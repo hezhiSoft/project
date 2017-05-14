@@ -3,4 +3,10 @@
 
     <string name="empty_str">暂无数据</string>
     <string name="recycler_view_item_foot_loading">加载更多&#8230;</string>
+
+    <!--Dialog-->
+    <string name="dialog_defalut_title">标题</string>
+    <string name="dialog_defalut_confirm_text">确定</string>
+    <string name="dialog_defalut_cancel_text">取消</string>
+    <string name="loading_defalut_dialog_text">加载中&#8230;</string>
 </resources>

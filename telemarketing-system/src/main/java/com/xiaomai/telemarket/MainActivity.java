@@ -1,9 +1,11 @@
 package com.xiaomai.telemarket;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.xiaomai.telemarket.module.cstmr.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.CusrometManagementStayFragment;
@@ -64,5 +66,19 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 setToolbarVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            DialogFactory.showMsgDialog(this, "退出", "确定退出电销系统?", "退出", "取消", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            }, null);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
