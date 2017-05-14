@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_background_color">#EBEBEB</color>
+    <color name="toolbar_press_color">#808080</color>
+    <color name="tab_active">#3F51B5</color>
+    <color name="badgeItem_color">#FF4081</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparency">#00000000</color>
+    <color name="gray">#808080</color>
+    <color name="red">#FC2828</color>
+
+    <color name="switch_btn">#E0584D</color>
+
+    <!--Dialog-->
+    <color name="dialog_btn_text">#009688</color>
+    <color name="dialog_btn_selector">#B6B6B6</color>
+
+    <color name="line">#E6E6E8</color>
+    <color name="FF00FF00">#ff00FF00</color>
+
+    <!--switch button-->
+    <color name="ksw_md_ripple_normal">#1E000000</color>
+    <color name="ksw_md_ripple_checked">#33019285</color>
+    <color name="ksw_md_solid_shadow">#33000000</color>
+    <color name="ksw_md_solid_normal">#ECECEC</color>
+    <color name="ksw_md_solid_checked">#019285</color>
+    <color name="ksw_md_solid_disable">#FFFFFF</color>
+    <color name="ksw_md_solid_checked_disable">#aaaaaa</color>
+</resources>
