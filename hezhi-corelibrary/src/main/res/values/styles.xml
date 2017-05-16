@@ -24,5 +24,15 @@
         <item name="android:background">@color/line</item>
     </style>
 
+    <declare-styleable name="WaytoTabLayout">
+        <attr name="tabLayout_mode">
+            <enum name="MODE_SCROLLABLE" value="0" />
+            <enum name="MODE_FIXED" value="1" />
+        </attr>
+        <attr name="tabLayout_indicatorColor" format="reference|color" />
+        <attr name="tabLayout_tab_textColor" format="reference|color" />
+        <attr name="tabLayout_tab_defaultTextColor" format="reference|color" />
+        <attr name="tabLayout_background" format="reference|color" />
+    </declare-styleable>
 
 </resources>

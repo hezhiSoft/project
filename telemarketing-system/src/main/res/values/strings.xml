@@ -6,4 +6,13 @@
     <string name="main_all_cusroment_tab">客户管理</string>
     <string name="main_stay_cusroment_tab">待跟进</string>
     <string name="main_order_tab">订单管理</string>
+
+    <array name="cusromet_details_tab_array">
+        <item>基本信息</item>
+        <item>负债</item>
+        <item>房产</item>
+        <item>保单</item>
+        <item>汽车</item>
+        <item>公司</item>
+    </array>
 </resources>

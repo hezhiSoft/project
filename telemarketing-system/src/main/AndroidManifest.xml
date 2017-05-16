@@ -22,6 +22,9 @@
         </activity>
 
         <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".module.cstmr.CusrometDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
     </application>

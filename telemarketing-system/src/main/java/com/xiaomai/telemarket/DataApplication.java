@@ -33,7 +33,7 @@ public class DataApplication extends BaseApplication {
      *用户信息
      * 
      *author: hezhiWu
-     *created at 2017/5/16 下午9:30
+     *created at 2017/5/16 下午9:35
      */
     public UserInfoEntity getUserInfoEntity(){
         if (userInfoEntity==null){
