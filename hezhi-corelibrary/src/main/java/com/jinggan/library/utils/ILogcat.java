@@ -11,7 +11,7 @@ import android.util.Log;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class WaytoLogcat {
+public class ILogcat {
 
     /**
      * 用于自定义TAG

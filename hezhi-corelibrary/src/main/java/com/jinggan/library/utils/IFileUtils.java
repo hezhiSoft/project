@@ -145,7 +145,7 @@ public class IFileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        WaytoLogcat.d("IFileUtils","size=="+size);
+        ILogcat.d("IFileUtils","size=="+size);
         return size;
     }
 

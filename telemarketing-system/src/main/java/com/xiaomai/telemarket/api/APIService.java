@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -22,6 +23,6 @@ public interface APIService {
      * author: hezhiWu
      * created at 2017/5/15 21:18
      */
-    @GET("api/user/login?username={account}&password={password}")
-    Call<Responese<UserInfoEntity>> login(@Query("account") String account, @Path("password") String password);
+    @GET
+    Call<Responese<UserInfoEntity>> login(@Url String url);
 }

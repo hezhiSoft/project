@@ -22,7 +22,7 @@ public class AccountRemetoRepo implements BaseDataSourse {
 
     private static AccountRemetoRepo instance;
 
-    public AccountRemetoRepo getInstance() {
+    public static AccountRemetoRepo getInstance() {
         if (instance == null) {
             instance = new AccountRemetoRepo();
         }
@@ -36,7 +36,8 @@ public class AccountRemetoRepo implements BaseDataSourse {
      * created at 2017/5/15 21:47
      */
     public void login(String account, String password, final RemetoRepoCallback<UserInfoEntity> callback) {
-        loginCall = RetrofitManager.getService(BuildConfig.DOMAIN, APIService.class).login(account, password);
+        String url="api/user/login?username="+account+"&password="+password;
+        loginCall = RetrofitManager.getService(BuildConfig.DOMAIN, APIService.class).login(url);
         loginCall.enqueue(new RetrofitCallback<Responese<UserInfoEntity>>() {
             @Override
             public void onSuccess(Responese<UserInfoEntity> data) {
