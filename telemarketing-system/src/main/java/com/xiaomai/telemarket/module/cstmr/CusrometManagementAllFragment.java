@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -21,15 +23,23 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementAllFragment extends BaseFragment {
+public class CusrometManagementAllFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener{
 
     Unbinder unbinder;
+    @BindView(R.id.CustomerAll_recyclerView)
+    PullToRefreshRecyclerView CustomerAllRecyclerView;
+
+    private CusrometManagementAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_customer_all, null);
         unbinder = ButterKnife.bind(this, rootView);
+        adapter=new CusrometManagementAdapter(getContext());
+        CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
+        CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
+        CustomerAllRecyclerView.setPullToRefreshListener(this);
         return rootView;
     }
 
@@ -48,4 +58,15 @@ public class CusrometManagementAllFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void onDownRefresh() {
+
+    }
+
+    @Override
+    public void onPullRefresh() {
+
+    }
 }
+

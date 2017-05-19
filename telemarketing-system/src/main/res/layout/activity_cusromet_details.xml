@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/CusrometDetails_Back_ImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:background="@drawable/selector_toolbar_seletor"
+            android:src="@drawable/ic_arrow_back_black_24dp"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="客户详情"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/CusrometDetails_Back_ImageView"
+            android:textColor="@color/white"/>
+
+
+        <ImageView
+            android:id="@+id/CusrometDetails_phone_ImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_title_phone"
+            android:layout_toLeftOf="@+id/CusrometDetails_Edit_ImageView"
+            android:padding="15dp"
+            android:background="@drawable/selector_toolbar_seletor"/>
+
+        <ImageView
+            android:id="@+id/CusrometDetails_Edit_ImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_title_edit"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:background="@drawable/selector_toolbar_seletor"/>
+
+
+
+    </RelativeLayout>
+
+    <com.jinggan.library.ui.widget.WaytoTabLayout
+        android:id="@+id/CusrometDetails_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabLayout_mode="MODE_SCROLLABLE"
+        app:tabLayout_indicatorColor="@color/colorAccent"
+        app:tabLayout_tab_textColor="@color/colorAccent"
+        app:tabLayout_tab_defaultTextColor="@color/gray"/>
+
+</LinearLayout>

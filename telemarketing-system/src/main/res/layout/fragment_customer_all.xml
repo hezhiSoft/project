@@ -50,4 +50,9 @@
     <include
         layout="@layout/cusromet_toolbar"/>
 
+    <com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView
+        android:id="@+id/CustomerAll_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
