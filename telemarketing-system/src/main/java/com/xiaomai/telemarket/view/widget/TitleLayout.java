@@ -82,7 +82,6 @@ public class TitleLayout extends RelativeLayout implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_back:
-//                ToastUtil.showToast(DataApplication.getINSTANCE().getApplicationContext(),"");
                 if (onNaviBarClickListener!=null) {
                     onNaviBarClickListener.onBackClick();
                 }
