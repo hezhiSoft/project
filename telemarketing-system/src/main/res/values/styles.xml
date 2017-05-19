@@ -40,5 +40,16 @@
         <item name="android:wallpaperIntraCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
+    <style name="line_1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/gray_dark_mid</item>
+    </style>
+
+    <style name="line_5">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">10dp</item>
+    <item name="android:background">@color/white_smoke</item>
+    </style>
 
 </resources>

@@ -7,6 +7,11 @@
     <string name="main_stay_cusroment_tab">待跟进</string>
     <string name="main_order_tab">订单管理</string>
 
+    <string name="title_customer">客户管理</string>
+    <string name="title_todo_list">待跟进列表</string>
+    <string name="title_orders">订单管理</string>
+    <string name="title_search">产品查询</string>
+
     <array name="cusromet_details_tab_array">
         <item>基本信息</item>
         <item>负债</item>
@@ -15,4 +20,18 @@
         <item>汽车</item>
         <item>公司</item>
     </array>
+
+    <!--common-->
+    <string name="common_back">返回</string>
+
+    <!--setting-->
+    <string name="set_user_state">状态管理</string>
+    <string name="set_dialing_source">拨号名单源</string>
+    <string name="set_exit">退出当前账号</string>
+    <string name="set_userstate_online">我在线上</string>
+    <string name="set_userstate_away">离开</string>
+    <string name="text_userstate_busy">忙碌</string>
+    <string name="text_userstate_not_disturb">请勿打扰</string>
+    <string name="text_number_library_public">公共名单库</string>
+    <string name="text_number_dialing_private">我的客户列表</string>
 </resources>
