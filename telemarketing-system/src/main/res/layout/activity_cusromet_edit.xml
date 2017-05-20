@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.jinggan.library.ui.view.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                style="@style/line_horizontal"/>
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svHint="请选择"
+                app:svItemName="负债类型" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入金额"
+                app:wvItemName="负债金额(万)" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svHint="选择日期"
+                app:svItemName="贷款日期" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svHint="选择机构/银行"
+                app:svItemName="机构/银行" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入金额"
+                app:wvItemName="每月还款" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入金额"
+                app:wvItemName="剩余还款" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入期数"
+                app:wvItemName="贷款期数" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入延期月数"
+                app:wvItemName="延期月数" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入延期月数"
+                app:wvItemName="延期月数" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入延期金额"
+                app:wvItemName="延期金额" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入延期数次"
+                app:wvItemName="延期次数" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svHint="选择贷款产品"
+                app:svItemName="贷款产品" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvHint="输入备注"
+                app:wvItemName="备注" />
+
+        </LinearLayout>
+    </com.jinggan.library.ui.view.OverScrollView>
+
+</RelativeLayout>

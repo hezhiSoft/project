@@ -1,6 +1,8 @@
 package com.xiaomai.telemarket.module.cstmr;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,8 @@ import android.widget.TextView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
-import com.xiaomai.telemarket.module.cstmr.data.CusrometEntity;
+import com.xiaomai.telemarket.common.Constant;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,16 +25,11 @@ import butterknife.ButterKnife;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometEntity> {
+public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometListEntity> {
 
 
     public CusrometManagementAdapter(Context context) {
         super(context);
-    }
-
-    @Override
-    public int getItemCount() {
-        return 5;
     }
 
     @Override
@@ -40,12 +38,35 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometE
     }
 
     @Override
-    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder=(ViewHolder)holder;
+    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.ItemCusrometUserName.setText(mLists.get(position).getCustomerName());
+        viewHolder.ItemCusrometLastTime.setText(mLists.get(position).getFollowDate().replaceAll("T", " "));
+        viewHolder.ItemCusrometRemark.setText(mLists.get(position).getRemark());
+        /*意向状态*/
+        int InterestedStatus = mLists.get(position).getInterestedStatus();
+        if (InterestedStatus == Constant.Description.NoInterested.getValue()) {
+            Drawable drawable = mContent.getResources().getDrawable(R.mipmap.icon_order_stauts_not);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            viewHolder.ItemCusrometStatus.setCompoundDrawables(drawable, null, null, null);
+            viewHolder.ItemCusrometStatus.setText("无意向");
+        } else if (InterestedStatus == Constant.Description.YesInterested.getValue()) {
+            Drawable drawable = mContent.getResources().getDrawable(R.mipmap.icon_order_finish_status);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            viewHolder.ItemCusrometStatus.setCompoundDrawables(drawable, null, null, null);
+            viewHolder.ItemCusrometStatus.setText("有意向");
+        } else {
+            Drawable drawable = mContent.getResources().getDrawable(R.mipmap.icon_order_stauts_null);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            viewHolder.ItemCusrometStatus.setCompoundDrawables(drawable, null, null, null);
+            viewHolder.ItemCusrometStatus.setText("未知意向");
+        }
         viewHolder.ItemCusrometLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ISkipActivityUtil.startIntent(mContent,CusrometDetailsActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("entity",mLists.get(position));
+                ISkipActivityUtil.startIntent(mContent, CusrometDetailsActivity.class,bundle);
             }
         });
     }
@@ -65,7 +86,7 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometE
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
         }
     }
 }

@@ -7,8 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +28,22 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementAllFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener{
+public class CusrometManagementAllFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallback<List<CusrometListEntity>>{
 
     Unbinder unbinder;
     @BindView(R.id.CustomerAll_recyclerView)
     PullToRefreshRecyclerView CustomerAllRecyclerView;
 
     private CusrometManagementAdapter adapter;
+
+    private int pageIndex;
+    private CusrometRemoteRepo remoteRepo;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        remoteRepo=CusrometRemoteRepo.getInstance();
+    }
 
     @Nullable
     @Override
@@ -40,6 +54,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements PullT
         CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
         CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
         CustomerAllRecyclerView.setPullToRefreshListener(this);
+        CustomerAllRecyclerView.startUpRefresh();
         return rootView;
     }
 
@@ -47,6 +62,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements PullT
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        remoteRepo.cancelRequest();
     }
 
     @OnClick({R.id.Customer_toolBar_add_ImageView, R.id.Customer_toolBar_screen_ImageView})
@@ -61,12 +77,50 @@ public class CusrometManagementAllFragment extends BaseFragment implements PullT
 
     @Override
     public void onDownRefresh() {
-
+        pageIndex=1;
+        remoteRepo.requestCusrometLists(pageIndex,null,this);
     }
 
     @Override
     public void onPullRefresh() {
+        pageIndex++;
+        remoteRepo.requestCusrometLists(pageIndex,null,this);
+    }
 
+    @Override
+    public void onSuccess(List<CusrometListEntity> data) {
+        if (pageIndex==1){
+            adapter.clearList();
+            adapter.addItems(data);
+        }else {
+            adapter.addItems(data,adapter.getItemCount()-1);
+            if (data.size()<=0){
+                CustomerAllRecyclerView.onLoadMoreFinish();
+            }
+        }
+    }
+
+    @Override
+    public void onFailure(int code, String msg) {
+        showToast(msg);
+        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+    }
+
+    @Override
+    public void onThrowable(Throwable t) {
+        showToast("数据异常");
+        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+    }
+
+    @Override
+    public void onUnauthorized() {
+        showToast("数据获取失败");
+        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+    }
+
+    @Override
+    public void onFinish() {
+        CustomerAllRecyclerView.closeDownRefresh();
     }
 }
 

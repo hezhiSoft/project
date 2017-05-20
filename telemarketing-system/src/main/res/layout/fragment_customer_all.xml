@@ -31,6 +31,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="15dp"
+            android:visibility="gone"
             android:src="@mipmap/icon_add" />
 
         <ImageView
@@ -43,6 +44,7 @@
             android:paddingBottom="15dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:layout_alignParentRight="true"
             android:paddingTop="15dp"
             android:src="@mipmap/icon_screen" />
     </RelativeLayout>

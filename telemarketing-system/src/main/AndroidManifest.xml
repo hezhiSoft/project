@@ -21,12 +21,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".module.cstmr.CusrometDetailsActivity"
+        <activity
+            android:name=".module.cstmr.CusrometDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.info.CusrometInfoEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
     </application>
 
 </manifest>
