@@ -1,4 +1,4 @@
-package com.xiaomai.telemarket.module.cstmr.fragment;
+package com.xiaomai.telemarket.module.cstmr.fragment.company;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,13 +17,13 @@ import com.jinggan.library.base.BaseFragment;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CusrometDebtoFragment extends BaseFragment {
+public class CusrometCompanyFragment extends BaseFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         TextView textView=new TextView(getContext());
-        textView.setText("负债");
+        textView.setText("公司");
         return textView;
     }
 }

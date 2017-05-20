@@ -85,4 +85,17 @@ public class CusrometInfoShowFragment extends BaseFragment {
         CusInfoSocialSecurityAccount.setText(entity.getSocialSecurityAccount() + "");
         CusInfoRemark.setText(entity.getRemark());
     }
+
+    /**
+     * 客户ID
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/20 14:09
+     */
+    public String getCusrometId() {
+        if (entity != null) {
+            return entity.getID();
+        }
+        return "";
+    }
 }

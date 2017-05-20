@@ -18,7 +18,7 @@ public class CusrometInfoEditActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cusromet_edit);
+        setContentView(R.layout.activity_cusromet_info);
         setToolbarTitle("编辑基本信息");
         setToolbarRightText("保存");
     }

@@ -112,10 +112,28 @@ public class FormWriteTopTitleView extends LinearLayout {
         }
     }
 
-    public void setContentText(String text) {
+    /**
+     *设置内容
+     * 
+     *author: hezhiWu
+     *created at 2017/5/20 18:05
+     */
+    public FormWriteTopTitleView setContentText(String text) {
         if (TextUtils.isEmpty(text)) {
             mContentEditText.setText("无");
         } else
             mContentEditText.setText(text);
+        return this;
+    }
+
+    /**
+     *设置Enabled
+     * 
+     *author: hezhiWu
+     *created at 2017/5/20 18:36
+     */
+    public FormWriteTopTitleView setItemEnabled(boolean enabled) {
+        mContentEditText.setEnabled(enabled);
+        return this;
     }
 }

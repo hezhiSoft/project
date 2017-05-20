@@ -1,4 +1,4 @@
-package com.xiaomai.telemarket.module.cstmr.fragment;
+package com.xiaomai.telemarket.module.cstmr.fragment.property;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
