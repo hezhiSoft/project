@@ -1,16 +1,16 @@
-package com.xiaomai.telemarket.module.account.data;
+package com.xiaomai.telemarket.module.cstmr.data.repo;
 
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.net.retrofit.RetrofitCallback;
-import com.jinggan.library.net.retrofit.RetrofitManager;
-import com.xiaomai.telemarket.BuildConfig;
-import com.xiaomai.telemarket.api.APIService;
 import com.xiaomai.telemarket.api.Responese;
-import com.xiaomai.telemarket.utils.MD5Util;
+import com.xiaomai.telemarket.api.XiaomaiRetrofitManager;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -19,43 +19,50 @@ import retrofit2.Call;
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
- * created at 2017/5/15 21:19
+ * created at 2017/5/17 21:19
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class AccountRemetoRepo implements BaseDataSourse {
-    Call<Responese<UserInfoEntity>> loginCall;
+public class CusrometRemoteRepo implements BaseDataSourse {
 
-    private static AccountRemetoRepo instance;
+    private Call<Responese<List<CusrometListEntity>>> listCusrometListCall;
 
-    public static AccountRemetoRepo getInstance() {
+    private static CusrometRemoteRepo instance;
+
+    public static CusrometRemoteRepo getInstance() {
         if (instance == null) {
-            instance = new AccountRemetoRepo();
+            instance = new CusrometRemoteRepo();
         }
         return instance;
     }
 
     /**
-     * 登录
+     * 获取客户列表
      * <p>
      * author: hezhiWu
-     * created at 2017/5/15 21:47
+     * created at 2017/5/17 21:25
+     *
+     * @param pageIndex
+     * @param callback
      */
-    public void login(String account, String password, final RemetoRepoCallback<UserInfoEntity> callback) {
+    public void requestCusrometLists(int pageIndex, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("username", account);
-            jsonObject.put("password", MD5Util.string2MD5(password));
+            JSONObject pageIndexObj = new JSONObject();
+            pageIndexObj.put("PageIndex", pageIndex);
+
+            jsonObject.put("pageparamer", pageIndexObj);
+            jsonObject.put("filter", filter);
             body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        loginCall = RetrofitManager.getService(BuildConfig.DOMAIN, APIService.class).login(body);
-        loginCall.enqueue(new RetrofitCallback<Responese<UserInfoEntity>>() {
+        listCusrometListCall = XiaomaiRetrofitManager.getAPIService().cusrometLists(body);
+        listCusrometListCall.enqueue(new RetrofitCallback<Responese<List<CusrometListEntity>>>() {
             @Override
-            public void onSuccess(Responese<UserInfoEntity> data) {
-                if (data.getCode() == 200) {
+            public void onSuccess(Responese<List<CusrometListEntity>> data) {
+                if (data.getData() != null && data.getData().size() >= 0) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
@@ -86,8 +93,8 @@ public class AccountRemetoRepo implements BaseDataSourse {
 
     @Override
     public void cancelRequest() {
-        if (loginCall != null && !loginCall.isCanceled()) {
-            loginCall.cancel();
+        if (listCusrometListCall != null && !listCusrometListCall.isCanceled()) {
+            listCusrometListCall.cancel();
         }
     }
 }

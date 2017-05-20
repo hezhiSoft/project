@@ -21,7 +21,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="UserName"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -31,9 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@mipmap/icon_order_finish_status"
                 android:drawablePadding="3dp"
-                android:text="有意向"
                 android:textColor="@color/gray"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -57,9 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="2017-04-15"
                 android:singleLine="true"
-                android:textColor="@color/dialog_btn_selector"
+                android:textColor="@color/ksw_md_solid_checked_disable"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -82,7 +78,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="有贷款意向"
                 android:singleLine="true"
                 android:textColor="@color/dialog_btn_selector"
                 android:textSize="14sp" />

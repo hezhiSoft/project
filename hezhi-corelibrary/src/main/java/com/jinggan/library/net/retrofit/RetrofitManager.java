@@ -1,5 +1,6 @@
 package com.jinggan.library.net.retrofit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitManager {
     /**
-     * 返回APIService
+     * 返回APIService 返回JSON格式
      * author: hezhiWu
      * created at 2017/3/16 9:23
      *
@@ -31,16 +32,37 @@ public class RetrofitManager {
     }
 
     /**
+     * 返回APIService 返回JSON格式
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/20 11:36
+     *
+     * @param domain 域名
+     * @param client 请求参数
+     * @param cls    API位类
+     */
+    public static <T> T getService(String domain, OkHttpClient client, Class<T> cls) {
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(domain)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        T service = mRetrofit.create(cls);
+        return service;
+    }
+
+    /**
      * 返回APIService ，返回String
      * author: hezhiWu
      * created at 2017/4/19 10:47
      *
      * @param domain 域名
+     * @param client 请求参数
      * @param cls    API位类
      */
-    public static <T> T getServiceStr(String domain, Class<T> cls) {
+    public static <T> T getServiceStr(String domain, OkHttpClient client, Class<T> cls) {
         Retrofit mRetrofit = new Retrofit.Builder()
-//                .client(getClient())
+                .client(client)
                 .baseUrl(domain)
                 .addConverterFactory(StringConverterFactory.create())
                 .build();
@@ -49,21 +71,21 @@ public class RetrofitManager {
     }
 
     /**
-     * 设置Http请求头
+     * 返回APIService ，返回String
+     * <p>
      * author: hezhiWu
-     * created at 2017/3/16 9:23
+     * created at 2017/5/20 11:41
+     *
+     * @param domain 域名
+     * @param cls    API位类
      */
-//    private static OkHttpClient getClient() {
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                Request request = chain.request().newBuilder()
-//                        .addHeader("Authorization", "Credential " + Userhelper.getCredentialId())
-//                        .addHeader("Accept", "application/json")
-//                        .build();
-//                return chain.proceed(request);
-//            }
-//        }).build();
-//        return client;
-//    }
+    public static <T> T getServiceStr(String domain, Class<T> cls) {
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl(domain)
+                .addConverterFactory(StringConverterFactory.create())
+                .build();
+        T service = mRetrofit.create(cls);
+        return service;
+    }
+
 }

@@ -23,4 +23,24 @@
     <declare-styleable name="MainBottomNavigationBar">
         <attr name="tab_active" format="reference|color" />
     </declare-styleable>
+
+    <declare-styleable name="FormWriteTopTitleView">
+        <attr name="wvItemName" format="reference|string" />
+        <attr name="wvHint" format="reference|string" />
+        <attr name="wvArrowDrop" format="reference" />
+        <attr name="wvEnabled" format="boolean" />
+        <attr name="wvInputType">
+            <enum name="text" value="0" />
+            <enum name="numberDecimal" value="1" /><!--小数点-->
+            <enum name="number" value="2" /><!--数字-->
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FormSelectTopTitleView">
+        <attr name="svItemName" format="reference|string" />
+        <attr name="svHint" format="reference|string" />
+        <attr name="svArrowDrop" format="reference" />
+        <attr name="svEnabled" format="boolean" />
+    </declare-styleable>
+
 </resources>

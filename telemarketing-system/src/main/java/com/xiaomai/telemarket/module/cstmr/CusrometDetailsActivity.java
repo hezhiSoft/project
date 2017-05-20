@@ -7,11 +7,13 @@ import android.view.View;
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
+import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometCarFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometCompanyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometDebtoFragment;
-import com.xiaomai.telemarket.module.cstmr.fragment.CusrometInfoFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoEditActivity;
+import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoShowFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometInsurancePolicyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometPropertyFragment;
 
@@ -32,7 +34,6 @@ import butterknife.OnClick;
 
 public class CusrometDetailsActivity extends BaseActivity {
 
-
     @BindView(R.id.CusrometDetails_tabLayout)
     WaytoTabLayout CusrometDetailsTabLayout;
 
@@ -50,7 +51,10 @@ public class CusrometDetailsActivity extends BaseActivity {
     }
 
     private void initTabLayout(){
-        fragments.add(new CusrometInfoFragment());
+        CusrometInfoShowFragment cusrometInfoFragment=new CusrometInfoShowFragment();
+        cusrometInfoFragment.setArguments(getIntent().getExtras());
+        fragments.add(cusrometInfoFragment);
+
         fragments.add(new CusrometDebtoFragment());
         fragments.add(new CusrometPropertyFragment());
         fragments.add(new CusrometInsurancePolicyFragment());
@@ -68,6 +72,9 @@ public class CusrometDetailsActivity extends BaseActivity {
             case R.id.CusrometDetails_phone_ImageView:
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
+                if (CusrometDetailsTabLayout.getViewPager().getCurrentItem()==0){
+                    ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class);
+                }
                 break;
         }
     }
