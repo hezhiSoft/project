@@ -79,10 +79,16 @@ public class FormSelectTopTitleView extends LinearLayout {
         }
     }
 
-    public void setContentText(String text) {
+    public FormSelectTopTitleView setContentText(String text) {
         if (TextUtils.isEmpty(text)) {
             mContentEditText.setText("无");
         } else
             mContentEditText.setText(text);
+        return this;
+    }
+
+    public FormSelectTopTitleView setArrowDropVisibility(int visibility) {
+        arrowDropImageView.setVisibility(visibility);
+        return this;
     }
 }

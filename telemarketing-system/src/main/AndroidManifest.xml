@@ -34,6 +34,11 @@
             android:name=".module.cstmr.fragment.info.CusrometInfoEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.debto.DebtoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
     </application>
 
 </manifest>

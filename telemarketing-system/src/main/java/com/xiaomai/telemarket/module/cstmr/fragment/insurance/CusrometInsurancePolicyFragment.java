@@ -1,4 +1,4 @@
-package com.xiaomai.telemarket.module.cstmr.fragment;
+package com.xiaomai.telemarket.module.cstmr.fragment.insurance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,13 +17,13 @@ import com.jinggan.library.base.BaseFragment;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CusrometCarFragment extends BaseFragment {
+public class CusrometInsurancePolicyFragment extends BaseFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         TextView textView=new TextView(getContext());
-        textView.setText("汽车");
+        textView.setText("保单");
         return textView;
     }
 }

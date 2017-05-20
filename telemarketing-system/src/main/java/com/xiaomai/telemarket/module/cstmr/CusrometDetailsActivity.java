@@ -9,13 +9,15 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
-import com.xiaomai.telemarket.module.cstmr.fragment.CusrometCarFragment;
-import com.xiaomai.telemarket.module.cstmr.fragment.CusrometCompanyFragment;
-import com.xiaomai.telemarket.module.cstmr.fragment.CusrometDebtoFragment;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.fragment.car.CusrometCarFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.company.CusrometCompanyFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoEditActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoShowFragment;
-import com.xiaomai.telemarket.module.cstmr.fragment.CusrometInsurancePolicyFragment;
-import com.xiaomai.telemarket.module.cstmr.fragment.CusrometPropertyFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsurancePolicyFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.property.CusrometPropertyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,16 @@ public class CusrometDetailsActivity extends BaseActivity {
     WaytoTabLayout CusrometDetailsTabLayout;
 
     private String[] tabNames;
-    private List<BaseFragment> fragments=new ArrayList<>();
+    private List<BaseFragment> fragments = new ArrayList<>();
+
+    private CusrometInfoShowFragment InfoFragment;
+    private CusrometDebtoFragment debtoFragment;
+    private CusrometPropertyFragment propertyFragment;
+    private CusrometInsurancePolicyFragment insurancePolicyFragment;
+    private CusrometCarFragment carFragment;
+    private CusrometCompanyFragment companyFragment;
+
+    private CusrometListEntity entity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,21 +57,39 @@ public class CusrometDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_cusromet_details);
         ButterKnife.bind(this);
         setToolbarVisibility(View.GONE);
-        tabNames=getResources().getStringArray(R.array.cusromet_details_tab_array);
+        entity = (CusrometListEntity) getIntent().getSerializableExtra("entity");
+        tabNames = getResources().getStringArray(R.array.cusromet_details_tab_array);
         initTabLayout();
     }
 
-    private void initTabLayout(){
-        CusrometInfoShowFragment cusrometInfoFragment=new CusrometInfoShowFragment();
-        cusrometInfoFragment.setArguments(getIntent().getExtras());
-        fragments.add(cusrometInfoFragment);
+    private void initTabLayout() {
+        InfoFragment = new CusrometInfoShowFragment();
+        InfoFragment.setArguments(getIntent().getExtras());
+        fragments.add(InfoFragment);
 
-        fragments.add(new CusrometDebtoFragment());
-        fragments.add(new CusrometPropertyFragment());
-        fragments.add(new CusrometInsurancePolicyFragment());
-        fragments.add(new CusrometCarFragment());
-        fragments.add(new CusrometCompanyFragment());
-        CusrometDetailsTabLayout.initTabLayout(getSupportFragmentManager(),fragments,tabNames);
+        debtoFragment = new CusrometDebtoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", entity.getID());
+        debtoFragment.setArguments(bundle);
+        fragments.add(debtoFragment);
+
+        propertyFragment = new CusrometPropertyFragment();
+        propertyFragment.setArguments(bundle);
+        fragments.add(propertyFragment);
+
+        insurancePolicyFragment = new CusrometInsurancePolicyFragment();
+        insurancePolicyFragment.setArguments(bundle);
+        fragments.add(insurancePolicyFragment);
+
+        carFragment = new CusrometCarFragment();
+        carFragment.setArguments(bundle);
+        fragments.add(carFragment);
+
+        companyFragment = new CusrometCompanyFragment();
+        companyFragment.setArguments(bundle);
+        fragments.add(companyFragment);
+
+        CusrometDetailsTabLayout.initTabLayout(getSupportFragmentManager(), fragments, tabNames);
     }
 
     @OnClick({R.id.CusrometDetails_Back_ImageView, R.id.CusrometDetails_phone_ImageView, R.id.CusrometDetails_Edit_ImageView})
@@ -72,8 +101,13 @@ public class CusrometDetailsActivity extends BaseActivity {
             case R.id.CusrometDetails_phone_ImageView:
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
-                if (CusrometDetailsTabLayout.getViewPager().getCurrentItem()==0){
-                    ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class);
+                int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
+                if (currentItem == 0) {/*客户信息*/
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("entiy", entity);
+                    ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
+                } else if (currentItem == 1) {/*负债*/
+                    DebtoActivity.startIntentToEdit(this, debtoFragment.getEntity());
                 }
                 break;
         }

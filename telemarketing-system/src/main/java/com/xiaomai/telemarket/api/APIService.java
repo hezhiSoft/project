@@ -1,7 +1,9 @@
 package com.xiaomai.telemarket.api;
 
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 
 import java.util.List;
 
@@ -44,5 +46,23 @@ public interface APIService {
      * @param body
      */
     @POST("api/customer/GetByFilter")
-    Call<Responese<List<CusrometListEntity>>> cusrometLists(@Body RequestBody body);
+    Call<Responese<List<CusrometListEntity>>> queryCusrometLists(@Body RequestBody body);
+
+    /**
+     * 获取客户负债列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/20 16:24
+     */
+    @POST("api/customer/GetDebt")
+    Call<Responese<List<DebtoEntity>>> queryCusrometDebtoLists(@Body RequestBody body);
+
+    /**
+     * 获取客户车辆信息
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/20 19:29
+     */
+    @POST("api/customer/GetCar")
+    Call<Responese<List<CarEntity>>> queryCusrometCarLists(@Body RequestBody body);
 }
