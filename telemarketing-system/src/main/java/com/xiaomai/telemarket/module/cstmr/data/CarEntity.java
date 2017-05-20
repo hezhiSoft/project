@@ -1,5 +1,7 @@
 package com.xiaomai.telemarket.module.cstmr.data;
 
+import java.io.Serializable;
+
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
@@ -7,7 +9,7 @@ package com.xiaomai.telemarket.module.cstmr.data;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CarEntity {
+public class CarEntity implements Serializable{
     private String ID;
     private String CustomerID;
     private int NakedCarPrice;

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginLeft="10dp" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_NakedCarPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvHint="请输入"
+        app:wvItemName="裸车价(万)" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Car_BuyDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svHint="请选择"
+        app:svItemName="购车日期" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_Mileage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvHint="请输入"
+        app:wvItemName="行驶里程" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_Barnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="品牌" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_CarModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="车型" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_IsMortgage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="是否按揭" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_IsRegistrationCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="有登记证" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Car_Remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="备注" />
+
+</LinearLayout>

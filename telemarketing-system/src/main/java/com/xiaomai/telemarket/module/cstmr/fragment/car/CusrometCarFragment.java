@@ -13,7 +13,9 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
+import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoAdapter;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ import butterknife.Unbinder;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CusrometCarFragment extends BaseFragment implements RemetoRepoCallback<List<CarEntity>>, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
+public class CusrometCarFragment extends BaseFragment implements CusrometCarAdapter.OnClickItemLisenter, RemetoRepoCallback<List<CarEntity>>, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
 
     @BindView(R.id.Details_number_TextView)
     TextView DetailsNumberTextView;
@@ -45,11 +47,14 @@ public class CusrometCarFragment extends BaseFragment implements RemetoRepoCallb
 
     private String cusrometId;
 
+    private CarEntity entity;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cusrometId = getArguments().getString("id");
         adapter = new CusrometCarAdapter(getContext());
+        adapter.setListenter(this);
         remoteRepo = CusrometRemoteRepo.getInstance();
     }
 
@@ -120,5 +125,15 @@ public class CusrometCarFragment extends BaseFragment implements RemetoRepoCallb
 
     @OnClick(R.id.Details_add_Button)
     public void onClick() {
+        CarActivity.startIntentToAdd(getActivity());
+    }
+
+    @Override
+    public void onSeleceItemPosition(CarEntity entity) {
+        this.entity=entity;
+    }
+
+    public CarEntity getEntity(){
+        return entity;
     }
 }
