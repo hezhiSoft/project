@@ -4,6 +4,7 @@ import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.home.setting.data.UserStateEntity;
 
 import java.util.List;
 
@@ -11,11 +12,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import retrofit2.http.Url;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -46,6 +43,45 @@ public interface APIService {
      * @param body
      */
     @POST("api/customer/GetByFilter")
+    Call<Responese<List<CusrometListEntity>>> cusrometLists(@Body RequestBody body);
+
+    /**
+     * 获取用户状态枚举
+     * @return
+     */
+    @GET("api/user/GetStateEnum")
+    Call<Responese<List<UserStateEntity>>> userStateList();
+
+//    /**
+//     * 获取用户状态 TODO 接口未定义
+//     * @return
+//     */
+//    @GET("")
+//    Call<String> requestUserState();
+
+    /**
+     * 更新用户状态
+     *
+     * @param body {"status":1}
+     * @return
+     */
+    @POST("api/user/SetState")
+    Call<Responese<Void>> updateUserState(@Body RequestBody body);
+
+    /**
+     * 从公共名单库获取客户信息
+     * @return
+     */
+    @POST("api/customer/GetFromPublic")
+    Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPublic();
+
+    /**
+     * 从私有名单库获取客户信息
+     * @param body {"preid":""}
+     * @return
+     */
+    @POST("api/customer/GetFromPublic")
+    Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPublic(@Body RequestBody body);
     Call<Responese<List<CusrometListEntity>>> queryCusrometLists(@Body RequestBody body);
 
     /**

@@ -6,8 +6,8 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
 
-import com.shenyidai.telemarket.DataApplication;
-import com.shenyidai.telemarket.receiver.OutgoingCallState;
+import com.xiaomai.telemarket.DataApplication;
+import com.xiaomai.telemarket.receiver.OutgoingCallState;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -93,7 +93,7 @@ public class ReadPhoneLogThread extends HandlerThread {
                     //发送广播
                     Intent dialingIntent = new Intent();
                     dialingIntent.setAction(OutgoingCallState.ForeGroundCallState.DIALING);
-                    DataApplication.getINSTANCE().sendBroadcast(dialingIntent);
+                    DataApplication.getInstance().sendBroadcast(dialingIntent);
 
                     Log.d(TAG, ReadPhoneLogThread.CallState.DIALING);
                 }
@@ -104,7 +104,7 @@ public class ReadPhoneLogThread extends HandlerThread {
                     //发送广播
                     Intent dialingIntent = new Intent();
                     dialingIntent.setAction(OutgoingCallState.ForeGroundCallState.ALERTING);
-                    DataApplication.getINSTANCE().sendBroadcast(dialingIntent);
+                    DataApplication.getInstance().sendBroadcast(dialingIntent);
 
                     Log.d(TAG, ReadPhoneLogThread.CallState.ALERTING);
                 }
@@ -115,7 +115,7 @@ public class ReadPhoneLogThread extends HandlerThread {
                     //发送广播
                     Intent dialingIntent = new Intent();
                     dialingIntent.setAction(OutgoingCallState.ForeGroundCallState.ACTIVE);
-                    DataApplication.getINSTANCE().sendBroadcast(dialingIntent);
+                    DataApplication.getInstance().sendBroadcast(dialingIntent);
 
                     Log.d(TAG, ReadPhoneLogThread.CallState.ACTIVE);
                 }
@@ -126,7 +126,7 @@ public class ReadPhoneLogThread extends HandlerThread {
                     //发送广播
                     Intent dialingIntent = new Intent();
                     dialingIntent.setAction(OutgoingCallState.ForeGroundCallState.DISCONNECTED);
-                    DataApplication.getINSTANCE().sendBroadcast(dialingIntent);
+                    DataApplication.getInstance().sendBroadcast(dialingIntent);
 
                     Log.d(TAG, ReadPhoneLogThread.CallState.DISCONNECTED);
                 }

@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.shenyidai.telemarket.R;
-import com.shenyidai.telemarket.module.base.BaseFragment;
-import com.shenyidai.telemarket.utils.ToastUtil;
+import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.ui.dialog.ToastUtil;
+import com.xiaomai.telemarket.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

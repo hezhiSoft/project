@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +53,7 @@ public class HomeFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Home_seting_TextView:/*设置*/
+                ISkipActivityUtil.startIntent(getActivity(), SettingActivity.class);
                 break;
             case R.id.Home_groupCall_Layout:/*群呼*/
                 break;
