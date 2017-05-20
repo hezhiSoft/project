@@ -10,6 +10,7 @@ import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.fragment.car.CarActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CusrometCarFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.company.CusrometCompanyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoFragment;
@@ -108,6 +109,15 @@ public class CusrometDetailsActivity extends BaseActivity {
                     ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
                 } else if (currentItem == 1) {/*负债*/
                     DebtoActivity.startIntentToEdit(this, debtoFragment.getEntity());
+                }else if (currentItem==2){/*房产*/
+
+                }else if (currentItem==3){/*保单*/
+
+                }else if (currentItem==4){/*汽车*/
+                Bundle bundle=new Bundle();
+                    CarActivity.startIntentToEdit(this,carFragment.getEntity());
+                }else if (currentItem==5){/*公司*/
+
                 }
                 break;
         }
