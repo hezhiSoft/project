@@ -3,4 +3,24 @@
     <color name="colorPrimary">#527FFF</color>
     <color name="colorPrimaryDark">#527FFF</color>
     <color name="colorAccent">#527FFF</color>
+
+    <color name="btn_bg">#0c88f4</color>
+    <color name="text_link">#216bcd</color>
+    <color name="text_title">#333333</color>
+    <color name="black_sub_title">#333333</color>
+    <color name="navigation_bg">#f8f8f8</color>
+    <color name="black">#000000</color>
+    <color name="red_emphasize">#ff4c4c</color>
+
+    <!--secondary color-->
+    <color name="gray_dark">#666666</color>
+    <color name="gray_dark_mid">#999999</color>
+    <color name="gray_light">#c5c5c5</color>
+
+    <!--layout background color-->
+    <color name="white_smoke">#f0eff5</color>
+    <color name="white_blue">#dbe4fe</color>
+    <color name="white_pure">#ffffff</color>
+
+    <color name="translucent">#00000000</color>
 </resources>
