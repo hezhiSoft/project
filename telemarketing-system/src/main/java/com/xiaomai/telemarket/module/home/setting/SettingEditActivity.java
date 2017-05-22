@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.shenyidai.telemarket.R;
-import com.shenyidai.telemarket.module.base.BaseActivity;
-import com.shenyidai.telemarket.module.base.BaseFragment;
-import com.shenyidai.telemarket.view.widget.TitleLayout;
+import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.BaseFragment;
+import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.view.widget.TitleLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
