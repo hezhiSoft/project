@@ -27,6 +27,8 @@ public class IFileUtils {
     public static final String PROJECT_ROOT_DIRECTORY = "Base";
     /*图片文件夹*/
     public static final String IMAGE_DEIRECTORY = "image";
+    /*录音文件夹*/
+    public static final String RECORD_DIRECTORY = "record";
     /*缓存文件夹*/
     public static final String IMAGE_CATCH_DIR = "catch";
     /*下载目录*/
@@ -89,6 +91,21 @@ public class IFileUtils {
      */
     public static String getImageCatchDir() {
         String path = getSDROOT() + File.separator + FILE_ROOT_DIRECTORY + File.separator + IMAGE_CATCH_DIR;
+        File file = new File(path);
+        if (!file.exists()) {
+            File filePath = file.getParentFile();
+            filePath.mkdirs();
+        }
+        return file.getAbsolutePath();
+    }
+
+    /**
+     *录音文件夹目录
+     *
+     * @return
+     */
+    public static String getRecordDirectory(){
+        String path = getSDROOT() + File.separator + FILE_ROOT_DIRECTORY + File.separator + RECORD_DIRECTORY;
         File file = new File(path);
         if (!file.exists()) {
             File filePath = file.getParentFile();

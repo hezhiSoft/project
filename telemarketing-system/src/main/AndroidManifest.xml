@@ -35,6 +35,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
+        <activity android:name=".module.home.setting.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".module.home.setting.SettingEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
         <activity
             android:name=".module.cstmr.fragment.debto.DebtoActivity"
             android:screenOrientation="portrait"

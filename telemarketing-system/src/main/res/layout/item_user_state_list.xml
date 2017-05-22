@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <CheckedTextView
+        android:id="@+id/ctv_user_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dimen_15dp"
+        android:paddingRight="@dimen/dimen_15dp"
+        android:checkMark="@mipmap/ic_select"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_bottom_16"
+        android:text="我在线上"/>
+
+</LinearLayout>

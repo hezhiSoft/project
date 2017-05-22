@@ -7,14 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.jinggan.library.base.BaseActivity;
-import com.jinggan.library.utils.ILogcat;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
-import com.xiaomai.telemarket.utils.MD5Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +87,7 @@ public class LoginActivity extends BaseActivity implements AccountContract.Login
     public void onLoginSuccess(UserInfoEntity entity) {
         ISharedPreferencesUtils.setValue(this, Constant.ACCOUNT_KEY, loginAccountEditText.getText().toString());
         ISharedPreferencesUtils.setValue(this, Constant.PASSWORD_KEY, loginPwdEditText.getText().toString());
+        ISharedPreferencesUtils.setValue(this, Constant.USER_STATE, Constant.UserState.INWORK.getValue());
 
         ISkipActivityUtil.startIntent(this, MainActivity.class);
     }
