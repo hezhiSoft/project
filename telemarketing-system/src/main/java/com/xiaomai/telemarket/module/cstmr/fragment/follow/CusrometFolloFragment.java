@@ -1,4 +1,4 @@
-package com.xiaomai.telemarket.module.cstmr.fragment.debto;
+package com.xiaomai.telemarket.module.cstmr.fragment.follow;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,74 +11,70 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
-import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
- * author: hezhiWu <wuhezhi007@gmail.com>
+ * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
- * created at 2017/5/16$ 下午10:38$
+ * created at 2017/5/22 22:21
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
+public class CusrometFolloFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<List<FollowEntity>> {
 
-public class CusrometDebtoFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<List<DebtoEntity>>, CusrometDebtoAdapter.OnClickItemLisenter {
-
+    @BindView(R.id.Follow_recyclerView)
+    PullToRefreshRecyclerView FollowRecyclerView;
     @BindView(R.id.Details_number_TextView)
     TextView DetailsNumberTextView;
-    @BindView(R.id.Edbto_recyclerView)
-    PullToRefreshRecyclerView EdbtoRecyclerView;
-    Unbinder unbinder;
 
-    private CusrometDebtoAdapter adapter;
+    private CusrometFollowAdapter adapter;
     private CusrometRemoteRepo remoteRepo;
 
     private String cusrometId;
 
-    private DebtoEntity debtoEntity;
+    private FollowEntity debtoEntity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
-        adapter = new CusrometDebtoAdapter(getContext());
-        adapter.setListenter(this);
+        adapter = new CusrometFollowAdapter(getContext());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_cusromet_edbto, null);
-        unbinder = ButterKnife.bind(this, rootView);
+        View rootView = inflater.inflate(R.layout.fragment_cusromet_follow, null);
+        ButterKnife.bind(this, rootView);
         initRecyclerView();
         return rootView;
     }
 
     private void initRecyclerView() {
-        EdbtoRecyclerView.setRecyclerViewAdapter(adapter);
-        EdbtoRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
-        EdbtoRecyclerView.setPullToRefreshListener(this);
-        EdbtoRecyclerView.startUpRefresh();
+        FollowRecyclerView.setRecyclerViewAdapter(adapter);
+        FollowRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
+        FollowRecyclerView.setPullToRefreshListener(this);
+        FollowRecyclerView.startUpRefresh();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         remoteRepo.cancelRequest();
     }
 
     @Override
     public void onDownRefresh() {
-        remoteRepo.queryCusrometDebtoLists(cusrometId, this);
+        remoteRepo.queryCusrometFollowLists(cusrometId, this);
     }
 
     @Override
@@ -92,43 +88,38 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
     }
 
     @Override
-    public void onSuccess(List<DebtoEntity> data) {
+    public void onSuccess(List<FollowEntity> data) {
         if (data != null && data.size() > 0) {
+            DetailsNumberTextView.setText("共"+data.size()+"条跟进明细");
             adapter.clearList();
-            DetailsNumberTextView.setText("共" + data.size() + "条负债信息");
             adapter.addItems(data);
         } else {
-            DetailsNumberTextView.setText("负债信息");
-            EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            DetailsNumberTextView.setText("跟进明细");
+            FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
     }
 
     @Override
     public void onUnauthorized() {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
     }
 
     @Override
     public void onFinish() {
-        EdbtoRecyclerView.closeDownRefresh();
+        FollowRecyclerView.closeDownRefresh();
     }
 
-    @Override
-    public void onSeleceItemPosition(DebtoEntity entity) {
-        this.debtoEntity = entity;
-    }
-
-    public DebtoEntity getEntity() {
+    public FollowEntity getEntity() {
         return debtoEntity;
     }
 }

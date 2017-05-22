@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginLeft="10dp" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Insurance_InsuranceCompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="保险公司" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Insurance_InsuredAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="保费金额" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Insurance_PaymentMethods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="缴费方式" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Insurance_BuyDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="购买日期" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Insurance_DelayDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="延期日期" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Insurance_DelayDays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="延期天数" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Insurance_FuXiaoDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="复效日期" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Insurance_Remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="备注" />
+
+
+</LinearLayout>

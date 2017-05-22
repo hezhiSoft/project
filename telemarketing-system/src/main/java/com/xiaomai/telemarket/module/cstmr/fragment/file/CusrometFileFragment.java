@@ -1,4 +1,4 @@
-package com.xiaomai.telemarket.module.cstmr.fragment.debto;
+package com.xiaomai.telemarket.module.cstmr.fragment.file;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,8 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerVie
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoAdapter;
+import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
 
 import java.util.List;
 
@@ -22,18 +24,17 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * author: hezhiWu <wuhezhi007@gmail.com>
+ * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
- * created at 2017/5/16$ 下午10:38$
+ * created at 2017/5/22 22:21
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-
-public class CusrometDebtoFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<List<DebtoEntity>>, CusrometDebtoAdapter.OnClickItemLisenter {
+public class CusrometFileFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<List<DebtoEntity>>, CusrometDebtoAdapter.OnClickItemLisenter {
 
     @BindView(R.id.Details_number_TextView)
     TextView DetailsNumberTextView;
-    @BindView(R.id.Edbto_recyclerView)
+    @BindView(R.id.File_recyclerView)
     PullToRefreshRecyclerView EdbtoRecyclerView;
     Unbinder unbinder;
 
@@ -56,7 +57,7 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_cusromet_edbto, null);
+        View rootView = inflater.inflate(R.layout.fragment_cusromet_file, null);
         unbinder = ButterKnife.bind(this, rootView);
         initRecyclerView();
         return rootView;
@@ -95,10 +96,10 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
     public void onSuccess(List<DebtoEntity> data) {
         if (data != null && data.size() > 0) {
             adapter.clearList();
-            DetailsNumberTextView.setText("共" + data.size() + "条负债信息");
+            DetailsNumberTextView.setText("共" + data.size() + "条文件资料");
             adapter.addItems(data);
         } else {
-            DetailsNumberTextView.setText("负债信息");
+            DetailsNumberTextView.setText("文件资料");
             EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
         }
     }

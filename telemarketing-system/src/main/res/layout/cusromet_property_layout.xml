@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginLeft="10dp" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Property_LandUse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="土地用地" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_AreaM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="面积" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Property_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="所属区域" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Property_CompletionDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="竣工日期" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_PropertyRightsYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="产权年限" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_RegistrationPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="登记价格(万)" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_VillageName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="小区名称" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_DetailedAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="详细地址" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_Remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="备注" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Property_IsMortgage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="是否按揭" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Property_MortgageBank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="按揭银行" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_MonthlyPaymentLoan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="每月还款" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_MortgageTimeLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="按揭期数(月)" />
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Property_RemainingMortgage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="剩余按揭" />
+</LinearLayout>
