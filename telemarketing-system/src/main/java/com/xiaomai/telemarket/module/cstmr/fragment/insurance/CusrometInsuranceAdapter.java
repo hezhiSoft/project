@@ -1,4 +1,4 @@
-package com.xiaomai.telemarket.module.cstmr.fragment.property;
+package com.xiaomai.telemarket.module.cstmr.fragment.insurance;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 
 import butterknife.BindView;
@@ -23,11 +24,11 @@ import butterknife.ButterKnife;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEntity> {
+public class CusrometInsuranceAdapter extends BaseRecyclerViewAdapter<InsuranceEntity> {
 
     private OnClickItemLisenter listenter;
 
-    public CusrometPropertyAdapter(Context context){
+    public CusrometInsuranceAdapter(Context context){
         super(context);
     }
 
@@ -39,7 +40,7 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHodler = (ViewHolder) holder;
-        viewHodler.DetailsTileTextView.setText("房产明细 "+(position+1));
+        viewHodler.DetailsTileTextView.setText("保单明细 "+(position+1));
         viewHodler.DetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,9 +61,9 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
                 }
             }
         });
-//        final View infoView = inflater.inflate(R.layout.cusromet_debto_layout, null);
-//        setDetailsData(infoView, mLists.get(position));
-//        viewHodler.DetailsContentLayout.addView(infoView);
+        final View infoView = inflater.inflate(R.layout.cusromet_insurance_layout, null);
+        setDetailsData(infoView, mLists.get(position));
+        viewHodler.DetailsContentLayout.addView(infoView);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -86,11 +87,14 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
         }
     }
 
+    private void setDetailsData(View view,InsuranceEntity entity){
+
+    }
     public void setListenter(OnClickItemLisenter listenter) {
         this.listenter = listenter;
     }
 
     public interface OnClickItemLisenter{
-        void onSeleceItemPosition(PropertyEntity entity);
+        void onSeleceItemPosition(InsuranceEntity entity);
     }
 }

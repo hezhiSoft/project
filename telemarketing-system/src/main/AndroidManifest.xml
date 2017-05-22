@@ -35,13 +35,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".module.home.setting.SettingActivity"
+        <activity
+            android:name=".module.home.setting.SettingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".module.home.setting.SettingEditActivity"
+        <activity
+            android:name=".module.home.setting.SettingEditActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
             android:name=".module.cstmr.fragment.debto.DebtoActivity"
@@ -50,6 +52,21 @@
 
         <activity
             android:name=".module.cstmr.fragment.car.CarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.property.PropertyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.insurance.InsuranceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.company.CompanyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
     </application>

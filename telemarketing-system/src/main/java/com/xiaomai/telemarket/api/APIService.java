@@ -2,8 +2,13 @@ package com.xiaomai.telemarket.api;
 
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
+import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
+import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
+import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.home.setting.data.UserStateEntity;
 
 import java.util.List;
@@ -47,6 +52,7 @@ public interface APIService {
 
     /**
      * 获取用户状态枚举
+     *
      * @return
      */
     @GET("api/user/GetStateEnum")
@@ -70,6 +76,7 @@ public interface APIService {
 
     /**
      * 从公共名单库获取客户信息
+     *
      * @return
      */
     @POST("api/customer/GetFromPublic")
@@ -77,11 +84,20 @@ public interface APIService {
 
     /**
      * 从私有名单库获取客户信息
+     *
      * @param body {"preid":""}
      * @return
      */
     @POST("api/customer/GetFromPublic")
     Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPublic(@Body RequestBody body);
+
+    /**
+     * 获取客户列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 8:51
+     */
+    @POST("api/customer/GetByFilter")
     Call<Responese<List<CusrometListEntity>>> queryCusrometLists(@Body RequestBody body);
 
     /**
@@ -94,6 +110,34 @@ public interface APIService {
     Call<Responese<List<DebtoEntity>>> queryCusrometDebtoLists(@Body RequestBody body);
 
     /**
+     * 获取客户房产列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 8:59
+     */
+    @POST("api/customer/GetHouse")
+    Call<Responese<List<PropertyEntity>>> queryCusrometHouse(@Body RequestBody body);
+
+    /**
+     * 获取客户保单列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 9:05
+     */
+    @POST("api/customer/GetInsurance")
+    Call<Responese<List<InsuranceEntity>>> queryCusrometInsurance(@Body RequestBody body);
+
+
+    /**
+     * 查询客户公司信息列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 9:27
+     */
+    @POST("api/customer/GetCompany")
+    Call<Responese<List<CompanyEntity>>> queryCusrometCompany(@Body RequestBody body);
+
+    /**
      * 获取客户车辆信息
      * <p>
      * author: hezhiWu
@@ -101,4 +145,23 @@ public interface APIService {
      */
     @POST("api/customer/GetCar")
     Call<Responese<List<CarEntity>>> queryCusrometCarLists(@Body RequestBody body);
+
+    /**
+     * 查询客户文件列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 22:35
+     */
+    @POST
+    Call<Responese<List<FileEntity>>> queryCusrometFileLists(@Body RequestBody body);
+
+    /**
+     * 查询客户跟进明细
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 22:34
+     */
+    @POST("api/customer/GetFollow")
+    Call<Responese<List<FollowEntity>>> queryCusrometFollowLists(@Body RequestBody body);
+
 }

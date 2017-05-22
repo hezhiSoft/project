@@ -4,11 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/item_add_details_layout" />
-
-    <com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView
-        android:id="@+id/Insurance_recyclerView"
+    <FrameLayout
+        android:id="@+id/Insurance_Content_Layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -12,13 +12,18 @@ import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CarActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CusrometCarFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.company.CompanyActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.company.CusrometCompanyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
+import com.xiaomai.telemarket.module.cstmr.fragment.file.CusrometFileFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.follow.CusrometFolloFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoEditActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoShowFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsurancePolicyFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.insurance.InsuranceActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.CusrometPropertyFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.property.PropertyActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +54,8 @@ public class CusrometDetailsActivity extends BaseActivity {
     private CusrometInsurancePolicyFragment insurancePolicyFragment;
     private CusrometCarFragment carFragment;
     private CusrometCompanyFragment companyFragment;
+    private CusrometFileFragment fileFragment;
+    private CusrometFolloFragment folloFragment;
 
     private CusrometListEntity entity;
 
@@ -90,6 +97,14 @@ public class CusrometDetailsActivity extends BaseActivity {
         companyFragment.setArguments(bundle);
         fragments.add(companyFragment);
 
+        fileFragment = new CusrometFileFragment();
+        fileFragment.setArguments(bundle);
+        fragments.add(fileFragment);
+
+        folloFragment = new CusrometFolloFragment();
+        folloFragment.setArguments(bundle);
+        fragments.add(folloFragment);
+
         CusrometDetailsTabLayout.initTabLayout(getSupportFragmentManager(), fragments, tabNames);
     }
 
@@ -109,14 +124,18 @@ public class CusrometDetailsActivity extends BaseActivity {
                     ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
                 } else if (currentItem == 1) {/*负债*/
                     DebtoActivity.startIntentToEdit(this, debtoFragment.getEntity());
-                }else if (currentItem==2){/*房产*/
+                } else if (currentItem == 2) {/*房产*/
+                    PropertyActivity.startIntentToEdit(this, propertyFragment.getEntity());
+                } else if (currentItem == 3) {/*保单*/
+                    InsuranceActivity.startIntentToEdit(this, insurancePolicyFragment.getEntity());
+                } else if (currentItem == 4) {/*汽车*/
+                    Bundle bundle = new Bundle();
+                    CarActivity.startIntentToEdit(this, carFragment.getEntity());
+                } else if (currentItem == 5) {/*公司*/
+                    CompanyActivity.startIntentToEdit(this, companyFragment.getEntity());
+                } else if (currentItem == 6) {/*文件资料*/
 
-                }else if (currentItem==3){/*保单*/
-
-                }else if (currentItem==4){/*汽车*/
-                Bundle bundle=new Bundle();
-                    CarActivity.startIntentToEdit(this,carFragment.getEntity());
-                }else if (currentItem==5){/*公司*/
+                } else if (currentItem == 7) {/*跟进明细*/
 
                 }
                 break;

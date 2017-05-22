@@ -7,7 +7,7 @@
     <include layout="@layout/item_add_details_layout" />
 
     <com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView
-        android:id="@+id/Edbto_recyclerView"
+        android:id="@+id/Property_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
