@@ -3,6 +3,7 @@ package com.xiaomai.telemarket.module.home.setting;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.BaseFragment;
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
  * @description 编辑设置界面
  * @createtime 06/05/2017 6:54 PM
  **/
-public class SettingEditActivity extends BaseActivity {
+public class SettingEditActivity extends BaseActivity implements TitleLayout.OnNaviBarClickListener{
 
     @BindView(R.id.layout_title)
     TitleLayout layoutTitle;
@@ -27,12 +28,13 @@ public class SettingEditActivity extends BaseActivity {
     public static final String EXTRA_TAG = "set_tag";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_edit_layout);
         ButterKnife.bind(this);
+        setToolbarVisibility(View.GONE);
         layoutTitle.setOnNaviBarClickListener(this);
-        mFragmentManager.beginTransaction().add(R.id.layout_set_content, createFragment(), null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.layout_set_content, createFragment(), null).commit();
     }
 
     private BaseFragment createFragment() {
@@ -48,5 +50,20 @@ public class SettingEditActivity extends BaseActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void onBackClick() {
+        finish();
+    }
+
+    @Override
+    public void onAddClick() {
+
+    }
+
+    @Override
+    public void onFilterClick() {
+
     }
 }

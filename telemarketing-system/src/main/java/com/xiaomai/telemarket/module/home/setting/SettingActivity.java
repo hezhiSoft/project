@@ -37,6 +37,7 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_menu);
         ButterKnife.bind(this);
+        setToolbarVisibility(View.GONE);
         initEvent();
     }
 
@@ -64,7 +65,7 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
 
     @Override
     public void onBackClick() {
-
+        finish();
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.xiaomai.telemarket.utils;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import com.jinggan.library.utils.IFileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,8 +23,6 @@ public class PhoneRecordUtil {
     private MediaRecorder mrecorder;
     private boolean started = false; //录音机是否已经启动
     private boolean isCommingNumber = false;//是否是来电
-
-    public static final String RECORD_FILE_PATH = "ShenYiDai";
 
     private static PhoneRecordUtil INSTANCE;
 
@@ -43,19 +43,13 @@ public class PhoneRecordUtil {
         started = true;
         mrecorder = new MediaRecorder();
 
-        File recordPath = new File(FileUtils.getExternalStoragePath() + File.separator + RECORD_FILE_PATH);
-        if (!recordPath.exists()) {
-            recordPath.mkdirs();
-            Log.d("recorder", "创建目录");
-        }
-
         String callDir = "呼出";
         if (isCommingNumber) {
             callDir = "呼入";
         }
         String fileName = callDir + "-" + phoneNumber + "-"+ new SimpleDateFormat("yy-MM-dd_HH-mm-ss")
                 .format(new Date(System.currentTimeMillis())) + ".mp3";//实际是3gp
-        File recordName = new File(recordPath, fileName);
+        File recordName = new File(IFileUtils.getRecordDirectory(), fileName);
 
         try {
             recordName.createNewFile();

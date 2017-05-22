@@ -25,6 +25,7 @@
     <string name="common_back">返回</string>
 
     <!--setting-->
+    <string name="settings">设置</string>
     <string name="set_user_state">状态管理</string>
     <string name="set_dialing_source">拨号名单源</string>
     <string name="set_exit">退出当前账号</string>
