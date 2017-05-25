@@ -124,7 +124,11 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         debtoListsCall.enqueue(new RetrofitCallback<Responese<List<DebtoEntity>>>() {
             @Override
             public void onSuccess(Responese<List<DebtoEntity>> data) {
-                callback.onSuccess(data.getData());
+                if (data.getData()!=null&&data.getData().size() > 0) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
+                }
             }
 
             @Override
@@ -171,7 +175,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         propertyListsCall.enqueue(new RetrofitCallback<Responese<List<PropertyEntity>>>() {
             @Override
             public void onSuccess(Responese<List<PropertyEntity>> data) {
-                if (data.getData().size() > 0) {
+                if (data.getData()!=null&&data.getData().size() > 0) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
@@ -223,7 +227,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         companyListsCall.enqueue(new RetrofitCallback<Responese<List<CompanyEntity>>>() {
             @Override
             public void onSuccess(Responese<List<CompanyEntity>> data) {
-                if (data.getData().size() > 0) {
+                if (data.getData()!=null&&data.getData().size() > 0) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
@@ -271,7 +275,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         insuranceListsCall.enqueue(new RetrofitCallback<Responese<List<InsuranceEntity>>>() {
             @Override
             public void onSuccess(Responese<List<InsuranceEntity>> data) {
-                if (data.getData().size() > 0) {
+                if (data.getData()!=null&&data.getData().size() > 0) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
@@ -319,7 +323,11 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         carListsCall.enqueue(new RetrofitCallback<Responese<List<CarEntity>>>() {
             @Override
             public void onSuccess(Responese<List<CarEntity>> data) {
-                callback.onSuccess(data.getData());
+                if (data.getData()!=null&&data.getData().size() > 0) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
+                }
             }
 
             @Override
@@ -350,8 +358,44 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/22 22:37
      */
-    public void queryCusrometFileLists(String cusrometId, RemetoRepoCallback<List<FileEntity>> callback) {
+    public void queryCusrometFileLists(String cusrometId, final RemetoRepoCallback<List<FileEntity>> callback) {
+        RequestBody body = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("customerid", cusrometId);
+            body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        fileListsCall=XiaomaiRetrofitManager.getAPIService().queryCusrometFileLists(body);
+        fileListsCall.enqueue(new RetrofitCallback<Responese<List<FileEntity>>>() {
+            @Override
+            public void onSuccess(Responese<List<FileEntity>> data) {
+                if (data.getData()!=null&&data.getData().size()>0){
+                    callback.onSuccess(data.getData());
+                }
+            }
 
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code,msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
     }
 
     /**
