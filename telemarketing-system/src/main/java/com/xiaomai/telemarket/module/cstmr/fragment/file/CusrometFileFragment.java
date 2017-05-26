@@ -11,9 +11,8 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
-import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
-import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoAdapter;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
 
 import java.util.List;
@@ -30,7 +29,7 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometFileFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<List<DebtoEntity>>, CusrometDebtoAdapter.OnClickItemLisenter {
+public class CusrometFileFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<List<FileEntity>>, CusrometFileAdapter.OnClickItemLisenter {
 
     @BindView(R.id.Details_number_TextView)
     TextView DetailsNumberTextView;
@@ -38,19 +37,19 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     PullToRefreshRecyclerView EdbtoRecyclerView;
     Unbinder unbinder;
 
-    private CusrometDebtoAdapter adapter;
+    private CusrometFileAdapter adapter;
     private CusrometRemoteRepo remoteRepo;
 
     private String cusrometId;
 
-    private DebtoEntity debtoEntity;
+    private FileEntity debtoEntity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
-        adapter = new CusrometDebtoAdapter(getContext());
+        adapter = new CusrometFileAdapter(getContext());
         adapter.setListenter(this);
     }
 
@@ -79,7 +78,7 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
 
     @Override
     public void onDownRefresh() {
-        remoteRepo.queryCusrometDebtoLists(cusrometId, this);
+        remoteRepo.queryCusrometFileLists(cusrometId, this);
     }
 
     @Override
@@ -93,7 +92,7 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     }
 
     @Override
-    public void onSuccess(List<DebtoEntity> data) {
+    public void onSuccess(List<FileEntity> data) {
         if (data != null && data.size() > 0) {
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条文件资料");
@@ -125,11 +124,11 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     }
 
     @Override
-    public void onSeleceItemPosition(DebtoEntity entity) {
+    public void onSeleceItemPosition(FileEntity entity) {
         this.debtoEntity = entity;
     }
 
-    public DebtoEntity getEntity() {
+    public FileEntity getEntity() {
         return debtoEntity;
     }
 }

@@ -9,4 +9,6 @@
     <string name="dialog_defalut_confirm_text">确定</string>
     <string name="dialog_defalut_cancel_text">取消</string>
     <string name="loading_defalut_dialog_text">加载中&#8230;</string>
+
+    <string name="title_select_pictrue">图片选择</string>
 </resources>

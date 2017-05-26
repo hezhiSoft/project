@@ -152,7 +152,7 @@ public interface APIService {
      * author: hezhiWu
      * created at 2017/5/22 22:35
      */
-    @POST
+    @POST("api/file/get")
     Call<Responese<List<FileEntity>>> queryCusrometFileLists(@Body RequestBody body);
 
     /**
