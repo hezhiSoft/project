@@ -14,6 +14,7 @@ import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +77,7 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
         @BindView(R.id.Details_layout)
         RelativeLayout DetailsLayout;
         @BindView(R.id.Details_content_layout)
-        LinearLayout DetailsContentLayout;
+        RelativeLayout DetailsContentLayout;
         @BindView(R.id.Details_line)
         View lineView;
         @BindView(R.id.Details_expand_iamgeView)
@@ -112,11 +113,11 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
         FormWriteTopTitleView PropertyRemainingMortgage=ButterKnife.findById(view,R.id.Property_RemainingMortgage);
 
         /*土地用途*/
-        PropertyLandUse.setContentText(entity.getLandUse()+"").setArrowDropVisibility(View.GONE);
+        PropertyLandUse.setContentText(DictionaryHelper.ParseLandUse(entity.getLandUse()+"")).setArrowDropVisibility(View.GONE);
         /*面积*/
         PropertyAreaM.setContentText(entity.getAreaM()+"").setItemEnabled(false);
         /*区域*/
-        PropertyArea.setContentText(entity.getArea()).setArrowDropVisibility(View.GONE);
+        PropertyArea.setContentText(DictionaryHelper.ParseSZAREA(entity.getArea())).setArrowDropVisibility(View.GONE);
         /*竣工日期*/
         PropertyCompletionDate.setContentText(entity.getCompletionDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
         /*产权年限*/
@@ -132,7 +133,7 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
         /*是否按揭*/
         PropertyIsMortgage.setContentText(entity.getIsMortgage()+"").setArrowDropVisibility(View.GONE);
         /*按揭银行*/
-        PropertyMortgageBank.setContentText(entity.getMortgageBank()).setArrowDropVisibility(View.GONE);
+        PropertyMortgageBank.setContentText(DictionaryHelper.ParseBank(entity.getMortgageBank())).setArrowDropVisibility(View.GONE);
         /*每月还款*/
         PropertyMonthlyPaymentLoan.setContentText(entity.getMonthlyPaymentLoan()+"").setItemEnabled(false);
         /*按揭期数*/

@@ -42,7 +42,11 @@ public class PropertyActivity extends BaseActivity {
         setToolbarTitle("房产明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.Car_Content_Layout, new PropertyEditFragment());
+
+        PropertyEditFragment fragment=new PropertyEditFragment();
+        fragment.setArguments(getIntent().getExtras());
+
+        transaction.replace(R.id.Car_Content_Layout, fragment);
         transaction.commit();
     }
 

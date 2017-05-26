@@ -14,11 +14,14 @@ import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 负债列表适配器
+ * <p>
  * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
  * created at 2017/5/20 13:31
@@ -41,7 +44,7 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHodler viewHodler = (ViewHodler) holder;
-        viewHodler.DetailsTileTextView.setText("负债明细 "+(position+1));
+        viewHodler.DetailsTileTextView.setText("负债明细 " + (position + 1));
         viewHodler.DetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,14 +52,14 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
                     viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_more_black_24dp);
                     viewHodler.DetailsContentLayout.setVisibility(View.GONE);
                     viewHodler.lineView.setVisibility(View.VISIBLE);
-                    if (listenter!=null){
+                    if (listenter != null) {
                         listenter.onSeleceItemPosition(null);
                     }
                 } else {
                     viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_less_black_24dp);
                     viewHodler.DetailsContentLayout.setVisibility(View.VISIBLE);
                     viewHodler.lineView.setVisibility(View.GONE);
-                    if (listenter!=null){
+                    if (listenter != null) {
                         listenter.onSeleceItemPosition(mLists.get(position));
                     }
                 }
@@ -76,7 +79,7 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
         @BindView(R.id.Details_layout)
         RelativeLayout DetailsLayout;
         @BindView(R.id.Details_content_layout)
-        LinearLayout DetailsContentLayout;
+        RelativeLayout DetailsContentLayout;
         @BindView(R.id.Details_line)
         View lineView;
         @BindView(R.id.Details_expand_iamgeView)
@@ -106,13 +109,13 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
         FormSelectTopTitleView loanProduct = ButterKnife.findById(rootView, R.id.Debto_loanProduct);
         FormWriteTopTitleView Remark = ButterKnife.findById(rootView, R.id.Debto_Remark);
         /*贷款类型*/
-        TypeDept.setContentText(entity.getTypeDept() + "").setArrowDropVisibility(View.GONE);
+        TypeDept.setContentText(DictionaryHelper.ParseDept(entity.getTypeDept()+"")).setArrowDropVisibility(View.GONE);
         /*负债金额*/
         LoanAmount.setContentText(entity.getLoanAmount() + "").setItemEnabled(false);
         /*贷款日期*/
         LoanDate.setContentText(entity.getLoanDate().replaceAll("T", " ")).setArrowDropVisibility(View.GONE);
         /*机构/银行*/
-        LoanBank.setContentText(entity.getLoanBank() + "").setArrowDropVisibility(View.GONE);
+        LoanBank.setContentText(DictionaryHelper.ParseBank(entity.getLoanBank())).setArrowDropVisibility(View.GONE);
         /*每月还款*/
         MonthlyPayments.setContentText(entity.getMonthlyPayments() + "").setItemEnabled(false);
         /*剩余还款*/
@@ -120,7 +123,7 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
         /*贷款期数*/
         LoanMonth.setContentText(entity.getLoanMonth() + "").setItemEnabled(false);
         /*还款方式*/
-        RepaymentMode.setContentText(entity.getRepaymentMode() + "").setArrowDropVisibility(View.GONE);
+        RepaymentMode.setContentText(DictionaryHelper.ParseRepaymentMode(entity.getRepaymentMode()+"")).setArrowDropVisibility(View.GONE);
         /*延期月数*/
         DelayDays.setContentText(entity.getDelayDays() + "").setItemEnabled(false);
         /*延期金额*/
@@ -132,7 +135,6 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
         loanProduct.setContentText("无").setArrowDropVisibility(View.GONE);
         /*备注*/
         Remark.setContentText(entity.getRemark()).setItemEnabled(false);
-
     }
 
 
@@ -140,7 +142,7 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
         this.listenter = listenter;
     }
 
-    public interface OnClickItemLisenter{
+    public interface OnClickItemLisenter {
         void onSeleceItemPosition(DebtoEntity entity);
     }
 }

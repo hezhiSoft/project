@@ -17,7 +17,9 @@ import com.xiaomai.telemarket.module.cstmr.fragment.company.CusrometCompanyFragm
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.file.CusrometFileFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.file.FileActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.follow.CusrometFolloFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.follow.FollowActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoEditActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoShowFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsurancePolicyFragment;
@@ -120,23 +122,50 @@ public class CusrometDetailsActivity extends BaseActivity {
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("entiy", entity);
+                    bundle.putSerializable("entity", entity);
                     ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
                 } else if (currentItem == 1) {/*负债*/
+                    if (debtoFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
                     DebtoActivity.startIntentToEdit(this, debtoFragment.getEntity());
                 } else if (currentItem == 2) {/*房产*/
+                    if (propertyFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
                     PropertyActivity.startIntentToEdit(this, propertyFragment.getEntity());
                 } else if (currentItem == 3) {/*保单*/
+                    if (insurancePolicyFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
                     InsuranceActivity.startIntentToEdit(this, insurancePolicyFragment.getEntity());
                 } else if (currentItem == 4) {/*汽车*/
-                    Bundle bundle = new Bundle();
+                    if (carFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
                     CarActivity.startIntentToEdit(this, carFragment.getEntity());
                 } else if (currentItem == 5) {/*公司*/
+                    if (companyFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
                     CompanyActivity.startIntentToEdit(this, companyFragment.getEntity());
                 } else if (currentItem == 6) {/*文件资料*/
-
+                    if (fileFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
+                    FileActivity.startIntentToEdit(this, fileFragment.getEntity());
                 } else if (currentItem == 7) {/*跟进明细*/
-
+                    if (folloFragment.getEntity() == null) {
+                        showToast("选择编辑明细");
+                        return;
+                    }
+                    FollowActivity.startIntentToEdit(this, folloFragment.getEntity());
                 }
                 break;
         }

@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <com.jinggan.library.ui.view.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_CustomerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvItemName="客户名称" />
+
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_CustomerTel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvItemName="客户电话" />
+
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:id="@+id/Info_IsSZHukou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svItemName="是否深户" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:id="@+id/Info_Sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svItemName="性别" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:id="@+id/Info_MaritalStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:svItemName="婚姻状态" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_Payroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvInputType="number"
+                app:wvItemName="代发工资" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_AccumulationFundAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvItemName="公积金基数" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_SocialSecurityAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvItemName="公积金基数" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_Remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:wvItemName="备注" />
+
+        </LinearLayout>
+    </com.jinggan.library.ui.view.OverScrollView>
 </LinearLayout>

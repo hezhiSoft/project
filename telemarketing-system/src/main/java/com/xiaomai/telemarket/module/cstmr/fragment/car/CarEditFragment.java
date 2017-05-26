@@ -1,5 +1,10 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.car;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
+
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
@@ -9,4 +14,17 @@ package com.xiaomai.telemarket.module.cstmr.fragment.car;
  */
 public class CarEditFragment extends CarBaseFragment{
 
+    private CarEntity entity;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        entity=(CarEntity) getArguments().getSerializable("entity");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initUI(entity);
+    }
 }

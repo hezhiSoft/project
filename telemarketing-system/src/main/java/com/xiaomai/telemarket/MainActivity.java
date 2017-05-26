@@ -7,6 +7,7 @@ import android.view.View;
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragment;
 import com.xiaomai.telemarket.module.home.HomeFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         setSwipeEnabled(false);
 
         initBottomNavigationBar();
+        DictionaryHelper.requestDictionary();
     }
 
     private void initBottomNavigationBar() {

@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jinggan.library.ui.widget.FormSelectTopTitleView;
+import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
@@ -75,7 +77,7 @@ public class CusrometCompanyAdapter extends BaseRecyclerViewAdapter<CompanyEntit
         @BindView(R.id.Details_layout)
         RelativeLayout DetailsLayout;
         @BindView(R.id.Details_content_layout)
-        LinearLayout DetailsContentLayout;
+        RelativeLayout DetailsContentLayout;
         @BindView(R.id.Details_line)
         View lineView;
         @BindView(R.id.Details_expand_iamgeView)
@@ -87,8 +89,40 @@ public class CusrometCompanyAdapter extends BaseRecyclerViewAdapter<CompanyEntit
         }
     }
 
-    private void setDetailsData(View view,CompanyEntity entity){
-
+    private void setDetailsData(View view,CompanyEntity entity) {
+        if (entity == null) {
+            return;
+        }
+        FormWriteTopTitleView CompanyName = ButterKnife.findById(view, R.id.Company_CompanyName);
+        FormWriteTopTitleView Industry = ButterKnife.findById(view, R.id.Company_Industry);
+        FormSelectTopTitleView RegisterDate=ButterKnife.findById(view,R.id.Company_RegisterDate);
+        FormWriteTopTitleView BusinessScope=ButterKnife.findById(view,R.id.Company_BusinessScope);
+        FormWriteTopTitleView SharesProportion=ButterKnife.findById(view,R.id.Company_SharesProportion);
+        FormWriteTopTitleView AccountWater=ButterKnife.findById(view,R.id.Company_AccountWater);
+        FormWriteTopTitleView LocationRental=ButterKnife.findById(view,R.id.Company_LocationRental);
+        FormSelectTopTitleView IsRentTransfer=ButterKnife.findById(view,R.id.Company_IsRentTransfer);
+        FormWriteTopTitleView AmountDebt=ButterKnife.findById(view,R.id.Company_AmountDebt);
+        FormWriteTopTitleView Remark=ButterKnife.findById(view,R.id.Company_Remark);
+        /*公司名称*/
+        CompanyName.setContentText(entity.getCompanyName()).setItemEnabled(false);
+        /*所属行业*/
+        Industry.setContentText(entity.getIndustry()).setItemEnabled(false);
+        /*注册日期*/
+        RegisterDate.setContentText(entity.getRegisterDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
+        /*经营范围*/
+        BusinessScope.setContentText(entity.getBusinessScope()).setItemEnabled(false);
+        /*占股比例*/
+        SharesProportion.setContentText(entity.getSharesProportion()+"").setItemEnabled(false);
+        /*账户流水*/
+        AccountWater.setContentText(entity.getAccountWater()+"").setItemEnabled(false);
+        /*租金*/
+        LocationRental.setContentText(entity.getLocationRental()+"").setItemEnabled(false);
+        /*租金是否转账*/
+        IsRentTransfer.setContentText(entity.getIsRentTransfer()==0?"否":"是").setArrowDropVisibility(View.GONE);
+        /*负债金额*/
+        AmountDebt.setContentText(entity.getAmountDebt()+"").setItemEnabled(false);
+        /*备注*/
+        Remark.setContentText(entity.getRemark()).setItemEnabled(false);
     }
 
     public void setListenter(OnClickItemLisenter listenter) {

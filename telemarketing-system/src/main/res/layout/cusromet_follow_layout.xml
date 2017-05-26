@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginLeft="10dp" />
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Follow_FollowType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="跟进方式"/>
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Follow_FollowDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="跟进时间"/>
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Follow_InterestedStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="意向状态"/>
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Follow_LoanType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="意向贷款类型"/>
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Follow_Amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="意向贷款金额(万)"/>
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Follow_NextFollowType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="下次跟进方式"/>
+
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/Follow_NextFollowDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:svItemName="下次跟进日期"/>
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Follow_NextFollowTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="下次跟进时间点"/>
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Follow_Remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="备注"/>
+
+    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Follow_FollowPerson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:wvItemName="跟进人"/>
+
+</LinearLayout>

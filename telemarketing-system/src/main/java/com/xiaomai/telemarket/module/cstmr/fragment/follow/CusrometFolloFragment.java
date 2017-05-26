@@ -48,6 +48,12 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter = new CusrometFollowAdapter(getContext());
+        adapter.setListenter(new CusrometFollowAdapter.OnClickItemLisenter() {
+            @Override
+            public void onSeleceItemPosition(FollowEntity entity) {
+                debtoEntity=entity;
+            }
+        });
     }
 
     @Nullable
@@ -84,7 +90,7 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
 
     @OnClick(R.id.Details_add_Button)
     public void onClick() {
-        DebtoActivity.startIntentToAdd(getActivity());
+        FollowActivity.startIntentToAdd(getActivity());
     }
 
     @Override

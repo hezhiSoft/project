@@ -62,7 +62,7 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
             }
         });
         View carView = inflater.inflate(R.layout.cusromet_car_layout, null);
-        setDetailsData(carView,mLists.get(position));
+        setDetailsData(carView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(carView);
     }
 
@@ -76,7 +76,7 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
         @BindView(R.id.Details_layout)
         RelativeLayout DetailsLayout;
         @BindView(R.id.Details_content_layout)
-        LinearLayout DetailsContentLayout;
+        RelativeLayout DetailsContentLayout;
         @BindView(R.id.Details_line)
         View DetailsLine;
 
@@ -86,36 +86,37 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
         }
     }
 
-    private void setDetailsData(View view,CarEntity entity){
-        if (entity==null){
+    private void setDetailsData(View view, CarEntity entity) {
+        if (entity == null) {
             return;
         }
-        FormWriteTopTitleView NakedCarPrice=ButterKnife.findById(view,R.id.Car_NakedCarPrice);
-        FormSelectTopTitleView BuyDate=ButterKnife.findById(view,R.id.Car_BuyDate);
-        FormWriteTopTitleView Mileage=ButterKnife.findById(view,R.id.Car_Mileage);
-        FormWriteTopTitleView Brand=ButterKnife.findById(view,R.id.Car_Barnd);
-        FormWriteTopTitleView CarModel=ButterKnife.findById(view,R.id.Car_CarModel);
-        FormWriteTopTitleView IsMortgage=ButterKnife.findById(view,R.id.Car_IsMortgage);
-        FormWriteTopTitleView IsRegistrationCertificate=ButterKnife.findById(view,R.id.Car_IsRegistrationCertificate);
-        FormWriteTopTitleView Remark=ButterKnife.findById(view,R.id.Car_Remark);
+        FormWriteTopTitleView NakedCarPrice = ButterKnife.findById(view, R.id.Car_NakedCarPrice);
+        FormSelectTopTitleView BuyDate = ButterKnife.findById(view, R.id.Car_BuyDate);
+        FormWriteTopTitleView Mileage = ButterKnife.findById(view, R.id.Car_Mileage);
+        FormWriteTopTitleView Brand = ButterKnife.findById(view, R.id.Car_Barnd);
+        FormWriteTopTitleView CarModel = ButterKnife.findById(view, R.id.Car_CarModel);
+        FormSelectTopTitleView IsMortgage = ButterKnife.findById(view, R.id.Car_IsMortgage);
+        FormSelectTopTitleView IsRegistrationCertificate = ButterKnife.findById(view, R.id.Car_IsRegistrationCertificate);
+        FormWriteTopTitleView Remark = ButterKnife.findById(view, R.id.Car_Remark);
         /*裸车价*/
-        NakedCarPrice.setContentText(entity.getNakedCarPrice()+"").setItemEnabled(false);
+        NakedCarPrice.setContentText(entity.getNakedCarPrice() + "").setItemEnabled(false);
         /*购车日期*/
-        BuyDate.setContentText(entity.getBuyDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
+        BuyDate.setContentText(entity.getBuyDate().replaceAll("T", " ")).setArrowDropVisibility(View.GONE);
         /*行驶里程*/
-        Mileage.setContentText(entity.getMileage()+"").setItemEnabled(false);
+        Mileage.setContentText(entity.getMileage() + "").setItemEnabled(false);
         /*品牌*/
         Brand.setContentText(entity.getBrand()).setItemEnabled(false);
         /*车型*/
         CarModel.setContentText(entity.getCarModel()).setItemEnabled(false);
         /*是否按揭*/
-        IsMortgage.setContentText(entity.getIsMortgage()+"").setItemEnabled(false);
+        IsMortgage.setContentText(entity.getIsMortgage() == 0 ? "否" : "是").setArrowDropVisibility(View.GONE);
         /*有登记证*/
-        IsRegistrationCertificate.setContentText(entity.getIsRegistrationCertificate()+"").setItemEnabled(false);
+        IsRegistrationCertificate.setContentText(entity.getIsRegistrationCertificate() == 0 ? "否" : "是").setArrowDropVisibility(View.GONE);
         /*备注*/
         Remark.setContentText(entity.getRemark()).setItemEnabled(false);
 
     }
+
     public void setListenter(OnClickItemLisenter listenter) {
         this.listenter = listenter;
     }

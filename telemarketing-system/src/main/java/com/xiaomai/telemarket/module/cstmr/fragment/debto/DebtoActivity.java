@@ -1,15 +1,17 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.debto;
 
 import android.app.Activity;
-import android.icu.util.IslamicCalendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -36,11 +38,21 @@ public class DebtoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onClickToolbarRightLayout() {
+        super.onClickToolbarRightLayout();
+        EventBusValues busValues=new EventBusValues();
+        busValues.setWhat(0x1001);
+        EventBus.getDefault().post(busValues);
+    }
+
     private void switchToEditDebtoFragment() {
         setToolbarTitle("负债明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.Debto_Content_Layout, new DebtoEditFragment());
+        DebtoEditFragment debtoEditFragment = new DebtoEditFragment();
+        debtoEditFragment.setArguments(getIntent().getExtras());
+        transaction.replace(R.id.Debto_Content_Layout, debtoEditFragment);
         transaction.commit();
     }
 

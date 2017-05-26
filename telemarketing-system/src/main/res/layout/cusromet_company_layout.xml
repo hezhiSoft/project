@@ -42,15 +42,16 @@
         app:wvItemName="账户流水(万)"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/Company_LocationRental"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvItemName="租金"/>
 
-    <com.jinggan.library.ui.widget.FormWriteTopTitleView
+    <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Company_IsRentTransfer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="租金是否转账"/>
+        app:svItemName="租金是否转账"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Company_AmountDebt"

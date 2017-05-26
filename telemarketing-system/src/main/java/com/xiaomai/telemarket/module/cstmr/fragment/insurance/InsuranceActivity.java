@@ -39,7 +39,11 @@ public class InsuranceActivity extends BaseActivity {
         setToolbarTitle("保单明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.Insurance_Content_Layout, new InsuranceEditFragment());
+
+        InsuranceEditFragment fragment=new InsuranceEditFragment();
+        fragment.setArguments(getIntent().getExtras());
+
+        transaction.replace(R.id.Insurance_Content_Layout, fragment);
         transaction.commit();
     }
 

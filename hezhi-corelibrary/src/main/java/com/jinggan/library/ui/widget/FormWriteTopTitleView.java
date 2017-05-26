@@ -126,6 +126,10 @@ public class FormWriteTopTitleView extends LinearLayout {
         return this;
     }
 
+    public String getContentText(){
+        return mContentEditText.getText().toString().trim();
+    }
+
     /**
      *设置Enabled
      * 

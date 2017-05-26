@@ -5,11 +5,33 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
+import com.jinggan.library.ui.date.DatePickDialog;
+import com.jinggan.library.ui.date.OnSureLisener;
+import com.jinggan.library.ui.date.bean.DateBean;
+import com.jinggan.library.ui.date.bean.DateType;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,14 +74,169 @@ public class DebtoBaseFragment extends BaseFragment {
     FormWriteTopTitleView DebtoRemark;
     Unbinder unbinder;
 
+    private DictionaryEntity TypeDeptDic,BankDic,RepaymentModeDic;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_debto, null);
         unbinder = ButterKnife.bind(this, rootView);
+        setListener();
         return rootView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void setListener() {
+        /*负债类型*/
+        DebtoTypeDept.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+            @Override
+            public void onClick(TextView textView) {
+                List<DictionaryEntity> list = DictionaryHelper.getDeptData();
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
+                dictionaryDialog.setItemData(list)
+                        .setSelectContent(DebtoTypeDept.getContentText())
+                        .setClickListener(new DictionaryDialog.OnClickItemListener() {
+                            @Override
+                            public void onClickItem(DictionaryEntity entity) {
+                                if (entity != null) {
+                                    TypeDeptDic=entity;
+                                    DebtoTypeDept.setContentText(entity.getName());
+                                }
+                            }
+                        });
+                dictionaryDialog.show(getFragmentManager(), getClass().getSimpleName());
+            }
+        });
+        /*贷款日期*/
+        DebtoLoanDate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+            @Override
+            public void onClick(TextView textView) {
+                DatePickDialog dialog = new DatePickDialog(getContext());
+                dialog.setTitle("选择日期");
+                dialog.setType(DateType.TYPE_YMD);
+                dialog.setOnSureLisener(new OnSureLisener() {
+                    @Override
+                    public void onSure(DateBean date) {
+                        DebtoLoanDate.setContentText(date.getYear() + "-" + date.getMoth() + "-" + date.getDay());
+                    }
+                });
+                dialog.show();
+            }
+        });
+        /*机构银行*/
+        DebtoLoanBank.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+            @Override
+            public void onClick(TextView textView) {
+                List<DictionaryEntity> list = DictionaryHelper.getBankData();
+                if (list == null || list.size() <= 0) {
+                    showToast("数据为空");
+                    return;
+                }
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
+                dictionaryDialog.setTitle("选择机构银行")
+                        .setSelectContent(DebtoLoanBank.getContentText())
+                        .setItemData(list)
+                        .setClickListener(new DictionaryDialog.OnClickItemListener() {
+                            @Override
+                            public void onClickItem(DictionaryEntity entity) {
+                                if (entity != null) {
+                                    BankDic=entity;
+                                    DebtoLoanBank.setContentText(entity.getName());
+                                }
+                            }
+                        }).show(getFragmentManager(), getClass().getSimpleName());
+            }
+        });
+        /*还款方式*/
+        DebtoRepaymentMode.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+            @Override
+            public void onClick(TextView textView) {
+                List<DictionaryEntity> list = DictionaryHelper.getRepaymentMode();
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
+                dictionaryDialog.setSelectContent(DebtoRepaymentMode.getContentText())
+                        .setItemData(list)
+                        .setClickListener(new DictionaryDialog.OnClickItemListener() {
+                            @Override
+                            public void onClickItem(DictionaryEntity entity) {
+                                if (entity != null) {
+                                    RepaymentModeDic=entity;
+                                    DebtoRepaymentMode.setContentText(entity.getName());
+                                }
+                            }
+                        });
+                dictionaryDialog.show(getFragmentManager(), getClass().getSimpleName());
+            }
+        });
+    }
+
+    protected void initUI(DebtoEntity entity) {
+        if (entity == null) {
+            return;
+        }
+        DebtoTypeDept.setContentText(DictionaryHelper.ParseDept(entity.getTypeDept() + ""));
+        DebtoLoanAmount.setContentText(entity.getLoanAmount() + "");
+        DebtoLoanDate.setContentText(entity.getLoanDate().replace("T", " "));
+        DebtoLoanBank.setContentText(DictionaryHelper.ParseBank(entity.getLoanBank()));
+        DebtoMonthlyPayments.setContentText(entity.getMonthlyPayments() + "");
+        DebtoRemainingLoanAmount.setContentText(entity.getRemainingLoanAmount() + "");
+        DebtoLoanMonth.setContentText(entity.getLoanMonth() + "");
+        DebtoRepaymentMode.setContentText(DictionaryHelper.ParseRepaymentMode(entity.getLoanMonth() + ""));
+        DebtoDelayDays.setContentText(entity.getDelayDays() + "");
+        DebtoDelayAccount.setContentText(entity.getDelayAccount() + "");
+        DebtoDelayNum.setContentText(entity.getDelayNum() + "");
+        DebtoLoanProduct.setContentText("无");
+        DebtoRemark.setContentText(entity.getRemark());
+    }
+
+    /**
+     * 获取实体对象
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/26 17:26
+     */
+    protected DebtoEntity getDebtoEntity() {
+        DebtoEntity entity = new DebtoEntity();
+        entity.setTypeDept(TypeDeptDic.getCode());
+        entity.setLoanAmount(IStringUtils.toInt(DebtoLoanAmount.getContentText()));
+        entity.setLoanDate(DebtoLoanDate.getContentText());
+        entity.setLoanBank(BankDic.getCode());
+        entity.setMonthlyPayments(IStringUtils.toInt(DebtoMonthlyPayments.getContentText()));
+        entity.setLoanMonth(IStringUtils.toInt(DebtoLoanMonth.getContentText()));
+        entity.setRepaymentMode(RepaymentModeDic.getCode());
+        entity.setDelayDays(IStringUtils.toInt(DebtoDelayDays.getContentText()));
+        entity.setDelayAccount(IStringUtils.toInt(DebtoDelayAccount.getContentText()));
+        entity.setDelayNum(IStringUtils.toInt(DebtoDelayNum.getContentText()));
+//        entity.setLo
+        entity.setRemark(DebtoRemark.getContentText());
+        return entity;
+    }
+
+    @Subscribe
+    public void onEventBusSubmit(EventBusValues values){
+        if (values.getWhat()==0x1001){
+            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSubmit();
+                }
+            });
+        }
+    }
+
+    public void onSubmit(){
+
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -9,6 +9,7 @@ import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
@@ -22,6 +23,8 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -40,6 +43,8 @@ public class CusrometRemoteRepo implements BaseDataSourse {
     private Call<Responese<List<CarEntity>>> carListsCall;
     private Call<Responese<List<FileEntity>>> fileListsCall;
     private Call<Responese<List<FollowEntity>>> followListsCall;
+
+    private Call<Responese<List<DictionaryEntity>>> dictionaryCall;
 
     private static CusrometRemoteRepo instance;
 
@@ -124,11 +129,8 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         debtoListsCall.enqueue(new RetrofitCallback<Responese<List<DebtoEntity>>>() {
             @Override
             public void onSuccess(Responese<List<DebtoEntity>> data) {
-                if (data.getData()!=null&&data.getData().size() > 0) {
                     callback.onSuccess(data.getData());
-                } else {
-                    callback.onFailure(data.getCode(), data.getMsg());
-                }
+
             }
 
             @Override
@@ -175,11 +177,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         propertyListsCall.enqueue(new RetrofitCallback<Responese<List<PropertyEntity>>>() {
             @Override
             public void onSuccess(Responese<List<PropertyEntity>> data) {
-                if (data.getData()!=null&&data.getData().size() > 0) {
                     callback.onSuccess(data.getData());
-                } else {
-                    callback.onFailure(data.getCode(), data.getMsg());
-                }
             }
 
             @Override
@@ -227,11 +225,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         companyListsCall.enqueue(new RetrofitCallback<Responese<List<CompanyEntity>>>() {
             @Override
             public void onSuccess(Responese<List<CompanyEntity>> data) {
-                if (data.getData()!=null&&data.getData().size() > 0) {
-                    callback.onSuccess(data.getData());
-                } else {
-                    callback.onFailure(data.getCode(), data.getMsg());
-                }
+                callback.onSuccess(data.getData());
             }
 
             @Override
@@ -275,11 +269,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         insuranceListsCall.enqueue(new RetrofitCallback<Responese<List<InsuranceEntity>>>() {
             @Override
             public void onSuccess(Responese<List<InsuranceEntity>> data) {
-                if (data.getData()!=null&&data.getData().size() > 0) {
-                    callback.onSuccess(data.getData());
-                } else {
-                    callback.onFailure(data.getCode(), data.getMsg());
-                }
+                callback.onSuccess(data.getData());
             }
 
             @Override
@@ -323,11 +313,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         carListsCall.enqueue(new RetrofitCallback<Responese<List<CarEntity>>>() {
             @Override
             public void onSuccess(Responese<List<CarEntity>> data) {
-                if (data.getData()!=null&&data.getData().size() > 0) {
-                    callback.onSuccess(data.getData());
-                } else {
-                    callback.onFailure(data.getCode(), data.getMsg());
-                }
+                callback.onSuccess(data.getData());
             }
 
             @Override
@@ -371,9 +357,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         fileListsCall.enqueue(new RetrofitCallback<Responese<List<FileEntity>>>() {
             @Override
             public void onSuccess(Responese<List<FileEntity>> data) {
-                if (data.getData()!=null&&data.getData().size()>0){
-                    callback.onSuccess(data.getData());
-                }
+                callback.onSuccess(data.getData());
             }
 
             @Override
@@ -417,16 +401,60 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         followListsCall.enqueue(new RetrofitCallback<Responese<List<FollowEntity>>>() {
             @Override
             public void onSuccess(Responese<List<FollowEntity>> data) {
-                if (data.getData() != null && data.getData().size() > 0) {
-                    callback.onSuccess(data.getData());
-                } else {
-                    callback.onFailure(data.getCode(), data.getMsg());
-                }
+                callback.onSuccess(data.getData());
             }
 
             @Override
             public void onFailure(int code, String msg) {
                 callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     *查询字典
+     *
+     *author: hezhiWu
+     *created at 2017/5/26 10:03
+     */
+    public void queryDictionary(String typecode, final RemetoRepoCallback<List<DictionaryEntity>> callback){
+        RequestBody body = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("typecode", typecode);
+            body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dictionaryCall=XiaomaiRetrofitManager.getAPIService().queryDictionary(body);
+        dictionaryCall.enqueue(new RetrofitCallback<Responese<List<DictionaryEntity>>>() {
+            @Override
+            public void onSuccess(Responese<List<DictionaryEntity>> data) {
+                if (data.getData()!=null&&data.getData().size()>0){
+                    callback.onSuccess(data.getData());
+                }else {
+                    callback.onFailure(data.getCode(),data.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code,msg);
             }
 
             @Override

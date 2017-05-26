@@ -40,7 +40,11 @@ public class CarActivity extends BaseActivity {
         setToolbarTitle("汽车明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.Car_Content_Layout, new CarEditFragment());
+
+        CarEditFragment fragment=new CarEditFragment();
+        fragment.setArguments(getIntent().getExtras());
+
+        transaction.replace(R.id.Car_Content_Layout, fragment);
         transaction.commit();
     }
 

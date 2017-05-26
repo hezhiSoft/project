@@ -42,7 +42,11 @@ public class CompanyActivity extends BaseActivity {
         setToolbarTitle("公司明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.Company_Content_Layout, new CompanyEditFragment());
+
+        CompanyEditFragment fragment=new CompanyEditFragment();
+        fragment.setArguments(getIntent().getExtras());
+
+        transaction.replace(R.id.Company_Content_Layout, fragment);
         transaction.commit();
     }
 

@@ -19,7 +19,8 @@
         android:id="@+id/Property_AreaM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="面积" />
+        app:wvItemName="面积"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Property_Area"
@@ -37,13 +38,15 @@
         android:id="@+id/Property_PropertyRightsYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="产权年限" />
+        app:wvItemName="产权年限"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Property_RegistrationPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="登记价格(万)" />
+        app:wvItemName="登记价格(万)"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Property_VillageName"
@@ -79,17 +82,20 @@
         android:id="@+id/Property_MonthlyPaymentLoan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="每月还款" />
+        app:wvItemName="每月还款"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Property_MortgageTimeLimit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="按揭期数(月)" />
+        app:wvItemName="按揭期数(月)"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Property_RemainingMortgage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="剩余按揭" />
+        app:wvItemName="剩余按揭"
+        app:wvInputType="number"/>
 </LinearLayout>

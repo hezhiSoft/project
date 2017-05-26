@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".module.account.LoginActivity"
+            android:name=".module.account.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme">
             <intent-filter>
@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".module.account.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
             android:name=".MainActivity"
@@ -67,6 +71,21 @@
 
         <activity
             android:name=".module.cstmr.fragment.company.CompanyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.file.FileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.follow.FollowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name="com.jinggan.library.media.picture.SelectPictureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
     </application>
