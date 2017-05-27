@@ -1,7 +1,5 @@
 package com.xiaomai.telemarket;
 
-import android.Manifest;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,23 +8,23 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
-import com.jinggan.library.utils.ISystemUtil;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragment;
 import com.xiaomai.telemarket.module.home.HomeFragment;
+import com.xiaomai.telemarket.module.home.HomeMenuItemClickListener;
 import com.xiaomai.telemarket.module.order.OrderFragment;
 import com.xiaomai.telemarket.service.PhoneCallStateService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener {
+public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener,HomeMenuItemClickListener {
     /*模块标记*/
-    private final int TAB_HOME = 0;
-    private final int TAB_CUSROMENTMANAGEMENT = 1;
-    private final int TAB_CUSROMENTLIST = 2;
-    private final int TAB_ORDER = 3;
+    public static final int TAB_HOME = 0;
+    public static final int TAB_CUSROMENTMANAGEMENT = 1;
+    public static final int TAB_CUSROMENTLIST = 2;
+    public static final int TAB_ORDER = 3;
 
     @BindView(R.id.main_bottom_navigationBar)
     MainBottomNavigationBar mainBottomNavigationBar;
@@ -62,19 +60,25 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     protected void onResume() {
         super.onResume();
         /*权限监测*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ISystemUtil.requestPermissions(this, new String[]{
-                    Manifest.permission.INTERNET,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
-                    Manifest.permission.CALL_PHONE,
-                    Manifest.permission.PROCESS_OUTGOING_CALLS,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.READ_LOGS,
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            });
-        }else{
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            ISystemUtil.requestPermissions(this, new String[]{
+//                    Manifest.permission.INTERNET,
+//                    Manifest.permission.ACCESS_NETWORK_STATE,
+//                    Manifest.permission.CALL_PHONE,
+//                    Manifest.permission.PROCESS_OUTGOING_CALLS,
+//                    Manifest.permission.READ_PHONE_STATE,
+//                    Manifest.permission.READ_LOGS,
+//                    Manifest.permission.RECORD_AUDIO,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//            });
+//        }
+    }
 
+    @Override
+    public void onMenuItemClick(int index) {
+        // TODO: 27/05/2017 切换fragment
+        if (mainBottomNavigationBar!=null) {
+            mainBottomNavigationBar.selectTab(index);
         }
     }
 

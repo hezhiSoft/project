@@ -3,6 +3,7 @@ package com.xiaomai.telemarket.module.home;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.home.dial.DialingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
@@ -52,6 +54,8 @@ public class HomeFragment extends BaseFragment {
     TextView HomeDeparmentTextView;
     Unbinder unbinder;
 
+    private HomeMenuItemClickListener homeMenuItemClickListener;
+
     private boolean isRecordPermissed;
     public static final int RECORD_PERMISSTION_REQUEST_CODE=0x001;
 
@@ -60,6 +64,10 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, null);
         unbinder = ButterKnife.bind(this, rootView);
+        Context context=getActivity();
+        if (context instanceof HomeMenuItemClickListener) {
+            homeMenuItemClickListener = (HomeMenuItemClickListener) context;
+        }
         return rootView;
     }
 
@@ -68,7 +76,6 @@ public class HomeFragment extends BaseFragment {
         super.onResume();
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
-            //RECORD_PERMISSTION_REQUEST_CODE
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO},
                     RECORD_PERMISSTION_REQUEST_CODE);
         } else {
@@ -95,12 +102,21 @@ public class HomeFragment extends BaseFragment {
                 dialingSingle();
                 break;
             case R.id.Home_customer_TextView:/*客户管理*/
+                if (homeMenuItemClickListener != null) {
+                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_CUSROMENTMANAGEMENT);
+                }
                 break;
             case R.id.Home_customerStay_TextView:/*待跟进订单*/
+                if (homeMenuItemClickListener != null) {
+                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_CUSROMENTLIST);
+                }
                 break;
             case R.id.Home_Search_TextView:/*产品查询*/
                 break;
             case R.id.Home_order_TextView:/*订单管理*/
+                if (homeMenuItemClickListener != null) {
+                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_ORDER);
+                }
                 break;
         }
     }
@@ -109,7 +125,7 @@ public class HomeFragment extends BaseFragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RECORD_PERMISSTION_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults != null&&grantResults.length>0&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission Granted
                 isRecordPermissed = true;
             } else {
