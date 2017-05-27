@@ -77,7 +77,9 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     @Override
     public void onMenuItemClick(int index) {
         // TODO: 27/05/2017 切换fragment
-//        onTabSelected(index);//切换fragment后的回调
+        if (mainBottomNavigationBar!=null) {
+            mainBottomNavigationBar.selectTab(index);
+        }
     }
 
     @Override
