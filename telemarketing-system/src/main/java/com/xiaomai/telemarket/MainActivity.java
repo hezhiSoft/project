@@ -1,5 +1,7 @@
 package com.xiaomai.telemarket;
 
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -7,11 +9,14 @@ import android.view.View;
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
+import com.jinggan.library.utils.IActivityManage;
+import com.jinggan.library.utils.ISystemUtil;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragment;
 import com.xiaomai.telemarket.module.home.HomeFragment;
 import com.xiaomai.telemarket.module.order.OrderFragment;
+import com.xiaomai.telemarket.service.PhoneCallStateService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +39,11 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         setSwipeEnabled(false);
 
         initBottomNavigationBar();
+        initService();
+    }
+
+    private void initService() {
+        PhoneCallStateService.StartService(this);
         DictionaryHelper.requestDictionary();
     }
 
@@ -46,6 +56,26 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 .setTabSelectedListener(this)
                 .setFirstSelectedTab(TAB_HOME);
         setToolbarVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*权限监测*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ISystemUtil.requestPermissions(this, new String[]{
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.CALL_PHONE,
+                    Manifest.permission.PROCESS_OUTGOING_CALLS,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_LOGS,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            });
+        }else{
+
+        }
     }
 
     @Override
@@ -76,11 +106,19 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
             DialogFactory.showMsgDialog(this, "退出", "确定退出电销系统?", "退出", "取消", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    // TODO: 19/05/2017 退出登录接口
+                    IActivityManage.getInstance().exit();
                 }
             }, null);
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onDestroy() {
+        PhoneCallStateService.StopService(DataApplication.getInstance().getApplicationContext());
+        super.onDestroy();
+    }
+
 }

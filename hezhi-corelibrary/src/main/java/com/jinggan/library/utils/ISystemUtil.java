@@ -1,16 +1,22 @@
 package com.jinggan.library.utils;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 
 import com.jinggan.library.base.BaseApplication;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.TELEPHONY_SERVICE;
@@ -106,5 +112,57 @@ public class ISystemUtil {
         TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
         String szImei = TelephonyMgr.getDeviceId();
         return szImei;
+    }
+
+    /**
+     * 6.0系统以上动态申请权限
+     * @param context
+     * @param permissions 要申请的权限数组
+     * @return
+     */
+
+    /**
+     * 6.0系统以上动态申请权限
+     * @author yangdu <youngdu29@gmail.com>
+     * @createtime 27/05/2017 1:39 AM
+     */
+    @TargetApi(23)
+    public static boolean requestPermissions(Activity context, String ... permissions) {
+        List<String> permissionList = new ArrayList<>();
+        if (permissions != null) {
+            for (String permission:
+                    permissions) {
+                addPermission(context,permissionList,permission);//检测权限
+            }
+        }
+        if (permissionList.size() > 0) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            }
+            context.requestPermissions(permissionList.toArray(new String[permissionList.size()]), 0);//申请未授权权限
+            return true;
+        }
+        return false;
+    }
+
+    public static void addPermission(Activity context,List<String> permissionsList, String permission) {
+        if (!checkHasSelfPermission(context,permission)) {
+            permissionsList.add(permission);
+        }
+    }
+
+    /**
+     * 6.0以上检测权限
+     * @param context
+     * @param permission
+     * @return
+     */
+    public static boolean checkHasSelfPermission(Activity context,String permission){
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && context.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)|| ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

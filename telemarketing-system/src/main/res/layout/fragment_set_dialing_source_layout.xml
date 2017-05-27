@@ -29,9 +29,7 @@
             android:textSize="@dimen/text_size_bottom_16"
             android:visibility="visible" />
 
-        <View
-            style="@style/line_5"
-            android:visibility="visible" />
+        <View style="@style/line_horizontal" />
 
         <TextView
             android:id="@+id/tv_source_private"

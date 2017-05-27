@@ -25,6 +25,7 @@
 
     <!--common-->
     <string name="common_back">返回</string>
+    <string name="common_progress_dlg_tip">操作中...</string>
 
     <!--setting-->
     <string name="settings">设置</string>
@@ -37,4 +38,12 @@
     <string name="text_userstate_not_disturb">请勿打扰</string>
     <string name="text_number_library_public">公共名单库</string>
     <string name="text_number_dialing_private">我的客户列表</string>
+
+    <!--dialing-->
+    <string name="dial_mute">静音</string>
+    <string name="dial_mark_empty">标记空号</string>
+    <string name="dial_handoff">免提</string>
+    <string name="dial_stop_group">停止群呼</string>
+    <string name="dial_cancel">取消</string>
+
 </resources>

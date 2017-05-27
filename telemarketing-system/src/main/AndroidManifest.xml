@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiaomai.telemarket">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".DataApplication"
         android:allowBackup="true"
@@ -10,6 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service android:name=".service.DownloadInitDataService" />
+        <service android:name=".service.PhoneCallStateService"/>
         <activity
             android:name=".module.account.SplashActivity"
             android:screenOrientation="portrait"
@@ -46,6 +57,11 @@
 
         <activity
             android:name=".module.home.setting.SettingEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.home.dial.DialingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 

@@ -55,4 +55,13 @@ public class Constant {
             this.value = value;
         }
     }
+
+    /**
+     * 公共库
+     */
+    public static final int DIAL_NUMBER_CODE_PUBLIC=1;
+    /**
+     * 私有库
+     */
+    public static final int DIAL_NUMBER_CODE_PRIVATE=2;
 }

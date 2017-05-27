@@ -89,7 +89,7 @@ public interface APIService {
      * @param body {"preid":""}
      * @return
      */
-    @POST("api/customer/GetFromPublic")
+    @POST("api/customer/GetFromPrivate")
     Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPublic(@Body RequestBody body);
 
     /**

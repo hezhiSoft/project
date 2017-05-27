@@ -22,7 +22,7 @@ import java.text.DecimalFormat;
 public class IFileUtils {
 
     /*文件根目录*/
-    public static final String FILE_ROOT_DIRECTORY = "Wayto";
+    public static final String FILE_ROOT_DIRECTORY = "XiaoMai";
     /*项目根目录*/
     public static final String PROJECT_ROOT_DIRECTORY = "Base";
     /*图片文件夹*/
@@ -108,8 +108,7 @@ public class IFileUtils {
         String path = getSDROOT() + File.separator + FILE_ROOT_DIRECTORY + File.separator + RECORD_DIRECTORY;
         File file = new File(path);
         if (!file.exists()) {
-            File filePath = file.getParentFile();
-            filePath.mkdirs();
+            file.mkdirs();
         }
         return file.getAbsolutePath();
     }
