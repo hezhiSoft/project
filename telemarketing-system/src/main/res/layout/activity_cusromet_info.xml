@@ -58,7 +58,8 @@
                 android:id="@+id/Info_AccumulationFundAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:wvItemName="公积金基数" />
+                app:wvItemName="银行流水"
+                android:visibility="visible"/>
 
             <com.jinggan.library.ui.widget.FormWriteTopTitleView
                 android:id="@+id/Info_SocialSecurityAccount"

@@ -59,7 +59,7 @@ public class CusrometDetailsActivity extends BaseActivity {
     private CusrometFileFragment fileFragment;
     private CusrometFolloFragment folloFragment;
 
-    private CusrometListEntity entity;
+    public static CusrometListEntity entity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

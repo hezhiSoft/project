@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.debto;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -74,7 +75,9 @@ public class DebtoBaseFragment extends BaseFragment {
     FormWriteTopTitleView DebtoRemark;
     Unbinder unbinder;
 
-    private DictionaryEntity TypeDeptDic,BankDic,RepaymentModeDic;
+    private String typeDeptCod,bankCode,repaymentModeCode;
+
+    protected Dialog dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,7 +113,7 @@ public class DebtoBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
-                                    TypeDeptDic=entity;
+                                    typeDeptCod=entity.getCode();
                                     DebtoTypeDept.setContentText(entity.getName());
                                 }
                             }
@@ -151,7 +154,7 @@ public class DebtoBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
-                                    BankDic=entity;
+                                    bankCode=entity.getCode();
                                     DebtoLoanBank.setContentText(entity.getName());
                                 }
                             }
@@ -170,7 +173,7 @@ public class DebtoBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
-                                    RepaymentModeDic=entity;
+                                    repaymentModeCode=entity.getCode();
                                     DebtoRepaymentMode.setContentText(entity.getName());
                                 }
                             }
@@ -184,6 +187,10 @@ public class DebtoBaseFragment extends BaseFragment {
         if (entity == null) {
             return;
         }
+        typeDeptCod=entity.getTypeDept();
+        bankCode=entity.getLoanBank();
+        repaymentModeCode=entity.getRepaymentMode();
+
         DebtoTypeDept.setContentText(DictionaryHelper.ParseDept(entity.getTypeDept() + ""));
         DebtoLoanAmount.setContentText(entity.getLoanAmount() + "");
         DebtoLoanDate.setContentText(entity.getLoanDate().replace("T", " "));
@@ -207,13 +214,13 @@ public class DebtoBaseFragment extends BaseFragment {
      */
     protected DebtoEntity getDebtoEntity() {
         DebtoEntity entity = new DebtoEntity();
-        entity.setTypeDept(TypeDeptDic.getCode());
+        entity.setTypeDept(typeDeptCod);
         entity.setLoanAmount(IStringUtils.toInt(DebtoLoanAmount.getContentText()));
         entity.setLoanDate(DebtoLoanDate.getContentText());
-        entity.setLoanBank(BankDic.getCode());
+        entity.setLoanBank(bankCode);
         entity.setMonthlyPayments(IStringUtils.toInt(DebtoMonthlyPayments.getContentText()));
         entity.setLoanMonth(IStringUtils.toInt(DebtoLoanMonth.getContentText()));
-        entity.setRepaymentMode(RepaymentModeDic.getCode());
+        entity.setRepaymentMode(repaymentModeCode);
         entity.setDelayDays(IStringUtils.toInt(DebtoDelayDays.getContentText()));
         entity.setDelayAccount(IStringUtils.toInt(DebtoDelayAccount.getContentText()));
         entity.setDelayNum(IStringUtils.toInt(DebtoDelayNum.getContentText()));

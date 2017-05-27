@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.property;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,16 +9,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.date.DatePickDialog;
 import com.jinggan.library.ui.date.OnSureLisener;
 import com.jinggan.library.ui.date.bean.DateBean;
 import com.jinggan.library.ui.date.bean.DateType;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
+import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -64,6 +72,16 @@ public class PropertyBaseFragment extends BaseFragment {
     FormWriteTopTitleView PropertyRemainingMortgage;
     Unbinder unbinder;
 
+    private String LandUseCode, AreaCode, BandCode;
+
+    protected Dialog dialog;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +89,12 @@ public class PropertyBaseFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         setListener();
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(true);
     }
 
     private void setListener() {
@@ -86,10 +110,11 @@ public class PropertyBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
+                                    LandUseCode = entity.getCode();
                                     PropertyLandUse.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
         /*所属区域*/
@@ -104,10 +129,11 @@ public class PropertyBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
+                                    AreaCode = entity.getCode();
                                     PropertyArea.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
         /*竣工日期*/
@@ -130,7 +156,7 @@ public class PropertyBaseFragment extends BaseFragment {
         PropertyIsMortgage.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(),PropertyIsMortgage.getTextView(),PropertyIsMortgage.getContentText().toString());
+                DictionaryHelper.showSelectDialog(getContext(), PropertyIsMortgage.getTextView(), PropertyIsMortgage.getContentText().toString());
             }
         });
         /*按揭银行*/
@@ -145,17 +171,78 @@ public class PropertyBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
+                                    BandCode = entity.getCode();
                                     PropertyMortgageBank.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
+    }
+
+    protected void initUI(PropertyEntity entity) {
+        if (entity == null) {
+            return;
+        }
+        LandUseCode = String.valueOf(entity.getLandUse());
+        AreaCode = entity.getArea();
+        BandCode = entity.getMortgageBank();
+
+        PropertyLandUse.setContentText(DictionaryHelper.ParseLandUse(entity.getLandUse() + ""));
+        PropertyAreaM.setContentText(entity.getAreaM() + "");
+        PropertyArea.setContentText(DictionaryHelper.ParseSZAREA(entity.getArea() + ""));
+        PropertyCompletionDate.setContentText(entity.getCompletionDate().replaceAll("T", " "));
+        PropertyPropertyRightsYear.setContentText(entity.getPropertyRightsYear() + "");
+        PropertyRegistrationPrice.setContentText(entity.getRegistrationPrice() + "");
+        PropertyVillageName.setContentText(entity.getVillageName());
+        PropertyDetailedAddress.setContentText(entity.getDetailedAddress());
+        PropertyRemark.setContentText(entity.getRemark());
+        PropertyIsMortgage.setContentText(entity.getIsMortgage() == 0 ? "否" : "是");
+        PropertyMortgageBank.setContentText(DictionaryHelper.ParseBank(entity.getMortgageBank()));
+        PropertyMonthlyPaymentLoan.setContentText(entity.getMonthlyPaymentLoan() + "");
+        PropertyMortgageTimeLimit.setContentText(entity.getMortgageTimeLimit() + "");
+        PropertyRemainingMortgage.setContentText(entity.getRemainingMortgage() + "");
+    }
+
+    protected PropertyEntity getPropertyEntity() {
+        PropertyEntity entity = new PropertyEntity();
+        entity.setLandUse(IStringUtils.toInt(LandUseCode));
+        entity.setAreaM(IStringUtils.toInt(PropertyAreaM.getContentText()));
+        entity.setArea(AreaCode);
+        entity.setCompletionDate(PropertyCompletionDate.getContentText());
+        entity.setPropertyRightsYear(IStringUtils.toInt(PropertyPropertyRightsYear.getContentText()));
+        entity.setRegistrationPrice(IStringUtils.toInt(PropertyRegistrationPrice.getContentText()));
+        entity.setVillageName(PropertyVillageName.getContentText());
+        entity.setDetailedAddress(PropertyDetailedAddress.getContentText());
+        entity.setRemark(PropertyRemark.getContentText());
+        entity.setIsMortgage("是".equals(PropertyIsMortgage.getContentText()) ? 1 : 0);
+        entity.setMortgageBank(BandCode);
+        entity.setMonthlyPaymentLoan(IStringUtils.toInt(PropertyMonthlyPaymentLoan.getContentText()));
+        entity.setMortgageTimeLimit(IStringUtils.toInt(PropertyMortgageTimeLimit.getContentText()));
+        entity.setRemainingMortgage(IStringUtils.toInt(PropertyRemainingMortgage));
+        return entity;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    @Subscribe
+    public void onEventBusSubmit(EventBusValues values) {
+        if (values.getWhat() == 0x1002) {
+            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSubmit();
+                }
+            });
+        }
+    }
+
+    public void onSubmit() {
+
     }
 }

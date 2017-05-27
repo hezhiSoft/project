@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.insurance;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,17 +9,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.date.DatePickDialog;
 import com.jinggan.library.ui.date.OnSureLisener;
 import com.jinggan.library.ui.date.bean.DateBean;
 import com.jinggan.library.ui.date.bean.DateType;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -54,6 +61,15 @@ public class InsuranceBaseFragment extends BaseFragment {
     FormWriteTopTitleView InsuranceRemark;
     Unbinder unbinder;
 
+    private String PaymentMethodsCode,InsuranceCompanyCode;
+
+    protected Dialog dialog;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,6 +85,12 @@ public class InsuranceBaseFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(true);
+    }
+
     private void setListener(){
         /*保险公司*/
         InsuranceInsuranceCompany.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
@@ -82,6 +104,7 @@ public class InsuranceBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity!=null){
+                                    InsuranceCompanyCode=entity.getCode();
                                     InsuranceInsuranceCompany.setContentText(entity.getName());
                                 }
                             }
@@ -100,6 +123,7 @@ public class InsuranceBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity!=null){
+                                    PaymentMethodsCode=entity.getCode();
                                     InsurancePaymentMethods.setContentText(entity.getName());
                                 }
                             }
@@ -160,7 +184,10 @@ public class InsuranceBaseFragment extends BaseFragment {
         if (entity==null){
             return;
         }
-        InsuranceInsuranceCompany.setContentText(DictionaryHelper.ParseINSURANCECOMPANY(entity.getInsuranceCompany())).setArrowDropVisibility(View.GONE);
+        InsuranceCompanyCode=entity.getInsuranceCompany();
+        PaymentMethodsCode=String.valueOf(entity.getPaymentMethods());
+
+        InsuranceInsuranceCompany.setContentText(DictionaryHelper.ParseINSURANCECOMPANY(entity.getInsuranceCompany()));
         InsuranceInsuredAmount.setContentText(entity.getInsuredAmount()+"");
         InsurancePaymentMethods.setContentText(DictionaryHelper.ParsePayCostType(entity.getPaymentMethods()+""));
         InsuranceBuyDate.setContentText(entity.getBuyDate().replaceAll("T"," "));
@@ -168,5 +195,34 @@ public class InsuranceBaseFragment extends BaseFragment {
         InsuranceDelayDays.setContentText(entity.getDelayDays()+"");
         InsuranceFuXiaoDate.setContentText(entity.getFuXiaoDate().replaceAll("T"," "));
         InsuranceRemark.setContentText(entity.getRemark());
+    }
+
+    protected InsuranceEntity getInsuranceEntity(){
+        InsuranceEntity entity=new InsuranceEntity();
+        entity.setInsuranceCompany(InsuranceCompanyCode);
+        entity.setInsuredAmount(IStringUtils.toInt(InsuranceInsuredAmount.getContentText()));
+        entity.setPaymentMethods(IStringUtils.toInt(PaymentMethodsCode));
+        entity.setBuyDate(InsuranceBuyDate.getContentText());
+        entity.setDelayDate(InsuranceDelayDate.getContentText());
+        entity.setDelayDays(IStringUtils.toInt(InsuranceDelayDays.getContentText()));
+        entity.setFuXiaoDate(InsuranceFuXiaoDate.getContentText());
+        entity.setRemark(InsuranceRemark.getContentText());
+        return entity;
+    }
+
+    @Subscribe
+    public void onEventBusSubmit(EventBusValues values) {
+        if (values.getWhat() == 0x1003) {
+            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSubmit();
+                }
+            });
+        }
+    }
+
+    public void onSubmit() {
+
     }
 }

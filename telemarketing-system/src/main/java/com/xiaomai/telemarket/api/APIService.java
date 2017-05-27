@@ -111,6 +111,24 @@ public interface APIService {
     Call<Responese<List<DebtoEntity>>> queryCusrometDebtoLists(@Body RequestBody body);
 
     /**
+     * 编辑客户负债信息
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/26 23:15
+     */
+    @POST("api/customer/EditDebt")
+    Call<Responese> editDebto(@Body DebtoEntity entity);
+
+    /**
+     * 添加客户负债信息
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/26 23:45
+     */
+    @POST("api/customer/AddDebt")
+    Call<Responese> addDebto(@Body DebtoEntity entity);
+
+    /**
      * 获取客户房产列表
      * <p>
      * author: hezhiWu
@@ -120,6 +138,15 @@ public interface APIService {
     Call<Responese<List<PropertyEntity>>> queryCusrometHouse(@Body RequestBody body);
 
     /**
+     * 编辑房产
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 0:09
+     */
+    @POST("api/customer/EditHouse")
+    Call<Responese> editHouse(@Body PropertyEntity entity);
+
+    /**
      * 获取客户保单列表
      * <p>
      * author: hezhiWu
@@ -127,6 +154,15 @@ public interface APIService {
      */
     @POST("api/customer/GetInsurance")
     Call<Responese<List<InsuranceEntity>>> queryCusrometInsurance(@Body RequestBody body);
+
+    /**
+     * 编辑
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 10:29
+     */
+    @POST("api/customer/EditInsurance")
+    Call<Responese> editInsurance(@Body InsuranceEntity entity);
 
 
     /**
@@ -139,6 +175,15 @@ public interface APIService {
     Call<Responese<List<CompanyEntity>>> queryCusrometCompany(@Body RequestBody body);
 
     /**
+     * 编辑公司
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 10:29
+     */
+    @POST("api/customer/EditCompany")
+    Call<Responese> editCompany(@Body CompanyEntity entity);
+
+    /**
      * 获取客户车辆信息
      * <p>
      * author: hezhiWu
@@ -147,6 +192,24 @@ public interface APIService {
     @POST("api/customer/GetCar")
     Call<Responese<List<CarEntity>>> queryCusrometCarLists(@Body RequestBody body);
 
+    /**
+     * 编辑房产
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 0:09
+     */
+    @POST("api/customer/EditCar")
+    Call<Responese> editCar(@Body CarEntity entity);
+
+    /**
+     *添加添加
+     * 
+     *author: hezhiWu
+     *created at 2017/5/27 13:55
+     */
+    @POST("api/customer/AddCar")
+    Call<Responese> addCar(@Body CarEntity entity);
+    
     /**
      * 查询客户文件列表
      * <p>
@@ -165,7 +228,14 @@ public interface APIService {
     @POST("api/customer/GetFollow")
     Call<Responese<List<FollowEntity>>> queryCusrometFollowLists(@Body RequestBody body);
 
-
+    /**
+     * 编辑公司
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 10:29
+     */
+    @POST("api/customer/EditFollow")
+    Call<Responese> editFollow(@Body FollowEntity entity);
     /**
      * 查询字典
      * <p>

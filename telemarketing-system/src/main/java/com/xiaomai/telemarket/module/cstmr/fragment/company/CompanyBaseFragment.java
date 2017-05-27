@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.company;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,15 +9,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.date.DatePickDialog;
 import com.jinggan.library.ui.date.OnSureLisener;
 import com.jinggan.library.ui.date.bean.DateBean;
 import com.jinggan.library.ui.date.bean.DateType;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +58,14 @@ public class CompanyBaseFragment extends BaseFragment {
     FormWriteTopTitleView CompanyRemark;
     Unbinder unbinder;
 
+
+    protected Dialog dialog;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +73,12 @@ public class CompanyBaseFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         setListener();
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(true);
     }
 
     private void setListener(){
@@ -99,9 +120,39 @@ public class CompanyBaseFragment extends BaseFragment {
         CompanyRemark.setContentText(entity.getRemark());
     }
 
+    protected CompanyEntity getCompanyEntity(){
+        CompanyEntity entity=new CompanyEntity();
+        entity.setCompanyName(CompanyCompanyName.getContentText());
+        entity.setIndustry(CompanyIndustry.getContentText());
+        entity.setRegisterDate(CompanyRegisterDate.getContentText());
+        entity.setBusinessScope(CompanyBusinessScope.getContentText());
+        entity.setSharesProportion(IStringUtils.toInt(CompanySharesProportion.getContentText()));
+        entity.setAccountWater(IStringUtils.toInt(CompanyAccountWater.getContentText()));
+        entity.setIsRentTransfer("否".equals(CompanyIsRentTransfer.getContentText())?0:1);
+        entity.setAmountDebt(IStringUtils.toInt(CompanyAmountDebt.getContentText()));
+        entity.setRemark(CompanyRemark.getContentText());
+        return entity;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Subscribe
+    public void onEventBusSubmit(EventBusValues values) {
+        if (values.getWhat() == 0x1005) {
+            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSubmit();
+                }
+            });
+        }
+    }
+
+    public void onSubmit() {
+
     }
 }

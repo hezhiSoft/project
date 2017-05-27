@@ -6,12 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoAddFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoEditFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -37,6 +40,15 @@ public class CompanyActivity extends BaseActivity {
             switchToAddDebtoFragment();
         }
     }
+
+    @Override
+    public void onClickToolbarRightLayout() {
+        super.onClickToolbarRightLayout();
+        EventBusValues busValues=new EventBusValues();
+        busValues.setWhat(0x1005);
+        EventBus.getDefault().post(busValues);
+    }
+
 
     private void switchToEditDebtoFragment() {
         setToolbarTitle("公司明细");
