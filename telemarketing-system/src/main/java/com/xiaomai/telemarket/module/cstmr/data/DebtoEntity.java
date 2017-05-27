@@ -12,14 +12,14 @@ import java.io.Serializable;
 public class DebtoEntity implements Serializable{
     private String ID;
     private String CustomerID;
-    private int TypeDept;
+    private String TypeDept;
     private int LoanAmount;
     private int RemainingLoanAmount;
     private int MonthlyPayments;
     private String LoanDate;
     private int LoanMonth;
     private String LoanBank;
-    private int RepaymentMode;
+    private String RepaymentMode;
     private int DelayDays;
     private int DelayAccount;
     private int DelayNum;
@@ -50,11 +50,11 @@ public class DebtoEntity implements Serializable{
         this.CustomerID = CustomerID;
     }
 
-    public int getTypeDept() {
+    public String getTypeDept() {
         return TypeDept;
     }
 
-    public void setTypeDept(int TypeDept) {
+    public void setTypeDept(String TypeDept) {
         this.TypeDept = TypeDept;
     }
 
@@ -106,11 +106,11 @@ public class DebtoEntity implements Serializable{
         this.LoanBank = LoanBank;
     }
 
-    public int getRepaymentMode() {
+    public String getRepaymentMode() {
         return RepaymentMode;
     }
 
-    public void setRepaymentMode(int RepaymentMode) {
+    public void setRepaymentMode(String RepaymentMode) {
         this.RepaymentMode = RepaymentMode;
     }
 

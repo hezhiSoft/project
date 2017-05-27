@@ -84,6 +84,7 @@ public class CusrometInfoShowFragment extends BaseFragment {
         CusInfoAccumulationFundAccount.setText(entity.getAccumulationFundAccount() + "");
         CusInfoSocialSecurityAccount.setText(entity.getSocialSecurityAccount() + "");
         CusInfoRemark.setText(entity.getRemark());
+
     }
 
     /**

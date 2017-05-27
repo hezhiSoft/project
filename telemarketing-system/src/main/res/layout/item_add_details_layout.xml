@@ -14,7 +14,6 @@
             android:id="@+id/Details_number_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="共5条负债明细"
             android:textColor="@color/gray"
             android:layout_centerVertical="true"
             android:textSize="18sp" />

@@ -47,12 +47,12 @@ public class AccountPresenter implements AccountContract.Presenter {
 
             @Override
             public void onThrowable(Throwable t) {
-
+                ToastUtil.showToast(activity,"登录失败");
             }
 
             @Override
             public void onUnauthorized() {
-
+                ToastUtil.showToast(activity,"登录失败");
             }
 
             @Override

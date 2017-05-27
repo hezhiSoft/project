@@ -31,6 +31,8 @@ public class FormSelectTopTitleView extends LinearLayout {
     private TextView mContentEditText;
     private ImageView arrowDropImageView;
 
+    private onArrowDropClick click;
+
     public FormSelectTopTitleView(Context context) {
         super(context, null);
     }
@@ -46,6 +48,29 @@ public class FormSelectTopTitleView extends LinearLayout {
         mTitleTextView = ButterKnife.findById(rootView, R.id.form_select_title);
         mContentEditText = ButterKnife.findById(rootView, R.id.form_select_content);
         arrowDropImageView = ButterKnife.findById(rootView, R.id.form_select_arrow_drop_down);
+
+        mContentEditText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (arrowDropImageView.getVisibility()==GONE){
+                    return;
+                }
+                if (click!=null){
+                    click.onClick(mContentEditText);
+                }
+            }
+        });
+        arrowDropImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (arrowDropImageView.getVisibility()==GONE){
+                    return;
+                }
+                if (click!=null){
+                    click.onClick(mContentEditText);
+                }
+            }
+        });
         addView(rootView);
     }
 
@@ -87,8 +112,32 @@ public class FormSelectTopTitleView extends LinearLayout {
         return this;
     }
 
+    public String getContentText(){
+        return mContentEditText.getText().toString().trim();
+    }
+
+    public TextView getTextView(){
+        return mContentEditText;
+    }
+
     public FormSelectTopTitleView setArrowDropVisibility(int visibility) {
         arrowDropImageView.setVisibility(visibility);
         return this;
+    }
+
+
+    /**
+     * 设置点击监听
+     * <p>
+     * author: hezhiWu
+     * created at 2017/4/5 9:16
+     */
+    public FormSelectTopTitleView setArrowDropListener(onArrowDropClick click) {
+        this.click = click;
+        return this;
+    }
+
+    public interface onArrowDropClick {
+        void onClick(TextView textView);
     }
 }

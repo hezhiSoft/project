@@ -14,14 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:svHint="请选择"
-        app:svItemName="负债类型" />
+        app:svItemName="负债类型"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Debto_LoanAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入金额"
-        app:wvItemName="负债金额(万)" />
+        app:wvItemName="负债金额(万)"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Debto_LoanDate"
@@ -42,21 +43,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入金额"
-        app:wvItemName="每月还款" />
+        app:wvItemName="每月还款"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Debto_RemainingLoanAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入金额"
-        app:wvItemName="剩余还款" />
+        app:wvItemName="剩余还款"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Debto_LoanMonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入期数"
-        app:wvItemName="贷款期数" />
+        app:wvItemName="贷款期数"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Debto_RepaymentMode"
@@ -70,21 +74,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入延期月数"
-        app:wvItemName="延期月数" />
+        app:wvItemName="延期月数"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Debto_DelayAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入延期金额"
-        app:wvItemName="延期金额" />
+        app:wvItemName="延期金额"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Debto_DelayNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="输入延期数次"
-        app:wvItemName="延期次数" />
+        app:wvItemName="延期次数"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Debto_loanProduct"

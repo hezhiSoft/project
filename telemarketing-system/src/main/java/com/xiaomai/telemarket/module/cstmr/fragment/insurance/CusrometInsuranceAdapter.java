@@ -9,10 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jinggan.library.ui.widget.FormSelectTopTitleView;
+import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +78,7 @@ public class CusrometInsuranceAdapter extends BaseRecyclerViewAdapter<InsuranceE
         @BindView(R.id.Details_layout)
         RelativeLayout DetailsLayout;
         @BindView(R.id.Details_content_layout)
-        LinearLayout DetailsContentLayout;
+        RelativeLayout DetailsContentLayout;
         @BindView(R.id.Details_line)
         View lineView;
         @BindView(R.id.Details_expand_iamgeView)
@@ -88,7 +91,33 @@ public class CusrometInsuranceAdapter extends BaseRecyclerViewAdapter<InsuranceE
     }
 
     private void setDetailsData(View view,InsuranceEntity entity){
-
+        if (entity==null){
+            return;
+        }
+        FormSelectTopTitleView InsuranceCompany=ButterKnife.findById(view,R.id.Insurance_InsuranceCompany);
+        FormWriteTopTitleView InsuredAmount=ButterKnife.findById(view,R.id.Insurance_InsuredAmount);
+        FormSelectTopTitleView PaymentMethods=ButterKnife.findById(view,R.id.Insurance_PaymentMethods);
+        FormSelectTopTitleView BuyDate=ButterKnife.findById(view,R.id.Insurance_BuyDate);
+        FormSelectTopTitleView DelayDate=ButterKnife.findById(view,R.id.Insurance_DelayDate);
+        FormWriteTopTitleView DelayDays=ButterKnife.findById(view,R.id.Insurance_DelayDays);
+        FormSelectTopTitleView FuXiaoDate=ButterKnife.findById(view,R.id.Insurance_FuXiaoDate);
+        FormWriteTopTitleView Remark=ButterKnife.findById(view,R.id.Insurance_Remark);
+        /*保险公司*/
+        InsuranceCompany.setContentText(DictionaryHelper.ParseINSURANCECOMPANY(entity.getInsuranceCompany())).setArrowDropVisibility(View.GONE);
+        /*保费金额*/
+        InsuredAmount.setContentText(entity.getInsuredAmount()+"").setItemEnabled(false);
+        /*缴费方式*/
+        PaymentMethods.setContentText(DictionaryHelper.ParsePayCostType(entity.getPaymentMethods()+"")).setArrowDropVisibility(View.GONE);
+        /*购买日期*/
+        BuyDate.setContentText(entity.getBuyDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
+        /*延期日期*/
+        DelayDate.setContentText(entity.getBuyDate().replace("T"," ")).setArrowDropVisibility(View.GONE);
+        /*延期天数 */
+        DelayDays.setContentText(entity.getDelayDays()+"").setItemEnabled(false);
+        /*复效日期*/
+        FuXiaoDate.setContentText(entity.getFuXiaoDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
+        /*备注*/
+        Remark.setContentText(entity.getRemark()).setItemEnabled(false);
     }
     public void setListenter(OnClickItemLisenter listenter) {
         this.listenter = listenter;

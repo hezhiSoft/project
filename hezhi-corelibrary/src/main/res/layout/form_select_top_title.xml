@@ -55,7 +55,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="5dp"
-            android:src="@drawable/ic_chevron_right_black_24dp"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp"
             android:visibility="visible" />
     </RelativeLayout>
 

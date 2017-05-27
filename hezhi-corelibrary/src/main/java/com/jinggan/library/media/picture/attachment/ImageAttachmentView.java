@@ -297,6 +297,7 @@ public class ImageAttachmentView extends LinearLayout implements AdapterView.OnI
      * @param url
      */
     public void setShowImage(String url) {
+        setShowImage();
         PictureEntity entity = new PictureEntity();
         entity.setNewUrl(url);
         adapter.appendToList(entity);

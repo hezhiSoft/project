@@ -11,6 +11,7 @@ import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISystemUtil;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragment;
 import com.xiaomai.telemarket.module.home.HomeFragment;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
     private void initService() {
         PhoneCallStateService.StartService(this);
+        DictionaryHelper.requestDictionary();
     }
 
     private void initBottomNavigationBar() {

@@ -88,7 +88,7 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
 
     @OnClick(R.id.Details_add_Button)
     public void onClick() {
-        DebtoActivity.startIntentToAdd(getActivity());
+        FileActivity.startIntentToAdd(getActivity());
     }
 
     @Override

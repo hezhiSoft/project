@@ -5,6 +5,7 @@ import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
@@ -164,4 +165,13 @@ public interface APIService {
     @POST("api/customer/GetFollow")
     Call<Responese<List<FollowEntity>>> queryCusrometFollowLists(@Body RequestBody body);
 
+
+    /**
+     * 查询字典
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/26 10:05
+     */
+    @POST("api/user/GetDataEnum")
+    Call<Responese<List<DictionaryEntity>>> queryDictionary(@Body RequestBody body);
 }

@@ -15,6 +15,7 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,8 +64,8 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
                 }
             }
         });
-        final View infoView = inflater.inflate(R.layout.cusromet_debto_layout, null);
-//        setDetailsData(infoView, mLists.get(position));
+        final View infoView = inflater.inflate(R.layout.cusromet_follow_layout, null);
+        setDetailsData(infoView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(infoView);
     }
 
@@ -77,7 +78,7 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
         @BindView(R.id.Details_layout)
         RelativeLayout DetailsLayout;
         @BindView(R.id.Details_content_layout)
-        LinearLayout DetailsContentLayout;
+        RelativeLayout DetailsContentLayout;
         @BindView(R.id.Details_line)
         View lineView;
         @BindView(R.id.Details_expand_iamgeView)
@@ -89,51 +90,42 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
         }
     }
 
-    private void setDetailsData(View rootView, DebtoEntity entity) {
+    private void setDetailsData(View rootView, FollowEntity entity) {
         if (entity == null) {
             return;
         }
-        FormSelectTopTitleView TypeDept = ButterKnife.findById(rootView, R.id.Debto_TypeDept);
-        FormWriteTopTitleView LoanAmount = ButterKnife.findById(rootView, R.id.Debto_LoanAmount);
-        FormSelectTopTitleView LoanDate = ButterKnife.findById(rootView, R.id.Debto_LoanDate);
-        FormSelectTopTitleView LoanBank = ButterKnife.findById(rootView, R.id.Debto_LoanBank);
-        FormWriteTopTitleView MonthlyPayments = ButterKnife.findById(rootView, R.id.Debto_MonthlyPayments);
-        FormWriteTopTitleView RemainingLoanAmount = ButterKnife.findById(rootView, R.id.Debto_RemainingLoanAmount);
-        FormWriteTopTitleView LoanMonth = ButterKnife.findById(rootView, R.id.Debto_LoanMonth);
-        FormSelectTopTitleView RepaymentMode = ButterKnife.findById(rootView, R.id.Debto_RepaymentMode);
-        FormWriteTopTitleView DelayDays = ButterKnife.findById(rootView, R.id.Debto_DelayDays);
-        FormWriteTopTitleView DelayAccount = ButterKnife.findById(rootView, R.id.Debto_DelayAccount);
-        FormWriteTopTitleView DelayNum = ButterKnife.findById(rootView, R.id.Debto_DelayNum);
-        FormSelectTopTitleView loanProduct = ButterKnife.findById(rootView, R.id.Debto_loanProduct);
-        FormWriteTopTitleView Remark = ButterKnife.findById(rootView, R.id.Debto_Remark);
-        /*贷款类型*/
-        TypeDept.setContentText(entity.getTypeDept() + "").setArrowDropVisibility(View.GONE);
-        /*负债金额*/
-        LoanAmount.setContentText(entity.getLoanAmount() + "").setItemEnabled(false);
-        /*贷款日期*/
-        LoanDate.setContentText(entity.getLoanDate().replaceAll("T", " ")).setArrowDropVisibility(View.GONE);
-        /*机构/银行*/
-        LoanBank.setContentText(entity.getLoanBank() + "").setArrowDropVisibility(View.GONE);
-        /*每月还款*/
-        MonthlyPayments.setContentText(entity.getMonthlyPayments() + "").setItemEnabled(false);
-        /*剩余还款*/
-        RemainingLoanAmount.setContentText(entity.getRemainingLoanAmount() + "").setItemEnabled(false);
-        /*贷款期数*/
-        LoanMonth.setContentText(entity.getLoanMonth() + "").setItemEnabled(false);
-        /*还款方式*/
-        RepaymentMode.setContentText(entity.getRepaymentMode() + "").setArrowDropVisibility(View.GONE);
-        /*延期月数*/
-        DelayDays.setContentText(entity.getDelayDays() + "").setItemEnabled(false);
-        /*延期金额*/
-        DelayAccount.setContentText(entity.getDelayAccount() + "").setItemEnabled(false);
-        /*延期次数*/
-        DelayNum.setContentText(entity.getDelayNum() + "").setItemEnabled(false);
-        // TODO: 2017/5/20 缺失字段
-        /*贷款产品*/
-        loanProduct.setContentText("无").setArrowDropVisibility(View.GONE);
-        /*备注*/
-        Remark.setContentText(entity.getRemark()).setItemEnabled(false);
+        FormSelectTopTitleView Follow_FollowType=ButterKnife.findById(rootView,R.id.Follow_FollowType);
+        FormSelectTopTitleView Follow_FollowDate=ButterKnife.findById(rootView,R.id.Follow_FollowDate);
+        FormSelectTopTitleView Follow_InterestedStatus=ButterKnife.findById(rootView,R.id.Follow_InterestedStatus);
+        FormSelectTopTitleView Follow_LoanType=ButterKnife.findById(rootView,R.id.Follow_LoanType);
+        FormWriteTopTitleView Follow_Amount=ButterKnife.findById(rootView,R.id.Follow_Amount);
+        FormSelectTopTitleView Follow_NextFollowType=ButterKnife.findById(rootView,R.id.Follow_NextFollowType);
+        FormSelectTopTitleView Follow_NextFollowDate=ButterKnife.findById(rootView,R.id.Follow_NextFollowDate);
+        FormWriteTopTitleView Follow_NextFollowTime=ButterKnife.findById(rootView,R.id.Follow_NextFollowTime);
+        FormWriteTopTitleView Follow_Remark=ButterKnife.findById(rootView,R.id.Follow_Remark);
+        FormWriteTopTitleView Follow_FollowPerson=ButterKnife.findById(rootView,R.id.Follow_FollowPerson);
 
+        /*跟进方式*/
+        Follow_FollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getFollowType()+"")).setArrowDropVisibility(View.GONE);
+        /*跟进时间*/
+        Follow_FollowDate.setContentText(entity.getFollowDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
+        /*意向状态*/
+        Follow_InterestedStatus.setContentText(DictionaryHelper.ParseInterestedStatus(entity.getInterestedStatus()+"")).setArrowDropVisibility(View.GONE);
+        /*贷款类型*/
+        Follow_LoanType.setContentText(DictionaryHelper.ParseLoanType(entity.getLoanType()+"")).setArrowDropVisibility(View.GONE);
+        /*贷款金额*/
+        Follow_Amount.setContentText(entity.getAmount()+"").setItemEnabled(false);
+        /*下次跟进方式*/
+        Follow_NextFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getNextFollowType()+"")).setArrowDropVisibility(View.GONE);
+        /*下次跟进日期*/
+        Follow_NextFollowDate.setContentText(entity.getNextFollowDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
+        /*下次跟进时间点*/
+        Follow_NextFollowTime.setContentText(entity.getNextFollowTime()+"").setItemEnabled(false);
+        /*备注*/
+        Follow_Remark.setContentText(entity.getRemark()).setItemEnabled(false);
+        /*跟进人*/
+        Follow_FollowPerson.setItemEnabled(false);
+//        Follow_FollowPerson.setContentText(entity.getP)
     }
 
 

@@ -10,16 +10,19 @@
         android:layout_marginLeft="10dp" />
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/File_FileName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:svItemName="文件名称" />
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
+        android:id="@+id/File_FileExtension"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:svItemName="文件类型" />
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
+        android:id="@+id/File_FileUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvItemName="文件路径" />
@@ -33,6 +36,7 @@
         android:textSize="16sp" />
 
     <com.jinggan.library.media.picture.attachment.ImageAttachmentView
+        android:id="@+id/File_Attachment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

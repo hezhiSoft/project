@@ -39,7 +39,7 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/Details_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
