@@ -26,8 +26,10 @@ import android.widget.TextView;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 import com.xiaomai.telemarket.module.home.dial.DialingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
@@ -68,7 +70,14 @@ public class HomeFragment extends BaseFragment {
         if (context instanceof HomeMenuItemClickListener) {
             homeMenuItemClickListener = (HomeMenuItemClickListener) context;
         }
+        initUI();
         return rootView;
+    }
+    private void initUI(){
+        UserInfoEntity entity= DataApplication.getInstance().getUserInfoEntity();
+        if (entity!=null){
+            HomeUserNameTextView.setText(entity.getDisplayName());
+        }
     }
 
     @Override

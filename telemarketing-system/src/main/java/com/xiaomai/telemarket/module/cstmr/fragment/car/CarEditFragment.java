@@ -19,9 +19,6 @@ import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
  */
 public class CarEditFragment extends CarBaseFragment implements RemetoRepoCallback<Responese> {
 
-
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

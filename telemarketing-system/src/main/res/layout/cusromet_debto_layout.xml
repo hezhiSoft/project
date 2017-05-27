@@ -98,6 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:svHint="选择贷款产品"
+        android:visibility="gone"
         app:svItemName="贷款产品" />
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView

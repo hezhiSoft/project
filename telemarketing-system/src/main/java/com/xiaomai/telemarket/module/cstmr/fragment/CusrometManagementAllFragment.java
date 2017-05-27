@@ -6,14 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonObject;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometManagementAdapter;
+import com.xiaomai.telemarket.module.cstmr.FiltersButtomDialog;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +36,7 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementAllFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallback<List<CusrometListEntity>>{
+public class CusrometManagementAllFragment extends BaseFragment implements FiltersButtomDialog.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallback<List<CusrometListEntity>>{
 
     Unbinder unbinder;
     @BindView(R.id.CustomerAll_recyclerView)
@@ -40,6 +47,9 @@ public class CusrometManagementAllFragment extends BaseFragment implements PullT
     private int pageIndex;
     private CusrometRemoteRepo remoteRepo;
 
+    private JSONObject filters;
+
+    private List<FiltersEntity> filtersEntities=new ArrayList<>();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,26 +82,53 @@ public class CusrometManagementAllFragment extends BaseFragment implements PullT
             case R.id.Customer_toolBar_add_ImageView:
                 break;
             case R.id.Customer_toolBar_screen_ImageView:
+                FiltersButtomDialog dialog=new FiltersButtomDialog();
+                dialog.setSelectContent(filtersEntities).setListener(this);
+                dialog.show(getFragmentManager(),getClass().getSimpleName());
                 break;
         }
     }
 
     @Override
+    public void onClickItem(List<FiltersEntity> entity) {
+        if (entity!=null&&entity.size()>0){
+            this.filtersEntities=entity;
+            try {
+                filters=new JSONObject();
+                for (FiltersEntity filtersEntity:entity){
+                    filters.put(filtersEntity.getKey(),filtersEntity.getCode());
+                }
+                CustomerAllRecyclerView.startUpRefresh();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onReplance() {
+        filtersEntities.clear();
+        filters=null;
+        CustomerAllRecyclerView.startUpRefresh();
+    }
+
+    @Override
     public void onDownRefresh() {
         pageIndex=1;
-        remoteRepo.requestCusrometLists(pageIndex,null,this);
+        remoteRepo.requestCusrometLists(pageIndex,filters,this);
     }
 
     @Override
     public void onPullRefresh() {
         pageIndex++;
-        remoteRepo.requestCusrometLists(pageIndex,null,this);
+        remoteRepo.requestCusrometLists(pageIndex,filters,this);
     }
 
     @Override
     public void onSuccess(List<CusrometListEntity> data) {
         if (pageIndex==1){
             adapter.clearList();
+            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.GONE);
             adapter.addItems(data);
         }else {
             adapter.addItems(data,adapter.getItemCount()-1);
@@ -103,8 +140,12 @@ public class CusrometManagementAllFragment extends BaseFragment implements PullT
 
     @Override
     public void onFailure(int code, String msg) {
-        showToast(msg);
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (pageIndex==1){
+            adapter.clearList();
+            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }else {
+            showToast(msg);
+        }
     }
 
     @Override

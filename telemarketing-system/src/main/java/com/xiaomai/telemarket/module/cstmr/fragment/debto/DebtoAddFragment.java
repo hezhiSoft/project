@@ -20,16 +20,16 @@ public class DebtoAddFragment extends DebtoBaseFragment implements RemetoRepoCal
     @Override
     public void onSubmit() {
         super.onSubmit();
-        DebtoEntity debtoEntity=getDebtoEntity();
+        DebtoEntity debtoEntity = getDebtoEntity();
         debtoEntity.setCustomerID(CusrometDetailsActivity.entity.getID());
 
-        dialog= DialogFactory.createLoadingDialog(getActivity(),"提交...");
-        CusrometRemoteRepo.getInstance().addDebto(debtoEntity,this);
+        dialog = DialogFactory.createLoadingDialog(getActivity(), "提交...");
+        CusrometRemoteRepo.getInstance().addDebto(debtoEntity, this);
     }
 
     @Override
     public void onSuccess(Responese data) {
-        showToast("提交成功");
+        showToast("新增成功");
         getActivity().finish();
     }
 

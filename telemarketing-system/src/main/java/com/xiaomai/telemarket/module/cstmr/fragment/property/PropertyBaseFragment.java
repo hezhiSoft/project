@@ -160,9 +160,9 @@ public class PropertyBaseFragment extends BaseFragment {
             }
         });
         /*按揭银行*/
-        PropertyMortgageBank.setOnClickListener(new View.OnClickListener() {
+        PropertyMortgageBank.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
-            public void onClick(View v) {
+            public void onClick(TextView textView) {
                 List<DictionaryEntity> list = DictionaryHelper.getBankData();
                 DictionaryDialog dictionaryDialog = new DictionaryDialog();
                 dictionaryDialog.setItemData(list)
