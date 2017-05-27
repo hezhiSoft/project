@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="张小麦"
+        android:text="@string/dial_xxx"
         android:textColor="@color/white_pure"
         android:textSize="@dimen/text_size_title_38" />
 
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_10dp"
-        android:text="正在呼叫..."
+        android:text="@string/dial_dialling"
         android:textColor="@color/white_pure"
         android:textSize="@dimen/text_size_content_18" />
 
@@ -142,6 +142,7 @@
                 android:background="@drawable/ic_dial_stop_selector" />
 
             <TextView
+                android:id="@+id/tv_dial_stop_on"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

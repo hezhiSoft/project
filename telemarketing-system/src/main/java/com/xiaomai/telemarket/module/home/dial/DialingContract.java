@@ -1,5 +1,7 @@
 package com.xiaomai.telemarket.module.home.dial;
 
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+
 /**
  * @description
  * @author yangdu <youngdu29@gmail.com>
@@ -8,10 +10,15 @@ package com.xiaomai.telemarket.module.home.dial;
 public class DialingContract {
 
     interface View{
-
+        void showRequestNumberStar();
+        void showRequestNumberSuccess(CusrometListEntity entity);
+        void showRequestNumberFailed(String msg);
+        void showRequestNumberStoped();
     }
 
     interface Presenter{
-
+        void requestNumberFromPublic();
+        void requestNumberFromPrivate(String preid);
+        void stopRequest();
     }
 }

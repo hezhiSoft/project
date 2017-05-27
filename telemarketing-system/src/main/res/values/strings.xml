@@ -44,6 +44,12 @@
     <string name="dial_mark_empty">标记空号</string>
     <string name="dial_handoff">免提</string>
     <string name="dial_stop_group">停止群呼</string>
+    <string name="dial_resume_group">继续群呼</string>
     <string name="dial_cancel">取消</string>
+    <string name="dial_xxx">XXX</string>
+    <string name="dial_dialling">正在呼叫&#8230;</string>
+    <string name="dial_requesting">请求数据中&#8230;</string>
+    <string name="dial_stoped">暂停拨号&#8230;</string>
+    <string name="dial_request_failed">网络故障&#8230;</string>
 
 </resources>

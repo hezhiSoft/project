@@ -1,20 +1,16 @@
 package com.xiaomai.telemarket.module.home;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +22,7 @@ import android.widget.TextView;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.ISystemUtil;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.home.dial.DialingActivity;
@@ -144,7 +141,7 @@ public class HomeFragment extends BaseFragment {
         editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setHint("输入电话号码");
-        editText.setText("10010");
+        editText.setText("10086");
         new AlertDialog.Builder(getActivity())
                 .setTitle("输入电话号码")
                 .setView(editText)
@@ -153,7 +150,7 @@ public class HomeFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String phoneNumber = editText.getText().toString();
                         if (RegexUtils.isPhoneLegal(phoneNumber)) {
-                            makeCall(getActivity(), phoneNumber, true);
+                            ISystemUtil.makeCall(getActivity(), phoneNumber, true);
                         } else {
                             showToast("电话号码格式不正确！");
                         }
@@ -161,21 +158,4 @@ public class HomeFragment extends BaseFragment {
                 }).create().show();
     }
 
-    /**
-     * @desc 拨打电话
-     * @param activity
-     * @param teleNumber 号码
-     * @param isDirect 是否直接播出
-     * @author  <youngdu29@gmail.com>
-     * @createtime 14/04/2017 9:54 AM
-     */
-    public static void makeCall(Activity activity, String teleNumber, boolean isDirect) {
-        if (activity!=null&&!TextUtils.isEmpty(teleNumber)) {
-            Intent intent = new Intent();
-            intent.setAction(isDirect?Intent.ACTION_CALL:Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + teleNumber));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(intent);
-        }
-    }
 }

@@ -57,7 +57,7 @@ public interface APIService {
      * @return
      */
     @GET("api/user/GetStateEnum")
-    Call<Responese<List<UserStateEntity>>> userStateList();
+    Call<Responese<List<UserStateEntity>>> getUserStateList();
 
 //    /**
 //     * 获取用户状态 TODO 接口未定义
@@ -90,7 +90,7 @@ public interface APIService {
      * @return
      */
     @POST("api/customer/GetFromPrivate")
-    Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPublic(@Body RequestBody body);
+    Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPrivate(@Body RequestBody body);
 
     /**
      * 获取客户列表

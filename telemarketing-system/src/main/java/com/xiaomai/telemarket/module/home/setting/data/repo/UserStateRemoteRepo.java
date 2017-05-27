@@ -66,7 +66,7 @@ public class UserStateRemoteRepo implements BaseDataSourse {
      * @param callback
      */
     public void requestUserStateLists(final RemetoRepoCallback<List<UserStateEntity>> callback) {
-        userStateListCall = XiaomaiRetrofitManager.getAPIService().userStateList();
+        userStateListCall = XiaomaiRetrofitManager.getAPIService().getUserStateList();
         userStateListCall.enqueue(new RetrofitCallback<Responese<List<UserStateEntity>>>() {
             @Override
             public void onSuccess(Responese<List<UserStateEntity>> data) {

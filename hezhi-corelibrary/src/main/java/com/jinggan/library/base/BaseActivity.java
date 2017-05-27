@@ -1,6 +1,6 @@
 package com.jinggan.library.base;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.jinggan.library.R;
 import com.jinggan.library.base.handler.WaytoHandler;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.ui.widget.SwipeBackLayout;
 import com.jinggan.library.utils.IActivityManage;
@@ -97,7 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected InputMethodManager mInput;
 
-    private Dialog dialog;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -471,6 +472,30 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void showToast(String msg) {
         ToastUtil.showToast(this, msg);
+    }
+
+    /**
+     * 显示进度对话框
+     * du yang
+     * @param msg
+     */
+    public void showProgressDlg(String msg){
+        if (progressDialog==null) {
+            progressDialog= DialogFactory.createLoadingDialog(this,msg);
+        }else{
+            progressDialog.setMessage(msg);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * 隐藏进度框
+     * du yang
+     */
+    public void dismissProgressDlg(){
+        if (progressDialog!=null&&progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override

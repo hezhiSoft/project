@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.jinggan.library.base.BaseApplication;
 
@@ -163,6 +164,24 @@ public class ISystemUtil {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     * @desc 拨打电话
+     * @param activity
+     * @param teleNumber 号码
+     * @param isDirect 是否直接播出
+     * @author  <youngdu29@gmail.com>
+     * @createtime 14/04/2017 9:54 AM
+     */
+    public static void makeCall(Activity activity, String teleNumber, boolean isDirect) {
+        if (activity!=null&&!TextUtils.isEmpty(teleNumber)) {
+            Intent intent = new Intent();
+            intent.setAction(isDirect?Intent.ACTION_CALL:Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + teleNumber));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
         }
     }
 }
