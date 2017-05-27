@@ -47,7 +47,7 @@ public class PhoneRecordUtil {
         if (isCommingNumber) {
             callDir = "呼入";
         }
-        String fileName = callDir + "-" + phoneNumber + "-"+ new SimpleDateFormat("yy-MM-dd_HH-mm-ss")
+        String fileName = callDir + "-" + phoneNumber + "-"+ new SimpleDateFormat("yyyyMMddHHmmss")
                 .format(new Date(System.currentTimeMillis())) + ".mp3";//实际是3gp
         File recordName = new File(IFileUtils.getRecordDirectory(), fileName);
 
@@ -56,20 +56,20 @@ public class PhoneRecordUtil {
             Log.d("recorder", "创建文件" + recordName.getName());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("recorder", "创建文件" + recordName.getName());
         }
 
-        mrecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        mrecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-        mrecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+        mrecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mrecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+        mrecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         mrecorder.setOutputFile(recordName.getAbsolutePath());
 
         try {
             mrecorder.prepare();
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
         mrecorder.start();
         started = true;
@@ -78,12 +78,12 @@ public class PhoneRecordUtil {
 
     public void stop() {
         try {
+            started = false;
             if (mrecorder != null) {
                 mrecorder.stop();
                 mrecorder.release();
                 mrecorder = null;
             }
-            started = false;
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,13 @@
 package com.jinggan.library.base;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.jinggan.library.base.handler.WaytoHandler;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +28,8 @@ public class BaseFragment extends Fragment {
      * 消息处理Handler
      */
     protected WaytoHandler mHandler;
+
+    protected ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,5 +79,30 @@ public class BaseFragment extends Fragment {
     public void showToast(String msg) {
         ToastUtil.showToast(getActivity(), msg);
     }
+
+    /**
+     * 显示进度对话框
+     * du yang
+     * @param msg
+     */
+    public void showProgressDlg(String msg){
+        if (progressDialog==null) {
+            progressDialog= DialogFactory.createLoadingDialog(getActivity(),msg);
+        }else{
+            progressDialog.setMessage(msg);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * 隐藏进度框
+     * du yang
+     */
+    public void dismissProgressDlg(){
+        if (progressDialog!=null&&progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
 
 }

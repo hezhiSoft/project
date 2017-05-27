@@ -13,6 +13,7 @@ import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
+import com.xiaomai.telemarket.service.DownloadInitDataService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +90,7 @@ public class LoginActivity extends BaseActivity implements AccountContract.Login
         ISharedPreferencesUtils.setValue(this, Constant.PASSWORD_KEY, loginPwdEditText.getText().toString());
         ISharedPreferencesUtils.setValue(this, Constant.USER_STATE, Constant.UserState.INWORK.getValue());
 
+        DownloadInitDataService.startService(getApplicationContext());
         ISkipActivityUtil.startIntent(this, MainActivity.class);
     }
 

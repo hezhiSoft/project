@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseActivity;
-import com.jinggan.library.ui.dialog.ToastUtil;
+import com.jinggan.library.ui.dialog.DialogFactory;
+import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISkipActivityUtil;
-import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
 
@@ -58,7 +58,13 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
                 ISkipActivityUtil.startIntent(SettingActivity.this, SettingEditActivity.class, bundle);
                 break;
             case R.id.tv_exit:
-                ToastUtil.showToast(DataApplication.getInstance(), "退出系统");
+                DialogFactory.showMsgDialog(this, "退出", "确定退出电销系统?", "退出", "取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: 19/05/2017 退出登录接口
+                        IActivityManage.getInstance().exit();
+                    }
+                }, null);
                 break;
         }
     }

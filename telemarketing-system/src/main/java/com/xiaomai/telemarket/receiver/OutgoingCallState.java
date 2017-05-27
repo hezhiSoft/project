@@ -21,15 +21,15 @@ public class OutgoingCallState {
      */
     public static final class ForeGroundCallState {
         //空闲状态
-        public static final String IDLE ="com.shenyidai.telemarket.FORE_GROUND_IDLE";
+        public static final String IDLE ="com.xiaomai.telemarket.FORE_GROUND_IDLE";
         //正在拨号，等待建立连接
-        public static final String DIALING ="com.shenyidai.telemarket.FORE_GROUND_DIALING";//
+        public static final String DIALING ="com.xiaomai.telemarket.FORE_GROUND_DIALING";//
         //呼出成功，对方正在响铃声
-        public static final String ALERTING ="com.shenyidai.telemarket.FORE_GROUND_ALERTING";
+        public static final String ALERTING ="com.xiaomai.telemarket.FORE_GROUND_ALERTING";
         //对话接通，通话建立
-        public static final String ACTIVE ="com.shenyidai.telemarket.FORE_GROUND_ACTIVE";
+        public static final String ACTIVE ="com.xiaomai.telemarket.FORE_GROUND_ACTIVE";
         //已经断开，挂机
-        public static final String DISCONNECTED ="com.shenyidai.telemarket.FORE_GROUND_DISCONNECTED";
+        public static final String DISCONNECTED ="com.xiaomai.telemarket.FORE_GROUND_DISCONNECTED";
     }
 
     /**

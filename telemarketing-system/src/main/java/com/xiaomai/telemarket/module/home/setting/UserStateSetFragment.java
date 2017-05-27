@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jinggan.library.base.BaseFragment;
-import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.jinggan.library.ui.dialog.ToastUtil;
+import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.home.setting.data.UserStateEntity;
-import com.xiaomai.telemarket.module.home.setting.data.repo.UserStateRemoteRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import butterknife.Unbinder;
  * @description 用户状态设置
  * @createtime 06/05/2017 4:18 PM
  **/
-public class UserStateSetFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallback<String> {
+public class UserStateSetFragment extends BaseFragment implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener,UserStateSetContract.View {
 
 
     @BindView(R.id.user_state_recyclerview)
@@ -38,7 +39,7 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
     Unbinder unbinder;
     private UserStateListAdapter adapter;
 
-    private UserStateRemoteRepo userStateRemoteRepo;
+    private UserStateChangePresenter userStateChangePresenter;
 
     public static BaseFragment newInstance() {
         return new UserStateSetFragment();
@@ -47,7 +48,7 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userStateRemoteRepo = UserStateRemoteRepo.getInstance();
+        userStateChangePresenter = new UserStateChangePresenter(this);
     }
 
     @Nullable
@@ -57,10 +58,11 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
         unbinder = ButterKnife.bind(this, view);
         adapter=new UserStateListAdapter(getContext());
         initUserStateList();
+        adapter.setOnItemClickListener(this);
         user_state_recyclerview.setRecyclerViewAdapter(adapter);
         user_state_recyclerview.setMode(PullToRefreshRecyclerView.Mode.DISABLED);//TODO 这里不做刷新
         user_state_recyclerview.setPullToRefreshListener(this);
-        user_state_recyclerview.startUpRefresh();
+//        user_state_recyclerview.startUpRefresh();
         return view;
     }
 
@@ -77,6 +79,14 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
             }catch (Exception ex){
 
             }
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, Object data, int position) {
+        if (data!=null) {
+            UserStateEntity entity = (UserStateEntity) data;
+            userStateChangePresenter.changeUserState(Integer.valueOf(entity.getCode()));
         }
     }
 
@@ -98,28 +108,20 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
     }
 
     @Override
-    public void onSuccess(String data) {
-//        adapter.changeUserState(data);
+    public void showChangeUserStateStart() {
+        showProgressDlg(getResources().getString(R.string.common_progress_dlg_tip));
     }
 
     @Override
-    public void onFailure(int code, String msg) {
-
+    public void showChangeUserStateSuccess(int status) {
+        dismissProgressDlg();
+        adapter.changeUserState(status + "");
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.USER_STATE, status);
     }
 
     @Override
-    public void onThrowable(Throwable t) {
-
+    public void showChangeUserStateFailed(String msg) {
+        dismissProgressDlg();
+        ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(), msg);
     }
-
-    @Override
-    public void onUnauthorized() {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
 }

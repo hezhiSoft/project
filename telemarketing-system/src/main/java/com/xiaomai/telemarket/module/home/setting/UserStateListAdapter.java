@@ -1,6 +1,7 @@
 package com.xiaomai.telemarket.module.home.setting;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,8 +22,10 @@ import butterknife.ButterKnife;
  **/
 public class UserStateListAdapter extends BaseRecyclerViewAdapter<UserStateEntity> {
 
+    private Drawable checkDrawable;
     public UserStateListAdapter(Context context) {
         super(context);
+        checkDrawable = context.getResources().getDrawable(R.mipmap.ic_select);
     }
 
     @Override
@@ -31,10 +34,25 @@ public class UserStateListAdapter extends BaseRecyclerViewAdapter<UserStateEntit
     }
 
     @Override
-    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.ctvUserState.setText(mLists.get(position).getName());
-        viewHolder.ctvUserState.setChecked(mLists.get(position).isSelect());
+        if (mLists.get(position).isSelect()) {
+            viewHolder.ctvUserState.setCheckMarkDrawable(checkDrawable);
+        } else {
+            viewHolder.ctvUserState.setCheckMarkDrawable(null);
+        }
+        final UserStateEntity entity = mLists.get(position);
+        viewHolder.ctvUserState.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if (entity != null) {
+                    if (listener!=null) {
+                        listener.onItemClick(view,entity,position);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -60,4 +78,5 @@ public class UserStateListAdapter extends BaseRecyclerViewAdapter<UserStateEntit
             ButterKnife.bind(this, view);
         }
     }
+
 }
