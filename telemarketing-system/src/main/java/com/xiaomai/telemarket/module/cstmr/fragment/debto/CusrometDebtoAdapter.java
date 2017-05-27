@@ -65,6 +65,7 @@ public class CusrometDebtoAdapter extends BaseRecyclerViewAdapter<DebtoEntity> {
                 }
             }
         });
+
         final View infoView = inflater.inflate(R.layout.cusromet_debto_layout, null);
         setDetailsData(infoView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(infoView);

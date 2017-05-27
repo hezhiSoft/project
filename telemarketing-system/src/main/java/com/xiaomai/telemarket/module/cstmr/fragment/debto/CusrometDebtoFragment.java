@@ -62,11 +62,16 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        EdbtoRecyclerView.startUpRefresh();
+    }
+
     private void initRecyclerView() {
         EdbtoRecyclerView.setRecyclerViewAdapter(adapter);
         EdbtoRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         EdbtoRecyclerView.setPullToRefreshListener(this);
-        EdbtoRecyclerView.startUpRefresh();
     }
 
     @Override

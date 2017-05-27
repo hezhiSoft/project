@@ -69,7 +69,7 @@ public class CusrometInfoEditActivity extends BaseActivity {
         InfoSex.setContentText(DictionaryHelper.ParseSex(entity.getSex()+""));
         InfoMaritalStatus.setContentText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus()+""));
         InfoPayroll.setContentText("无");
-        InfoAccumulationFundAccount.setContentText(entity.getAccumulationFundAccount()+"");
+        InfoAccumulationFundAccount.setContentText(entity.getAccountWater()+"");
         InfoSocialSecurityAccount.setContentText(entity.getSocialSecurityAccount()+"");
         InfoRemark.setContentText(entity.getRemark());
 

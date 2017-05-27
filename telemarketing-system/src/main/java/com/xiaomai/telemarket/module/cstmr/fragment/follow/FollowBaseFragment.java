@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.follow;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,14 +9,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -55,6 +62,15 @@ public class FollowBaseFragment extends BaseFragment {
     FormWriteTopTitleView FollowFollowPerson;
     Unbinder unbinder;
 
+    protected Dialog dialog;
+
+    private String FollowTypeCode,InterestedStatusCode,LoanTypeCode,NextFollowTypeCode;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +78,12 @@ public class FollowBaseFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         setListener();
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(true);
     }
 
     private void setListener(){
@@ -76,6 +98,7 @@ public class FollowBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity!=null){
+                                    FollowTypeCode=entity.getCode();
                                     FollowFollowType.setContentText(entity.getName());
                                 }
                             }
@@ -99,6 +122,7 @@ public class FollowBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity!=null){
+                                    InterestedStatusCode=entity.getCode();
                                     FollowInterestedStatus.setContentText(entity.getName());
                                 }
                             }
@@ -116,6 +140,7 @@ public class FollowBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity!=null){
+                                    LoanTypeCode=entity.getCode();
                                     FollowLoanType.setContentText(entity.getName());
                                 }
                             }
@@ -133,6 +158,7 @@ public class FollowBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity!=null){
+                                    NextFollowTypeCode=entity.getCode();
                                     FollowNextFollowType.setContentText(entity.getName());
                                 }
                             }
@@ -151,6 +177,11 @@ public class FollowBaseFragment extends BaseFragment {
         if (entity==null){
             return;
         }
+        FollowTypeCode=entity.getFollowType()+"";
+        InterestedStatusCode=entity.getInterestedStatus()+"";
+        LoanTypeCode=entity.getLoanType()+"";
+        NextFollowTypeCode=entity.getNextFollowType()+"";
+
         FollowFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getFollowType()+""));
         FollowFollowDate.setContentText(entity.getFollowDate().replaceAll("T"," "));
         FollowInterestedStatus.setContentText(DictionaryHelper.ParseInterestedStatus(entity.getInterestedStatus()+""));
@@ -163,9 +194,42 @@ public class FollowBaseFragment extends BaseFragment {
         FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName());
     }
 
+    protected FollowEntity getFollowEntity(){
+        FollowEntity entity=new FollowEntity();
+        entity.setFollowType(IStringUtils.toInt(FollowTypeCode));
+        entity.setFollowDate(FollowFollowDate.getContentText());
+        entity.setInterestedStatus(IStringUtils.toInt(InterestedStatusCode));
+        entity.setLoanType(IStringUtils.toInt(LoanTypeCode));
+        entity.setAmount(IStringUtils.toInt(FollowAmount.getContentText()));
+        entity.setNextFollowType(IStringUtils.toInt(NextFollowTypeCode));
+        entity.setNextFollowDate(FollowNextFollowDate.getContentText());
+        entity.setNextFollowTime(IStringUtils.toInt(FollowNextFollowTime.getContentText()));
+        entity.setRemark(FollowRemark.getContentText());
+        FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName());
+        return entity;
+    }
+
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Subscribe
+    public void onEventBusSubmit(EventBusValues values) {
+        if (values.getWhat() == 0x1007) {
+            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSubmit();
+                }
+            });
+        }
+    }
+
+    public void onSubmit() {
+
     }
 }

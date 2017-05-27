@@ -6,10 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -34,6 +37,14 @@ public class FollowActivity extends BaseActivity {
             e.printStackTrace();
             switchToAddDebtoFragment();
         }
+    }
+
+    @Override
+    public void onClickToolbarRightLayout() {
+        super.onClickToolbarRightLayout();
+        EventBusValues busValues=new EventBusValues();
+        busValues.setWhat(0x1007);
+        EventBus.getDefault().post(busValues);
     }
 
     private void switchToEditDebtoFragment() {
