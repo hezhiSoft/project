@@ -75,7 +75,7 @@ public class DebtoBaseFragment extends BaseFragment {
     FormWriteTopTitleView DebtoRemark;
     Unbinder unbinder;
 
-    private String typeDeptCod,bankCode,repaymentModeCode;
+    private String typeDeptCod, bankCode, repaymentModeCode;
 
     protected Dialog dialog;
 
@@ -113,7 +113,7 @@ public class DebtoBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
-                                    typeDeptCod=entity.getCode();
+                                    typeDeptCod = entity.getCode();
                                     DebtoTypeDept.setContentText(entity.getName());
                                 }
                             }
@@ -131,7 +131,19 @@ public class DebtoBaseFragment extends BaseFragment {
                 dialog.setOnSureLisener(new OnSureLisener() {
                     @Override
                     public void onSure(DateBean date) {
-                        DebtoLoanDate.setContentText(date.getYear() + "-" + date.getMoth() + "-" + date.getDay());
+                        String month = "";
+                        if (date.getMoth() < 10) {
+                            month = "0" + date.getMoth();
+                        } else {
+                            month = date.getMoth() + "";
+                        }
+                        String day = "";
+                        if (date.getDay() < 10) {
+                            day = "0" + date.getDay();
+                        } else {
+                            day = date.getDay() + "";
+                        }
+                        DebtoLoanDate.setContentText(date.getYear() + "-" + month + "-" + day);
                     }
                 });
                 dialog.show();
@@ -154,7 +166,7 @@ public class DebtoBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
-                                    bankCode=entity.getCode();
+                                    bankCode = entity.getCode();
                                     DebtoLoanBank.setContentText(entity.getName());
                                 }
                             }
@@ -173,7 +185,7 @@ public class DebtoBaseFragment extends BaseFragment {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
                                 if (entity != null) {
-                                    repaymentModeCode=entity.getCode();
+                                    repaymentModeCode = entity.getCode();
                                     DebtoRepaymentMode.setContentText(entity.getName());
                                 }
                             }
@@ -187,9 +199,9 @@ public class DebtoBaseFragment extends BaseFragment {
         if (entity == null) {
             return;
         }
-        typeDeptCod=entity.getTypeDept();
-        bankCode=entity.getLoanBank();
-        repaymentModeCode=entity.getRepaymentMode();
+        typeDeptCod = entity.getTypeDept();
+        bankCode = entity.getLoanBank();
+        repaymentModeCode = entity.getRepaymentMode();
 
         DebtoTypeDept.setContentText(DictionaryHelper.ParseDept(entity.getTypeDept() + ""));
         DebtoLoanAmount.setContentText(entity.getLoanAmount() + "");
@@ -230,8 +242,8 @@ public class DebtoBaseFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onEventBusSubmit(EventBusValues values){
-        if (values.getWhat()==0x1001){
+    public void onEventBusSubmit(EventBusValues values) {
+        if (values.getWhat() == 0x1001) {
             DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -241,9 +253,10 @@ public class DebtoBaseFragment extends BaseFragment {
         }
     }
 
-    public void onSubmit(){
+    public void onSubmit() {
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

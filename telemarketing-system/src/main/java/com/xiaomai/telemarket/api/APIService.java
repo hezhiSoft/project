@@ -7,6 +7,7 @@ import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
@@ -93,6 +94,15 @@ public interface APIService {
     Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPrivate(@Body RequestBody body);
 
     /**
+     * 获取过滤每件
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 19:11
+     */
+    @POST("api/customer/GetFilters")
+    Call<Responese<List<FiltersEntity>>> getFilters();
+
+    /**
      * 获取客户列表
      * <p>
      * author: hezhiWu
@@ -147,6 +157,15 @@ public interface APIService {
     Call<Responese> editHouse(@Body PropertyEntity entity);
 
     /**
+     * 新增房产
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 18:15
+     */
+    @POST("api/customer/AddHouse")
+    Call<Responese> addHouse(@Body PropertyEntity entity);
+
+    /**
      * 获取客户保单列表
      * <p>
      * author: hezhiWu
@@ -164,6 +183,8 @@ public interface APIService {
     @POST("api/customer/EditInsurance")
     Call<Responese> editInsurance(@Body InsuranceEntity entity);
 
+    @POST("api/customer/AddInsurance")
+    Call<Responese> addInsurance(@Body InsuranceEntity entity);
 
     /**
      * 查询客户公司信息列表
@@ -184,6 +205,15 @@ public interface APIService {
     Call<Responese> editCompany(@Body CompanyEntity entity);
 
     /**
+     * 添加公司
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 18:41
+     */
+    @POST("api/customer/AddCompany")
+    Call<Responese> addCompany(@Body CompanyEntity entity);
+
+    /**
      * 获取客户车辆信息
      * <p>
      * author: hezhiWu
@@ -202,14 +232,14 @@ public interface APIService {
     Call<Responese> editCar(@Body CarEntity entity);
 
     /**
-     *添加添加
-     * 
-     *author: hezhiWu
-     *created at 2017/5/27 13:55
+     * 添加添加
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 13:55
      */
     @POST("api/customer/AddCar")
     Call<Responese> addCar(@Body CarEntity entity);
-    
+
     /**
      * 查询客户文件列表
      * <p>
@@ -236,6 +266,16 @@ public interface APIService {
      */
     @POST("api/customer/EditFollow")
     Call<Responese> editFollow(@Body FollowEntity entity);
+
+    /**
+     * 添加跟进
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 18:43
+     */
+    @POST("api/customer/AddFollow")
+    Call<Responese> addFollow(@Body FollowEntity entity);
+
     /**
      * 查询字典
      * <p>

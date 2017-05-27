@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
+import com.jinggan.library.ui.date.DatePickDialog;
+import com.jinggan.library.ui.date.OnSureLisener;
+import com.jinggan.library.ui.date.bean.DateBean;
+import com.jinggan.library.ui.date.bean.DateType;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
@@ -108,8 +112,16 @@ public class FollowBaseFragment extends BaseFragment {
         FollowFollowDate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(),FollowFollowDate.getTextView(),FollowFollowDate.getContentText());
-            }
+                DatePickDialog dialog = new DatePickDialog(getContext());
+                dialog.setTitle("选择日期");
+                dialog.setType(DateType.TYPE_YMD);
+                dialog.setOnSureLisener(new OnSureLisener() {
+                    @Override
+                    public void onSure(DateBean date) {
+                        FollowFollowDate.setContentText(date.getYear() + "-" + date.getMoth() + "-" + date.getDay());
+                    }
+                });
+                dialog.show();}
         });
         FollowInterestedStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
@@ -168,8 +180,16 @@ public class FollowBaseFragment extends BaseFragment {
         FollowNextFollowDate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(),FollowNextFollowDate.getTextView(),FollowNextFollowDate.getContentText());
-            }
+                DatePickDialog dialog = new DatePickDialog(getContext());
+                dialog.setTitle("选择日期");
+                dialog.setType(DateType.TYPE_YMD);
+                dialog.setOnSureLisener(new OnSureLisener() {
+                    @Override
+                    public void onSure(DateBean date) {
+                        FollowNextFollowDate.setContentText(date.getYear() + "-" + date.getMoth() + "-" + date.getDay());
+                    }
+                });
+                dialog.show();}
         });
     }
 
