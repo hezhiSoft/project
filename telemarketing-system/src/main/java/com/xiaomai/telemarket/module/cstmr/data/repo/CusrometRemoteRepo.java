@@ -152,6 +152,58 @@ public class CusrometRemoteRepo implements BaseDataSourse {
     }
 
     /**
+     *获取踏进列表
+     *
+     *author: hezhiWu
+     *created at 2017/5/28 下午12:45
+     */
+    public void requestStayFollow(int pageIndex, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
+        RequestBody body = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            JSONObject pageIndexObj = new JSONObject();
+            pageIndexObj.put("PageIndex", pageIndex);
+
+            jsonObject.put("pageparamer", pageIndexObj);
+            jsonObject.put("filter", filter);
+            body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        listCusrometListCall = XiaomaiRetrofitManager.getAPIService().queryStayFollow(body);
+        listCusrometListCall.enqueue(new RetrofitCallback<Responese<List<CusrometListEntity>>>() {
+            @Override
+            public void onSuccess(Responese<List<CusrometListEntity>> data) {
+                if (data.getData() != null && data.getData().size() >= 0) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
      * 获取客户负债信息
      * <p>
      * author: hezhiWu

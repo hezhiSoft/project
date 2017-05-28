@@ -27,8 +27,11 @@ import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
+import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
+import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
 import com.xiaomai.telemarket.module.home.dial.DialingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
+import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
 
 import butterknife.BindView;
@@ -56,23 +59,24 @@ public class HomeFragment extends BaseFragment {
     private HomeMenuItemClickListener homeMenuItemClickListener;
 
     private boolean isRecordPermissed;
-    public static final int RECORD_PERMISSTION_REQUEST_CODE=0x001;
+    public static final int RECORD_PERMISSTION_REQUEST_CODE = 0x001;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, null);
         unbinder = ButterKnife.bind(this, rootView);
-        Context context=getActivity();
+        Context context = getActivity();
         if (context instanceof HomeMenuItemClickListener) {
             homeMenuItemClickListener = (HomeMenuItemClickListener) context;
         }
         initUI();
         return rootView;
     }
-    private void initUI(){
-        UserInfoEntity entity= DataApplication.getInstance().getUserInfoEntity();
-        if (entity!=null){
+
+    private void initUI() {
+        UserInfoEntity entity = DataApplication.getInstance().getUserInfoEntity();
+        if (entity != null) {
             HomeUserNameTextView.setText(entity.getDisplayName());
         }
     }
@@ -95,7 +99,7 @@ public class HomeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView})
+    @OnClick({R.id.Home_call_TextView, R.id.Home_trend_TextView, R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Home_seting_TextView:/*设置*/
@@ -120,9 +124,16 @@ public class HomeFragment extends BaseFragment {
             case R.id.Home_Search_TextView:/*产品查询*/
                 break;
             case R.id.Home_order_TextView:/*订单管理*/
-                if (homeMenuItemClickListener != null) {
-                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_ORDER);
-                }
+//                if (homeMenuItemClickListener != null) {
+//                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_ORDER);
+//                }
+                ISkipActivityUtil.startIntent(getContext(), OrderActivity.class);
+                break;
+            case R.id.Home_call_TextView:/*员工外呼*/
+                ISkipActivityUtil.startIntent(getContext(), CallOutActivity.class);
+                break;
+            case R.id.Home_trend_TextView:/*外呼趋势*/
+                ISkipActivityUtil.startIntent(getContext(), CallTrendActivity.class);
                 break;
         }
     }
@@ -131,7 +142,7 @@ public class HomeFragment extends BaseFragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RECORD_PERMISSTION_REQUEST_CODE) {
-            if (grantResults != null&&grantResults.length>0&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission Granted
                 isRecordPermissed = true;
             } else {
@@ -141,9 +152,9 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    private void dialingSingle(){
+    private void dialingSingle() {
         if (!isRecordPermissed) {
-            ToastUtil.showToast(getActivity(),"录音权限被禁止！请在权限管理中允许录音权限");
+            ToastUtil.showToast(getActivity(), "录音权限被禁止！请在权限管理中允许录音权限");
             return;
         }
         final EditText editText = new EditText(getActivity());
@@ -154,7 +165,7 @@ public class HomeFragment extends BaseFragment {
         new AlertDialog.Builder(getActivity())
                 .setTitle("输入电话号码")
                 .setView(editText)
-                .setPositiveButton("拨号",new DialogInterface.OnClickListener(){
+                .setPositiveButton("拨号", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String phoneNumber = editText.getText().toString();
