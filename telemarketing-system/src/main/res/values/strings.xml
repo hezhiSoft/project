@@ -52,4 +52,6 @@
     <string name="dial_stoped">暂停拨号&#8230;</string>
     <string name="dial_request_failed">网络故障&#8230;</string>
 
+    <string name="dial_star_by_group">按顺序拨号</string>
+
 </resources>

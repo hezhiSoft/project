@@ -9,14 +9,14 @@ import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
  **/
 public class DialingContract {
 
-    interface View{
+    public interface View{
         void showRequestNumberStar();
         void showRequestNumberSuccess(CusrometListEntity entity);
         void showRequestNumberFailed(String msg);
         void showRequestNumberStoped();
     }
 
-    interface Presenter{
+    public interface Presenter{
         void requestNumberFromPublic();
         void requestNumberFromPrivate(String preid);
         void stopRequest();
