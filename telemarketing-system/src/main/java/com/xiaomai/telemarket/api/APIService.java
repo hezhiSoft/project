@@ -112,6 +112,15 @@ public interface APIService {
     Call<Responese<List<CusrometListEntity>>> queryCusrometLists(@Body RequestBody body);
 
     /**
+     *获取跟进列表
+     * 
+     *author: hezhiWu
+     *created at 2017/5/28 下午12:45
+     */
+    @POST("api/customer/FollowingCustomers")
+    Call<Responese<List<CusrometListEntity>>> queryStayFollow(@Body RequestBody body);
+
+    /**
      * 获取客户负债列表
      * <p>
      * author: hezhiWu
