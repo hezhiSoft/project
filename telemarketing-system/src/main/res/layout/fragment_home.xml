@@ -107,10 +107,11 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_dial_group_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="按顺序拨号"
+                            android:text="@string/dial_star_by_group"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
                     </LinearLayout>
