@@ -5,7 +5,7 @@
     <string name="main_home_tab">主页</string>
     <string name="main_all_cusroment_tab">客户管理</string>
     <string name="main_stay_cusroment_tab">待跟进</string>
-    <string name="main_order_tab">订单管理</string>
+    <string name="main_order_tab">设置</string>
 
     <string name="title_customer">客户管理</string>
     <string name="title_todo_list">待跟进列表</string>

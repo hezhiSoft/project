@@ -34,8 +34,11 @@ import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.home.dial.DialingContract;
 import com.xiaomai.telemarket.module.home.dial.DialingPresenter;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
+import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
+import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
 import com.xiaomai.telemarket.module.home.dial.DialingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
+import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
 
 import butterknife.BindView;
@@ -89,9 +92,10 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
         initUI();
         return rootView;
     }
-    private void initUI(){
-        UserInfoEntity entity= DataApplication.getInstance().getUserInfoEntity();
-        if (entity!=null){
+
+    private void initUI() {
+        UserInfoEntity entity = DataApplication.getInstance().getUserInfoEntity();
+        if (entity != null) {
             HomeUserNameTextView.setText(entity.getDisplayName());
         }
     }
@@ -123,7 +127,7 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView})
+    @OnClick({R.id.Home_call_TextView, R.id.Home_trend_TextView, R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Home_seting_TextView:/*设置*/
@@ -156,9 +160,16 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
             case R.id.Home_Search_TextView:/*产品查询*/
                 break;
             case R.id.Home_order_TextView:/*订单管理*/
-                if (homeMenuItemClickListener != null) {
-                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_ORDER);
-                }
+//                if (homeMenuItemClickListener != null) {
+//                    homeMenuItemClickListener.onMenuItemClick(MainActivity.TAB_ORDER);
+//                }
+                ISkipActivityUtil.startIntent(getContext(), OrderActivity.class);
+                break;
+            case R.id.Home_call_TextView:/*员工外呼*/
+                ISkipActivityUtil.startIntent(getContext(), CallOutActivity.class);
+                break;
+            case R.id.Home_trend_TextView:/*外呼趋势*/
+                ISkipActivityUtil.startIntent(getContext(), CallTrendActivity.class);
                 break;
         }
     }

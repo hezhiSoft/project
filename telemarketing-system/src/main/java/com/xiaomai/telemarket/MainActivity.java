@@ -11,6 +11,7 @@ import com.jinggan.library.utils.IActivityManage;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragment;
+import com.xiaomai.telemarket.module.cstmr.fragment.mine.MineFragment;
 import com.xiaomai.telemarket.module.home.HomeFragment;
 import com.xiaomai.telemarket.module.home.HomeMenuItemClickListener;
 import com.xiaomai.telemarket.module.order.OrderFragment;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         mainBottomNavigationBar.addTabItem(R.drawable.ic_tab_home, R.string.main_home_tab, new HomeFragment())
                 .addTabItem(R.drawable.ic_tab_customer, R.string.main_all_cusroment_tab, new CusrometManagementAllFragment())
                 .addTabItem(R.drawable.ic_tab_list, R.string.main_stay_cusroment_tab, new CusrometManagementStayFragment())
-                .addTabItem(R.drawable.ic_tab_order, R.string.main_order_tab,new OrderFragment())
+                .addTabItem(R.mipmap.icon_tab_set, R.string.main_order_tab,new MineFragment())
                 .setTabSelectedListener(this)
                 .setFirstSelectedTab(TAB_HOME);
         setToolbarVisibility(View.GONE);
@@ -93,13 +94,13 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 break;
             case TAB_CUSROMENTLIST:
                 setToolbarCenterTitle("待跟进列表");
-                setToolbarVisibility(View.VISIBLE);
+                setToolbarVisibility(View.GONE);
                 setToolbarRightImage(R.mipmap.icon_screen);
                 break;
             case TAB_ORDER:
                 setToolbarCenterTitle(R.string.main_order_tab);
-                setToolbarRightImage(R.mipmap.icon_screen);
                 setToolbarVisibility(View.VISIBLE);
+                setToolbarRightImage(0);
                 break;
         }
     }

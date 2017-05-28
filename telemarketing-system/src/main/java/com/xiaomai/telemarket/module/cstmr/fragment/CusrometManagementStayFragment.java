@@ -7,7 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.CusrometManagementAdapter;
+import com.xiaomai.telemarket.module.cstmr.FiltersButtomDialog;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
+import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 待跟进列表
@@ -17,12 +34,126 @@ import com.xiaomai.telemarket.R;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementStayFragment extends BaseFragment {
+public class CusrometManagementStayFragment extends BaseFragment implements RemetoRepoCallback<List<CusrometListEntity>>, FiltersButtomDialog.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener{
+
+    @BindView(R.id.Stay_recyclerView)
+    PullToRefreshRecyclerView CustomerAllRecyclerView;
+
+    private CusrometManagementAdapter adapter;
+
+    private int pageIndex;
+    private CusrometRemoteRepo remoteRepo;
+
+    private JSONObject filters;
+
+    private List<FiltersEntity> filtersEntities=new ArrayList<>();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        remoteRepo=CusrometRemoteRepo.getInstance();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_customer_stay,null);
+        ButterKnife.bind(this,rootView);
+        adapter=new CusrometManagementAdapter(getContext());
+        CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
+        CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
+        CustomerAllRecyclerView.setPullToRefreshListener(this);
+        CustomerAllRecyclerView.startUpRefresh();
         return rootView;
     }
+
+    @OnClick({R.id.Stay_toolBar_add_ImageView, R.id.Stay_toolBar_screen_ImageView})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.Stay_toolBar_add_ImageView:
+                break;
+            case R.id.Stay_toolBar_screen_ImageView:
+                FiltersButtomDialog dialog=new FiltersButtomDialog();
+                dialog.setSelectContent(filtersEntities).setListener(this);
+                dialog.show(getFragmentManager(),getClass().getSimpleName());
+                break;
+        }
+    }
+
+    @Override
+    public void onClickItem(List<FiltersEntity> entity) {
+        if (entity!=null&&entity.size()>0){
+            this.filtersEntities=entity;
+            try {
+                filters=new JSONObject();
+                for (FiltersEntity filtersEntity:entity){
+                    filters.put(filtersEntity.getKey(),filtersEntity.getCode());
+                }
+                CustomerAllRecyclerView.startUpRefresh();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onReplance() {
+        filtersEntities.clear();
+        filters=null;
+        CustomerAllRecyclerView.startUpRefresh();
+    }
+
+    @Override
+    public void onDownRefresh() {
+        pageIndex=1;
+        remoteRepo.requestStayFollow(pageIndex,filters,this);
+    }
+
+    @Override
+    public void onPullRefresh() {
+        pageIndex++;
+        remoteRepo.requestStayFollow(pageIndex,filters,this);
+    }
+
+    @Override
+    public void onSuccess(List<CusrometListEntity> data) {
+        if (pageIndex==1){
+            adapter.clearList();
+            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            adapter.addItems(data);
+        }else {
+            adapter.addItems(data,adapter.getItemCount()-1);
+            if (data.size()<=0){
+                CustomerAllRecyclerView.onLoadMoreFinish();
+            }
+        }
+    }
+
+    @Override
+    public void onFailure(int code, String msg) {
+        if (pageIndex==1){
+            adapter.clearList();
+            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }else {
+            showToast(msg);
+        }
+    }
+
+    @Override
+    public void onThrowable(Throwable t) {
+        showToast("数据异常");
+        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+    }
+
+    @Override
+    public void onUnauthorized() {
+        showToast("数据获取失败");
+        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+    }
+
+    @Override
+    public void onFinish() {
+        CustomerAllRecyclerView.closeDownRefresh();
+    }
+
 }
