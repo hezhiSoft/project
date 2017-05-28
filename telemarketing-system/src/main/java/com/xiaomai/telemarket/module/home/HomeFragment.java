@@ -30,13 +30,12 @@ import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
-import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
-import com.xiaomai.telemarket.module.home.dial.DialingContract;
-import com.xiaomai.telemarket.module.home.dial.DialingPresenter;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
 import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
-import com.xiaomai.telemarket.module.home.dial.DialingActivity;
+import com.xiaomai.telemarket.module.home.dial.DialingContract;
+import com.xiaomai.telemarket.module.home.dial.DialingPresenter;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
@@ -88,8 +87,8 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
         if (context instanceof HomeMenuItemClickListener) {
             homeMenuItemClickListener = (HomeMenuItemClickListener) context;
         }
-        initData();
         initUI();
+        initData(savedInstanceState);
         return rootView;
     }
 
@@ -100,9 +99,14 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
         }
     }
 
-    private void initData() {
+    private void initData(Bundle savedInstanceState) {
         isFromPublic = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE)
                 .equals(Constant.DIAL_NUMBER_CODE_PUBLIC);
+        if (savedInstanceState!=null) {
+            isFromPublic = savedInstanceState.getBoolean("isFromPublic");
+            isStopped = savedInstanceState.getBoolean("isStopped");
+            preDialCusId = savedInstanceState.getString("preDialCusId");
+        }
         dialingPresenter = new DialingPresenter(this);
     }
 
@@ -119,6 +123,14 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
                 restartRequest();
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isFromPublic",isFromPublic);
+        outState.putBoolean("isStopped", isStopped);
+        outState.putString("preDialCusId", preDialCusId);
     }
 
     @Override
