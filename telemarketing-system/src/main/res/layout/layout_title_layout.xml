@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:drawableLeft="@mipmap/ic_back"
         android:gravity="center"
-        android:paddingRight="@dimen/dimen_10dp"
+        android:paddingRight="@dimen/dimen_30dp"
         android:text="@string/common_back"
         android:textColor="@color/white_pure"
         android:textSize="18sp" />

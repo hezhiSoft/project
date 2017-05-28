@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity implements AccountContract.Login
     public void onLoginSuccess(UserInfoEntity entity) {
         ISharedPreferencesUtils.setValue(this, Constant.ACCOUNT_KEY, loginAccountEditText.getText().toString());
         ISharedPreferencesUtils.setValue(this, Constant.PASSWORD_KEY, loginPwdEditText.getText().toString());
-        ISharedPreferencesUtils.setValue(this, Constant.USER_STATE, Constant.UserState.INWORK.getValue());
+        ISharedPreferencesUtils.setValue(this, Constant.USER_STATE_KEY, Constant.UserState.INWORK.getValue());
 
         DownloadInitDataService.startService(getApplicationContext());
         ISkipActivityUtil.startIntent(this, MainActivity.class);

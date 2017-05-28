@@ -7,9 +7,12 @@ import android.widget.TextView;
 
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
-import com.jinggan.library.utils.IActivityManage;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.Constant;
+import com.xiaomai.telemarket.module.account.LoginActivity;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
 
 import butterknife.BindView;
@@ -38,6 +41,7 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
         setContentView(R.layout.activity_setting_menu);
         ButterKnife.bind(this);
         setToolbarVisibility(View.GONE);
+        setSwipeEnabled(false);
         initEvent();
     }
 
@@ -58,11 +62,13 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
                 ISkipActivityUtil.startIntent(SettingActivity.this, SettingEditActivity.class, bundle);
                 break;
             case R.id.tv_exit:
-                DialogFactory.showMsgDialog(this, "退出", "确定退出电销系统?", "退出", "取消", new View.OnClickListener() {
+                DialogFactory.showMsgDialog(this, "退出", "确定退出当前账号?", "退出", "取消", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // TODO: 19/05/2017 退出登录接口
-                        IActivityManage.getInstance().exit();
+                        ISharedPreferencesUtils.setValue(SettingActivity.this, Constant.ISLOGIN_KEY, false);
+                        ISkipActivityUtil.startIntent(SettingActivity.this, LoginActivity.class);
+//                        IActivityManage.getInstance().exit();
                     }
                 }, null);
                 break;
@@ -71,6 +77,7 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
 
     @Override
     public void onBackClick() {
+        ISkipActivityUtil.startIntent(SettingActivity.this, MainActivity.class);
         finish();
     }
 

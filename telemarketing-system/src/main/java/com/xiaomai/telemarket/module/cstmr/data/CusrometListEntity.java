@@ -227,4 +227,5 @@ public class CusrometListEntity implements Serializable{
     public void setRowIndex(int RowIndex) {
         this.RowIndex = RowIndex;
     }
+
 }

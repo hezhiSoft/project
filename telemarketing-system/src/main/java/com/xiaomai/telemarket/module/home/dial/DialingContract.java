@@ -13,12 +13,14 @@ public class DialingContract {
         void showRequestNumberStar();
         void showRequestNumberSuccess(CusrometListEntity entity);
         void showRequestNumberFailed(String msg);
+        void showRequestFinished(String mag);
         void showRequestNumberStoped();
     }
 
     public interface Presenter{
         void requestNumberFromPublic();
         void requestNumberFromPrivate(String preid);
+        void deleteTempInfo(String userid);
         void stopRequest();
     }
 }

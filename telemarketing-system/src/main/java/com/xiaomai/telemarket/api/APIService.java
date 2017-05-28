@@ -94,6 +94,14 @@ public interface APIService {
     Call<Responese<List<CusrometListEntity>>> getCustomerInfoFromPrivate(@Body RequestBody body);
 
     /**
+     * 清除拨号记录
+     * @param body {"customerid":""}
+     * @return
+     */
+    @POST("api/customer/DelFromList")
+    Call<Responese<Void>> DelFromList(@Body RequestBody body);
+
+    /**
      * 获取过滤每件
      * <p>
      * author: hezhiWu

@@ -12,12 +12,18 @@ public class Constant {
 
     public static final String ACCOUNT_KEY = "account";
     public static final String PASSWORD_KEY = "password";
+    public static final String ISLOGIN_KEY = "is_login";
     public static final String USERINFO_KEY = "userInfo";
-    public static final String USER_STATE = "userState";
+    public static final String USER_STATE_KEY = "userState";
+    public static final String USER_STATE_NAME_KEY = "userStateName";
 
     /**setting*/
     public static final String USER_STATE_LIST="user_state_list";
     public static final String DIAL_NUMBER_SOURCE = "dial_number_source";
+
+    /**dialing*/
+    public static final String IS_DIALING_KEY= "is_dialing";//接通正在通话中
+
 
     /**
      * 意向状态
@@ -64,4 +70,7 @@ public class Constant {
      * 私有库
      */
     public static final int DIAL_NUMBER_CODE_PRIVATE=2;
+
+    /**状态码*/
+    public static final int RESPONSE_CODE_411=411;
 }

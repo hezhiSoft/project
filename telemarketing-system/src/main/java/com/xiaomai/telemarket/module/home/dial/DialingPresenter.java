@@ -2,6 +2,7 @@ package com.xiaomai.telemarket.module.home.dial;
 
 
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.home.dial.data.repo.CustomerPhoneNumberRemoteRepo;
 
@@ -37,7 +38,11 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFailure(int code, String msg) {
-                mView.showRequestNumberFailed(msg);
+                if (code == Constant.RESPONSE_CODE_411) {
+                    mView.showRequestFinished(msg);
+                } else {
+                    mView.showRequestNumberFailed(msg);
+                }
             }
 
             @Override
@@ -71,7 +76,11 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFailure(int code, String msg) {
-                mView.showRequestNumberFailed(msg);
+                if (code == Constant.RESPONSE_CODE_411) {
+                    mView.showRequestFinished(msg);
+                } else {
+                    mView.showRequestNumberFailed(msg);
+                }
             }
 
             @Override
@@ -82,6 +91,36 @@ public class DialingPresenter implements DialingContract.Presenter {
             @Override
             public void onUnauthorized() {
                 mView.showRequestNumberFailed("onUnauthorized!");
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    @Override
+    public void deleteTempInfo(String userid) {
+        mRepo.deleteFromList(userid, new RemetoRepoCallback<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+
+            }
+
+            @Override
+            public void onUnauthorized() {
+
             }
 
             @Override

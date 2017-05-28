@@ -43,15 +43,42 @@
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
-                    <TextView
-                        android:id="@+id/Home_Deparment_TextView"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="客户部 | 客户主管"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:id="@+id/Home_Deparment_TextView"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="right"
+                            android:text="客户部"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:text=" | "/>
+
+                        <TextView
+                            android:id="@+id/Home_UserState_TextView"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:text="在线"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
@@ -85,7 +112,7 @@
                     android:padding="15dp">
 
                     <ImageView
-                        android:id="@+id/homeImage1"
+                        android:id="@+id/Home_Image_Dial"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -96,15 +123,15 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/homeImage1"
+                        android:layout_toRightOf="@+id/Home_Image_Dial"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="群呼"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="群呼"-->
+                            <!--android:textColor="@color/black"-->
+                            <!--android:textSize="14sp" />-->
 
                         <TextView
                             android:id="@+id/tv_dial_group_state"
@@ -112,8 +139,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="@string/dial_star_by_group"
-                            android:textColor="@color/gray"
-                            android:textSize="12sp" />
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -149,20 +176,20 @@
                         android:layout_toRightOf="@+id/homeImage2"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="点呼"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="点呼"-->
+                            <!--android:textColor="@color/black"-->
+                            <!--android:textSize="14sp" />-->
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="指定拨号"
-                            android:textColor="@color/gray"
-                            android:textSize="12sp" />
+                            android:text="@string/dial_star_by_single"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                 </RelativeLayout>

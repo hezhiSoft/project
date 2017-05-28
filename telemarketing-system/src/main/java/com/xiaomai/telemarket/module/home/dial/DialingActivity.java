@@ -209,6 +209,11 @@ public class DialingActivity extends BaseActivity implements DialingContract.Vie
     }
 
     @Override
+    public void showRequestFinished(String mag) {
+
+    }
+
+    @Override
     protected void dispatchMessage(Message msg) {
         if (msg.what == MSG_START_REQUEST) {
             //重新发起请求
