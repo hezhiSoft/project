@@ -3,8 +3,11 @@ package com.xiaomai.telemarket.module.cstmr;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.GridView;
 import com.jinggan.library.base.ArrayListAdapter;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.ToastUtil;
+import com.jinggan.library.utils.IDensityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
@@ -27,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.R.attr.data;
+import static com.xiaomai.telemarket.R.id.parent;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -55,12 +62,13 @@ public class FiltersButtomDialog extends BottomSheetDialogFragment implements Re
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.filter_dialog, null);
+      View rootView = inflater.inflate(R.layout.filter_dialog, null);
         unbinder = ButterKnife.bind(this, rootView);
         DialogFiltersGridView.setAdapter(adater);
         CusrometRemoteRepo.getInstance().getFilters(this);
         return rootView;
     }
+
 
     @Override
     public void onSuccess(List<FiltersEntity> data) {

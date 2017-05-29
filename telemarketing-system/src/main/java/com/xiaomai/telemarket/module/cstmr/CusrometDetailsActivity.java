@@ -8,6 +8,7 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.ISystemUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CarActivity;
@@ -20,6 +21,7 @@ import com.xiaomai.telemarket.module.cstmr.fragment.file.CusrometFileFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.file.FileActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.follow.CusrometFolloFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.follow.FollowActivity;
+import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoEditActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoShowFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsurancePolicyFragment;
@@ -117,13 +119,15 @@ public class CusrometDetailsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.CusrometDetails_phone_ImageView:
+                ISystemUtil.makeCall(this,entity.getCustomerTel(),true);
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("entity", entity);
-                    ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("entity", entity);
+//                    ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
+                    CusrometInfoActivity.startIntentToEdit(this,entity);
                 } else if (currentItem == 1) {/*负债*/
                     if (debtoFragment.getEntity() == null) {
                         showToast("选择编辑明细");

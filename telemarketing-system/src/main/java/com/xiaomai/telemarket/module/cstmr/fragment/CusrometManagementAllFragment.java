@@ -1,10 +1,13 @@
 package com.xiaomai.telemarket.module.cstmr.fragment;
 
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.jinggan.library.base.BaseFragment;
@@ -16,6 +19,7 @@ import com.xiaomai.telemarket.module.cstmr.FiltersButtomDialog;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.os.Build.VERSION.SDK;
+import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * 客户管理
@@ -41,6 +48,8 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     Unbinder unbinder;
     @BindView(R.id.CustomerAll_recyclerView)
     PullToRefreshRecyclerView CustomerAllRecyclerView;
+    @BindView(R.id.Time_sor_TextView)
+    TextView sorTextView;
 
     private CusrometManagementAdapter adapter;
 
@@ -50,6 +59,8 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     private JSONObject filters;
 
     private List<FiltersEntity> filtersEntities=new ArrayList<>();
+
+    private boolean upSort=true;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,21 +81,59 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden){
+//            CustomerAllRecyclerView.startUpRefresh();
+//        }
+//    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
         remoteRepo.cancelRequest();
     }
 
-    @OnClick({R.id.Customer_toolBar_add_ImageView, R.id.Customer_toolBar_screen_ImageView})
+    @OnClick({R.id.Time_sor_TextView,R.id.Customer_toolBar_add_ImageView, R.id.Customer_toolBar_screen_ImageView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Customer_toolBar_add_ImageView:
+                CusrometInfoActivity.startIntentToAdd(getActivity());
                 break;
             case R.id.Customer_toolBar_screen_ImageView:
                 FiltersButtomDialog dialog=new FiltersButtomDialog();
                 dialog.setSelectContent(filtersEntities).setListener(this);
                 dialog.show(getFragmentManager(),getClass().getSimpleName());
+                break;
+            case R.id.Time_sor_TextView:
+//                sorTextView.set
+                if (upSort){
+                    Drawable drawable;
+                    if (Build.VERSION.SDK_INT>=21){
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_down,getActivity().getTheme());
+                    }else {
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_down);
+                    }
+                    drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    sorTextView.setCompoundDrawables(null,null,drawable,null);
+                    upSort=false;
+                }else {
+                    Drawable drawable;
+                    if (Build.VERSION.SDK_INT>=21){
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_up,getActivity().getTheme());
+                    }else {
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_up);
+                    }
+                    drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    sorTextView.setCompoundDrawables(null,null,drawable,null);
+                    upSort=true;
+                }
                 break;
         }
     }

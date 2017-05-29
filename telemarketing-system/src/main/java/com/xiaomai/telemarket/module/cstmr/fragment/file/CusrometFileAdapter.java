@@ -94,12 +94,12 @@ public class CusrometFileAdapter extends BaseRecyclerViewAdapter<FileEntity> {
         if (entity == null) {
             return;
         }
-        FormSelectTopTitleView fileName=ButterKnife.findById(rootView,R.id.File_FileName);
+        FormWriteTopTitleView fileName=ButterKnife.findById(rootView,R.id.File_FileName);
         FormSelectTopTitleView File_FileExtension=ButterKnife.findById(rootView,R.id.File_FileExtension);
         FormWriteTopTitleView File_FileUrl=ButterKnife.findById(rootView,R.id.File_FileUrl);
         ImageAttachmentView imageAttachmentView=ButterKnife.findById(rootView,R.id.File_Attachment);
         /*文件名*/
-        fileName.setContentText(entity.getFileName()).setArrowDropVisibility(View.GONE);
+        fileName.setContentText(entity.getFileName()).setItemEnabled(false);
         /*文件类型*/
         File_FileExtension.setContentText(entity.getFileExtension()).setArrowDropVisibility(View.GONE);
         /*文件路径*/
