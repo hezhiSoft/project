@@ -4,8 +4,9 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.jinggan.library.ui.dialog.ToastUtil;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.xiaomai.telemarket.DataApplication;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.utils.PhoneRecordUtil;
 
 
@@ -33,21 +34,26 @@ public class TelListener extends PhoneStateListener {
                 Log.i(TAG, "onCallStateChanged #CALL_STATE_IDLE" + "拨出");
                 if (mRecord.isStarted()) {
                     mRecord.stop();
-                    ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"挂断电话! time:"+ System.currentTimeMillis());
+//                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
+//                    ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"挂断电话! time:"+ System.currentTimeMillis());
+                } else {
                 }
+                ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
                 //此处添加一系列功能代码
                 break;
             case TelephonyManager.CALL_STATE_RINGING: // 来电响铃
                 Log.i(TAG, "onCallStateChanged #CALL_STATE_RINGING"+",接到"+incomingNumber+"来电！");
-                ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"接到"+incomingNumber+"来电！");
+//                ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"接到"+incomingNumber+"来电！");
                 //此处添加一系列功能代码
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK: // 摘机，即接通
                 Log.i(TAG, "onCallStateChanged #CALL_STATE_OFFHOOK");
+                ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
                 if (!mRecord.isStarted()) {
                     mRecord.start();
-                    ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),""+incomingNumber+"接通 ！");
+                    //IS_DIALING_KEY
                 }
+//                    ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),""+incomingNumber+"接通 ！");
                 //此处添加一系列功能代码
                 break;
         }

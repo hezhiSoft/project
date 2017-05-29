@@ -68,6 +68,21 @@ public class UserStateListAdapter extends BaseRecyclerViewAdapter<UserStateEntit
         notifyDataSetChanged();
     }
 
+    /**
+     * 获取用户状态
+     * @return
+     */
+    public String getUserState() {
+        if (mLists!=null&&mLists.size()>0) {
+            for (UserStateEntity entity : mLists) {
+                if (entity!=null&&entity.isSelect()) {
+                    return entity.getName();
+                }
+            }
+        }
+        return "";
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.ctv_user_state)

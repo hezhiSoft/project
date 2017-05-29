@@ -15,6 +15,8 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * @description 获取拨号资源
@@ -23,6 +25,7 @@ import retrofit2.Call;
  **/
 public class CustomerPhoneNumberRemoteRepo implements BaseDataSourse{
     private Call<Responese<List<CusrometListEntity>>> listCusrometListCall;
+    private Call<Responese<Void>> deleteTempInfoCall;
 
     private static CustomerPhoneNumberRemoteRepo instance;
 
@@ -74,14 +77,14 @@ public class CustomerPhoneNumberRemoteRepo implements BaseDataSourse{
 
     /**
      * 从私有库中获取客户信息
-     * @param preUserId
+     * @param preUserTime
      * @param callback
      */
-    public void requestPhoneNumberFromPrivate(String preUserId,final RemetoRepoCallback<List<CusrometListEntity>> callback){
+    public void requestPhoneNumberFromPrivate(String preUserTime,final RemetoRepoCallback<List<CusrometListEntity>> callback){
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("preid", preUserId);
+            jsonObject.put("predate", preUserTime);
             body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -119,10 +122,49 @@ public class CustomerPhoneNumberRemoteRepo implements BaseDataSourse{
         });
     }
 
+    /**
+     * 清除拨号信息
+     * @param userid
+     * @param callback
+     */
+    public void deleteFromList(String userid,final RemetoRepoCallback<Void> callback){
+        RequestBody body = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("customerid", userid);
+            body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        deleteTempInfoCall = XiaomaiRetrofitManager.getAPIService().DelFromList(body);
+        deleteTempInfoCall.enqueue(new Callback<Responese<Void>>() {
+            @Override
+            public void onResponse(Call<Responese<Void>> call, Response<Responese<Void>> response) {
+                if (response.code() == 200 && response.isSuccessful() && response.body() != null) {
+                    Responese<Void> body = response.body();
+                    if (body.isSuccess()) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure(body.getCode(), body.getMsg());
+                    }
+                } else {
+                    callback.onFailure(response.code(), "failure");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Responese<Void>> call, Throwable t) {
+                callback.onFailure(400, "failure");
+            }
+        });
+    }
+
     @Override
     public void cancelRequest() {
         if (listCusrometListCall!=null&&!listCusrometListCall.isCanceled()) {
             listCusrometListCall.cancel();
+        }if (deleteTempInfoCall!=null&&!deleteTempInfoCall.isCanceled()) {
+            deleteTempInfoCall.cancel();
         }
     }
 }

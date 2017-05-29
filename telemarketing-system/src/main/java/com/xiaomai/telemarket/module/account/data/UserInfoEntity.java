@@ -13,6 +13,7 @@ public class UserInfoEntity {
     private String TenantID;
     private String UserName;
     private String DisplayName;
+    private String Department;
     private String Password;
     private int Status;
     private String DeptID;
@@ -169,5 +170,13 @@ public class UserInfoEntity {
 
     public void setRowIndex(int RowIndex) {
         this.RowIndex = RowIndex;
+    }
+
+    public String getDepartment() {
+        return Department;
+    }
+
+    public void setDepartment(String department) {
+        Department = department;
     }
 }

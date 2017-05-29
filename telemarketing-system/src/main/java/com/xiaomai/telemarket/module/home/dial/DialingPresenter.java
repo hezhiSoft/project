@@ -2,6 +2,7 @@ package com.xiaomai.telemarket.module.home.dial;
 
 
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.home.dial.data.repo.CustomerPhoneNumberRemoteRepo;
 
@@ -37,7 +38,11 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFailure(int code, String msg) {
-                mView.showRequestNumberFailed(msg);
+                if (code == Constant.RESPONSE_CODE_411) {
+                    mView.showRequestFinished(msg);
+                } else {
+                    mView.showRequestNumberFailed(msg);
+                }
             }
 
             @Override
@@ -52,7 +57,6 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFinish() {
-
             }
         });
     }
@@ -71,7 +75,11 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFailure(int code, String msg) {
-                mView.showRequestNumberFailed(msg);
+                if (code == Constant.RESPONSE_CODE_411) {
+                    mView.showRequestFinished(msg);
+                } else {
+                    mView.showRequestNumberFailed(msg);
+                }
             }
 
             @Override
@@ -86,9 +94,13 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFinish() {
-
             }
         });
+    }
+
+    @Override
+    public void deleteTempInfo(String userid,final RemetoRepoCallback<Void> callback) {
+        mRepo.deleteFromList(userid, callback);
     }
 
     @Override

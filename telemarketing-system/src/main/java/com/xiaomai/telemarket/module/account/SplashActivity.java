@@ -30,7 +30,12 @@ public class SplashActivity extends BaseActivity implements RemetoRepoCallback<U
         setToolbarVisibility(View.GONE);
         String account = ISharedPreferencesUtils.getValue(this, Constant.ACCOUNT_KEY, "").toString();
         String password = ISharedPreferencesUtils.getValue(this, Constant.PASSWORD_KEY, "").toString();
-        AccountRemetoRepo.getInstance().login(account,password,this);
+        boolean isLogin= (boolean) ISharedPreferencesUtils.getValue(this, Constant.ISLOGIN_KEY, false);
+        if (!isLogin) {
+            AccountRemetoRepo.getInstance().login(account, password, this);
+        } else {
+            ISkipActivityUtil.startIntent(this, LoginActivity.class);
+        }
     }
 
     @Override

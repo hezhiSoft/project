@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.jinggan.library.ui.dialog.ToastUtil;
-import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.utils.PhoneRecordUtil;
 
 
@@ -38,7 +36,7 @@ public class OutgoingCallReciver extends BroadcastReceiver {
 //            ReadPhoneLog.getInstance(ctx).start();
             recorder.setPhoneNumber(phoneNum);
             recorder.setIsCommingNumber(false);
-            ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"拨出电话："+phoneNum+"！");
+//            ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"拨出电话："+phoneNum+"！");
             Log.d(TAG, "设置为去电状态");
             Log.d(TAG, "去电状态 呼叫：" + phoneNum);
         }
@@ -53,7 +51,7 @@ public class OutgoingCallReciver extends BroadcastReceiver {
 
         if (phoneState.equals(OutgoingCallState.ForeGroundCallState.ACTIVE)) {
             if (!recorder.isCommingNumber() && !recorder.isStarted()) {
-                ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"拨出电话接通！");
+//                ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"拨出电话接通！");
                 Log.d(TAG, "去电已接通 启动录音机");
                 recorder.start();
 
@@ -63,7 +61,7 @@ public class OutgoingCallReciver extends BroadcastReceiver {
         if (phoneState.equals(OutgoingCallState.ForeGroundCallState.DISCONNECTED)) {
             if (!recorder.isCommingNumber() && recorder.isStarted()) {
                 Log.d(TAG, "已挂断 关闭录音机");
-                ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"拨出电话挂断！");
+//                ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"拨出电话挂断！");
                 recorder.stop();
             }
         }

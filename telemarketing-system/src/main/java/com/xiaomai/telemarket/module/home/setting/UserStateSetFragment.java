@@ -73,7 +73,7 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
                 List<UserStateEntity> userStateEntities = new Gson().fromJson(userStateJson,new TypeToken<ArrayList<UserStateEntity>>(){}.getType());
                 if (userStateEntities!=null&&userStateEntities.size()>0) {
                     adapter.addItems(userStateEntities);
-                    String state = ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE, Constant.UserState.INWORK.getValue()) + "";
+                    String state = ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_KEY, Constant.UserState.INWORK.getValue()) + "";
                     adapter.changeUserState(state);
                 }
             }catch (Exception ex){
@@ -116,7 +116,8 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
     public void showChangeUserStateSuccess(int status) {
         dismissProgressDlg();
         adapter.changeUserState(status + "");
-        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.USER_STATE, status);
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.USER_STATE_KEY, status);
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.USER_STATE_NAME_KEY, adapter.getUserState());
     }
 
     @Override
