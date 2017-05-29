@@ -57,7 +57,6 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFinish() {
-
             }
         });
     }
@@ -95,39 +94,13 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFinish() {
-
             }
         });
     }
 
     @Override
-    public void deleteTempInfo(String userid) {
-        mRepo.deleteFromList(userid, new RemetoRepoCallback<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-
-            }
-
-            @Override
-            public void onThrowable(Throwable t) {
-
-            }
-
-            @Override
-            public void onUnauthorized() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
+    public void deleteTempInfo(String userid,final RemetoRepoCallback<Void> callback) {
+        mRepo.deleteFromList(userid, callback);
     }
 
     @Override

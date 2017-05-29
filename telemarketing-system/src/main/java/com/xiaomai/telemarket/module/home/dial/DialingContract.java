@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.home.dial;
 
+import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 
 /**
@@ -20,7 +21,7 @@ public class DialingContract {
     public interface Presenter{
         void requestNumberFromPublic();
         void requestNumberFromPrivate(String preid);
-        void deleteTempInfo(String userid);
+        void deleteTempInfo(String userid,final RemetoRepoCallback<Void> callback);
         void stopRequest();
     }
 }

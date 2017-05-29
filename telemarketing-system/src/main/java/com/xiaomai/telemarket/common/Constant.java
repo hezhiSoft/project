@@ -23,6 +23,7 @@ public class Constant {
 
     /**dialing*/
     public static final String IS_DIALING_KEY= "is_dialing";//接通正在通话中
+    public static final String IS_DIALING_BY_GROUP= "is_dial_by_group";//接通正在通话中
 
 
     /**
