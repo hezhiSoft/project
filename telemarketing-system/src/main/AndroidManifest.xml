@@ -121,6 +121,12 @@
             android:name=".module.function.callTrend.CallTrendActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.cstmr.fragment.info.CusrometInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
     </application>
 
 </manifest>

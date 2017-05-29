@@ -84,6 +84,11 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onTabSelected(int position) {
         switch (position) {
             case TAB_HOME:

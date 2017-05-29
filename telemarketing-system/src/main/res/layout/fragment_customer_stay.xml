@@ -17,7 +17,7 @@
             android:gravity="center"
             android:text="待跟进列表"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:visibility="visible" />
 
         <ImageView

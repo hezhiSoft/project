@@ -2,9 +2,12 @@ package com.xiaomai.telemarket.module.cstmr.fragment.info;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.xiaomai.telemarket.R;
@@ -17,15 +20,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
- * author: hezhiWu <hezhi.woo@gmail.com>
+ * author: hezhiWu <wuhezhi007@gmail.com>
  * version: V1.0
- * created at 2017/5/20 11:52
+ * created at 2017/5/28$ 下午3:14$
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometInfoEditActivity extends BaseActivity {
+
+public class ShowInfoBaseFragment extends BaseFragment {
 
     @BindView(R.id.Info_CustomerName)
     FormWriteTopTitleView InfoCustomerName;
@@ -46,37 +51,23 @@ public class CusrometInfoEditActivity extends BaseActivity {
     @BindView(R.id.Info_Remark)
     FormWriteTopTitleView InfoRemark;
 
-    private CusrometListEntity entity;
+    protected CusrometListEntity entity;
 
+
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cusromet_info);
-        ButterKnife.bind(this);
-        setToolbarTitle("编辑基本信息");
-        setToolbarRightText("保存");
-        entity=(CusrometListEntity)getIntent().getSerializableExtra("entity");
-        initUI(entity);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView=inflater.inflate(R.layout.activity_cusromet_info,null);
+        ButterKnife.bind(this,rootView);
+        setListener();
+        return rootView;
     }
 
-    private void initUI(CusrometListEntity entity){
-        if (entity==null){
-            return;
-        }
-        InfoCustomerName.setContentText(entity.getCustomerName()).setItemEnabled(false);
-        InfoCustomerTel.setContentText(entity.getCustomerTel()).setItemEnabled(false);
-        InfoIsSZHukou.setContentText(entity.getIsSZHukou()==0?"否":"是");
-        InfoSex.setContentText(DictionaryHelper.ParseSex(entity.getSex()+""));
-        InfoMaritalStatus.setContentText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus()+""));
-        InfoPayroll.setContentText("无");
-        InfoAccumulationFundAccount.setContentText(entity.getAccountWater()+"");
-        InfoSocialSecurityAccount.setContentText(entity.getSocialSecurityAccount()+"");
-        InfoRemark.setContentText(entity.getRemark());
-
+    private void setListener(){
         InfoIsSZHukou.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(CusrometInfoEditActivity.this,InfoIsSZHukou.getTextView(),InfoIsSZHukou.getContentText());
+                DictionaryHelper.showSelectDialog(getContext(),InfoIsSZHukou.getTextView(),InfoIsSZHukou.getContentText());
             }
         });
         InfoSex.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
@@ -93,7 +84,7 @@ public class CusrometInfoEditActivity extends BaseActivity {
                                     InfoSex.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getSupportFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(),getClass().getSimpleName());
             }
         });
         InfoMaritalStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
@@ -110,15 +101,27 @@ public class CusrometInfoEditActivity extends BaseActivity {
                                     InfoMaritalStatus.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getSupportFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(),getClass().getSimpleName());
             }
         });
+
     }
 
+    protected void initUI(CusrometListEntity entity){
+        if (entity==null){
+            return;
+        }
+        InfoCustomerName.setContentText(entity.getCustomerName()).setItemEnabled(false);
+        InfoCustomerTel.setContentText(entity.getCustomerTel()).setItemEnabled(false);
+        InfoIsSZHukou.setContentText(entity.getIsSZHukou()==0?"否":"是");
+        InfoSex.setContentText(DictionaryHelper.ParseSex(entity.getSex()+""));
+        InfoMaritalStatus.setContentText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus()+""));
+        InfoPayroll.setContentText("无");
+        InfoAccumulationFundAccount.setContentText(entity.getAccountWater()+"");
+        InfoSocialSecurityAccount.setContentText(entity.getSocialSecurityAccount()+"");
+        InfoRemark.setContentText(entity.getRemark());
+
+           }
 
 
-    @Override
-    public void onClickToolbarRightLayout() {
-        super.onClickToolbarRightLayout();
-    }
 }
