@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
@@ -31,9 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static android.os.Build.VERSION.SDK;
-import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * 客户管理
@@ -191,7 +187,9 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     public void onFailure(int code, String msg) {
         if (pageIndex==1){
             adapter.clearList();
-            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            if (CustomerAllRecyclerView!=null) {// TODO: 30/05/2017 连续两次重启app这里报空指针错误
+                CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            }
         }else {
             showToast(msg);
         }
@@ -200,18 +198,24 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     @Override
     public void onThrowable(Throwable t) {
         showToast("数据异常");
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (CustomerAllRecyclerView != null) {
+            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onUnauthorized() {
         showToast("数据获取失败");
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (CustomerAllRecyclerView != null) {
+            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        CustomerAllRecyclerView.closeDownRefresh();
+        if (CustomerAllRecyclerView!=null) {
+            CustomerAllRecyclerView.closeDownRefresh();
+        }
     }
 }
 

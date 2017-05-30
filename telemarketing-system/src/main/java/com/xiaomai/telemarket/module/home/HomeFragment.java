@@ -6,14 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
-import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
@@ -38,8 +34,8 @@ import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
 import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
-import com.xiaomai.telemarket.module.home.dial.DialingContract;
-import com.xiaomai.telemarket.module.home.dial.DialingPresenter;
+import com.xiaomai.telemarket.module.home.dial.HomeDialingContract;
+import com.xiaomai.telemarket.module.home.dial.HomeDialingPresenter;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
@@ -56,7 +52,7 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class HomeFragment extends BaseFragment implements DialingContract.View {
+public class HomeFragment extends BaseFragment implements HomeDialingContract.View {
     private static final String TAG = "HomeFragment";
 
     @BindView(R.id.Home_UserHead_iamgeView)
@@ -75,21 +71,23 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
     RelativeLayout HomeGroupCallLayout;
     Unbinder unbinder;
 
-    //拨号相关
-    private DialingPresenter dialingPresenter;
-    private String preDialCusFollowTime = "";//前一个已经拨号的用户时间
-    private String preUserID = "";//前一个已经拨号的用户时间
-    private boolean isStopped = true;
+    /**
+     * 拨号相关
+     */
+    private HomeDialingPresenter homeDialingPresenter;
+//    private DialingPresenter dialingPresenter;
+//    private String preDialCusFollowTime = "";//前一个已经拨号的用户时间
+//    private String preUserID = "";//前一个已经拨号的用户时间
+//    private boolean isStopped = true;
+//
+//    private boolean isFromPublic;//拨号来源 true -public,false-private
+//    private boolean isDialingByGroup;//拨号方式 tur -by group，false - by single
+//    public static final int MSG_DIAL_REQUEST = 0x001;
 
-    private boolean isFromPublic;//拨号来源 true -public,false-private
-    private boolean isDialingByGroup;
-//    private boolean isFirstDial = true;
-    public static final int MSG_START_REQUEST = 0x001;
+    private boolean isRecordPermissible;
+    public static final int RECORD_PERMISSION_REQUEST_CODE = 0x001;
 
     private HomeMenuItemClickListener homeMenuItemClickListener;
-
-    private boolean isRecordPermissed;
-    public static final int RECORD_PERMISSTION_REQUEST_CODE = 0x001;
 
     @Nullable
     @Override
@@ -115,35 +113,32 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
     }
 
     private void initData(Bundle savedInstanceState) {
-        isFromPublic = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE)
-                .equals(Constant.DIAL_NUMBER_CODE_PUBLIC);
-        if (savedInstanceState != null) {
-            isFromPublic = savedInstanceState.getBoolean("isFromPublic");
-            isStopped = savedInstanceState.getBoolean("isStopped");
-//            isFirstDial = savedInstanceState.getBoolean("isFirstDial");
-            isDialingByGroup = savedInstanceState.getBoolean("isDialingByGroup");
-            preDialCusFollowTime = savedInstanceState.getString("preDialCusFollowTime");
-        }
-        dialingPresenter = new DialingPresenter(this);
+        homeDialingPresenter = new HomeDialingPresenter(this);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("isFromPublic", isFromPublic);
-        outState.putBoolean("isStopped", isStopped);
-        outState.putBoolean("isDialingByGroup", isDialingByGroup);
-//        outState.putBoolean("isFirstDial", isFirstDial);
-        outState.putString("preDialCusFollowTime", preDialCusFollowTime);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        //检测录音权限
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_PERMISSION_REQUEST_CODE);
+        } else {
+            isRecordPermissible = true;
+            homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOut();
+        }
         if (HomeUserStateTextView != null) {
             HomeUserStateTextView.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
         }
-        if (tvDialGroupState != null) {
+    }
+
+    @Override
+    public void showIsDialingGroupUnStopped(boolean isStopped) {
+        if (tvDialGroupState != null && HomeImageDial != null) {
             if (isStopped) {
                 tvDialGroupState.setText(getResources().getString(R.string.dial_star_by_group));
                 HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_call));
@@ -152,23 +147,6 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
                 HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_sing_call));
             }
         }
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO},
-                    RECORD_PERMISSTION_REQUEST_CODE);
-        } else {
-            isRecordPermissed = true;
-//            isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, true);
-            if (!isStopped && !getDialingState()) {
-                Log.i(TAG, "onResume: request again###");
-                restartRequest();
-            }
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -184,24 +162,14 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
                 ISkipActivityUtil.startIntent(getActivity(), SettingActivity.class);
                 break;
             case R.id.Home_groupCall_Layout:/*群呼*/
-                isDialingByGroup = true;
-                setDialByGroup(isDialingByGroup);
-                // TODO: 28/05/2017 群呼
-//                ISkipActivityUtil.startIntent(getActivity(), DialingActivity.class);
-                if (isStopped) {
-                    tvDialGroupState.setText(getResources().getString(R.string.dial_stop_group));
-                    HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_sing_call));
-                    restartRequest();
+                if (homeDialingPresenter.getIsDialingGroupStoped()) {
+                    homeDialingPresenter.startDialingByGroup();
                 } else {
-                    stopRequest();
-                    tvDialGroupState.setText(getResources().getString(R.string.dial_star_by_group));
-                    HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_call));
+                    homeDialingPresenter.stopDialingByGroup();
                 }
                 break;
             case R.id.Home_singCall_Layout:/*点呼*/
-                isDialingByGroup = false;
-                setDialByGroup(isDialingByGroup);
-                restartRequest();
+                homeDialingPresenter.startDialingBySingle();
 //                dialingSingle();
                 break;
             case R.id.Home_customer_TextView:/*客户管理*/
@@ -234,19 +202,65 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RECORD_PERMISSTION_REQUEST_CODE) {
+        if (requestCode == RECORD_PERMISSION_REQUEST_CODE) {
             if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission Granted
-                isRecordPermissed = true;
+                isRecordPermissible = true;
             } else {
                 // Permission Denied
-                isRecordPermissed = false;
+                isRecordPermissible = false;
             }
         }
     }
 
+    @Override
+    public void showDialingByGroupStarted() {
+        if (tvDialGroupState!=null) {
+            tvDialGroupState.setText(getResources().getString(R.string.dial_stop_group));
+            HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_sing_call));
+        }
+    }
+
+    @Override
+    public void showDialingOutStarted(CusrometListEntity entity) {
+        if (entity!=null) {
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
+            ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
+        }
+    }
+
+    @Override
+    public void showDialingStopped() {
+        if (tvDialGroupState != null) {
+            tvDialGroupState.setText(getResources().getString(R.string.dial_star_by_group));
+            HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_call));
+        }
+    }
+
+    @Override
+    public void showRequestNumberFailed(String msg) {
+        // TODO: 30/05/2017 请求号码错误
+        showToast(msg);
+        if (homeDialingPresenter!=null&&!homeDialingPresenter.getIsDialingGroupStoped()) {
+            homeDialingPresenter.startDialingByGroup();// TODO: 30/05/2017 请求号码失败,只有处于群拨状态时才重拨
+        }
+    }
+
+    @Override
+    public void showDialingFinished(String msg) {
+        if (homeDialingPresenter != null) {
+            homeDialingPresenter.stopDialingByGroup();
+        }
+        DialogFactory.showMsgDialog(getActivity(), "提示", msg+"是否停止拨号?", "停止", "取消",null, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeDialingPresenter.stopDialingByGroup();
+            }
+        });
+    }
+
     private void dialingSingle() {
-        if (!isRecordPermissed) {
+        if (!isRecordPermissible) {
             ToastUtil.showToast(getActivity(), "录音权限被禁止！请在权限管理中允许录音权限");
             return;
         }
@@ -254,7 +268,7 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
         editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setHint("输入电话号码");
-        editText.setText("10086");
+        editText.setText("10010");
         new AlertDialog.Builder(getActivity())
                 .setTitle("输入电话号码")
                 .setView(editText)
@@ -269,167 +283,6 @@ public class HomeFragment extends BaseFragment implements DialingContract.View {
                         }
                     }
                 }).create().show();
-    }
-
-    @Override
-    public void showRequestNumberStar() {
-        Log.i(TAG, "showRequestNumberStar: -----start request ----");
-    }
-
-    @Override
-    public void showRequestNumberSuccess(CusrometListEntity entity) {
-        if (entity == null) {
-            if (!isStopped && !getDialingState()) {
-                restartRequest();
-                Log.i(TAG, "showRequestNumberSuccess: request null #####273");
-            }
-        } else {
-            // 用户没有手动结束
-            if (!isStopped && !getDialingState()) {
-                Log.i(TAG, "showRequestNumberSuccess: dial out number#" + entity.getCustomerTel());
-                preDialCusFollowTime = entity.getFollowDate();
-                preUserID = entity.getID();
-                String phoneNumber = entity.getCustomerTel();
-                if (RegexUtils.isPhoneLegal(phoneNumber)) {
-                    //拨出号码
-                    ISystemUtil.makeCall(getActivity(), phoneNumber, true);
-                } else {
-//                    showToast("无效号码！");
-                    if (!isStopped && !getDialingState()) {
-                        restartRequest();
-                        Log.i(TAG, "showRequestNumberSuccess: request null #####289");
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void showRequestNumberFailed(String msg) {
-        Log.i(TAG, "showRequestNumberFailed: " + msg);
-//        showToast("请求失败！重连中...");
-        if (!isStopped && !getDialingState()) {
-            restartRequest();
-            Log.i(TAG, "showRequestNumberSuccess: request null #####302");
-        }
-    }
-
-    @Override
-    public void showRequestFinished(String msg) {
-        stopRequest();
-        DialogFactory.showMsgDialog(getActivity(), "提示", msg+"是否停止群呼?", "停止", "继续", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                    if (HomeGroupCallLayout!=null) {
-//                        HomeGroupCallLayout.performClick();
-//                    }
-                stopRequest();
-                tvDialGroupState.setText(getResources().getString(R.string.dial_star_by_group));
-                HomeImageDial.setImageDrawable(getResources().getDrawable(R.mipmap.icon_home_call));
-            }
-        }, new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                restartRequest();
-            }
-        });
-    }
-
-    @Override
-    public void showRequestNumberStoped() {
-        isStopped = true;
-    }
-
-    @Override
-    protected void dispatchMessage(Message msg) {
-        if (msg.what == MSG_START_REQUEST) {
-            //重新发起请求
-            Log.i(TAG, "dispatchMessage: request again#####");
-            isFromPublic = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE).equals(Constant.DIAL_NUMBER_CODE_PUBLIC);
-            if (!TextUtils.isEmpty(preUserID)) {
-                dialingPresenter.deleteTempInfo(preUserID, new RemetoRepoCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void data) {
-                        if (isFromPublic) {
-                            dialingPresenter.requestNumberFromPublic();
-                            Log.i(TAG, "dispatchMessage: request from #public");
-                        } else {
-                            dialingPresenter.requestNumberFromPrivate(preDialCusFollowTime);
-                            Log.i(TAG, "dispatchMessage: request from #private");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        showRequestFinished(msg);
-                    }
-
-                    @Override
-                    public void onThrowable(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onUnauthorized() {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                });
-            }else{
-                if (isFromPublic) {
-                    dialingPresenter.requestNumberFromPublic();
-                    Log.i(TAG, "dispatchMessage: request from #public");
-                } else {
-                    dialingPresenter.requestNumberFromPrivate(preDialCusFollowTime);
-                    Log.i(TAG, "dispatchMessage: request from #private");
-                }
-            }
-        }
-    }
-
-    /**
-     * 重新请求号码
-     */
-    private void restartRequest() {
-        Log.i(TAG, "restartRequest: request again########");
-        mHandler.sendEmptyMessage(MSG_START_REQUEST);
-        isStopped = false;
-//        mHandler.sendEmptyMessageDelayed(MSG_START_REQUEST, 2000);
-    }
-
-
-    /**
-     * 停止群呼
-     */
-    private void stopRequest() {
-        if (mHandler != null && mHandler.hasMessages(MSG_START_REQUEST)) {
-            mHandler.removeMessages(MSG_START_REQUEST);
-        }
-        dialingPresenter.stopRequest();
-        isStopped = true;
-        Log.i(TAG, "stopRequest: -----stop request ----");
-    }
-
-    /**
-     * 获取是否在通话状态中
-     *
-     * @return
-     */
-    public boolean getDialingState() {
-        return (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
-    }
-
-    public boolean getIsDialPublic(){
-        return ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE)
-                .equals(Constant.DIAL_NUMBER_CODE_PUBLIC);
-    }
-
-    public void setDialByGroup(boolean isGroup){
-        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, isGroup);
     }
 
 }

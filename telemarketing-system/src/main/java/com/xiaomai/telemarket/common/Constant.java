@@ -23,7 +23,9 @@ public class Constant {
 
     /**dialing*/
     public static final String IS_DIALING_KEY= "is_dialing";//接通正在通话中
-    public static final String IS_DIALING_BY_GROUP= "is_dial_by_group";//接通正在通话中
+    public static final String IS_DIALING_GROUP_FINISHED = "is_dialing_group_finished";//群呼是否结束
+
+    public static final String IS_DIALING_BY_GROUP= "is_dial_by_group";//是否群呼
 
 
     /**
@@ -64,14 +66,14 @@ public class Constant {
     }
 
     /**
-     * 公共库
+     * 拨号来源：公共库
      */
     public static final int DIAL_NUMBER_CODE_PUBLIC=1;
     /**
-     * 私有库
+     * 拨号来源：私有库
      */
     public static final int DIAL_NUMBER_CODE_PRIVATE=2;
 
-    /**状态码*/
-    public static final int RESPONSE_CODE_411=411;
+    /**所有号码请求完成 状态码*/
+    public static final int RESPONSE_CODE_DIALING_FINISH =411;
 }

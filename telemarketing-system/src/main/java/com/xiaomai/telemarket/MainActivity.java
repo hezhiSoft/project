@@ -8,7 +8,9 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragment;
@@ -129,6 +131,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
     @Override
     protected void onDestroy() {
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
         PhoneCallStateService.StopService(DataApplication.getInstance().getApplicationContext());
         super.onDestroy();
     }
