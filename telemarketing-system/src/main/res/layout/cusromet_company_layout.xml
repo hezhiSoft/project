@@ -33,19 +33,22 @@
         android:id="@+id/Company_SharesProportion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="占股比例(%)"/>
+        app:wvItemName="占股比例(%)"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Company_AccountWater"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="账户流水(万)"/>
+        app:wvItemName="账户流水(万)"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Company_LocationRental"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="租金"/>
+        app:wvItemName="租金"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Company_IsRentTransfer"
@@ -57,7 +60,8 @@
         android:id="@+id/Company_AmountDebt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="负债金额"/>
+        app:wvItemName="负债金额"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Company_Remark"

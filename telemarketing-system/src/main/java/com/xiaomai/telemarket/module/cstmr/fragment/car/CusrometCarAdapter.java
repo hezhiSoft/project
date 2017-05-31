@@ -61,6 +61,12 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
                 }
             }
         });
+        if (position==0){
+            viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_less_black_24dp);
+            viewHodler.DetailsContentLayout.setVisibility(View.VISIBLE);
+            viewHodler.DetailsLine.setVisibility(View.GONE);
+        }
+
         View carView = inflater.inflate(R.layout.cusromet_car_layout, null);
         setDetailsData(carView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(carView);

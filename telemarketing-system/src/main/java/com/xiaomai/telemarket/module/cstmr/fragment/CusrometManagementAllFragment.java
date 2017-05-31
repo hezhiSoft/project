@@ -54,13 +54,14 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     private CusrometManagementAdapter adapter;
 
     private int pageIndex;
+    private String sort="desc";/*默认降序*/
     private CusrometRemoteRepo remoteRepo;
 
     private JSONObject filters;
 
     private List<FiltersEntity> filtersEntities=new ArrayList<>();
 
-    private boolean upSort=true;
+    private boolean desc=true;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_customer_all, null);
         unbinder = ButterKnife.bind(this, rootView);
-        adapter=new CusrometManagementAdapter(getContext());
+        adapter=new CusrometManagementAdapter(getContext(),1);
         CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
         CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
         CustomerAllRecyclerView.setPullToRefreshListener(this);
@@ -84,14 +85,6 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     public void onResume() {
         super.onResume();
     }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden){
-//            CustomerAllRecyclerView.startUpRefresh();
-//        }
-//    }
 
     @Override
     public void onDestroyView() {
@@ -113,7 +106,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                 break;
             case R.id.Time_sor_TextView:
 //                sorTextView.set
-                if (upSort){
+                if (!desc){
                     Drawable drawable;
                     if (Build.VERSION.SDK_INT>=21){
                         drawable=getResources().getDrawable(R.mipmap.ic_sor_down,getActivity().getTheme());
@@ -122,7 +115,8 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                     }
                     drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
                     sorTextView.setCompoundDrawables(null,null,drawable,null);
-                    upSort=false;
+                    desc=false;
+                    sort="desc";
                 }else {
                     Drawable drawable;
                     if (Build.VERSION.SDK_INT>=21){
@@ -132,8 +126,10 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                     }
                     drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
                     sorTextView.setCompoundDrawables(null,null,drawable,null);
-                    upSort=true;
+                    desc=true;
+                    sort="asc";
                 }
+                CustomerAllRecyclerView.startUpRefresh();
                 break;
         }
     }
@@ -164,13 +160,13 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     @Override
     public void onDownRefresh() {
         pageIndex=1;
-        remoteRepo.requestCusrometLists(pageIndex,filters,this);
+        remoteRepo.requestCusrometLists(pageIndex,sort,filters,this);
     }
 
     @Override
     public void onPullRefresh() {
         pageIndex++;
-        remoteRepo.requestCusrometLists(pageIndex,filters,this);
+        remoteRepo.requestCusrometLists(pageIndex,sort,filters,this);
     }
 
     @Override
@@ -200,13 +196,13 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     @Override
     public void onThrowable(Throwable t) {
         showToast("数据异常");
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+//        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
     }
 
     @Override
     public void onUnauthorized() {
         showToast("数据获取失败");
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+//        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
     }
 
     @Override

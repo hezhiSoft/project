@@ -64,6 +64,12 @@ public class CusrometInsuranceAdapter extends BaseRecyclerViewAdapter<InsuranceE
                 }
             }
         });
+        if (position==0){
+            viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_less_black_24dp);
+            viewHodler.DetailsContentLayout.setVisibility(View.VISIBLE);
+            viewHodler.lineView.setVisibility(View.GONE);
+        }
+
         final View infoView = inflater.inflate(R.layout.cusromet_insurance_layout, null);
         setDetailsData(infoView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(infoView);

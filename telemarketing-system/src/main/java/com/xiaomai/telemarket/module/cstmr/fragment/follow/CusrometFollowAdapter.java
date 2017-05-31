@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
+import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
@@ -64,6 +65,12 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
                 }
             }
         });
+        if (position==0){
+            viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_less_black_24dp);
+            viewHodler.DetailsContentLayout.setVisibility(View.VISIBLE);
+            viewHodler.lineView.setVisibility(View.GONE);
+        }
+
         final View infoView = inflater.inflate(R.layout.cusromet_follow_layout, null);
         setDetailsData(infoView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(infoView);
@@ -125,7 +132,7 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
         Follow_Remark.setContentText(entity.getRemark()).setItemEnabled(false);
         /*跟进人*/
         Follow_FollowPerson.setItemEnabled(false);
-//        Follow_FollowPerson.setContentText(entity.getP)
+        Follow_FollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName());
     }
 
 

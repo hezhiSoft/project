@@ -26,7 +26,8 @@
                 android:id="@+id/Info_CustomerTel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:wvItemName="客户电话" />
+                app:wvItemName="客户电话"
+                app:wvInputType="number"/>
 
 
             <com.jinggan.library.ui.widget.FormSelectTopTitleView

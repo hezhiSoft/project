@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.fragment.follow.FollowActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +29,15 @@ import butterknife.ButterKnife;
  */
 public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometListEntity> {
 
+    private int flag;
 
     public CusrometManagementAdapter(Context context) {
         super(context);
+    }
+
+    public CusrometManagementAdapter(Context context,int flag) {
+        super(context);
+        this.flag=flag;
     }
 
     @Override
@@ -64,9 +72,14 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
         viewHolder.ItemCusrometLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("entity",mLists.get(position));
-                ISkipActivityUtil.startIntent(mContent, CusrometDetailsActivity.class,bundle);
+                if (flag==1){
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("entity",mLists.get(position));
+                    ISkipActivityUtil.startIntent(mContent, CusrometDetailsActivity.class,bundle);
+                }else if (flag==2){
+                    FollowActivity.startIntentToQuery((Activity)mContent,mLists.get(position).getID());
+                }
+
             }
         });
     }

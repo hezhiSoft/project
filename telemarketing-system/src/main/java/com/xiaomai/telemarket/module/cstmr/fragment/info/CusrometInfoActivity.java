@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -23,6 +26,7 @@ public class CusrometInfoActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        setToolbarRightText("保存");
         try {
             if (getIntent().getExtras().containsKey("entity")){
                 switchToEdit();
@@ -35,8 +39,17 @@ public class CusrometInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onClickToolbarRightLayout() {
+        super.onClickToolbarRightLayout();
+        EventBusValues busValues=new EventBusValues();
+        busValues.setWhat(0x10010);
+        EventBus.getDefault().post(busValues);
+    }
+
     private void switchToAdd() {
         setToolbarTitle("添加客户资料");
+        setToolbarRightText("保存");
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.Cusromet_info, new CusrometInfoAddFragment());
         transaction.commitAllowingStateLoss();
@@ -44,6 +57,7 @@ public class CusrometInfoActivity extends BaseActivity {
 
     private void switchToEdit(){
         setToolbarTitle("编辑客户资料");
+        setToolbarRightText("保存");
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         CusrometInfoEditFragment fragment=new CusrometInfoEditFragment();

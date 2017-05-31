@@ -37,7 +37,8 @@
         android:id="@+id/Follow_Amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="意向贷款金额(万)"/>
+        app:wvItemName="意向贷款金额(万)"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Follow_NextFollowType"
