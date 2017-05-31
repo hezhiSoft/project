@@ -111,6 +111,24 @@ public interface APIService {
     Call<Responese<List<FiltersEntity>>> getFilters();
 
     /**
+     * 添加用户
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 19:11
+     */
+    @POST("api/customer/AddCustomer")
+    Call<Responese<CusrometListEntity>> addCusromet(@Body CusrometListEntity entity);
+
+    /**
+     * 添加用户
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/27 19:11
+     */
+    @POST("api/customer/EditCustomer")
+    Call<Responese<CusrometListEntity>> editCusromet(@Body  CusrometListEntity entity);
+
+    /**
      * 获取客户列表
      * <p>
      * author: hezhiWu
@@ -275,6 +293,14 @@ public interface APIService {
     @POST("api/customer/GetFollow")
     Call<Responese<List<FollowEntity>>> queryCusrometFollowLists(@Body RequestBody body);
 
+    /**
+     * 查询客户跟进明细
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/22 22:34
+     */
+    @POST("api/customer/FollowingDetail")
+    Call<Responese<List<FollowEntity>>> queryCusrometFollowDetails(@Body RequestBody body);
     /**
      * 编辑公司
      * <p>

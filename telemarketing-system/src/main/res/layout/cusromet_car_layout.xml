@@ -29,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:wvHint="请输入"
-        app:wvItemName="行驶里程" />
+        app:wvItemName="行驶里程"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Car_Barnd"

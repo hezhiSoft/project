@@ -44,7 +44,7 @@
         android:layout_above="@+id/filter_buttom_layout"
         android:layout_below="@+id/filter_title_layout"
         android:layout_margin="10dp"
-        android:numColumns="2"
+        android:numColumns="3"
         android:verticalSpacing="10dp" />
 
     <LinearLayout

@@ -19,7 +19,8 @@
         android:id="@+id/Insurance_InsuredAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="保费金额" />
+        app:wvItemName="保费金额"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Insurance_PaymentMethods"
@@ -43,7 +44,8 @@
         android:id="@+id/Insurance_DelayDays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:wvItemName="延期天数" />
+        app:wvItemName="延期天数"
+        app:wvInputType="number"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Insurance_FuXiaoDate"

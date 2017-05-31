@@ -1,10 +1,13 @@
 package com.xiaomai.telemarket.module.cstmr.fragment;
 
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
@@ -38,15 +41,21 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
 
     @BindView(R.id.Stay_recyclerView)
     PullToRefreshRecyclerView CustomerAllRecyclerView;
+    @BindView(R.id.Time_sor_TextView)
+    TextView sorTextView;
+
 
     private CusrometManagementAdapter adapter;
 
     private int pageIndex;
+    private String sort="desc";/*默认降序*/
     private CusrometRemoteRepo remoteRepo;
 
     private JSONObject filters;
 
     private List<FiltersEntity> filtersEntities=new ArrayList<>();
+
+    private boolean desc=true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +68,7 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_customer_stay,null);
         ButterKnife.bind(this,rootView);
-        adapter=new CusrometManagementAdapter(getContext());
+        adapter=new CusrometManagementAdapter(getContext(),2);
         CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
         CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
         CustomerAllRecyclerView.setPullToRefreshListener(this);
@@ -67,7 +76,7 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
         return rootView;
     }
 
-    @OnClick({R.id.Stay_toolBar_add_ImageView, R.id.Stay_toolBar_screen_ImageView})
+    @OnClick({R.id.Time_sor_TextView,R.id.Stay_toolBar_add_ImageView, R.id.Stay_toolBar_screen_ImageView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Stay_toolBar_add_ImageView:
@@ -76,6 +85,33 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
                 FiltersButtomDialog dialog=new FiltersButtomDialog();
                 dialog.setSelectContent(filtersEntities).setListener(this);
                 dialog.show(getFragmentManager(),getClass().getSimpleName());
+                break;
+            case R.id.Time_sor_TextView:
+//                sorTextView.set
+                if (!desc){
+                    Drawable drawable;
+                    if (Build.VERSION.SDK_INT>=21){
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_down,getActivity().getTheme());
+                    }else {
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_down);
+                    }
+                    drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    sorTextView.setCompoundDrawables(null,null,drawable,null);
+                    desc=false;
+                    sort="desc";
+                }else {
+                    Drawable drawable;
+                    if (Build.VERSION.SDK_INT>=21){
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_up,getActivity().getTheme());
+                    }else {
+                        drawable=getResources().getDrawable(R.mipmap.ic_sor_up);
+                    }
+                    drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    sorTextView.setCompoundDrawables(null,null,drawable,null);
+                    desc=true;
+                    sort="asc";
+                }
+                CustomerAllRecyclerView.startUpRefresh();
                 break;
         }
     }
