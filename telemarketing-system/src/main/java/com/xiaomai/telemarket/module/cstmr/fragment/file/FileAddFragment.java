@@ -8,4 +8,9 @@ package com.xiaomai.telemarket.module.cstmr.fragment.file;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 public class FileAddFragment extends FileBaseFragment {
+
+    @Override
+    public void onSubmit() {
+        super.onSubmit();
+    }
 }

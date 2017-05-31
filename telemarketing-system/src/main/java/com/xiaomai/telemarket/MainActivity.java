@@ -10,6 +10,7 @@ import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.appCheck.AppCheckHelper;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementAllFragment;
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
         initBottomNavigationBar();
         initService();
+        AppCheckHelper.getInstance().checkVersion(this,false);
     }
 
     private void initService() {
@@ -109,7 +111,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 setToolbarCenterTitle(R.string.main_order_tab);
                 setToolbarVisibility(View.VISIBLE);
                 setToolbarRightImage(0);
-                ISkipActivityUtil.startIntent(this, SettingActivity.class);
+//                ISkipActivityUtil.startIntent(this, SettingActivity.class);
                 break;
         }
     }
@@ -134,6 +136,10 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
         PhoneCallStateService.StopService(DataApplication.getInstance().getApplicationContext());
         super.onDestroy();
+    }
+
+    public MainBottomNavigationBar getMainBottomNavigationBar(){
+        return mainBottomNavigationBar;
     }
 
 }

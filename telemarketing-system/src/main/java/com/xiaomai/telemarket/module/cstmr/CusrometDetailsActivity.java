@@ -110,6 +110,7 @@ public class CusrometDetailsActivity extends BaseActivity {
         fragments.add(folloFragment);
 
         CusrometDetailsTabLayout.initTabLayout(getSupportFragmentManager(), fragments, tabNames);
+
     }
 
     @OnClick({R.id.CusrometDetails_Back_ImageView, R.id.CusrometDetails_phone_ImageView, R.id.CusrometDetails_Edit_ImageView})
@@ -124,9 +125,6 @@ public class CusrometDetailsActivity extends BaseActivity {
             case R.id.CusrometDetails_Edit_ImageView:
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("entity", entity);
-//                    ISkipActivityUtil.startIntent(this, CusrometInfoEditActivity.class, bundle);
                     CusrometInfoActivity.startIntentToEdit(this,entity);
                 } else if (currentItem == 1) {/*负债*/
                     if (debtoFragment.getEntity() == null) {
@@ -173,5 +171,9 @@ public class CusrometDetailsActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    public WaytoTabLayout getTabLayout(){
+        return CusrometDetailsTabLayout;
     }
 }

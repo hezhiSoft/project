@@ -11,6 +11,7 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
@@ -87,20 +88,21 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条房产信息");
             adapter.addItems(data);
+            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(2,data.size());
         } else {
             DetailsNumberTextView.setText("房产信息");
-            PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override

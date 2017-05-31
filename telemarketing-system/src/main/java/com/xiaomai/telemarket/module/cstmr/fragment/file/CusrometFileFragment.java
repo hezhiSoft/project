@@ -11,6 +11,7 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
@@ -97,20 +98,21 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条文件资料");
             adapter.addItems(data);
+            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(6,data.size());
         } else {
             DetailsNumberTextView.setText("文件资料");
-            EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override

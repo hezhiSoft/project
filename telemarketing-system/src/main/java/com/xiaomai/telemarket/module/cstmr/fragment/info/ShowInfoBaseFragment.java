@@ -157,8 +157,8 @@ public class ShowInfoBaseFragment extends BaseFragment {
         entity.setCustomerName(InfoCustomerName.getContentText());
         entity.setCustomerTel(InfoCustomerTel.getContentText());
         entity.setIsSZHukou("否".equals(InfoIsSZHukou.getContentText())?0:1);
-        entity.setSex(IStringUtils.toInt(DictionaryHelper.ParseSex(InfoSex.getContentText())));
-        entity.setMaritalStatus(IStringUtils.toInt(DictionaryHelper.ParseMaritalStatus(InfoMaritalStatus.getContentText())));
+        entity.setSex(IStringUtils.toInt(SexCode));
+        entity.setMaritalStatus(IStringUtils.toInt(MaritalStatusCode));
 //        entity.se
         entity.setAccountWater(IStringUtils.toInt(InfoAccumulationFundAccount.getContentText()));
         entity.setSocialSecurityAccount(IStringUtils.toInt(InfoSocialSecurityAccount.getContentText()));

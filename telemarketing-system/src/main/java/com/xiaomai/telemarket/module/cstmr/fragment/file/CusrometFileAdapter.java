@@ -68,6 +68,9 @@ public class CusrometFileAdapter extends BaseRecyclerViewAdapter<FileEntity> {
             viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_less_black_24dp);
             viewHodler.DetailsContentLayout.setVisibility(View.VISIBLE);
             viewHodler.lineView.setVisibility(View.GONE);
+            if (listenter!=null){
+                listenter.onSeleceItemPosition(mLists.get(position));
+            }
         }
 
         final View infoView = inflater.inflate(R.layout.cusromet_file_layout, null);

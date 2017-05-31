@@ -120,7 +120,7 @@ public class FormWriteTopTitleView extends LinearLayout {
      */
     public FormWriteTopTitleView setContentText(String text) {
         if (TextUtils.isEmpty(text)) {
-            mContentEditText.setText("无");
+            mContentEditText.setHint("无");
         } else
             mContentEditText.setText(text);
         return this;

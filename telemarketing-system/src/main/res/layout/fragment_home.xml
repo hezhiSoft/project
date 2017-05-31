@@ -39,7 +39,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="菜刀"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
@@ -54,7 +53,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="right"
-                            android:text="客户部"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -74,7 +72,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="left"
-                            android:text="在线"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -88,6 +85,7 @@
                     android:layout_alignParentRight="true"
                     android:padding="10dp"
                     android:text="设置"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </RelativeLayout>

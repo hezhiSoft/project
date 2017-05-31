@@ -12,10 +12,9 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
-import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
-import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoAdapter;
 
 import java.util.List;
 
@@ -97,20 +96,21 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         if (data != null && data.size() > 0) {
             adapter.addItems(data);
             DetailsNumberTextView.setText("共" + data.size() + "条汽车明细");
+            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(4,data.size());
         } else {
             DetailsNumberTextView.setText("洗车明细");
-            CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            CarRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        CarRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        CarRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.jinggan.library.ui.widget.pullRefreshRecyler;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -80,6 +81,20 @@ public class PullToRefreshRecyclerView extends LinearLayout implements SwipeRefr
      */
     public void setEmptyTextViewVisiblity(int visiblity) {
         pullToRefreshEmptyTextView.setVisibility(visiblity);
+    }
+
+    /**
+     * 设置页面提示语
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 17:21
+     */
+    public void setPageHint(int imageResId, String context) {
+        Drawable drawable = getResources().getDrawable(imageResId);
+        drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        pullToRefreshEmptyTextView.setCompoundDrawables(null, drawable, null, null);
+        pullToRefreshEmptyTextView.setText(context);
+        pullToRefreshEmptyTextView.setVisibility(VISIBLE);
     }
 
     /**

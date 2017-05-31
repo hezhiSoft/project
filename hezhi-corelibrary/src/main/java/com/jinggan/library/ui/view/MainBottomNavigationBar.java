@@ -175,9 +175,13 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
             } else {
                 item.setText(String.valueOf(number));
             }
-            removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource).setBadgeItem(item)).setActiveColor(R.color.tab_active).initialise();
+            removeItem(tabPosition)
+                    .addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource).setBadgeItem(item))
+                    .setActiveColor(R.color.tab_active).initialise();
         } else {
-            removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource)).setActiveColor(R.color.tab_active).initialise();
+            removeItem(tabPosition)
+                    .addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource)).setActiveColor(R.color.tab_active)
+                    .initialise();
         }
     }
 
