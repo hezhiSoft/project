@@ -31,14 +31,11 @@ public class TelListener extends PhoneStateListener {
 
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE: // 空闲状态，即无来电也无去电
-                Log.i(TAG, "onCallStateChanged #CALL_STATE_IDLE" + "拨出");
                 if (mRecord.isStarted()) {
                     mRecord.stop();
-//                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
-//                    ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),"挂断电话! time:"+ System.currentTimeMillis());
-                } else {
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+                    Log.i(TAG, "onCallStateChanged #CALL_STATE_IDLE" + "挂断");
                 }
-                ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
                 //此处添加一系列功能代码
                 break;
             case TelephonyManager.CALL_STATE_RINGING: // 来电响铃
@@ -47,13 +44,11 @@ public class TelListener extends PhoneStateListener {
                 //此处添加一系列功能代码
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK: // 摘机，即接通
-                Log.i(TAG, "onCallStateChanged #CALL_STATE_OFFHOOK");
+                Log.i(TAG, "onCallStateChanged #CALL_STATE_OFFHOOK" + "，接通" + incomingNumber);
                 ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
                 if (!mRecord.isStarted()) {
                     mRecord.start();
-                    //IS_DIALING_KEY
                 }
-//                    ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(),""+incomingNumber+"接通 ！");
                 //此处添加一系列功能代码
                 break;
         }

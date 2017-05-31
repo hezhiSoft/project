@@ -38,7 +38,7 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFailure(int code, String msg) {
-                if (code == Constant.RESPONSE_CODE_411) {
+                if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
                     mView.showRequestFinished(msg);
                 } else {
                     mView.showRequestNumberFailed(msg);
@@ -75,7 +75,7 @@ public class DialingPresenter implements DialingContract.Presenter {
 
             @Override
             public void onFailure(int code, String msg) {
-                if (code == Constant.RESPONSE_CODE_411) {
+                if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
                     mView.showRequestFinished(msg);
                 } else {
                     mView.showRequestNumberFailed(msg);
