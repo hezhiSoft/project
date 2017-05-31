@@ -65,6 +65,9 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
             viewHodler.ExpandImageView.setImageResource(R.drawable.ic_expand_less_black_24dp);
             viewHodler.DetailsContentLayout.setVisibility(View.VISIBLE);
             viewHodler.DetailsLine.setVisibility(View.GONE);
+            if (listenter!=null){
+                listenter.onSeleceItemPosition(mLists.get(position));
+            }
         }
 
         View carView = inflater.inflate(R.layout.cusromet_car_layout, null);

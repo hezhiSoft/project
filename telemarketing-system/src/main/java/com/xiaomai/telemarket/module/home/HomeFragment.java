@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
@@ -39,6 +40,9 @@ import com.xiaomai.telemarket.module.home.dial.HomeDialingPresenter;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +93,12 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
 
     private HomeMenuItemClickListener homeMenuItemClickListener;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +111,12 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         initUI();
         initData(savedInstanceState);
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initUI() {
@@ -285,4 +301,12 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                 }).create().show();
     }
 
+    @Subscribe
+    public void notifactionFollowNumber(EventBusValues values){
+        switch (values.getWhat()){
+            case 0x900:
+
+                break;
+        }
+    }
 }

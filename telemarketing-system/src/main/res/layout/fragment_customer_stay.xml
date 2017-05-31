@@ -46,6 +46,7 @@
             android:paddingRight="10dp"
             android:layout_alignParentRight="true"
             android:paddingTop="15dp"
+            android:visibility="gone"
             android:src="@mipmap/icon_screen" />
     </RelativeLayout>
 

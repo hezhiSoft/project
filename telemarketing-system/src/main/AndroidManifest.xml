@@ -107,6 +107,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
+        <activity android:name="com.jinggan.library.media.picture.ShowPictureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
         <activity
             android:name=".module.order.OrderActivity"
             android:screenOrientation="portrait"

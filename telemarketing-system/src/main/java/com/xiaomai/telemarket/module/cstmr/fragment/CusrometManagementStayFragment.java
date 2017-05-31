@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
+import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometManagementAdapter;
 import com.xiaomai.telemarket.module.cstmr.FiltersButtomDialog;
@@ -37,7 +40,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementStayFragment extends BaseFragment implements RemetoRepoCallback<List<CusrometListEntity>>, FiltersButtomDialog.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener{
+public class CusrometManagementStayFragment extends BaseFragment implements RemetoRepoCallback<List<CusrometListEntity>>, FiltersButtomDialog.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
 
     @BindView(R.id.Stay_recyclerView)
     PullToRefreshRecyclerView CustomerAllRecyclerView;
@@ -48,27 +51,29 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     private CusrometManagementAdapter adapter;
 
     private int pageIndex;
-    private String sort="desc";/*默认降序*/
+    private String sort = "desc";/*默认降序*/
     private CusrometRemoteRepo remoteRepo;
 
     private JSONObject filters;
 
-    private List<FiltersEntity> filtersEntities=new ArrayList<>();
+    private List<FiltersEntity> filtersEntities = new ArrayList<>();
 
-    private boolean desc=true;
+    private boolean desc = true;
+
+    private boolean hidden = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        remoteRepo=CusrometRemoteRepo.getInstance();
+        remoteRepo = CusrometRemoteRepo.getInstance();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_customer_stay,null);
-        ButterKnife.bind(this,rootView);
-        adapter=new CusrometManagementAdapter(getContext(),2);
+        View rootView = inflater.inflate(R.layout.fragment_customer_stay, null);
+        ButterKnife.bind(this, rootView);
+        adapter = new CusrometManagementAdapter(getContext(), 2);
         CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
         CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
         CustomerAllRecyclerView.setPullToRefreshListener(this);
@@ -76,40 +81,40 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
         return rootView;
     }
 
-    @OnClick({R.id.Time_sor_TextView,R.id.Stay_toolBar_add_ImageView, R.id.Stay_toolBar_screen_ImageView})
+    @OnClick({R.id.Time_sor_TextView, R.id.Stay_toolBar_add_ImageView, R.id.Stay_toolBar_screen_ImageView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Stay_toolBar_add_ImageView:
                 break;
             case R.id.Stay_toolBar_screen_ImageView:
-                FiltersButtomDialog dialog=new FiltersButtomDialog();
+                FiltersButtomDialog dialog = new FiltersButtomDialog();
                 dialog.setSelectContent(filtersEntities).setListener(this);
-                dialog.show(getFragmentManager(),getClass().getSimpleName());
+                dialog.show(getFragmentManager(), getClass().getSimpleName());
                 break;
             case R.id.Time_sor_TextView:
 //                sorTextView.set
-                if (!desc){
+                if (!desc) {
                     Drawable drawable;
-                    if (Build.VERSION.SDK_INT>=21){
-                        drawable=getResources().getDrawable(R.mipmap.ic_sor_down,getActivity().getTheme());
-                    }else {
-                        drawable=getResources().getDrawable(R.mipmap.ic_sor_down);
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        drawable = getResources().getDrawable(R.mipmap.ic_sor_down, getActivity().getTheme());
+                    } else {
+                        drawable = getResources().getDrawable(R.mipmap.ic_sor_down);
                     }
-                    drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
-                    sorTextView.setCompoundDrawables(null,null,drawable,null);
-                    desc=false;
-                    sort="desc";
-                }else {
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    sorTextView.setCompoundDrawables(null, null, drawable, null);
+                    desc = true;
+                    sort = "desc";
+                } else {
                     Drawable drawable;
-                    if (Build.VERSION.SDK_INT>=21){
-                        drawable=getResources().getDrawable(R.mipmap.ic_sor_up,getActivity().getTheme());
-                    }else {
-                        drawable=getResources().getDrawable(R.mipmap.ic_sor_up);
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        drawable = getResources().getDrawable(R.mipmap.ic_sor_up, getActivity().getTheme());
+                    } else {
+                        drawable = getResources().getDrawable(R.mipmap.ic_sor_up);
                     }
-                    drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
-                    sorTextView.setCompoundDrawables(null,null,drawable,null);
-                    desc=true;
-                    sort="asc";
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    sorTextView.setCompoundDrawables(null, null, drawable, null);
+                    desc = false;
+                    sort = "asc";
                 }
                 CustomerAllRecyclerView.startUpRefresh();
                 break;
@@ -118,12 +123,12 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
 
     @Override
     public void onClickItem(List<FiltersEntity> entity) {
-        if (entity!=null&&entity.size()>0){
-            this.filtersEntities=entity;
+        if (entity != null && entity.size() > 0) {
+            this.filtersEntities = entity;
             try {
-                filters=new JSONObject();
-                for (FiltersEntity filtersEntity:entity){
-                    filters.put(filtersEntity.getKey(),filtersEntity.getCode());
+                filters = new JSONObject();
+                for (FiltersEntity filtersEntity : entity) {
+                    filters.put(filtersEntity.getKey(), filtersEntity.getCode());
                 }
                 CustomerAllRecyclerView.startUpRefresh();
             } catch (JSONException e) {
@@ -135,31 +140,44 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     @Override
     public void onReplance() {
         filtersEntities.clear();
-        filters=null;
+        filters = null;
         CustomerAllRecyclerView.startUpRefresh();
     }
 
     @Override
     public void onDownRefresh() {
-        pageIndex=1;
-        remoteRepo.requestStayFollow(pageIndex,filters,this);
+        pageIndex = 1;
+        remoteRepo.requestStayFollow(pageIndex, filters, this);
     }
 
     @Override
     public void onPullRefresh() {
         pageIndex++;
-        remoteRepo.requestStayFollow(pageIndex,filters,this);
+        remoteRepo.requestStayFollow(pageIndex, filters, this);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        this.hidden = hidden;
     }
 
     @Override
     public void onSuccess(List<CusrometListEntity> data) {
-        if (pageIndex==1){
+        if (pageIndex == 1) {
             adapter.clearList();
             CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.GONE);
             adapter.addItems(data);
-        }else {
-            adapter.addItems(data,adapter.getItemCount()-1);
-            if (data.size()<=0){
+            ((MainActivity) getActivity()).getMainBottomNavigationBar().addTabSign(2, data.size());
+            EventBusValues busValues = new EventBusValues();
+            busValues.setWhat(0x900);
+            busValues.setObject(data.size());
+            if (!hidden) {
+                ((MainActivity) getActivity()).getMainBottomNavigationBar().setFirstSelectedTab(2);
+            }
+        } else {
+            adapter.addItems(data, adapter.getItemCount() - 1);
+            if (data.size() <= 0) {
                 CustomerAllRecyclerView.onLoadMoreFinish();
             }
         }
@@ -167,10 +185,10 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
 
     @Override
     public void onFailure(int code, String msg) {
-        if (pageIndex==1){
+        if (pageIndex == 1) {
             adapter.clearList();
             CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
-        }else {
+        } else {
             showToast(msg);
         }
     }

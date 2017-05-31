@@ -43,7 +43,6 @@ import butterknife.Unbinder;
  */
 public class FollowBaseFragment extends BaseFragment {
 
-
     @BindView(R.id.Follow_FollowType)
     FormSelectTopTitleView FollowFollowType;
     @BindView(R.id.Follow_FollowDate)
@@ -228,8 +227,6 @@ public class FollowBaseFragment extends BaseFragment {
         FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName());
         return entity;
     }
-
-
 
     @Override
     public void onDestroyView() {

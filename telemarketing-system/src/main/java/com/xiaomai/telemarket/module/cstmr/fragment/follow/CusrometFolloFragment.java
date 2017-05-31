@@ -11,6 +11,7 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
@@ -99,20 +100,21 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
             DetailsNumberTextView.setText("共"+data.size()+"条跟进明细");
             adapter.clearList();
             adapter.addItems(data);
+            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(7,data.size());
         } else {
             DetailsNumberTextView.setText("跟进明细");
-            FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            FollowRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        FollowRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        FollowRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override

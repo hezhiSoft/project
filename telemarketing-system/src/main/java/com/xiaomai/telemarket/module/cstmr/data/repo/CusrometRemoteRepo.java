@@ -19,9 +19,12 @@ import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,21 +106,21 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/27 19:13
      */
-    public void editCusromet(CusrometListEntity entity, final RemetoRepoCallback<CusrometListEntity> callback){
-        addCusrometCall=XiaomaiRetrofitManager.getAPIService().editCusromet(entity);
+    public void editCusromet(CusrometListEntity entity, final RemetoRepoCallback<CusrometListEntity> callback) {
+        addCusrometCall = XiaomaiRetrofitManager.getAPIService().editCusromet(entity);
         addCusrometCall.enqueue(new RetrofitCallback<Responese<CusrometListEntity>>() {
             @Override
             public void onSuccess(Responese<CusrometListEntity> data) {
-                if (data.getCode()==214){
+                if (data.getCode() == 214) {
                     callback.onSuccess(data.getData());
-                }else {
-                    callback.onFailure(data.getCode(),data.getMsg());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                callback.onFailure(code,msg);
+                callback.onFailure(code, msg);
             }
 
             @Override
@@ -143,21 +146,21 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/27 19:13
      */
-    public void addCusromet(CusrometListEntity entity, final RemetoRepoCallback<CusrometListEntity> callback){
-        addCusrometCall=XiaomaiRetrofitManager.getAPIService().addCusromet(entity);
+    public void addCusromet(CusrometListEntity entity, final RemetoRepoCallback<CusrometListEntity> callback) {
+        addCusrometCall = XiaomaiRetrofitManager.getAPIService().addCusromet(entity);
         addCusrometCall.enqueue(new RetrofitCallback<Responese<CusrometListEntity>>() {
             @Override
             public void onSuccess(Responese<CusrometListEntity> data) {
-                if (data.getCode()==214){
+                if (data.getCode() == 214) {
                     callback.onSuccess(data.getData());
-                }else {
-                    callback.onFailure(data.getCode(),data.getMsg());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                callback.onFailure(code,msg);
+                callback.onFailure(code, msg);
             }
 
             @Override
@@ -176,6 +179,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
             }
         });
     }
+
     /**
      * 获取客户列表
      * <p>
@@ -185,7 +189,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * @param pageIndex
      * @param callback
      */
-    public void requestCusrometLists(int pageIndex,String sort, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
+    public void requestCusrometLists(int pageIndex, String sort, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -193,7 +197,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
             pageIndexObj.put("PageIndex", pageIndex);
 
             jsonObject.put("pageparamer", pageIndexObj);
-            jsonObject.put("sort",sort);
+            jsonObject.put("sort", sort);
             jsonObject.put("filter", filter);
             body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         } catch (JSONException e) {
@@ -233,10 +237,10 @@ public class CusrometRemoteRepo implements BaseDataSourse {
     }
 
     /**
-     *获取踏进列表
-     *
-     *author: hezhiWu
-     *created at 2017/5/28 下午12:45
+     * 获取踏进列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/28 下午12:45
      */
     public void requestStayFollow(int pageIndex, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
         RequestBody body = null;
@@ -1001,7 +1005,115 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         });
     }
 
-    public void queryFollowDetails(String customerid,final RemetoRepoCallback<List<FollowEntity>> callback){
+    /**
+     * 添加文件明细
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 16:22
+     */
+    public void addFile(String fileName, List<String> images, final RemetoRepoCallback<FileEntity> callback) {
+        List<File> list = new ArrayList<>();
+        List<MultipartBody.Part> parts = new ArrayList<>();
+        if (images != null && images.size() > 0) {
+            for (int i = 0; i < images.size(); i++) {
+                list.add(new File(images.get(i)));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), list.get(i));
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file" + (i + 1), list.get(i).getName(), requestBody);
+                parts.add(part);
+            }
+        }
+        String pamar = "file/upload?param={\"filename\":" + fileName + "}";
+        final Call<Responese<FileEntity>> call = XiaomaiRetrofitManager.getAPIService().addFile(pamar, parts);
+        call.enqueue(new RetrofitCallback<Responese<FileEntity>>() {
+            @Override
+            public void onSuccess(Responese<FileEntity> data) {
+                if (data.getCode() == 214) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 编辑文件明细
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 16:34
+     */
+    public void editFile(String fileName, List<String> images, final RemetoRepoCallback<FileEntity> callback) {
+        List<File> list = new ArrayList<>();
+        List<MultipartBody.Part> parts = new ArrayList<>();
+        if (images != null && images.size() > 0) {
+            for (int i = 0; i < images.size(); i++) {
+                list.add(new File(images.get(i)));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), list.get(i));
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file" + (i + 1), list.get(i).getName(), requestBody);
+                parts.add(part);
+            }
+        }
+        String pamar = "file/upload?param={\"filename\":" + fileName + "}";
+        final Call<Responese<FileEntity>> call = XiaomaiRetrofitManager.getAPIService().editFile(pamar, parts);
+        call.enqueue(new RetrofitCallback<Responese<FileEntity>>() {
+            @Override
+            public void onSuccess(Responese<FileEntity> data) {
+                if (data.getCode() == 214) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 查询跟进明细详情
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 16:21
+     */
+    public void queryFollowDetails(String customerid, final RemetoRepoCallback<List<FollowEntity>> callback) {
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -1010,7 +1122,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Call<Responese<List<FollowEntity>>> call= XiaomaiRetrofitManager.getAPIService().queryCusrometFollowDetails(body);
+        Call<Responese<List<FollowEntity>>> call = XiaomaiRetrofitManager.getAPIService().queryCusrometFollowDetails(body);
         call.enqueue(new RetrofitCallback<Responese<List<FollowEntity>>>() {
             @Override
             public void onSuccess(Responese<List<FollowEntity>> data) {

@@ -9,8 +9,11 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.BuildConfig;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.appCheck.AppCheckHelper;
+import com.xiaomai.telemarket.appCheck.data.VersionEntity;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.LoginActivity;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
@@ -34,6 +37,8 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
     TextView tvExit;
     @BindView(R.id.layout_title)
     TitleLayout layoutTitle;
+    @BindView(R.id.Version_update)
+    TextView VersionUpdate;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,9 +52,10 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
 
     private void initEvent() {
         layoutTitle.setOnNaviBarClickListener(this);
+        VersionUpdate.setText("版本更新V"+ BuildConfig.VERSION_NAME);
     }
 
-    @OnClick({R.id.tv_user_state_set, R.id.tv_dialing_source_set, R.id.tv_exit})
+    @OnClick({R.id.Version_update,R.id.tv_user_state_set, R.id.tv_dialing_source_set, R.id.tv_exit})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -71,6 +77,8 @@ public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviB
 //                        IActivityManage.getInstance().exit();
                     }
                 }, null);
+                break;
+            case R.id.Version_update:
                 break;
         }
     }

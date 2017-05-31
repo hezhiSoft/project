@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.api;
 
+import com.xiaomai.telemarket.appCheck.data.VersionEntity;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
@@ -13,13 +14,18 @@ import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.home.setting.data.UserStateEntity;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Url;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -95,6 +101,7 @@ public interface APIService {
 
     /**
      * 清除拨号记录
+     *
      * @param body {"customerid":""}
      * @return
      */
@@ -126,7 +133,7 @@ public interface APIService {
      * created at 2017/5/27 19:11
      */
     @POST("api/customer/EditCustomer")
-    Call<Responese<CusrometListEntity>> editCusromet(@Body  CusrometListEntity entity);
+    Call<Responese<CusrometListEntity>> editCusromet(@Body CusrometListEntity entity);
 
     /**
      * 获取客户列表
@@ -138,10 +145,10 @@ public interface APIService {
     Call<Responese<List<CusrometListEntity>>> queryCusrometLists(@Body RequestBody body);
 
     /**
-     *获取跟进列表
-     * 
-     *author: hezhiWu
-     *created at 2017/5/28 下午12:45
+     * 获取跟进列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/28 下午12:45
      */
     @POST("api/customer/FollowingCustomers")
     Call<Responese<List<CusrometListEntity>>> queryStayFollow(@Body RequestBody body);
@@ -285,6 +292,26 @@ public interface APIService {
     Call<Responese<List<FileEntity>>> queryCusrometFileLists(@Body RequestBody body);
 
     /**
+     * 添加文件
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 16:19
+     */
+    @Multipart
+    @POST
+    Call<Responese<FileEntity>> addFile(@Url String url, @Part() List<MultipartBody.Part> parts);
+
+    /**
+     * 编辑文件信息
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 16:20
+     */
+    @Multipart
+    @POST
+    Call<Responese<FileEntity>> editFile(@Url String url, @Part() List<MultipartBody.Part> parts);
+
+    /**
      * 查询客户跟进明细
      * <p>
      * author: hezhiWu
@@ -301,6 +328,7 @@ public interface APIService {
      */
     @POST("api/customer/FollowingDetail")
     Call<Responese<List<FollowEntity>>> queryCusrometFollowDetails(@Body RequestBody body);
+
     /**
      * 编辑公司
      * <p>
@@ -327,4 +355,13 @@ public interface APIService {
      */
     @POST("api/user/GetDataEnum")
     Call<Responese<List<DictionaryEntity>>> queryDictionary(@Body RequestBody body);
+
+    /**
+     *版本检测
+     * 
+     *author: hezhiWu
+     *created at 2017/5/31 18:04
+     */
+    @POST("api/user/Version")
+    Call<Responese<List<VersionEntity>>> checkAppVersion();
 }

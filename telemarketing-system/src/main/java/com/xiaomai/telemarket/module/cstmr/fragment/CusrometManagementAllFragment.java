@@ -111,7 +111,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                     }
                     drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
                     sorTextView.setCompoundDrawables(null,null,drawable,null);
-                    desc=false;
+                    desc=true;
                     sort="desc";
                 }else {
                     Drawable drawable;
@@ -122,7 +122,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                     }
                     drawable.setBounds(0, 0,drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
                     sorTextView.setCompoundDrawables(null,null,drawable,null);
-                    desc=true;
+                    desc=false;
                     sort="asc";
                 }
                 CustomerAllRecyclerView.startUpRefresh();

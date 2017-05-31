@@ -4,12 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/TabMission_textView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/gray"
-        android:textSize="16sp" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/TabMission_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Title"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/TabMission_Tag_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/TabMission_textView"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:background="@mipmap/icon_circle"
+            android:textSize="9sp"
+            android:layout_marginLeft="-4dp"
+            android:visibility="gone"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 </LinearLayout>
