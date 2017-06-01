@@ -23,41 +23,75 @@
 
         <View style="@style/line_1" />
 
-        <TextView
-            android:id="@+id/tv_user_state_set"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/home_layout_selector"
-            android:drawableRight="@mipmap/ic_arrow_right"
-            android:paddingBottom="@dimen/dimen_15dp"
-            android:paddingLeft="@dimen/dimen_15dp"
-            android:paddingRight="@dimen/dimen_15dp"
-            android:paddingTop="@dimen/dimen_12dp"
-            android:drawablePadding="@dimen/dimen_10dp"
-            android:text="@string/set_user_state"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_size_bottom_16"
-            android:visibility="visible" />
+            android:layout_height="@dimen/dimen_45dp">
+
+            <TextView
+                android:id="@+id/tv_user_state_set"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/home_layout_selector"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:drawableRight="@mipmap/ic_arrow_right"
+                android:paddingLeft="@dimen/dimen_15dp"
+                android:paddingRight="@dimen/dimen_15dp"
+                android:drawablePadding="@dimen/dimen_10dp"
+                android:text="@string/set_user_state"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_bottom_16"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_user_state"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen_35dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_bottom_16"
+                android:visibility="visible" />
+
+        </RelativeLayout>
 
         <View
             style="@style/line_5"
             android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/tv_dialing_source_set"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/home_layout_selector"
-            android:drawableRight="@mipmap/ic_arrow_right"
-            android:paddingBottom="@dimen/dimen_12dp"
-            android:paddingLeft="@dimen/dimen_15dp"
-            android:paddingRight="@dimen/dimen_15dp"
-            android:paddingTop="@dimen/dimen_12dp"
-            android:text="@string/set_dialing_source"
-            android:drawablePadding="@dimen/dimen_10dp"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_size_bottom_16"
-            android:visibility="visible" />
+            android:layout_height="@dimen/dimen_45dp">
+
+            <TextView
+                android:id="@+id/tv_dialing_source_set"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/home_layout_selector"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:drawableRight="@mipmap/ic_arrow_right"
+                android:paddingLeft="@dimen/dimen_15dp"
+                android:paddingRight="@dimen/dimen_15dp"
+                android:drawablePadding="@dimen/dimen_10dp"
+                android:text="@string/set_dialing_source"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_bottom_16"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_dialing_source"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen_35dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_bottom_16"
+                android:visibility="visible" />
+
+        </RelativeLayout>
 
         <View
             style="@style/line_5"
@@ -66,7 +100,7 @@
         <TextView
             android:id="@+id/Version_update"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dimen_45dp"
             android:background="@drawable/home_layout_selector"
             android:drawableRight="@mipmap/ic_arrow_right"
             android:paddingBottom="@dimen/dimen_12dp"
@@ -86,7 +120,7 @@
         <TextView
             android:id="@+id/tv_exit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dimen_45dp"
             android:background="@drawable/home_layout_selector"
             android:paddingBottom="@dimen/dimen_12dp"
             android:paddingLeft="@dimen/dimen_15dp"

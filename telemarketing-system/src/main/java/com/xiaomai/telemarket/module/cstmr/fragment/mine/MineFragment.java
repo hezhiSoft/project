@@ -17,13 +17,13 @@ import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.appCheck.AppCheckHelper;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.LoginActivity;
-import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingEditActivity;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -45,30 +45,46 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
     TitleLayout layoutTitle;
     @BindView(R.id.Version_update)
     TextView VersionUpdate;
+    @BindView(R.id.tv_user_state)
+    TextView tvUserState;
+    @BindView(R.id.tv_dialing_source)
+    TextView tvDialingSource;
+    Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.activity_setting_menu,null);
-        ButterKnife.bind(this,rootView);
+        View rootView = inflater.inflate(R.layout.activity_setting_menu, null);
+        unbinder=ButterKnife.bind(this, rootView);
+        initUI();
         initEvent();
         return rootView;
     }
-    private void initEvent() {
-        layoutTitle.setOnNaviBarClickListener(this);
-        VersionUpdate.setText("版本更新V"+ BuildConfig.VERSION_NAME);
+
+    private void initUI() {
+        tvUserState.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
+        if (ISharedPreferencesUtils.getValue(getActivity(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE).equals(Constant.DIAL_NUMBER_CODE_PUBLIC)) {
+            tvDialingSource.setText(getResources().getString(R.string.text_number_library_public));
+        } else {
+            tvDialingSource.setText(getResources().getString(R.string.text_number_dialing_private));
+        }
     }
 
-    @OnClick({R.id.Version_update,R.id.tv_user_state_set, R.id.tv_dialing_source_set, R.id.tv_exit})
+    private void initEvent() {
+        layoutTitle.setOnNaviBarClickListener(this);
+        VersionUpdate.setText("版本更新V" + BuildConfig.VERSION_NAME);
+    }
+
+    @OnClick({R.id.Version_update, R.id.tv_user_state_set, R.id.tv_dialing_source_set, R.id.tv_exit})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.tv_user_state_set:
-                bundle.putString(SettingEditActivity.EXTRA_TAG,SettingEditActivity.TAG_USERSTATE);
+                bundle.putString(SettingEditActivity.EXTRA_TAG, SettingEditActivity.TAG_USERSTATE);
                 ISkipActivityUtil.startIntent(getActivity(), SettingEditActivity.class, bundle);
                 break;
             case R.id.tv_dialing_source_set:
-                bundle.putString(SettingEditActivity.EXTRA_TAG,SettingEditActivity.TAG_DIALING);
+                bundle.putString(SettingEditActivity.EXTRA_TAG, SettingEditActivity.TAG_DIALING);
                 ISkipActivityUtil.startIntent(getActivity(), SettingEditActivity.class, bundle);
                 break;
             case R.id.tv_exit:
@@ -83,7 +99,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
                 }, null);
                 break;
             case R.id.Version_update:
-                AppCheckHelper.getInstance().checkVersion(getActivity(),true);
+                AppCheckHelper.getInstance().checkVersion(getActivity(), true);
                 break;
         }
     }
@@ -104,6 +120,11 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }
 
 

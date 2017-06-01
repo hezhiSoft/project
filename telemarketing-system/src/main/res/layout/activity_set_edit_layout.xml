@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:TitleLayout="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.xiaomai.telemarket.view.widget.TitleLayout
-        android:id="@+id/layout_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        TitleLayout:titleText="@string/settings">
-    </com.xiaomai.telemarket.view.widget.TitleLayout>
+    <!--<com.xiaomai.telemarket.view.widget.TitleLayout-->
+        <!--android:id="@+id/layout_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--TitleLayout:titleText="@string/settings">-->
+    <!--</com.xiaomai.telemarket.view.widget.TitleLayout>-->
 
     <FrameLayout
         android:id="@+id/layout_set_content"

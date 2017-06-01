@@ -10,7 +10,6 @@ import com.jinggan.library.base.BaseFragment;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -20,8 +19,8 @@ import butterknife.ButterKnife;
  **/
 public class SettingEditActivity extends BaseActivity implements TitleLayout.OnNaviBarClickListener{
 
-    @BindView(R.id.layout_title)
-    TitleLayout layoutTitle;
+//    @BindView(R.id.layout_title)
+//    TitleLayout layoutTitle;
 
     public static final String TAG_USERSTATE = "userstate";
     public static final String TAG_DIALING = "dialing";
@@ -32,8 +31,9 @@ public class SettingEditActivity extends BaseActivity implements TitleLayout.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_edit_layout);
         ButterKnife.bind(this);
-        setToolbarVisibility(View.GONE);
-        layoutTitle.setOnNaviBarClickListener(this);
+        setToolbarVisibility(View.VISIBLE);
+        setToolbarTitle(getResources().getString(R.string.settings));
+//        layoutTitle.setOnNaviBarClickListener(this);
         getSupportFragmentManager().beginTransaction().add(R.id.layout_set_content, createFragment(), null).commit();
     }
 
@@ -42,10 +42,12 @@ public class SettingEditActivity extends BaseActivity implements TitleLayout.OnN
         if (bundle != null) {
             String tag = bundle.getString(EXTRA_TAG);
             if (TextUtils.equals(tag,TAG_USERSTATE)) {
-                layoutTitle.setTitle(getResources().getString(R.string.set_user_state));
+//                layoutTitle.setTitle(getResources().getString(R.string.set_user_state));
+                setToolbarTitle(getResources().getString(R.string.set_user_state));
                 return UserStateSetFragment.newInstance();
             }else if (TextUtils.equals(tag,TAG_DIALING)) {
-                layoutTitle.setTitle(getResources().getString(R.string.set_dialing_source));
+//                layoutTitle.setTitle(getResources().getString(R.string.set_dialing_source));
+                setToolbarTitle(getResources().getString(R.string.set_dialing_source));
                 return DialingSourceSetFragment.newInstance();
             }
         }
