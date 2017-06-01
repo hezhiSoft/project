@@ -32,12 +32,14 @@ import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
+import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
 import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingContract;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingPresenter;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
+import com.xiaomai.telemarket.module.home.setting.SettingEditActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.utils.RegexUtils;
 
@@ -171,11 +173,16 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         unbinder.unbind();
     }
 
-    @OnClick({R.id.Home_call_TextView, R.id.Home_trend_TextView, R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView})
+    @OnClick({R.id.Home_call_TextView, R.id.Home_trend_TextView, R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView,R.id.Home_UserState_TextView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Home_seting_TextView:/*设置*/
                 ISkipActivityUtil.startIntent(getActivity(), SettingActivity.class);
+                break;
+            case R.id.Home_UserState_TextView:
+                Bundle bundle=new Bundle();
+                bundle.putString(SettingEditActivity.EXTRA_TAG,SettingEditActivity.TAG_USERSTATE);
+                ISkipActivityUtil.startIntent(getActivity(), SettingEditActivity.class, bundle);
                 break;
             case R.id.Home_groupCall_Layout:/*群呼*/
                 if (homeDialingPresenter.getIsDialingGroupStoped()) {
@@ -240,6 +247,10 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     @Override
     public void showDialingOutStarted(CusrometListEntity entity) {
         if (entity!=null) {
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("entity",entity);
+            ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
+            //
             ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
             ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
         }
