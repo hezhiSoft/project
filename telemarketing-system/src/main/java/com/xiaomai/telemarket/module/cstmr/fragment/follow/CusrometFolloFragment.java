@@ -52,7 +52,7 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
         adapter.setListenter(new CusrometFollowAdapter.OnClickItemLisenter() {
             @Override
             public void onSeleceItemPosition(FollowEntity entity) {
-                debtoEntity=entity;
+                debtoEntity = entity;
             }
         });
     }
@@ -70,6 +70,12 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
         FollowRecyclerView.setRecyclerViewAdapter(adapter);
         FollowRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         FollowRecyclerView.setPullToRefreshListener(this);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         FollowRecyclerView.startUpRefresh();
     }
 
@@ -97,34 +103,47 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     @Override
     public void onSuccess(List<FollowEntity> data) {
         if (data != null && data.size() > 0) {
-            DetailsNumberTextView.setText("共"+data.size()+"条跟进明细");
+            DetailsNumberTextView.setText("共" + data.size() + "条跟进明细");
+            if (FollowRecyclerView != null) {
+                FollowRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.clearList();
             adapter.addItems(data);
-            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(7,data.size());
+            ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(7, data.size());
         } else {
             DetailsNumberTextView.setText("跟进明细");
-            FollowRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (FollowRecyclerView != null) {
+                FollowRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        FollowRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        FollowRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        FollowRecyclerView.closeDownRefresh();
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.closeDownRefresh();
+        }
     }
 
     public FollowEntity getEntity() {

@@ -102,32 +102,45 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
         if (data != null && data.size() > 0) {
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条负债信息");
+            if (EdbtoRecyclerView != null) {
+                EdbtoRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
-            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(1,data.size());
+            ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(1, data.size());
         } else {
             DetailsNumberTextView.setText("负债信息");
-            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (EdbtoRecyclerView != null) {
+                EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (EdbtoRecyclerView != null) {
+            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (EdbtoRecyclerView != null) {
+            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (EdbtoRecyclerView != null) {
+            EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        EdbtoRecyclerView.closeDownRefresh();
+        if (EdbtoRecyclerView != null) {
+            EdbtoRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override

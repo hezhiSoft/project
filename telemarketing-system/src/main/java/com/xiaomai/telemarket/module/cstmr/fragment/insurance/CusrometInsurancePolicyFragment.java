@@ -13,6 +13,7 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerVie
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
+import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter=new CusrometInsuranceAdapter(getContext());
+        adapter = new CusrometInsuranceAdapter(getContext());
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter.setListenter(this);
@@ -67,12 +68,17 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
         PropertyRecyclerView.setRecyclerViewAdapter(adapter);
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         PropertyRecyclerView.startUpRefresh();
     }
 
     @Override
     public void onDownRefresh() {
-        remoteRepo.queryCusrometInsuranceLists(cusrometId,this);
+        remoteRepo.queryCusrometInsuranceLists(cusrometId, this);
     }
 
     @Override
@@ -85,32 +91,45 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
         if (data != null && data.size() > 0) {
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条保单信息");
+            if (PropertyRecyclerView != null) {
+                PropertyRecyclerView.setVisibility(View.GONE);
+            }
             adapter.addItems(data);
-            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(3,data.size());
+            ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(3, data.size());
         } else {
             DetailsNumberTextView.setText("保单信息");
-            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (PropertyRecyclerView != null) {
+                PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        PropertyRecyclerView.closeDownRefresh();
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override
@@ -127,10 +146,10 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
 
     @Override
     public void onSeleceItemPosition(InsuranceEntity entity) {
-        this.entity=entity;
+        this.entity = entity;
     }
 
-    public InsuranceEntity getEntity(){
+    public InsuranceEntity getEntity() {
         return entity;
     }
 }

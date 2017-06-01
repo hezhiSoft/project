@@ -69,6 +69,12 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
         PropertyRecyclerView.setRecyclerViewAdapter(adapter);
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         PropertyRecyclerView.startUpRefresh();
     }
 
@@ -87,32 +93,45 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
         if (data != null && data.size() > 0) {
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条公司信息");
+            if (PropertyRecyclerView!=null){
+                PropertyRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
             ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(5,data.size());
         } else {
             DetailsNumberTextView.setText("公司信息");
-            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (PropertyRecyclerView!=null){
+                PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        PropertyRecyclerView.closeDownRefresh();
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override

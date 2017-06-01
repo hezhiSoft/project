@@ -60,13 +60,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:wvItemName="银行流水"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                app:wvInputType="number"/>
 
             <com.jinggan.library.ui.widget.FormWriteTopTitleView
                 android:id="@+id/Info_SocialSecurityAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:wvItemName="公积金基数" />
+                app:wvItemName="公积金基数"
+                app:wvInputType="number"/>
 
             <com.jinggan.library.ui.widget.FormWriteTopTitleView
                 android:id="@+id/Info_Remark"

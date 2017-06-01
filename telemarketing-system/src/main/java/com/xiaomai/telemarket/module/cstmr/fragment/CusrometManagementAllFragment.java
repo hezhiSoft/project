@@ -167,9 +167,9 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
 
     @Override
     public void onSuccess(List<CusrometListEntity> data) {
+        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.GONE);
         if (pageIndex==1){
             adapter.clearList();
-            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.GONE);
             adapter.addItems(data);
         }else {
             adapter.addItems(data,adapter.getItemCount()-1);

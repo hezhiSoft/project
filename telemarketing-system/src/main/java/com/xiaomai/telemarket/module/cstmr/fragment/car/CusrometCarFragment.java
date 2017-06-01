@@ -71,6 +71,12 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         CarRecyclerView.setRecyclerViewAdapter(adapter);
         CarRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         CarRecyclerView.setPullToRefreshListener(this);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         CarRecyclerView.startUpRefresh();
     }
 
@@ -96,31 +102,44 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         if (data != null && data.size() > 0) {
             adapter.addItems(data);
             DetailsNumberTextView.setText("共" + data.size() + "条汽车明细");
+            if (CarRecyclerView!=null){
+                CarRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(4,data.size());
         } else {
             DetailsNumberTextView.setText("洗车明细");
-            CarRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (CarRecyclerView!=null){
+                CarRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        CarRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        CarRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        CarRecyclerView.closeDownRefresh();
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.closeDownRefresh();
+        }
     }
 
     @OnClick(R.id.Details_add_Button)

@@ -14,6 +14,7 @@
         android:id="@+id/Car_NakedCarPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:wvInputType="number"
         app:wvHint="请输入"
         app:wvItemName="裸车价(万)" />
 

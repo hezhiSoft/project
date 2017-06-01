@@ -50,7 +50,7 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter=new CusrometPropertyAdapter(getContext());
+        adapter = new CusrometPropertyAdapter(getContext());
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter.setListenter(this);
@@ -69,12 +69,17 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
         PropertyRecyclerView.setRecyclerViewAdapter(adapter);
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         PropertyRecyclerView.startUpRefresh();
     }
 
     @Override
     public void onDownRefresh() {
-        remoteRepo.queryCusrometHouseLists(cusrometId,this);
+        remoteRepo.queryCusrometHouseLists(cusrometId, this);
     }
 
     @Override
@@ -87,32 +92,45 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
         if (data != null && data.size() > 0) {
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条房产信息");
+            if (DetailsNumberTextView != null) {
+                PropertyRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
-            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(2,data.size());
+            ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(2, data.size());
         } else {
             DetailsNumberTextView.setText("房产信息");
-            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (PropertyRecyclerView != null) {
+                PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        PropertyRecyclerView.closeDownRefresh();
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override
@@ -129,10 +147,10 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
 
     @Override
     public void onSeleceItemPosition(PropertyEntity entity) {
-        this.entity=entity;
+        this.entity = entity;
     }
 
-    public PropertyEntity getEntity(){
+    public PropertyEntity getEntity() {
         return entity;
     }
 }
