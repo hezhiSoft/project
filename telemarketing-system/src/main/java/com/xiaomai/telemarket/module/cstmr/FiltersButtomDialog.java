@@ -50,8 +50,8 @@ public class FiltersButtomDialog extends BottomSheetDialogFragment implements Re
 
     private FiltersAdater adater;
 
+    private List<FiltersEntity> selectLists;
     private List<FiltersEntity> lists = new ArrayList<>();
-    private List<FiltersEntity> selectLists = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class FiltersButtomDialog extends BottomSheetDialogFragment implements Re
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      View rootView = inflater.inflate(R.layout.filter_dialog, null);
+        View rootView = inflater.inflate(R.layout.filter_dialog, null);
         unbinder = ButterKnife.bind(this, rootView);
         DialogFiltersGridView.setAdapter(adater);
         CusrometRemoteRepo.getInstance().getFilters(this);
@@ -103,20 +103,20 @@ public class FiltersButtomDialog extends BottomSheetDialogFragment implements Re
         unbinder.unbind();
     }
 
-    @OnClick({R.id.DialogTaskFilters_replace,R.id.DialogFilters_close_ImageView, R.id.DialogTaskFilters_confirm})
+    @OnClick({R.id.DialogTaskFilters_replace, R.id.DialogFilters_close_ImageView, R.id.DialogTaskFilters_confirm})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.DialogFilters_close_ImageView:
                 dismiss();
                 break;
             case R.id.DialogTaskFilters_confirm:
-                if (clickItemListener!=null){
+                if (clickItemListener != null) {
                     clickItemListener.onClickItem(lists);
                 }
                 dismiss();
                 break;
             case R.id.DialogTaskFilters_replace:
-                if (clickItemListener!=null){
+                if (clickItemListener != null) {
                     clickItemListener.onReplance();
                 }
                 dismiss();
@@ -139,19 +139,25 @@ public class FiltersButtomDialog extends BottomSheetDialogFragment implements Re
                 for (FiltersEntity entity : selectLists) {
                     if (entity.getName().equals(mList.get(position).getName())) {
                         checkBox.setChecked(true);
-                        lists.add(mList.get(position));
-                        break;
+                        if (!lists.contains(entity))
+                            lists.add(entity);
                     }
                 }
             }
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            lists.add(mList.get(position));
-                        } else {
-                            lists.remove(mList.get(position));
+                    if (isChecked) {
+                        lists.add(mList.get(position));
+                    } else {
+                        if (selectLists != null && selectLists.size() > 0) {
+                            for (FiltersEntity entity : selectLists) {
+                                if (entity.getName().equals(mList.get(position).getName())) {
+                                    lists.remove(entity);
+                                }
+                            }
                         }
+                    }
                 }
             });
             return convertView;
@@ -166,12 +172,16 @@ public class FiltersButtomDialog extends BottomSheetDialogFragment implements Re
     }
 
     public FiltersButtomDialog setSelectContent(List<FiltersEntity> entities) {
-        this.selectLists = entities;
+        if (entities == null) {
+            this.selectLists = new ArrayList<>();
+        } else
+            this.selectLists = entities;
         return this;
     }
 
     public interface OnClickItemListener {
         void onClickItem(List<FiltersEntity> entity);
+
         void onReplance();
     }
 }

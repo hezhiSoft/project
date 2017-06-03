@@ -3,11 +3,14 @@ package com.xiaomai.telemarket.module.cstmr.fragment.file;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.xiaomai.telemarket.api.Responese;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -39,7 +42,11 @@ public class FileEditFragment extends FileBaseFragment implements RemetoRepoCall
 
     @Override
     public void onSuccess(FileEntity data) {
-        showToast("编辑成功");
+        EventBusValues values=new EventBusValues();
+        values.setWhat(0x207);
+        EventBus.getDefault().post(values);
+
+        showToast("保存成功");
         getActivity().finish();
     }
 

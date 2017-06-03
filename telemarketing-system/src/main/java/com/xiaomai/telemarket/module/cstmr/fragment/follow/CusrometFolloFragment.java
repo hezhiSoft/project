@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -15,6 +17,9 @@ import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -35,6 +40,8 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     PullToRefreshRecyclerView FollowRecyclerView;
     @BindView(R.id.Details_number_TextView)
     TextView DetailsNumberTextView;
+    @BindView((R.id.Details_add_Button))
+    Button addButtonDetails;
 
     private CusrometFollowAdapter adapter;
     private CusrometRemoteRepo remoteRepo;
@@ -46,6 +53,8 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter = new CusrometFollowAdapter(getContext());
@@ -62,6 +71,7 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_follow, null);
         ButterKnife.bind(this, rootView);
+        addButtonDetails.setText("添加跟进");
         initRecyclerView();
         return rootView;
     }
@@ -70,19 +80,27 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
         FollowRecyclerView.setRecyclerViewAdapter(adapter);
         FollowRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         FollowRecyclerView.setPullToRefreshListener(this);
-
+        FollowRecyclerView.startUpRefresh();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        FollowRecyclerView.startUpRefresh();
+
     }
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x208){
+            remoteRepo.queryCusrometFollowLists(cusrometId, this);
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         remoteRepo.cancelRequest();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -102,12 +120,12 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
 
     @Override
     public void onSuccess(List<FollowEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
             DetailsNumberTextView.setText("共" + data.size() + "条跟进明细");
             if (FollowRecyclerView != null) {
                 FollowRecyclerView.setEmptyTextViewVisiblity(View.GONE);
             }
-            adapter.clearList();
             adapter.addItems(data);
             ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(7, data.size());
         } else {

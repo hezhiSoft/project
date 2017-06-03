@@ -24,7 +24,7 @@ import com.xiaomai.telemarket.service.PhoneCallStateService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener,HomeMenuItemClickListener {
+public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener, HomeMenuItemClickListener {
     /*模块标记*/
     public static final int TAB_HOME = 0;
     public static final int TAB_CUSROMENTMANAGEMENT = 1;
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
         initBottomNavigationBar();
         initService();
-        AppCheckHelper.getInstance().checkVersion(this,false);
+        AppCheckHelper.getInstance().checkVersion(this, false);
     }
 
     private void initService() {
@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         mainBottomNavigationBar.addTabItem(R.drawable.ic_tab_home, R.string.main_home_tab, new HomeFragment())
                 .addTabItem(R.drawable.ic_tab_customer, R.string.main_all_cusroment_tab, new CusrometManagementAllFragment())
                 .addTabItem(R.drawable.ic_tab_list, R.string.main_stay_cusroment_tab, new CusrometManagementStayFragment())
-                .addTabItem(R.mipmap.icon_tab_set, R.string.main_order_tab,new MineFragment())
+                .addTabItem(R.mipmap.icon_tab_set, R.string.main_order_tab, new MineFragment())
                 .setTabSelectedListener(this)
                 .setFirstSelectedTab(TAB_HOME);
         setToolbarVisibility(View.GONE);
@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     @Override
     public void onMenuItemClick(int index) {
         // TODO: 27/05/2017 切换fragment
-        if (mainBottomNavigationBar!=null) {
+        if (mainBottomNavigationBar != null) {
             mainBottomNavigationBar.selectTab(index);
         }
     }
@@ -116,19 +116,32 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         }
     }
 
+    private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            DialogFactory.showMsgDialog(this, "退出", "确定退出电销系统?", "退出", "取消", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: 19/05/2017 退出登录接口
-                    IActivityManage.getInstance().exit();
-                }
-            }, null);
+//            DialogFactory.showMsgDialog(this, "退出", "确定退出电销系统?", "退出", "取消", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // TODO: 19/05/2017 退出登录接口
+//                    IActivityManage.getInstance().exit();
+//                }
+//            }, null);
+            exit();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            showToast("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            IActivityManage.getInstance().exit();
+            System.exit(0);
+        }
     }
 
     @Override
@@ -138,7 +151,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         super.onDestroy();
     }
 
-    public MainBottomNavigationBar getMainBottomNavigationBar(){
+    public MainBottomNavigationBar getMainBottomNavigationBar() {
         return mainBottomNavigationBar;
     }
 

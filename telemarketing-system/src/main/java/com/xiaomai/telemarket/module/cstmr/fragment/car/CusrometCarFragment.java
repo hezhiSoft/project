@@ -9,12 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -51,6 +55,8 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         cusrometId = getArguments().getString("id");
         adapter = new CusrometCarAdapter(getContext());
         adapter.setListenter(this);
@@ -62,6 +68,7 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_car, null);
         unbinder = ButterKnife.bind(this, rootView);
+        DetailsAddButton.setText("添加汽车");
         initRecyclerView();
         return rootView;
     }
@@ -71,12 +78,6 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         CarRecyclerView.setRecyclerViewAdapter(adapter);
         CarRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         CarRecyclerView.setPullToRefreshListener(this);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         CarRecyclerView.startUpRefresh();
     }
 
@@ -85,6 +86,15 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         super.onDestroyView();
         unbinder.unbind();
         remoteRepo.cancelRequest();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x205){
+            remoteRepo.queryCusrometCarLists(cusrometId, this);
+        }
     }
 
     @Override
@@ -99,6 +109,7 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
 
     @Override
     public void onSuccess(List<CarEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
             adapter.addItems(data);
             DetailsNumberTextView.setText("共" + data.size() + "条汽车明细");

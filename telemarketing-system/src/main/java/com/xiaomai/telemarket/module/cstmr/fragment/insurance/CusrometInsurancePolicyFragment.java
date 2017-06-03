@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -15,6 +17,9 @@ import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -37,6 +42,8 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     TextView DetailsNumberTextView;
     @BindView(R.id.Insurance_recyclerView)
     PullToRefreshRecyclerView PropertyRecyclerView;
+    @BindView((R.id.Details_add_Button))
+    Button addButtonDetails;
     Unbinder unbinder;
 
     private CusrometInsuranceAdapter adapter;
@@ -49,6 +56,8 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         adapter = new CusrometInsuranceAdapter(getContext());
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
@@ -60,6 +69,7 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_insurance, null);
         unbinder = ButterKnife.bind(this, rootView);
+        addButtonDetails.setText("添加保单");
         initRecyclerView();
         return rootView;
     }
@@ -68,12 +78,20 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
         PropertyRecyclerView.setRecyclerViewAdapter(adapter);
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
+        PropertyRecyclerView.startUpRefresh();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        PropertyRecyclerView.startUpRefresh();
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x204){
+            remoteRepo.queryCusrometInsuranceLists(cusrometId, this);
+        }
     }
 
     @Override
@@ -88,8 +106,8 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
 
     @Override
     public void onSuccess(List<InsuranceEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
-            adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条保单信息");
             if (PropertyRecyclerView != null) {
                 PropertyRecyclerView.setVisibility(View.GONE);

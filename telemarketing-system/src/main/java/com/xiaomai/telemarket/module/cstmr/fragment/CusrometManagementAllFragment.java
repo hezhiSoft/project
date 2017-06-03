@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -20,6 +21,8 @@ import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.info.CusrometInfoActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,6 +65,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         remoteRepo=CusrometRemoteRepo.getInstance();
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -87,8 +91,15 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
         super.onDestroyView();
         unbinder.unbind();
         remoteRepo.cancelRequest();
+        EventBus.getDefault().unregister(this);
     }
 
+    @Subscribe
+    public void onFreshUI(EventBusValues values){
+        if (values.getWhat()==0x201){
+            CustomerAllRecyclerView.startUpRefresh();
+        }
+    }
     @OnClick({R.id.Time_sor_TextView,R.id.Customer_toolBar_add_ImageView, R.id.Customer_toolBar_screen_ImageView})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -143,6 +154,10 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }else {
+            filtersEntities.clear();
+            filters=null;
+            CustomerAllRecyclerView.startUpRefresh();
         }
     }
 
@@ -187,13 +202,13 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                 CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
             }
         }else {
-            showToast(msg);
+//            showToast(msg);
         }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        showToast("数据异常");
+//        showToast("数据异常");
         if (CustomerAllRecyclerView != null) {
             CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
         }
@@ -201,7 +216,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
 
     @Override
     public void onUnauthorized() {
-        showToast("数据获取失败");
+//        showToast("数据获取失败");
         if (CustomerAllRecyclerView != null) {
             CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
         }

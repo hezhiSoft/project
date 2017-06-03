@@ -125,7 +125,7 @@ public class CusrometDetailsActivity extends BaseActivity {
             case R.id.CusrometDetails_Edit_ImageView:
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
-                    CusrometInfoActivity.startIntentToEdit(this,entity);
+                    CusrometInfoActivity.startIntentToEdit(this,InfoFragment.getCusromentEntity());
                 } else if (currentItem == 1) {/*负债*/
                     if (debtoFragment.getEntity() == null) {
                         showToast("选择编辑明细");

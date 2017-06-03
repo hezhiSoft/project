@@ -58,6 +58,6 @@
         app:tabLayout_mode="MODE_SCROLLABLE"
         app:tabLayout_indicatorColor="@color/colorAccent"
         app:tabLayout_tab_textColor="@color/colorAccent"
-        app:tabLayout_tab_defaultTextColor="@color/gray"/>
+        app:tabLayout_tab_defaultTextColor="#666666"/>
 
 </LinearLayout>

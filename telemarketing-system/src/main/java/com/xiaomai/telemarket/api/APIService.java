@@ -357,11 +357,20 @@ public interface APIService {
     Call<Responese<List<DictionaryEntity>>> queryDictionary(@Body RequestBody body);
 
     /**
-     *版本检测
-     * 
-     *author: hezhiWu
-     *created at 2017/5/31 18:04
+     * 版本检测
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/31 18:04
      */
     @POST("api/user/Version")
     Call<Responese<List<VersionEntity>>> checkAppVersion();
+
+    /**
+     * 设置客户电话号码为空
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/3 18:18
+     */
+    @POST("api/customer/SetEmptyTel")
+    Call<Responese<Void>> setEmptyTel(@Body RequestBody body);
 }

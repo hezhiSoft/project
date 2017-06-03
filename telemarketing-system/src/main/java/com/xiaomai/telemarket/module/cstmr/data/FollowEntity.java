@@ -26,6 +26,7 @@ public class FollowEntity implements Serializable{
     private String CreatedBy;
     private String CreatedDate;
     private int RowIndex;
+    private String FileUrl;
 
     public String getID() {
         return ID;
@@ -145,5 +146,13 @@ public class FollowEntity implements Serializable{
 
     public void setRowIndex(int RowIndex) {
         this.RowIndex = RowIndex;
+    }
+
+    public String getFileUrl() {
+        return FileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        FileUrl = fileUrl;
     }
 }

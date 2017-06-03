@@ -1,11 +1,14 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.property;
 
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.xiaomai.telemarket.api.Responese;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -27,7 +30,11 @@ public class PropertyAddFragment extends PropertyBaseFragment implements RemetoR
 
     @Override
     public void onSuccess(Responese data) {
-        showToast("新增成功");
+        EventBusValues values=new EventBusValues();
+        values.setWhat(0x203);
+        EventBus.getDefault().post(values);
+
+        showToast("保存成功");
         getActivity().finish();
     }
 

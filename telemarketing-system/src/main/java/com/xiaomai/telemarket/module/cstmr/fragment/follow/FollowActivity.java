@@ -100,7 +100,7 @@ public class FollowActivity extends BaseActivity{
     }
 
     private void switchToEditDebtoFragment() {
-        setToolbarTitle("保单明细");
+        setToolbarTitle("跟进明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -112,7 +112,7 @@ public class FollowActivity extends BaseActivity{
     }
 
     private void switchToAddDebtoFragment() {
-        setToolbarTitle("添加保单明细");
+        setToolbarTitle("添加跟进明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.Follow_Content_Layout, new FollowAddFragment());

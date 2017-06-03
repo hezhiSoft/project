@@ -210,7 +210,7 @@ public class FollowBaseFragment extends BaseFragment {
         FollowNextFollowDate.setContentText(entity.getNextFollowDate().replaceAll("T"," "));
         FollowNextFollowTime.setContentText(entity.getNextFollowTime()+"");
         FollowRemark.setContentText(entity.getRemark());
-        FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName());
+        FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName()).setItemEnabled(false);
     }
 
     protected FollowEntity getFollowEntity(){
