@@ -1,6 +1,8 @@
 package com.xiaomai.telemarket.module.cstmr;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -9,6 +11,7 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.ISystemUtil;
+import com.jinggan.library.utils.PermissionHelper;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CarActivity;
@@ -74,6 +77,7 @@ public class CusrometDetailsActivity extends BaseActivity {
         initTabLayout();
     }
 
+
     private void initTabLayout() {
         InfoFragment = new CusrometInfoShowFragment();
         InfoFragment.setArguments(getIntent().getExtras());
@@ -120,12 +124,14 @@ public class CusrometDetailsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.CusrometDetails_phone_ImageView:
-                ISystemUtil.makeCall(this,entity.getCustomerTel(),true);
+                if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x999)) {
+                    ISystemUtil.makeCall(this, entity.getCustomerTel(), true);
+                }
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
-                    CusrometInfoActivity.startIntentToEdit(this,InfoFragment.getCusromentEntity());
+                    CusrometInfoActivity.startIntentToEdit(this, InfoFragment.getCusromentEntity());
                 } else if (currentItem == 1) {/*负债*/
                     if (debtoFragment.getEntity() == null) {
                         showToast("选择编辑明细");
@@ -173,7 +179,15 @@ public class CusrometDetailsActivity extends BaseActivity {
         }
     }
 
-    public WaytoTabLayout getTabLayout(){
+    public WaytoTabLayout getTabLayout() {
         return CusrometDetailsTabLayout;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==0x999){
+            ISystemUtil.makeCall(this, entity.getCustomerTel(), true);
+        }
     }
 }
