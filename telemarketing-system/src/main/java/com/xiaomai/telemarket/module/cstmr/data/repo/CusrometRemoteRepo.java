@@ -242,7 +242,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/28 下午12:45
      */
-    public void requestStayFollow(int pageIndex, String sort,JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
+    public void requestStayFollow(int pageIndex, String sort, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -1012,7 +1012,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/31 16:22
      */
-    public void addFile(String fileName, List<String> images, final RemetoRepoCallback<FileEntity> callback) {
+    public void addFile(String fileName, String cusrometId, List<String> images, final RemetoRepoCallback<FileEntity> callback) {
         List<File> list = new ArrayList<>();
         List<MultipartBody.Part> parts = new ArrayList<>();
         if (images != null && images.size() > 0) {
@@ -1023,12 +1023,12 @@ public class CusrometRemoteRepo implements BaseDataSourse {
                 parts.add(part);
             }
         }
-        String pamar = "file/upload?param={\"filename\":" + fileName + "}";
+        String pamar = "api/file/upload?param={\"filename\":\"" + fileName + "\",\"BusinessID\":\"" + cusrometId + "\"}";
         final Call<Responese<FileEntity>> call = XiaomaiRetrofitManager.getAPIService().addFile(pamar, parts);
         call.enqueue(new RetrofitCallback<Responese<FileEntity>>() {
             @Override
             public void onSuccess(Responese<FileEntity> data) {
-                if (data.getCode() == 214) {
+                if (data.getCode() == 213) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
