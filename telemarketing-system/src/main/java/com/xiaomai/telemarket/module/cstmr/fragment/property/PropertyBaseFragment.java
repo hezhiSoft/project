@@ -23,6 +23,7 @@ import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,7 +62,7 @@ public class PropertyBaseFragment extends BaseFragment {
     @BindView(R.id.Property_Remark)
     FormWriteTopTitleView PropertyRemark;
     @BindView(R.id.Property_IsMortgage)
-    FormSelectTopTitleView PropertyIsMortgage;
+    SelecteConditionTileView PropertyIsMortgage;
     @BindView(R.id.Property_MortgageBank)
     FormSelectTopTitleView PropertyMortgageBank;
     @BindView(R.id.Property_MonthlyPaymentLoan)
@@ -153,12 +154,12 @@ public class PropertyBaseFragment extends BaseFragment {
             }
         });
         /*是否按揭*/
-        PropertyIsMortgage.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(), PropertyIsMortgage.getTextView(), PropertyIsMortgage.getContentText().toString());
-            }
-        });
+//        PropertyIsMortgage.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                DictionaryHelper.showSelectDialog(getContext(), PropertyIsMortgage.getTextView(), PropertyIsMortgage.getContentText().toString());
+//            }
+//        });
         /*按揭银行*/
         PropertyMortgageBank.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
@@ -197,7 +198,7 @@ public class PropertyBaseFragment extends BaseFragment {
         PropertyVillageName.setContentText(entity.getVillageName());
         PropertyDetailedAddress.setContentText(entity.getDetailedAddress());
         PropertyRemark.setContentText(entity.getRemark());
-        PropertyIsMortgage.setContentText(entity.getIsMortgage() == 0 ? "否" : "是");
+        PropertyIsMortgage.setStatus(entity.getIsMortgage());
         PropertyMortgageBank.setContentText(DictionaryHelper.ParseBank(entity.getMortgageBank()));
         PropertyMonthlyPaymentLoan.setContentText(entity.getMonthlyPaymentLoan() + "");
         PropertyMortgageTimeLimit.setContentText(entity.getMortgageTimeLimit() + "");
@@ -215,7 +216,7 @@ public class PropertyBaseFragment extends BaseFragment {
         entity.setVillageName(PropertyVillageName.getContentText());
         entity.setDetailedAddress(PropertyDetailedAddress.getContentText());
         entity.setRemark(PropertyRemark.getContentText());
-        entity.setIsMortgage("是".equals(PropertyIsMortgage.getContentText()) ? 1 : 0);
+        entity.setIsMortgage(PropertyIsMortgage.getStatus());
         entity.setMortgageBank(BandCode);
         entity.setMonthlyPaymentLoan(IStringUtils.toInt(PropertyMonthlyPaymentLoan.getContentText()));
         entity.setMortgageTimeLimit(IStringUtils.toInt(PropertyMortgageTimeLimit.getContentText()));

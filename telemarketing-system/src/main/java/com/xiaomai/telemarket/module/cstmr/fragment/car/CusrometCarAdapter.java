@@ -14,6 +14,7 @@ import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,8 +105,8 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
         FormWriteTopTitleView Mileage = ButterKnife.findById(view, R.id.Car_Mileage);
         FormWriteTopTitleView Brand = ButterKnife.findById(view, R.id.Car_Barnd);
         FormWriteTopTitleView CarModel = ButterKnife.findById(view, R.id.Car_CarModel);
-        FormSelectTopTitleView IsMortgage = ButterKnife.findById(view, R.id.Car_IsMortgage);
-        FormSelectTopTitleView IsRegistrationCertificate = ButterKnife.findById(view, R.id.Car_IsRegistrationCertificate);
+        SelecteConditionTileView IsMortgage = ButterKnife.findById(view, R.id.Car_IsMortgage);
+        SelecteConditionTileView IsRegistrationCertificate = ButterKnife.findById(view, R.id.Car_IsRegistrationCertificate);
         FormWriteTopTitleView Remark = ButterKnife.findById(view, R.id.Car_Remark);
         /*裸车价*/
         NakedCarPrice.setContentText(entity.getNakedCarPrice() + "").setItemEnabled(false);
@@ -118,9 +119,9 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
         /*车型*/
         CarModel.setContentText(entity.getCarModel()).setItemEnabled(false);
         /*是否按揭*/
-        IsMortgage.setContentText(entity.getIsMortgage() == 0 ? "否" : "是").setArrowDropVisibility(View.GONE);
+        IsMortgage.setStatus(entity.getIsMortgage()).setRadioGropEnabled(false);
         /*有登记证*/
-        IsRegistrationCertificate.setContentText(entity.getIsRegistrationCertificate() == 0 ? "否" : "是").setArrowDropVisibility(View.GONE);
+        IsRegistrationCertificate.setStatus(entity.getIsRegistrationCertificate()).setRadioGropEnabled(false);
         /*备注*/
         Remark.setContentText(entity.getRemark()).setItemEnabled(false);
 

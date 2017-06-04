@@ -15,6 +15,7 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,7 +109,7 @@ public class CusrometCompanyAdapter extends BaseRecyclerViewAdapter<CompanyEntit
         FormWriteTopTitleView SharesProportion=ButterKnife.findById(view,R.id.Company_SharesProportion);
         FormWriteTopTitleView AccountWater=ButterKnife.findById(view,R.id.Company_AccountWater);
         FormWriteTopTitleView LocationRental=ButterKnife.findById(view,R.id.Company_LocationRental);
-        FormSelectTopTitleView IsRentTransfer=ButterKnife.findById(view,R.id.Company_IsRentTransfer);
+        SelecteConditionTileView IsRentTransfer=ButterKnife.findById(view,R.id.Company_IsRentTransfer);
         FormWriteTopTitleView AmountDebt=ButterKnife.findById(view,R.id.Company_AmountDebt);
         FormWriteTopTitleView Remark=ButterKnife.findById(view,R.id.Company_Remark);
         /*公司名称*/
@@ -126,7 +127,7 @@ public class CusrometCompanyAdapter extends BaseRecyclerViewAdapter<CompanyEntit
         /*租金*/
         LocationRental.setContentText(entity.getLocationRental()+"").setItemEnabled(false);
         /*租金是否转账*/
-        IsRentTransfer.setContentText(entity.getIsRentTransfer()==0?"否":"是").setArrowDropVisibility(View.GONE);
+        IsRentTransfer.setStatus(entity.getIsRentTransfer()).setRadioGropEnabled(false);
         /*负债金额*/
         AmountDebt.setContentText(entity.getAmountDebt()+"").setItemEnabled(false);
         /*备注*/
