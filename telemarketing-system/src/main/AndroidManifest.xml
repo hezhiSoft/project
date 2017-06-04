@@ -44,6 +44,7 @@
 
         <activity
             android:name=".module.cstmr.CusrometDetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"
             android:windowSoftInputMode="adjustPan|stateHidden" />

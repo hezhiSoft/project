@@ -8,11 +8,15 @@ import android.view.View;
 
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.IStringUtils;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CarActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CusrometCarFragment;
@@ -31,6 +35,8 @@ import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsuranceP
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.InsuranceActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.CusrometPropertyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.PropertyActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +135,15 @@ public class CusrometDetailsActivity extends BaseActivity {
                 }
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
+                /*判断当前是否处于群呼状态,通知群呼当前处理编辑状态*/
+                boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, "false").toString());
+                if (isCall) {
+                    EventBusValues values = new EventBusValues();
+                    values.setWhat(0x10101);
+                    values.setObject(false);
+                    EventBus.getDefault().post(values);
+                }
+
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
                     CusrometInfoActivity.startIntentToEdit(this, InfoFragment.getCusromentEntity());
@@ -186,7 +201,7 @@ public class CusrometDetailsActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode==0x999){
+        if (requestCode == 0x999) {
             ISystemUtil.makeCall(this, entity.getCustomerTel(), true);
         }
     }
