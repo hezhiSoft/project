@@ -235,7 +235,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/item_seletor"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/ic_trend"
+                    android:drawableTop="@mipmap/ic_stay"
                     android:gravity="center"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp"
@@ -334,11 +334,57 @@
                     android:layout_weight="1"
                     android:background="@drawable/item_seletor"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/icon_home_order"
+                    android:drawableTop="@mipmap/ic_terrain"
                     android:gravity="center"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp"
                     android:text="外呼走势"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/line" />
+
+                <TextView
+                    android:id="@+id/Home_Status_count_TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_seletor"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@mipmap/ic_status_count"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    android:text="状态统计"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/line" />
+
+                <TextView
+                    android:id="@+id/Home_status_query_TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_seletor"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@mipmap/ic_status_query"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    android:text="状态查询"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
 

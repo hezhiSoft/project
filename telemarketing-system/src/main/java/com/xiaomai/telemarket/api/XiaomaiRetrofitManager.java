@@ -44,6 +44,7 @@ public class XiaomaiRetrofitManager {
                 Request request = chain.request().newBuilder()
                         .addHeader("tenantid", DataApplication.getInstance().getUserInfoEntity().getTenantID())
                         .addHeader("userid", DataApplication.getInstance().getUserInfoEntity().getUserID())
+                        .addHeader("istenant",DataApplication.getInstance().getUserInfoEntity().getIsTenant()+"")
                         .build();
                 return chain.proceed(request);
             }

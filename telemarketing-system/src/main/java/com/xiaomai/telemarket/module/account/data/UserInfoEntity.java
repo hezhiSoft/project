@@ -15,6 +15,7 @@ public class UserInfoEntity {
     private String DisplayName;
     private String Department;
     private String Password;
+    private int IsTenant;
     private int Status;
     private String DeptID;
     private String Birthday;
@@ -178,5 +179,13 @@ public class UserInfoEntity {
 
     public void setDepartment(String department) {
         Department = department;
+    }
+
+    public void setIsTenant(int IsTenant){
+        this.IsTenant=IsTenant;
+    }
+
+    public int getIsTenant(){
+        return IsTenant;
     }
 }

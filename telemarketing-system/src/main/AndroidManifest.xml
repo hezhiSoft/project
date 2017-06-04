@@ -144,6 +144,16 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
+        <activity android:name=".module.function.statusCount.StatusCountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity android:name=".module.function.statusQuery.StatusQueryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+
         <!-- Bugly配置参数-->
         <meta-data
             android:name="BUGLY_APPID"

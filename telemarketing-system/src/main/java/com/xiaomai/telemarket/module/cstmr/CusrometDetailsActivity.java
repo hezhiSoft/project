@@ -136,7 +136,7 @@ public class CusrometDetailsActivity extends BaseActivity {
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
                 /*判断当前是否处于群呼状态,通知群呼当前处理编辑状态*/
-                boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, "false").toString());
+                boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, false).toString());
                 if (isCall) {
                     EventBusValues values = new EventBusValues();
                     values.setWhat(0x10101);

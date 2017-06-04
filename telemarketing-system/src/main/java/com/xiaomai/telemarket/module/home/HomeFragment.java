@@ -38,6 +38,8 @@ import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
 import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
+import com.xiaomai.telemarket.module.function.statusCount.StatusCountActivity;
+import com.xiaomai.telemarket.module.function.statusQuery.StatusQueryActivity;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingContract;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingPresenter;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
@@ -176,7 +178,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         unbinder.unbind();
     }
 
-    @OnClick({R.id.Home_call_TextView, R.id.Home_trend_TextView, R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView,R.id.Home_UserState_TextView})
+    @OnClick({R.id.Home_Status_count_TextView,R.id.Home_status_query_TextView,R.id.Home_call_TextView, R.id.Home_trend_TextView, R.id.Home_seting_TextView, R.id.Home_groupCall_Layout, R.id.Home_singCall_Layout, R.id.Home_customer_TextView, R.id.Home_customerStay_TextView, R.id.Home_Search_TextView, R.id.Home_order_TextView,R.id.Home_UserState_TextView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Home_seting_TextView:/*设置*/
@@ -220,6 +222,12 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                 break;
             case R.id.Home_trend_TextView:/*外呼趋势*/
                 ISkipActivityUtil.startIntent(getContext(), CallTrendActivity.class);
+                break;
+            case R.id.Home_Status_count_TextView:
+                ISkipActivityUtil.startIntent(getContext(), StatusCountActivity.class);
+                break;
+            case R.id.Home_status_query_TextView:
+                ISkipActivityUtil.startIntent(getContext(), StatusQueryActivity.class);
                 break;
         }
     }
