@@ -99,6 +99,7 @@
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:text="忘记密码"
+        android:visibility="gone"
         android:textColor="#206CCA"
         android:textSize="14sp" />
 

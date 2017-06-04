@@ -111,7 +111,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         addCusrometCall.enqueue(new RetrofitCallback<Responese<CusrometListEntity>>() {
             @Override
             public void onSuccess(Responese<CusrometListEntity> data) {
-                if (data.getCode() == 214) {
+                if (data.getCode() == 210) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
@@ -242,7 +242,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/28 下午12:45
      */
-    public void requestStayFollow(int pageIndex, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
+    public void requestStayFollow(int pageIndex, String sort, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -250,6 +250,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
             pageIndexObj.put("PageIndex", pageIndex);
 
             jsonObject.put("pageparamer", pageIndexObj);
+            jsonObject.put("sort", sort);
             jsonObject.put("filter", filter);
             body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         } catch (JSONException e) {
@@ -1011,7 +1012,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * author: hezhiWu
      * created at 2017/5/31 16:22
      */
-    public void addFile(String fileName, List<String> images, final RemetoRepoCallback<FileEntity> callback) {
+    public void addFile(String fileName, String cusrometId, List<String> images, final RemetoRepoCallback<FileEntity> callback) {
         List<File> list = new ArrayList<>();
         List<MultipartBody.Part> parts = new ArrayList<>();
         if (images != null && images.size() > 0) {
@@ -1022,12 +1023,12 @@ public class CusrometRemoteRepo implements BaseDataSourse {
                 parts.add(part);
             }
         }
-        String pamar = "file/upload?param={\"filename\":" + fileName + "}";
+        String pamar = "api/file/upload?param={\"filename\":\"" + fileName + "\",\"BusinessID\":\"" + cusrometId + "\"}";
         final Call<Responese<FileEntity>> call = XiaomaiRetrofitManager.getAPIService().addFile(pamar, parts);
         call.enqueue(new RetrofitCallback<Responese<FileEntity>>() {
             @Override
             public void onSuccess(Responese<FileEntity> data) {
-                if (data.getCode() == 214) {
+                if (data.getCode() == 213) {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
@@ -1275,6 +1276,55 @@ public class CusrometRemoteRepo implements BaseDataSourse {
             @Override
             public void onFinish() {
                 callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 设置客户电话号码为空
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/3 18:23
+     */
+    public void setEmptyTel(String customerId, final RemetoRepoCallback<Void> callback) {
+        RequestBody body = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("customerid", customerId);
+            body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Call<Responese<Void>> call = XiaomaiRetrofitManager.getAPIService().setEmptyTel(body);
+        call.enqueue(new RetrofitCallback<Responese<Void>>() {
+            @Override
+            public void onSuccess(Responese<Void> data) {
+                if (callback != null)
+                    callback.onSuccess(data.getData());
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                if (callback != null)
+                    callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                if (callback != null)
+                    callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                if (callback != null)
+                    callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                if (callback != null)
+                    callback.onFinish();
             }
         });
     }

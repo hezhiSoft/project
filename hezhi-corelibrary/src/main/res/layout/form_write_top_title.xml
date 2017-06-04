@@ -28,7 +28,7 @@
                 android:gravity="center|left"
                 android:paddingLeft="5dp"
                 android:text="Title"
-                android:textColor="@color/black"
+                android:textColor="#666666"
                 android:textSize="14sp" />
 
             <EditText
@@ -41,7 +41,7 @@
                 android:paddingBottom="2dp"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 

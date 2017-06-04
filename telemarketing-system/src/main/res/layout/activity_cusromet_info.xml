@@ -26,8 +26,22 @@
                 android:id="@+id/Info_CustomerTel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:wvItemName="客户电话"
-                app:wvInputType="number"/>
+                app:wvInputType="number"
+                app:wvItemName="客户电话" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:id="@+id/Info_Tel_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:svItemName="是否空号" />
+
+            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+                android:id="@+id/Info_intention_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:svItemName="是否有意向" />
 
 
             <com.jinggan.library.ui.widget.FormSelectTopTitleView
@@ -56,17 +70,26 @@
                 app:wvItemName="代发工资" />
 
             <com.jinggan.library.ui.widget.FormWriteTopTitleView
+                android:id="@+id/Info_BankFlow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:wvInputType="number"
+                app:wvItemName="银行流水" />
+
+            <com.jinggan.library.ui.widget.FormWriteTopTitleView
                 android:id="@+id/Info_AccumulationFundAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:wvItemName="银行流水"
-                android:visibility="visible"/>
+                app:wvInputType="number"
+                app:wvItemName="公积金基数" />
 
             <com.jinggan.library.ui.widget.FormWriteTopTitleView
                 android:id="@+id/Info_SocialSecurityAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:wvItemName="公积金基数" />
+                app:wvInputType="number"
+                app:wvItemName="社保基数" />
 
             <com.jinggan.library.ui.widget.FormWriteTopTitleView
                 android:id="@+id/Info_Remark"

@@ -1,9 +1,16 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.info;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -20,6 +27,13 @@ public class CusrometInfoAddFragment extends ShowInfoBaseFragment implements Rem
         super.onSubmit();
         dialog= DialogFactory.createLoadingDialog(getActivity(),"提交...");
         CusrometRemoteRepo.getInstance().addCusromet(getCusrometEntity(),this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        InfoTelStatus.setVisibility(View.VISIBLE);
+        InfoIntentionStatus.setVisibility(View.VISIBLE);
     }
 
     @Override

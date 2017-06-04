@@ -48,7 +48,7 @@ public class FileActivity extends BaseActivity {
     }
 
     private void switchToEditDebtoFragment() {
-        setToolbarTitle("保单明细");
+        setToolbarTitle("文件明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -60,7 +60,7 @@ public class FileActivity extends BaseActivity {
     }
 
     private void switchToAddDebtoFragment() {
-        setToolbarTitle("添加保单明细");
+        setToolbarTitle("添加文件明细");
         setToolbarRightText("保存");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.File_Content_Layout, new FileAddFragment());

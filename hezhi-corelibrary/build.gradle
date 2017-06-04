@@ -37,6 +37,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     /*图片加载*/
     compile 'com.github.bumptech.glide:glide:latest.release'
+    /*Bugly*/
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     /*Rxjava*/
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxandroid:1.2.1'

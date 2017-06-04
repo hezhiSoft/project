@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -16,6 +18,9 @@ import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.CusrometDebtoAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -38,6 +43,8 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
     TextView DetailsNumberTextView;
     @BindView(R.id.Property_recyclerView)
     PullToRefreshRecyclerView PropertyRecyclerView;
+    @BindView((R.id.Details_add_Button))
+    Button addButtonDetails;
     Unbinder unbinder;
 
     private CusrometPropertyAdapter adapter;
@@ -50,7 +57,9 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter=new CusrometPropertyAdapter(getContext());
+        EventBus.getDefault().register(this);
+
+        adapter = new CusrometPropertyAdapter(getContext());
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter.setListenter(this);
@@ -61,6 +70,7 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_property, null);
         unbinder = ButterKnife.bind(this, rootView);
+        addButtonDetails.setText("添加房产");
         initRecyclerView();
         return rootView;
     }
@@ -73,8 +83,21 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x203){
+            PropertyRecyclerView.startUpRefresh();
+        }
+    }
+
+    @Override
     public void onDownRefresh() {
-        remoteRepo.queryCusrometHouseLists(cusrometId,this);
+        remoteRepo.queryCusrometHouseLists(cusrometId, this);
     }
 
     @Override
@@ -84,35 +107,48 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
 
     @Override
     public void onSuccess(List<PropertyEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
-            adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条房产信息");
+            if (DetailsNumberTextView != null) {
+                PropertyRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
-            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(2,data.size());
+            ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(2, data.size());
         } else {
             DetailsNumberTextView.setText("房产信息");
-            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (PropertyRecyclerView != null) {
+                PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        PropertyRecyclerView.closeDownRefresh();
+        if (PropertyRecyclerView != null) {
+            PropertyRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override
@@ -129,10 +165,10 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
 
     @Override
     public void onSeleceItemPosition(PropertyEntity entity) {
-        this.entity=entity;
+        this.entity = entity;
     }
 
-    public PropertyEntity getEntity(){
+    public PropertyEntity getEntity() {
         return entity;
     }
 }

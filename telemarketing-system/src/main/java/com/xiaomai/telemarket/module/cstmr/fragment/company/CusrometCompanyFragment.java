@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -16,6 +18,9 @@ import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsuranceAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -38,6 +43,8 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
     TextView DetailsNumberTextView;
     @BindView(R.id.Company_recyclerView)
     PullToRefreshRecyclerView PropertyRecyclerView;
+    @BindView((R.id.Details_add_Button))
+    Button addButtonDetails;
     Unbinder unbinder;
 
     private CusrometCompanyAdapter adapter;
@@ -50,6 +57,8 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         adapter=new CusrometCompanyAdapter(getContext());
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
@@ -61,8 +70,15 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_company, null);
         unbinder = ButterKnife.bind(this, rootView);
+        addButtonDetails.setText("添加公司");
         initRecyclerView();
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initRecyclerView() {
@@ -70,6 +86,14 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
         PropertyRecyclerView.startUpRefresh();
+    }
+
+
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x206){
+            remoteRepo.queryCusrometCompanyLists(cusrometId, this);
+        }
     }
 
     @Override
@@ -84,35 +108,48 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
 
     @Override
     public void onSuccess(List<CompanyEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
-            adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条公司信息");
+            if (PropertyRecyclerView!=null){
+                PropertyRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
             ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(5,data.size());
         } else {
             DetailsNumberTextView.setText("公司信息");
-            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (PropertyRecyclerView!=null){
+                PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        PropertyRecyclerView.closeDownRefresh();
+        if (PropertyRecyclerView!=null) {
+            PropertyRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override

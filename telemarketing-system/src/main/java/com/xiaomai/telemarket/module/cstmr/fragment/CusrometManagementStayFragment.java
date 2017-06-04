@@ -147,13 +147,13 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     @Override
     public void onDownRefresh() {
         pageIndex = 1;
-        remoteRepo.requestStayFollow(pageIndex, filters, this);
+        remoteRepo.requestStayFollow(pageIndex, sort,filters, this);
     }
 
     @Override
     public void onPullRefresh() {
         pageIndex++;
-        remoteRepo.requestStayFollow(pageIndex, filters, this);
+        remoteRepo.requestStayFollow(pageIndex,sort, filters, this);
     }
 
     @Override
@@ -189,13 +189,13 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
             adapter.clearList();
             CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
         } else {
-            showToast(msg);
+//            showToast(msg);
         }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        showToast("数据异常");
+//        showToast("数据异常");
         CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
     }
 

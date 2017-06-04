@@ -231,6 +231,7 @@ public class DebtoBaseFragment extends BaseFragment {
         entity.setLoanDate(DebtoLoanDate.getContentText());
         entity.setLoanBank(bankCode);
         entity.setMonthlyPayments(IStringUtils.toInt(DebtoMonthlyPayments.getContentText()));
+        entity.setRemainingLoanAmount(IStringUtils.toInt(DebtoRemainingLoanAmount.getContentText().toString()));
         entity.setLoanMonth(IStringUtils.toInt(DebtoLoanMonth.getContentText()));
         entity.setRepaymentMode(repaymentModeCode);
         entity.setDelayDays(IStringUtils.toInt(DebtoDelayDays.getContentText()));

@@ -11,6 +11,7 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.BuildConfig;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
@@ -55,7 +56,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_setting_menu, null);
-        unbinder=ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         initUI();
         initEvent();
         return rootView;
@@ -92,6 +93,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
                     @Override
                     public void onClick(View v) {
                         // TODO: 19/05/2017 退出登录接口
+                        ISharedPreferencesUtils.setValue(getContext(), Constant.PASSWORD_KEY, "");
                         ISharedPreferencesUtils.setValue(getActivity(), Constant.ISLOGIN_KEY, false);
                         ISkipActivityUtil.startIntent(getActivity(), LoginActivity.class);
 //                        IActivityManage.getInstance().exit();

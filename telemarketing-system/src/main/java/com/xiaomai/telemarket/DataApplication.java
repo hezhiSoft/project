@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.jinggan.library.base.BaseApplication;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 import com.xiaomai.telemarket.service.PhoneCallStateService;
@@ -30,6 +31,8 @@ public class DataApplication extends BaseApplication implements Thread.UncaughtE
     @Override
     public void onCreate() {
         super.onCreate();
+         /*初始化Bugly*/
+        CrashReport.initCrashReport(getApplicationContext(), "05c5820e16", false);
         instance=this;
     }
 

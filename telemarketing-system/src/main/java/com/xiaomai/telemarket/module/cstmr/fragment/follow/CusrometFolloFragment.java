@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -15,6 +17,9 @@ import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -35,6 +40,8 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     PullToRefreshRecyclerView FollowRecyclerView;
     @BindView(R.id.Details_number_TextView)
     TextView DetailsNumberTextView;
+    @BindView((R.id.Details_add_Button))
+    Button addButtonDetails;
 
     private CusrometFollowAdapter adapter;
     private CusrometRemoteRepo remoteRepo;
@@ -46,13 +53,15 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter = new CusrometFollowAdapter(getContext());
         adapter.setListenter(new CusrometFollowAdapter.OnClickItemLisenter() {
             @Override
             public void onSeleceItemPosition(FollowEntity entity) {
-                debtoEntity=entity;
+                debtoEntity = entity;
             }
         });
     }
@@ -62,6 +71,7 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_follow, null);
         ButterKnife.bind(this, rootView);
+        addButtonDetails.setText("添加跟进");
         initRecyclerView();
         return rootView;
     }
@@ -74,9 +84,23 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x208){
+            remoteRepo.queryCusrometFollowLists(cusrometId, this);
+        }
+    }
+
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         remoteRepo.cancelRequest();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -96,35 +120,48 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
 
     @Override
     public void onSuccess(List<FollowEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
-            DetailsNumberTextView.setText("共"+data.size()+"条跟进明细");
-            adapter.clearList();
+            DetailsNumberTextView.setText("共" + data.size() + "条跟进明细");
+            if (FollowRecyclerView != null) {
+                FollowRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
-            ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(7,data.size());
+            ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(7, data.size());
         } else {
             DetailsNumberTextView.setText("跟进明细");
-            FollowRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (FollowRecyclerView != null) {
+                FollowRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        FollowRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        FollowRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        FollowRecyclerView.closeDownRefresh();
+        if (FollowRecyclerView != null) {
+            FollowRecyclerView.closeDownRefresh();
+        }
     }
 
     public FollowEntity getEntity() {

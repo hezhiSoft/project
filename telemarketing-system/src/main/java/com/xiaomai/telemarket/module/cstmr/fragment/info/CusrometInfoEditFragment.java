@@ -2,12 +2,16 @@ package com.xiaomai.telemarket.module.cstmr.fragment.info;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -17,30 +21,43 @@ import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements RemetoRepoCallback<CusrometListEntity>{
+public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements RemetoRepoCallback<CusrometListEntity> {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        entity=(CusrometListEntity) getArguments().getSerializable("entity");
+        entity = (CusrometListEntity) getArguments().getSerializable("entity");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        InfoTelStatus.setVisibility(View.VISIBLE);
+        InfoIntentionStatus.setVisibility(View.VISIBLE);
         initUI(entity);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        CusrometRemoteRepo.getInstance().cancelRequest();
     }
 
     @Override
     public void onSubmit() {
         super.onSubmit();
-        dialog= DialogFactory.createLoadingDialog(getActivity(),"提交...");
-        CusrometRemoteRepo.getInstance().editCusromet(getCusrometEntity(),this);
+        dialog = DialogFactory.createLoadingDialog(getActivity(), "提交...");
+        CusrometRemoteRepo.getInstance().editCusromet(getCusrometEntity(), this);
     }
 
     @Override
     public void onSuccess(CusrometListEntity data) {
-        showToast("提交成功");
+        EventBusValues values = new EventBusValues();
+        values.setWhat(0x201);
+        values.setObject(data);
+        EventBus.getDefault().post(values);
+
+        showToast("保存成功");
         getActivity().finish();
     }
 

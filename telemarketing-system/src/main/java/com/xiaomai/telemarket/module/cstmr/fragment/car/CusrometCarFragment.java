@@ -9,12 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -51,6 +55,8 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         cusrometId = getArguments().getString("id");
         adapter = new CusrometCarAdapter(getContext());
         adapter.setListenter(this);
@@ -62,6 +68,7 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_car, null);
         unbinder = ButterKnife.bind(this, rootView);
+        DetailsAddButton.setText("添加汽车");
         initRecyclerView();
         return rootView;
     }
@@ -79,6 +86,15 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         super.onDestroyView();
         unbinder.unbind();
         remoteRepo.cancelRequest();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x205){
+            remoteRepo.queryCusrometCarLists(cusrometId, this);
+        }
     }
 
     @Override
@@ -93,34 +109,48 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
 
     @Override
     public void onSuccess(List<CarEntity> data) {
+        adapter.clearList();
         if (data != null && data.size() > 0) {
             adapter.addItems(data);
             DetailsNumberTextView.setText("共" + data.size() + "条汽车明细");
+            if (CarRecyclerView!=null){
+                CarRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(4,data.size());
         } else {
             DetailsNumberTextView.setText("洗车明细");
-            CarRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (CarRecyclerView!=null){
+                CarRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        CarRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        CarRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        CarRecyclerView.closeDownRefresh();
+        if (CarRecyclerView!=null) {
+            CarRecyclerView.closeDownRefresh();
+        }
     }
 
     @OnClick(R.id.Details_add_Button)

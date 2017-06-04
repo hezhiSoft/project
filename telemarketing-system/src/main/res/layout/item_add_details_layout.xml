@@ -14,7 +14,7 @@
             android:id="@+id/Details_number_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
+            android:textColor="#666666"
             android:layout_centerVertical="true"
             android:textSize="18sp" />
 

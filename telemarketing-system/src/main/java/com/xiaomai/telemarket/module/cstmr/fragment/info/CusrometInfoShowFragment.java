@@ -8,8 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +57,7 @@ public class CusrometInfoShowFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         entity = (CusrometListEntity) getArguments().getSerializable("entity");
     }
 
@@ -68,6 +74,7 @@ public class CusrometInfoShowFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initUI(CusrometListEntity entity) {
@@ -75,16 +82,24 @@ public class CusrometInfoShowFragment extends BaseFragment {
             return;
         }
         CusInfoCustomerName.setText(entity.getCustomerName());
+
         CusInfoCustomerTel.setText(entity.getCustomerTel());
         CusInfoIsSZHukou.setText(entity.getIsSZHukou() == 0 ? "否" : "是");
-        CusInfoSex.setText(entity.getSex() == 0 ? "男" : "女");
-        CusInfoMaritalStatus.setText(entity.getMaritalStatus() == 0 ? "未婚" : "已婚");
+        CusInfoSex.setText(DictionaryHelper.ParseSex(entity.getSex()+""));
+        CusInfoMaritalStatus.setText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus()+""));
         CusInfoPayroll.setText(entity.getWage() + "");
         CusInfoBankFlow.setText(entity.getAccountWater() + "");
         CusInfoAccumulationFundAccount.setText(entity.getAccumulationFundAccount() + "");
         CusInfoSocialSecurityAccount.setText(entity.getSocialSecurityAccount() + "");
         CusInfoRemark.setText(entity.getRemark());
+    }
 
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x201){
+            entity=(CusrometListEntity)values.getObject();
+            initUI(entity);
+        }
     }
 
     /**
@@ -98,5 +113,9 @@ public class CusrometInfoShowFragment extends BaseFragment {
             return entity.getID();
         }
         return "";
+    }
+
+    public CusrometListEntity getCusromentEntity(){
+        return entity;
     }
 }

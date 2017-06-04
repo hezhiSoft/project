@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
@@ -15,6 +17,9 @@ import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -36,6 +41,8 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     TextView DetailsNumberTextView;
     @BindView(R.id.File_recyclerView)
     PullToRefreshRecyclerView EdbtoRecyclerView;
+    @BindView((R.id.Details_add_Button))
+    Button addButtonDetails;
     Unbinder unbinder;
 
     private CusrometFileAdapter adapter;
@@ -48,6 +55,8 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
         adapter = new CusrometFileAdapter(getContext());
@@ -59,8 +68,15 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_file, null);
         unbinder = ButterKnife.bind(this, rootView);
+        addButtonDetails.setText("添加文件");
         initRecyclerView();
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initRecyclerView() {
@@ -68,6 +84,13 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
         EdbtoRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         EdbtoRecyclerView.setPullToRefreshListener(this);
         EdbtoRecyclerView.startUpRefresh();
+    }
+
+    @Subscribe
+    public void onUpdateUIData(EventBusValues values){
+        if (values.getWhat()==0x207){
+            remoteRepo.queryCusrometFileLists(cusrometId, this);
+        }
     }
 
     @Override
@@ -97,32 +120,45 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
         if (data != null && data.size() > 0) {
             adapter.clearList();
             DetailsNumberTextView.setText("共" + data.size() + "条文件资料");
+            if (EdbtoRecyclerView!=null){
+                EdbtoRecyclerView.setEmptyTextViewVisiblity(View.GONE);
+            }
             adapter.addItems(data);
             ((CusrometDetailsActivity)getActivity()).getTabLayout().setTagNumber(6,data.size());
         } else {
             DetailsNumberTextView.setText("文件资料");
-            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            if (EdbtoRecyclerView!=null){
+                EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+            }
         }
     }
 
     @Override
     public void onFailure(int code, String msg) {
-        EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (EdbtoRecyclerView!=null) {
+            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        if (EdbtoRecyclerView!=null) {
+            EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_error, "页面出错");
+        }
     }
 
     @Override
     public void onUnauthorized() {
-        EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        if (EdbtoRecyclerView!=null) {
+            EdbtoRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        }
     }
 
     @Override
     public void onFinish() {
-        EdbtoRecyclerView.closeDownRefresh();
+        if (EdbtoRecyclerView!=null) {
+            EdbtoRecyclerView.closeDownRefresh();
+        }
     }
 
     @Override
