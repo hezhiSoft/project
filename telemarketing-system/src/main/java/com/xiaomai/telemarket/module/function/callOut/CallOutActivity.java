@@ -21,9 +21,6 @@ import butterknife.ButterKnife;
 
 public class CallOutActivity extends BaseActivity {
 
-    @BindView(R.id.dl_left)
-    DrawerLayout drawerLayout;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

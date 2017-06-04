@@ -21,6 +21,7 @@ import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,9 +50,9 @@ public class CarBaseFragment extends BaseFragment {
     @BindView(R.id.Car_CarModel)
     FormWriteTopTitleView CarCarModel;
     @BindView(R.id.Car_IsMortgage)
-    FormSelectTopTitleView CarIsMortgage;
+    SelecteConditionTileView CarIsMortgage;
     @BindView(R.id.Car_IsRegistrationCertificate)
-    FormSelectTopTitleView CarIsRegistrationCertificate;
+    SelecteConditionTileView CarIsRegistrationCertificate;
     @BindView(R.id.Car_Remark)
     FormWriteTopTitleView CarRemark;
     Unbinder unbinder;
@@ -105,20 +106,20 @@ public class CarBaseFragment extends BaseFragment {
                 dialog.show();
             }
         });
-        /*是否按揭*/
-        CarIsMortgage.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(), CarIsMortgage.getTextView(), CarIsMortgage.getContentText());
-            }
-        });
-        /*是否有登记证*/
-        CarIsRegistrationCertificate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(), CarIsRegistrationCertificate.getTextView(), CarIsRegistrationCertificate.getContentText());
-            }
-        });
+//        /*是否按揭*/
+//        CarIsMortgage.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                DictionaryHelper.showSelectDialog(getContext(), CarIsMortgage.getTextView(), CarIsMortgage.getContentText());
+//            }
+//        });
+//        /*是否有登记证*/
+//        CarIsRegistrationCertificate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                DictionaryHelper.showSelectDialog(getContext(), CarIsRegistrationCertificate.getTextView(), CarIsRegistrationCertificate.getContentText());
+//            }
+//        });
     }
 
     protected void initUI(CarEntity entity) {
@@ -130,8 +131,8 @@ public class CarBaseFragment extends BaseFragment {
         CarMileage.setContentText(entity.getMileage() + "");
         CarBarnd.setContentText(entity.getBrand());
         CarCarModel.setContentText(entity.getCarModel());
-        CarIsMortgage.setContentText(entity.getIsMortgage() == 0 ? "否" : "是");
-        CarIsRegistrationCertificate.setContentText(entity.getIsRegistrationCertificate() == 0 ? "否" : "是");
+        CarIsMortgage.setStatus(entity.getIsMortgage());
+        CarIsRegistrationCertificate.setStatus(entity.getIsRegistrationCertificate());
         CarRemark.setContentText(entity.getRemark());
     }
 
@@ -144,8 +145,8 @@ public class CarBaseFragment extends BaseFragment {
         carEntity.setMileage(IStringUtils.toInt(CarMileage.getContentText()));
         carEntity.setBrand(CarBarnd.getContentText());
         carEntity.setCarModel(CarCarModel.getContentText());
-        carEntity.setIsMortgage("否".equals(CarIsMortgage.getContentText())?0:1);
-        carEntity.setIsRegistrationCertificate("否".equals(CarIsRegistrationCertificate.getContentText())?0:1);
+        carEntity.setIsMortgage(CarIsMortgage.getStatus());
+        carEntity.setIsRegistrationCertificate(CarIsRegistrationCertificate.getStatus());
         carEntity.setRemark(CarRemark.getContentText());
         return carEntity;
     }

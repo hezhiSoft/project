@@ -66,11 +66,11 @@
         android:layout_height="wrap_content"
         app:wvItemName="备注" />
 
-    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+    <com.xiaomai.telemarket.view.widget.SelecteConditionTileView
         android:id="@+id/Property_IsMortgage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:svItemName="是否按揭" />
+        app:selectTitle="是否按揭"/>
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView
         android:id="@+id/Property_MortgageBank"
