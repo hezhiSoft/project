@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -194,13 +195,22 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                 break;
             case R.id.Home_groupCall_Layout:/*群呼*/
                 if (homeDialingPresenter.getIsDialingGroupStoped()) {
-                    homeDialingPresenter.startDialingByGroup();
+                    // TODO: 04/06/2017 判断正在通话中禁止群呼
+                    boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+                    if (!isDialingOffHook) {
+                        homeDialingPresenter.startDialingByGroup();
+                    } else {
+                        //正在通话中,不让继续拨出
+//                        showToast("");
+                    }
                 } else {
                     homeDialingPresenter.stopDialingByGroup();
                 }
                 break;
             case R.id.Home_singCall_Layout:/*点呼*/
-                homeDialingPresenter.startDialingBySingle();
+                if (TextUtils.equals(tvDialGroupState.getText().toString(),getResources().getString(R.string.dial_star_by_group))) {
+                    homeDialingPresenter.startDialingBySingle();
+                }
                 break;
             case R.id.Home_customer_TextView:/*客户管理*/
                 if (homeMenuItemClickListener != null) {
@@ -303,7 +313,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         if (homeDialingPresenter != null) {
             homeDialingPresenter.stopDialingByGroup();
         }
-        DialogFactory.showMsgDialog(getActivity(), "提示", msg+"是否停止拨号?", "停止", "",null, new View.OnClickListener() {
+        DialogFactory.warningDialog(getActivity(),"提示",msg+"是否停止拨号?","停止",new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 homeDialingPresenter.stopDialingByGroup();
