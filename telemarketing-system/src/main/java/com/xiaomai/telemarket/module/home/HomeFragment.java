@@ -38,6 +38,7 @@ import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.function.callOut.CallOutActivity;
 import com.xiaomai.telemarket.module.function.callTrend.CallTrendActivity;
+import com.xiaomai.telemarket.module.function.produtQuery.ProdutQueryActivity;
 import com.xiaomai.telemarket.module.function.statusCount.StatusCountActivity;
 import com.xiaomai.telemarket.module.function.statusQuery.StatusQueryActivity;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingContract;
@@ -210,6 +211,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                 }
                 break;
             case R.id.Home_Search_TextView:/*产品查询*/
+            ISkipActivityUtil.startIntent(getContext(), ProdutQueryActivity.class);
                 break;
             case R.id.Home_order_TextView:/*订单管理*/
 //                if (homeMenuItemClickListener != null) {

@@ -1,5 +1,6 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.info;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -277,7 +278,9 @@ public class ShowInfoBaseFragment extends BaseFragment {
                 DialogFactory.showMsgDialog(getContext(), "设置提示", "是否设置下次跟进时间?", "设置", "提交", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FollowActivity.startIntentToAdd(getActivity());
+//                        FollowActivity.startIntentToAdd(getActivity());
+                        FollowActivity.startIntentToQuery(getActivity(),entity.getCustomerTel(),entity.getID());
+
                     }
                 }, new View.OnClickListener() {
                     @Override
