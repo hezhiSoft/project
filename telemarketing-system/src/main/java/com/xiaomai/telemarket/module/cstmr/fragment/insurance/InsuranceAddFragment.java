@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.EventBus;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class InsuraanceAddFragment extends InsuranceBaseFragment implements RemetoRepoCallback<Responese> {
+public class InsuranceAddFragment extends InsuranceBaseFragment implements RemetoRepoCallback<Responese> {
 
 
     @Override

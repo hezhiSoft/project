@@ -77,7 +77,8 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
         EdbtoRecyclerView.setRecyclerViewAdapter(adapter);
         EdbtoRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         EdbtoRecyclerView.setPullToRefreshListener(this);
-        EdbtoRecyclerView.startUpRefresh();
+//        EdbtoRecyclerView.startUpRefresh();
+        remoteRepo.queryCusrometDebtoLists(cusrometId, this);
     }
 
     @Override

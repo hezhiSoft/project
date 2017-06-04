@@ -44,7 +44,6 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     PullToRefreshRecyclerView PropertyRecyclerView;
     @BindView((R.id.Details_add_Button))
     Button addButtonDetails;
-    Unbinder unbinder;
 
     private CusrometInsuranceAdapter adapter;
     private CusrometRemoteRepo remoteRepo;
@@ -57,28 +56,28 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-
-        adapter = new CusrometInsuranceAdapter(getContext());
         cusrometId = getArguments().getString("id");
         remoteRepo = CusrometRemoteRepo.getInstance();
-        adapter.setListenter(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cusromet_insurance, null);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         addButtonDetails.setText("添加保单");
         initRecyclerView();
         return rootView;
     }
 
     private void initRecyclerView() {
+        adapter = new CusrometInsuranceAdapter(getContext());
+        adapter.setListenter(this);
         PropertyRecyclerView.setRecyclerViewAdapter(adapter);
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
-        PropertyRecyclerView.startUpRefresh();
+//        PropertyRecyclerView.startUpRefresh();
+        remoteRepo.queryCusrometInsuranceLists(cusrometId, this);
     }
 
     @Override
@@ -110,7 +109,7 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
         if (data != null && data.size() > 0) {
             DetailsNumberTextView.setText("共" + data.size() + "条保单信息");
             if (PropertyRecyclerView != null) {
-                PropertyRecyclerView.setVisibility(View.GONE);
+                PropertyRecyclerView.setEmptyTextViewVisiblity(View.GONE);
             }
             adapter.addItems(data);
             ((CusrometDetailsActivity) getActivity()).getTabLayout().setTagNumber(3, data.size());
@@ -153,7 +152,6 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         remoteRepo.cancelRequest();
     }
 

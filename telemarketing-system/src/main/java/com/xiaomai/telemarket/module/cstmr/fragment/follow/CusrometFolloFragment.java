@@ -80,7 +80,8 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
         FollowRecyclerView.setRecyclerViewAdapter(adapter);
         FollowRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         FollowRecyclerView.setPullToRefreshListener(this);
-        FollowRecyclerView.startUpRefresh();
+//        FollowRecyclerView.startUpRefresh();
+        remoteRepo.queryCusrometFollowLists(cusrometId, this);
     }
 
     @Override
