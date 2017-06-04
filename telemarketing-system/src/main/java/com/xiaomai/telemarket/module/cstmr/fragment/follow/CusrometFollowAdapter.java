@@ -156,7 +156,7 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
                 if (TextUtils.isEmpty(entity.getFileUrl())) {
                     return;
                 }
-                if (player.isPlaying()) {
+                if (player!=null&&player.isPlaying()) {
                     vodieButton.setText("播放");
                     player.stop();
                 } else {
