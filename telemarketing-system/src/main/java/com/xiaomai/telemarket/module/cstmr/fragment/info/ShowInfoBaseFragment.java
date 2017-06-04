@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.follow.FollowActivity;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,7 +52,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
     @BindView(R.id.Info_CustomerTel)
     FormWriteTopTitleView InfoCustomerTel;
     @BindView(R.id.Info_IsSZHukou)
-    FormSelectTopTitleView InfoIsSZHukou;
+    SelecteConditionTileView InfoIsSZHukou;
     @BindView(R.id.Info_Sex)
     FormSelectTopTitleView InfoSex;
     @BindView(R.id.Info_MaritalStatus)
@@ -64,9 +66,10 @@ public class ShowInfoBaseFragment extends BaseFragment {
     @BindView(R.id.Info_SocialSecurityAccount)
     FormWriteTopTitleView InfoSocialSecurityAccount;
     @BindView(R.id.Info_Tel_status)
-    FormSelectTopTitleView InfoTelStatus;
+    SelecteConditionTileView InfoTelStatus;
     @BindView(R.id.Info_intention_status)
-    FormSelectTopTitleView InfoIntentionStatus;
+    SelecteConditionTileView InfoIntentionStatus;
+
     private String SexCode, MaritalStatusCode;
 
     @BindView(R.id.Info_Remark)
@@ -99,90 +102,90 @@ public class ShowInfoBaseFragment extends BaseFragment {
     }
 
     private void setListener() {
-        InfoIsSZHukou.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(), InfoIsSZHukou.getTextView(), InfoIsSZHukou.getContentText());
-            }
-        });
+//        InfoIsSZHukou.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                DictionaryHelper.showSelectDialog(getContext(), InfoIsSZHukou.getTextView(), InfoIsSZHukou.getContentText());
+//            }
+//        });
+//
+//        InfoTelStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+//                View rootView = LayoutInflater.from(getContext()).inflate(R.layout.select_layout, null);
+//                RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.Dialog_RadioGroup);
+//                RadioButton isButton = ButterKnife.findById(rootView, R.id.Dialog_is);
+//                RadioButton noButton = ButterKnife.findById(rootView, R.id.Dialog_no);
+//                rootView.findViewById(R.id.Select_close_ImageView).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                if ("是".equals(InfoTelStatus.getContentText())) {
+//                    isButton.setChecked(true);
+//                } else if ("否".equals(InfoTelStatus.getContentText())) {
+//                    noButton.setChecked(true);
+//                }
+//                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+//                        if (checkedId == R.id.Dialog_is) {
+//                            InfoTelStatus.getTextView().setText("是");
+//                            //TODO 設置電話為空號，接口調用
+//                            CusrometRemoteRepo.getInstance().setEmptyTel(entity.getID(), null);
+//                        } else if (checkedId == R.id.Dialog_no) {
+//                            InfoTelStatus.getTextView().setText("否");
+//                        }
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.setContentView(rootView);
+//                dialog.show();
+//            }
+//        });
 
-        InfoTelStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
-                View rootView = LayoutInflater.from(getContext()).inflate(R.layout.select_layout, null);
-                RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.Dialog_RadioGroup);
-                RadioButton isButton = ButterKnife.findById(rootView, R.id.Dialog_is);
-                RadioButton noButton = ButterKnife.findById(rootView, R.id.Dialog_no);
-                rootView.findViewById(R.id.Select_close_ImageView).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                if ("是".equals(InfoTelStatus.getContentText())) {
-                    isButton.setChecked(true);
-                } else if ("否".equals(InfoTelStatus.getContentText())) {
-                    noButton.setChecked(true);
-                }
-                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                        if (checkedId == R.id.Dialog_is) {
-                            InfoTelStatus.getTextView().setText("是");
-                            //TODO 設置電話為空號，接口調用
-                            CusrometRemoteRepo.getInstance().setEmptyTel(entity.getID(), null);
-                        } else if (checkedId == R.id.Dialog_no) {
-                            InfoTelStatus.getTextView().setText("否");
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setContentView(rootView);
-                dialog.show();
-            }
-        });
-
-        InfoIntentionStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
-                View rootView = LayoutInflater.from(getContext()).inflate(R.layout.select_layout, null);
-                RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.Dialog_RadioGroup);
-                RadioButton isButton = ButterKnife.findById(rootView, R.id.Dialog_is);
-                RadioButton noButton = ButterKnife.findById(rootView, R.id.Dialog_no);
-                rootView.findViewById(R.id.Select_close_ImageView).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                if ("是".equals(InfoIntentionStatus.getContentText())) {
-                    isButton.setChecked(true);
-                } else if ("否".equals(InfoIntentionStatus.getContentText())) {
-                    noButton.setChecked(true);
-                }
-                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                        if (checkedId == R.id.Dialog_is) {
-                            InfoIntentionStatus.getTextView().setText("是");
-                            DialogFactory.showMsgDialog(getContext(), "", "是否设置下次跟进时间", "设置", "关闭", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    FollowActivity.startIntentToAdd(getActivity());
-                                }
-                            }, null);
-                        } else if (checkedId == R.id.Dialog_no) {
-                            InfoIntentionStatus.getTextView().setText("否");
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setContentView(rootView);
-                dialog.show();
-            }
-        });
+//        InfoIntentionStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+//                View rootView = LayoutInflater.from(getContext()).inflate(R.layout.select_layout, null);
+//                RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.Dialog_RadioGroup);
+//                RadioButton isButton = ButterKnife.findById(rootView, R.id.Dialog_is);
+//                RadioButton noButton = ButterKnife.findById(rootView, R.id.Dialog_no);
+//                rootView.findViewById(R.id.Select_close_ImageView).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                if ("是".equals(InfoIntentionStatus.getContentText())) {
+//                    isButton.setChecked(true);
+//                } else if ("否".equals(InfoIntentionStatus.getContentText())) {
+//                    noButton.setChecked(true);
+//                }
+//                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+//                        if (checkedId == R.id.Dialog_is) {
+//                            InfoIntentionStatus.getTextView().setText("是");
+//                            DialogFactory.showMsgDialog(getContext(), "", "是否设置下次跟进时间", "设置", "关闭", new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    FollowActivity.startIntentToAdd(getActivity());
+//                                }
+//                            }, null);
+//                        } else if (checkedId == R.id.Dialog_no) {
+//                            InfoIntentionStatus.getTextView().setText("否");
+//                        }
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.setContentView(rootView);
+//                dialog.show();
+//            }
+//        });
         InfoSex.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
@@ -231,7 +234,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
 
         InfoCustomerName.setContentText(entity.getCustomerName()).setItemEnabled(false);
         InfoCustomerTel.setContentText(entity.getCustomerTel()).setItemEnabled(false);
-        InfoIsSZHukou.setContentText(entity.getIsSZHukou() == 0 ? "否" : "是");
+        InfoIsSZHukou.setStatus(entity.getIsSZHukou());
         InfoSex.setContentText(DictionaryHelper.ParseSex(entity.getSex() + ""));
         InfoMaritalStatus.setContentText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus() + ""));
         InfoPayroll.setContentText(entity.getWage() + "");
@@ -247,7 +250,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
         }
         entity.setCustomerName(InfoCustomerName.getContentText());
         entity.setCustomerTel(InfoCustomerTel.getContentText());
-        entity.setIsSZHukou("否".equals(InfoIsSZHukou.getContentText()) ? 0 : 1);
+        entity.setIsSZHukou(InfoIsSZHukou.getStatus());
         entity.setSex(IStringUtils.toInt(SexCode));
         entity.setMaritalStatus(IStringUtils.toInt(MaritalStatusCode));
         entity.setWage(IStringUtils.toInt(InfoPayroll.getContentText()));
@@ -262,12 +265,29 @@ public class ShowInfoBaseFragment extends BaseFragment {
     @Subscribe
     public void onEventBusSubmit(EventBusValues values) {
         if (values.getWhat() == 0x10010) {
-//            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-            onSubmit();
-//                }
-//            });
+            if (TextUtils.isEmpty(InfoCustomerName.getContentText())){
+                showToast("客户名字不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(InfoCustomerTel.getContentText())){
+                showToast("客户电话号码不能为空");
+                return;
+            }
+            if (InfoIntentionStatus.getStatus() == 1) {
+                DialogFactory.showMsgDialog(getContext(), "设置提示", "是否设置下次跟进时间?", "设置", "提交", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FollowActivity.startIntentToAdd(getActivity());
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onSubmit();
+                    }
+                });
+            }else {
+                onSubmit();
+            }
         }
     }
 

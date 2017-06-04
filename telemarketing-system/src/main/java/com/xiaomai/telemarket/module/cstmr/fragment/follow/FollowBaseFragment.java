@@ -202,7 +202,7 @@ public class FollowBaseFragment extends BaseFragment {
         NextFollowTypeCode=entity.getNextFollowType()+"";
 
         FollowFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getFollowType()+""));
-        FollowFollowDate.setContentText(entity.getFollowDate().replaceAll("T"," "));
+        FollowFollowDate.setContentText(entity.getFollowDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
         FollowInterestedStatus.setContentText(DictionaryHelper.ParseInterestedStatus(entity.getInterestedStatus()+""));
         FollowLoanType.setContentText(DictionaryHelper.ParseLoanType(entity.getLoanType()+""));
         FollowAmount.setContentText(entity.getAmount()+"");

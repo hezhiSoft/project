@@ -30,6 +30,7 @@ public class FormSelectTopTitleView extends LinearLayout {
     private TextView mTitleTextView;
     private TextView mContentEditText;
     private ImageView arrowDropImageView;
+    private ImageView clearImageView;
 
     private onArrowDropClick click;
 
@@ -48,7 +49,8 @@ public class FormSelectTopTitleView extends LinearLayout {
         mTitleTextView = ButterKnife.findById(rootView, R.id.form_select_title);
         mContentEditText = ButterKnife.findById(rootView, R.id.form_select_content);
         arrowDropImageView = ButterKnife.findById(rootView, R.id.form_select_arrow_drop_down);
-
+        clearImageView=ButterKnife.findById(rootView,R.id.form_select_clear);
+        
         mContentEditText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +71,13 @@ public class FormSelectTopTitleView extends LinearLayout {
                 if (click!=null){
                     click.onClick(mContentEditText);
                 }
+            }
+        });
+        
+        clearImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContentEditText.setText("");
             }
         });
         addView(rootView);
@@ -134,6 +143,17 @@ public class FormSelectTopTitleView extends LinearLayout {
      */
     public FormSelectTopTitleView setArrowDropListener(onArrowDropClick click) {
         this.click = click;
+        return this;
+    }
+    
+    /**
+     *设置消除按钮显示状态
+     * 
+     *author: hezhiWu
+     *created at 2017/6/4 下午2:20
+     */
+    public FormSelectTopTitleView setClearViewVisibility(int visibility){
+        clearImageView.setVisibility(visibility);
         return this;
     }
 

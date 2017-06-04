@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:id="@+id/selecte_condition_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:text="Title"
+                android:minWidth="@dimen/dimen_80dp"
+                android:layout_gravity="center"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/Selecte_condition_radioGrop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dimen_10dp"
+                android:layout_gravity="center">
+
+                <RadioButton
+                    android:id="@+id/Selecte_condition_yes_radioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="是"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/Selecte_condition_no_radioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="否"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </RadioGroup>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="15dp">
+
+        <View
+            android:id="@+id/form_writeV2_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line" />
+    </LinearLayout>
+
+
+</LinearLayout>
