@@ -25,7 +25,7 @@ public class Constant {
     public static final String IS_DIALING_KEY= "is_dialing";//接通正在通话中
     public static final String IS_DIALING_GROUP_FINISHED = "is_dialing_group_finished";//群呼是否结束
     public static final String PRE_CUSTOMER_KEY = "pre_customer_key";//上一个拨号的用户信息
-
+    public static final String IS_FROM_HOME_GROUP_DIALING = "is_from_group_dialing";//是否从群拨跳转到的客户信息界面
     public static final String IS_DIALING_BY_GROUP= "is_dial_by_group";//是否群呼
 
 

@@ -56,7 +56,7 @@ public class PhoneRecordUtil {
         }
         CusrometListEntity customerEntity = mLocalCustomerDataSource.getPreCustomer();
         if (customerEntity!=null) {
-            directoryName +=File.separator+customerEntity.getID();
+            directoryName +=File.separator+customerEntity.getExtend();
             File file = new File(directoryName);
             if (!file.exists()) {
                 file.mkdirs();

@@ -40,12 +40,14 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     @Override
     public void startDialingBySingle() {
         startDialing(true);
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
     }
 
     @Override
     public void startDialingByGroup() {
         startDialing(false);
         mView.showDialingByGroupStarted();
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, true);
     }
 
     @Override
@@ -59,10 +61,20 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     public void checkIsDialingGroupUnStoppedAndDialingOut() {
         isDialingGroupFinished = getIsDialingGroupStoped();
         boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
-        if (!isDialingGroupFinished && !isDialingOffHook) {
+        boolean isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
+        if (!isDialingGroupFinished && !isDialingOffHook&&isDialingByGroup) {
             startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
         }
         mView.showIsDialingGroupUnStopped(isDialingGroupFinished);
+    }
+
+    public void checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI() {
+        isDialingGroupFinished = getIsDialingGroupStoped();
+        boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+        boolean isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
+        if (!isDialingGroupFinished && !isDialingOffHook&&isDialingByGroup) {
+            startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
+        }
     }
 
     /**
@@ -78,6 +90,11 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
         }
         if (ContextCompat.checkSelfPermission(DataApplication.getInstance().getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(), "拨号权限被禁止！请在权限管理中允许录音权限");
+            return;
+        }
+        boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+        if (isDialingOffHook) {
+            //正在通话中
             return;
         }
         //设置群呼是否结束

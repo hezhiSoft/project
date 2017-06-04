@@ -35,6 +35,7 @@ public class CusrometListEntity implements Serializable{
     private int DeleteFlag;
     private String RowVersion;
     private int RowIndex;
+    private String Extend;
 
     public String getID() {
         return ID;
@@ -227,5 +228,11 @@ public class CusrometListEntity implements Serializable{
     public void setRowIndex(int RowIndex) {
         this.RowIndex = RowIndex;
     }
+    public String getExtend() {
+        return Extend;
+    }
 
+    public void setExtend(String extend) {
+        Extend = extend;
+    }
 }
