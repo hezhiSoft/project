@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ import com.xiaomai.telemarket.utils.RegexUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,8 +84,10 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
      */
     private HomeDialingPresenter homeDialingPresenter;
 
-    private boolean isRecordPermissible;
+    private boolean isRecordPermissible=true;
+    private boolean isCallPhonePermissible=true;
     public static final int RECORD_PERMISSION_REQUEST_CODE = 0x001;
+    public static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 0x002;
 
     private HomeMenuItemClickListener homeMenuItemClickListener;
 
@@ -135,10 +139,15 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     public void onResume() {
         super.onResume();
         //检测录音权限
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_PERMISSION_REQUEST_CODE);
-        } else {
-            isRecordPermissible = true;
+            isRecordPermissible = false;
+        }
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_PERMISSION_REQUEST_CODE);
+            isCallPhonePermissible = false;
+        }
+        if (isRecordPermissible && isCallPhonePermissible) {
             homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOut();
         }
         if (HomeUserStateTextView != null) {
@@ -216,13 +225,21 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RECORD_PERMISSION_REQUEST_CODE) {
+        if (requestCode == RECORD_PERMISSION_REQUEST_CODE) {//录音权限
             if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission Granted
                 isRecordPermissible = true;
             } else {
                 // Permission Denied
                 isRecordPermissible = false;
+            }
+        } else if (requestCode == CALL_PHONE_PERMISSION_REQUEST_CODE) {//拨打电话权限
+            if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted
+                isCallPhonePermissible = true;
+            } else {
+                // Permission Denied
+                isCallPhonePermissible = false;
             }
         }
     }
@@ -243,6 +260,8 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
             ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
             //
             ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
+            //这里停止群拨状态 等待客户信息编辑界面返回消息后再判断是否继续拨出
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
             ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
         }
     }
@@ -283,6 +302,10 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
             ToastUtil.showToast(getActivity(), "录音权限被禁止！请在权限管理中允许录音权限");
             return;
         }
+        if (!isCallPhonePermissible) {
+            ToastUtil.showToast(getActivity(), "拨号权限被禁止！请在权限管理中允许录音权限");
+            return;
+        }
         final EditText editText = new EditText(getActivity());
         editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -309,6 +332,25 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         switch (values.getWhat()){
             case 0x900:
 
+                break;
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMainUserEvent(EventBusValues values) {
+        Log.i(TAG, "onMainUserEvent: "+values.getWhat()+" ,object="+values.getObject());
+        switch (values.getWhat()) {
+            case 0x10101://客户信息保存通知
+                Object obj = values.getObject();
+                boolean isResume = obj != null ? (boolean) values.getObject() : false;//是否继续拨号
+                if (isResume) {
+                    homeDialingPresenter.startDialingByGroup();// TODO: 04/06/2017 继续拨号
+                }
+                ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, !isResume);
+                break;
+            case 0x10102:
+                //通话结束通知
+                homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOut();
                 break;
         }
     }

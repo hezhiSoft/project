@@ -118,6 +118,10 @@ public class UserStateSetFragment extends BaseFragment implements PullToRefreshR
         adapter.changeUserState(status + "");
         ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.USER_STATE_KEY, status);
         ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.USER_STATE_NAME_KEY, adapter.getUserState());
+        // TODO: 04/06/2017 自动结束当前aavtivity
+        if (getActivity()!=null) {
+            getActivity().finish();
+        }
     }
 
     @Override

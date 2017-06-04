@@ -4,7 +4,7 @@ package com.xiaomai.telemarket.module.home.dial;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
-import com.xiaomai.telemarket.module.home.dial.data.repo.CustomerPhoneNumberRemoteRepo;
+import com.xiaomai.telemarket.module.home.dial.data.source.remote.CustomerPhoneNumberRemoteRepo;
 
 import java.util.List;
 

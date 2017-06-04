@@ -8,6 +8,7 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
@@ -28,6 +29,7 @@ public class SplashActivity extends BaseActivity implements RemetoRepoCallback<U
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         setToolbarVisibility(View.GONE);
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
         String account = ISharedPreferencesUtils.getValue(this, Constant.ACCOUNT_KEY, "").toString();
         String password = ISharedPreferencesUtils.getValue(this, Constant.PASSWORD_KEY, "").toString();
         boolean isLogin= (boolean) ISharedPreferencesUtils.getValue(this, Constant.ISLOGIN_KEY, false);

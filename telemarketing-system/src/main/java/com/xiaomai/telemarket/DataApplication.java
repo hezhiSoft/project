@@ -22,7 +22,7 @@ public class DataApplication extends BaseApplication implements Thread.UncaughtE
 
     private static final String TAG = "DataApplication";
     private UserInfoEntity userInfoEntity;
-    
+
     private static DataApplication instance;
     
     public static DataApplication getInstance(){

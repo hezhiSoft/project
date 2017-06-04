@@ -1,30 +1,42 @@
 package com.xiaomai.telemarket.module.home.dial;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
+
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
-import com.xiaomai.telemarket.module.home.dial.data.repo.CustomerPhoneNumberRemoteRepo;
+import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
+import com.xiaomai.telemarket.module.home.dial.data.source.remote.CustomerPhoneNumberRemoteRepo;
 
 import java.util.List;
 
+import static com.jinggan.library.utils.ISharedPreferencesUtils.setValue;
+
 /**
- * @description
  * @author yangdu <youngdu29@gmail.com>
+ * @description
  * @createtime 30/05/2017 12:53 PM
  **/
 public class HomeDialingPresenter implements HomeDialingContract.Presenter {
+    private static final String TAG = "HomeDialingPresenter";
 
     private HomeDialingContract.View mView;
     private CustomerPhoneNumberRemoteRepo mRepo;
+    private CustomerLocalDataSource mLocalCustomerDataSource;
 
-    private CusrometListEntity mPreCustomerEnity;
     private boolean isDialingGroupFinished;//群呼是否结束
+//    private String[] numberArray = {"17817814397", "10010", "10086"};
+//    private int currentIndex = 0;
 
-q    public HomeDialingPresenter(HomeDialingContract.View mView) {
+    public HomeDialingPresenter(HomeDialingContract.View mView) {
         this.mView = mView;
         this.mRepo = CustomerPhoneNumberRemoteRepo.getInstance();
+        this.mLocalCustomerDataSource = CustomerLocalDataSource.getInstance();
     }
 
     @Override
@@ -40,7 +52,7 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
 
     @Override
     public void stopDialingByGroup() {
-        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
         mRepo.cancelRequest();
         mView.showDialingStopped();
     }
@@ -48,8 +60,16 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
     @Override
     public void checkIsDialingGroupUnStoppedAndDialingOut() {
         isDialingGroupFinished = getIsDialingGroupStoped();
-        boolean isDialingOffHook=(boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+        boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
         if (!isDialingGroupFinished && !isDialingOffHook) {
+//            if (currentIndex >= numberArray.length) {
+//                currentIndex = 0;
+//            }
+//            CusrometListEntity entity = new CusrometListEntity();
+//            entity.setCustomerTel(numberArray[currentIndex]);
+//            SystemClock.sleep(1000);
+//            mView.showDialingOutStarted(entity);
+//            currentIndex++;
             startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
         }
         mView.showIsDialingGroupUnStopped(isDialingGroupFinished);
@@ -57,12 +77,23 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
 
     /**
      * 开始拨号，拨出前要先删除上一条拨号临时记录
+     *
      * @param isDialingGroupFinished 群呼是否结束 点拨：true ，群拨：false
      */
-    private void startDialing(final boolean isDialingGroupFinished){
+    private void startDialing(final boolean isDialingGroupFinished) {
+        //检测权限
+        if (ContextCompat.checkSelfPermission(DataApplication.getInstance().getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(), "录音权限被禁止！请在权限管理中允许录音权限");
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(DataApplication.getInstance().getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(), "拨号权限被禁止！请在权限管理中允许录音权限");
+            return;
+        }
         //设置群呼是否结束
-        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, isDialingGroupFinished);
-        if (mPreCustomerEnity!=null) {
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, isDialingGroupFinished);
+        CusrometListEntity mPreCustomerEnity = mLocalCustomerDataSource.getPreCustomer();
+        if (mPreCustomerEnity != null) {
             mRepo.deleteFromList(mPreCustomerEnity.getID(), new RemetoRepoCallback<Void>() {
                 @Override
                 public void onSuccess(Void data) {
@@ -89,25 +120,28 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
 
                 }
             });
-        }else{
+        } else {
             startRequestNumber(isDialingGroupFinished);
         }
     }
 
     /**
      * 开始从服务器请求号码
+     *
      * @param isDialingGroupFinished 群呼是否结束 点拨：true ，群拨：false
      */
-    private void startRequestNumber(final boolean isDialingGroupFinished){
-        if (getDialingNumberSource()== Constant.DIAL_NUMBER_CODE_PRIVATE) {
+    private void startRequestNumber(final boolean isDialingGroupFinished) {
+        CusrometListEntity mPreCustomerEnity = mLocalCustomerDataSource.getPreCustomer();
+        if (getDialingNumberSource() == Constant.DIAL_NUMBER_CODE_PRIVATE) {
             //私有库
-            mRepo.requestPhoneNumberFromPrivate(mPreCustomerEnity!=null?mPreCustomerEnity.getFollowDate():"", new RemetoRepoCallback<List<CusrometListEntity>>() {
+            mRepo.requestPhoneNumberFromPrivate(mPreCustomerEnity != null ? mPreCustomerEnity.getFollowDate() : "", new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
-                    if (data!=null&&data.size()>0) {
-                        mPreCustomerEnity = data.get(0);
-                        mView.showDialingOutStarted(mPreCustomerEnity);
-                    }else{
+                    if (data != null && data.size() > 0) {
+                        CusrometListEntity entity = data.get(0);
+                        mLocalCustomerDataSource.setPreCustomer(entity);
+                        mView.showDialingOutStarted(entity);
+                    } else {
                         mView.showRequestNumberFailed("数据异常！");
                     }
                 }
@@ -115,10 +149,9 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
                 @Override
                 public void onFailure(int code, String msg) {
                     if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
-                        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+                        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
                         mView.showDialingFinished(msg);//所有号码请求完成
-                    }
-                    else {
+                    } else {
                         mView.showRequestNumberFailed(msg);
                     }
                 }
@@ -138,15 +171,16 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
 
                 }
             });
-        }else if (getDialingNumberSource()== Constant.DIAL_NUMBER_CODE_PUBLIC) {
+        } else if (getDialingNumberSource() == Constant.DIAL_NUMBER_CODE_PUBLIC) {
             //公共库
             mRepo.requestPhoneNumberFromPublic(new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
-                    if (data!=null&&data.size()>0) {
-                        mPreCustomerEnity = data.get(0);
-                        mView.showDialingOutStarted(mPreCustomerEnity);
-                    }else{
+                    if (data != null && data.size() > 0) {
+                        CusrometListEntity entity = data.get(0);
+                        mLocalCustomerDataSource.setPreCustomer(entity);
+                        mView.showDialingOutStarted(entity);
+                    } else {
                         mView.showRequestNumberFailed("数据异常！");
                     }
                 }
@@ -154,7 +188,7 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
                 @Override
                 public void onFailure(int code, String msg) {
                     if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
-                        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+                        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
                         mView.showDialingFinished(msg);//所有号码请求完成
                     } else {
                         mView.showRequestNumberFailed(msg);
@@ -178,11 +212,12 @@ q    public HomeDialingPresenter(HomeDialingContract.View mView) {
         }
     }
 
-    public boolean getIsDialingGroupStoped(){
+    public boolean getIsDialingGroupStoped() {
         return (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
     }
 
-    private int getDialingNumberSource(){
+    private int getDialingNumberSource() {
         return Integer.valueOf(ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE) + "");
     }
+
 }
