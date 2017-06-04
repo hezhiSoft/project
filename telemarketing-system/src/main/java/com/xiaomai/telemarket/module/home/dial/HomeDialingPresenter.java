@@ -22,7 +22,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     private CusrometListEntity mPreCustomerEnity;
     private boolean isDialingGroupFinished;//群呼是否结束
 
-q    public HomeDialingPresenter(HomeDialingContract.View mView) {
+    public HomeDialingPresenter(HomeDialingContract.View mView) {
         this.mView = mView;
         this.mRepo = CustomerPhoneNumberRemoteRepo.getInstance();
     }

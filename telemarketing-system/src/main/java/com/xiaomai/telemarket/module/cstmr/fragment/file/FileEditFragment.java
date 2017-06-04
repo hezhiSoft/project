@@ -51,7 +51,7 @@ public class FileEditFragment extends FileBaseFragment implements RemetoRepoCall
         CusrometRemoteRepo.getInstance().cancelRequest();
 
         /*判断当前是否处于群呼状态,通知群呼下一个号码*/
-        boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(getActivity(), Constant.IS_DIALING_GROUP_FINISHED, "false").toString());
+        boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(getActivity(), Constant.IS_DIALING_GROUP_FINISHED, false).toString());
         if (isCall){
             EventBusValues busValues = new EventBusValues();
             busValues.setWhat(0x10101);

@@ -19,6 +19,7 @@
         android:id="@+id/Follow_FollowDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:svItemName="跟进时间" />
 
     <com.jinggan.library.ui.widget.FormSelectTopTitleView

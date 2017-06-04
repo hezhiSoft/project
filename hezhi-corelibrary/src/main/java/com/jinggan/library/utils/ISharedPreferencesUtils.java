@@ -76,7 +76,7 @@ public class ISharedPreferencesUtils {
             String type = defValue.getClass().getSimpleName();// 获取数据类型
             if (spf != null) {
                 if (type.equals("String")) {
-                    return spf.getString(key, (String) defValue);
+                    return spf.getString(key, defValue.toString());
                 } else if (type.equals("Integer")) {
                     return spf.getInt(key, (Integer) defValue);
                 } else if (type.equals("Boolean")) {
