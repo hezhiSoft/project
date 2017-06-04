@@ -4,6 +4,55 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/FollowActivity_Back_ImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:background="@drawable/selector_toolbar_seletor"
+            android:src="@drawable/ic_arrow_back_black_24dp"/>
+
+        <TextView
+            android:id="@+id/FollowActivity_titleView"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="客户详情"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/FollowActivity_Back_ImageView"
+            android:textColor="@color/white"/>
+
+
+        <ImageView
+            android:id="@+id/FollowActivity_phone_ImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_title_phone"
+            android:layout_toLeftOf="@+id/FollowActivity_Edit_ImageView"
+            android:padding="15dp"
+            android:background="@drawable/selector_toolbar_seletor"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/FollowActivity_Edit_ImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="保存"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:background="@drawable/selector_toolbar_seletor"/>
+
+    </RelativeLayout>
+
+
     <FrameLayout
         android:id="@+id/Follow_Content_Layout"
         android:layout_width="match_parent"

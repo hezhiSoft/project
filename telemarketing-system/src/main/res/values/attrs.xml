@@ -7,4 +7,8 @@
         <attr name="showFilter" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="SelecteConditionTileView">
+        <attr name="selectTitle" format="string"/>
+    </declare-styleable>
+
 </resources>

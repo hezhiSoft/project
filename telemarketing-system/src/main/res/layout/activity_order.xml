@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="10dp"
         android:drawableTop="@mipmap/icon_unopen"
-        android:text="很抱歉，该功能暂末开放"
+        android:text="很抱歉，该功能暂未开放"
         android:textColor="@color/gray"
         android:textSize="18sp" />
 

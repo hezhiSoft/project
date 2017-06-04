@@ -77,7 +77,7 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
                     bundle.putSerializable("entity",mLists.get(position));
                     ISkipActivityUtil.startIntent(mContent, CusrometDetailsActivity.class,bundle);
                 }else if (flag==2){
-                    FollowActivity.startIntentToQuery((Activity)mContent,mLists.get(position).getID());
+                    FollowActivity.startIntentToQuery((Activity)mContent,mLists.get(position).getCustomerTel(),mLists.get(position).getID());
                 }
 
             }

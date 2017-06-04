@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:title="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -29,26 +30,26 @@
                 app:wvInputType="number"
                 app:wvItemName="客户电话" />
 
-            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+
+            <com.xiaomai.telemarket.view.widget.SelecteConditionTileView
                 android:id="@+id/Info_Tel_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:svItemName="是否空号" />
+                app:selectTitle="是否空号" />
 
-            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+
+            <com.xiaomai.telemarket.view.widget.SelecteConditionTileView
                 android:id="@+id/Info_intention_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:svItemName="是否有意向" />
+                app:selectTitle="是否有意向"/>
 
 
-            <com.jinggan.library.ui.widget.FormSelectTopTitleView
+            <com.xiaomai.telemarket.view.widget.SelecteConditionTileView
                 android:id="@+id/Info_IsSZHukou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:svItemName="是否深户" />
+                app:selectTitle="是否深户"/>
 
             <com.jinggan.library.ui.widget.FormSelectTopTitleView
                 android:id="@+id/Info_Sex"

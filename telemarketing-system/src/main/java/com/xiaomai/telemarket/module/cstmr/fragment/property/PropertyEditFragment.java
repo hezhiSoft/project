@@ -6,11 +6,16 @@ import android.support.annotation.Nullable;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.api.Responese;
+import com.xiaomai.telemarket.common.Constant;
+import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -35,6 +40,36 @@ public class PropertyEditFragment extends PropertyBaseFragment implements Remeto
         super.onActivityCreated(savedInstanceState);
         initUI(propertyEntity);
     }
+
+    @Subscribe
+    public void onCallStatus(EventBusValues values){
+        if (values.getWhat()==0x10102){
+            PropertyEntity entity=getPropertyEntity();
+            entity.setID(propertyEntity.getID());
+            entity.setCustomerID(propertyEntity.getCustomerID());
+            entity.setDeleteFlag(propertyEntity.getDeleteFlag());
+            entity.setRowIndex(propertyEntity.getRowIndex());
+            entity.setRowVersion(propertyEntity.getRowVersion());
+
+            CusrometRemoteRepo.getInstance().editHouse(entity,this);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        CusrometRemoteRepo.getInstance().cancelRequest();
+
+        /*判断当前是否处于群呼状态,通知群呼下一个号码*/
+        boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(getActivity(), Constant.IS_DIALING_GROUP_FINISHED, "false").toString());
+        if (isCall){
+            EventBusValues busValues = new EventBusValues();
+            busValues.setWhat(0x10101);
+            busValues.setObject(true);
+            EventBus.getDefault().post(busValues);
+        }
+    }
+
 
     @Override
     public void onSubmit() {

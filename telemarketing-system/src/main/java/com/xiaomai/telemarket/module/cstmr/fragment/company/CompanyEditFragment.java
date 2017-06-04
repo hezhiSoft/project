@@ -6,13 +6,18 @@ import android.support.annotation.Nullable;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.api.Responese;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
+import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CarBaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -36,6 +41,43 @@ public class CompanyEditFragment extends CompanyBaseFragment implements RemetoRe
         super.onActivityCreated(savedInstanceState);
         initUI(entity);
     }
+
+    @Subscribe
+    public void onCallStatus(EventBusValues values){
+        if (values.getWhat()==0x10102){
+            CompanyEntity companyEntity = getCompanyEntity();
+            companyEntity.setID(entity.getID());
+            companyEntity.setCustomerID(entity.getCustomerID());
+            companyEntity.setRowVersion(entity.getRowVersion());
+            companyEntity.setRowIndex(entity.getRowIndex());
+            companyEntity.setCreatedBy(entity.getCreatedBy());
+            companyEntity.setSharesProportion(entity.getSharesProportion());
+            companyEntity.setDeleteFlag(entity.getDeleteFlag());
+            companyEntity.setCreatedDate(entity.getCreatedDate());
+            companyEntity.setLocationRental(entity.getLocationRental());
+            companyEntity.setModifiedBy(entity.getModifiedBy());
+            companyEntity.setModifiedDate(entity.getModifiedDate());
+            companyEntity.setRegisterDate(entity.getRegisterDate());
+
+            CusrometRemoteRepo.getInstance().editCompany(companyEntity, this);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        CusrometRemoteRepo.getInstance().cancelRequest();
+
+        /*判断当前是否处于群呼状态,通知群呼下一个号码*/
+        boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(getActivity(), Constant.IS_DIALING_GROUP_FINISHED, "false").toString());
+        if (isCall){
+            EventBusValues busValues = new EventBusValues();
+            busValues.setWhat(0x10101);
+            busValues.setObject(true);
+            EventBus.getDefault().post(busValues);
+        }
+    }
+
 
     @Override
     public void onSubmit() {
