@@ -73,7 +73,7 @@ public class CusrometInsuranceAdapter extends BaseRecyclerViewAdapter<InsuranceE
             }
         }
 
-        final View infoView = inflater.inflate(R.layout.cusromet_insurance_layout, null);
+        View infoView = inflater.inflate(R.layout.cusromet_insurance_layout, null);
         setDetailsData(infoView, mLists.get(position));
         viewHodler.DetailsContentLayout.addView(infoView);
     }
@@ -128,6 +128,7 @@ public class CusrometInsuranceAdapter extends BaseRecyclerViewAdapter<InsuranceE
         /*备注*/
         Remark.setContentText(entity.getRemark()).setItemEnabled(false);
     }
+
     public void setListenter(OnClickItemLisenter listenter) {
         this.listenter = listenter;
     }

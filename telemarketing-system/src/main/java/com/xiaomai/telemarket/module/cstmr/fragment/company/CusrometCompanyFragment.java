@@ -85,7 +85,8 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
         PropertyRecyclerView.setRecyclerViewAdapter(adapter);
         PropertyRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         PropertyRecyclerView.setPullToRefreshListener(this);
-        PropertyRecyclerView.startUpRefresh();
+//        PropertyRecyclerView.startUpRefresh();
+        remoteRepo.queryCusrometCompanyLists(cusrometId, this);
     }
 
 

@@ -78,7 +78,8 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         CarRecyclerView.setRecyclerViewAdapter(adapter);
         CarRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         CarRecyclerView.setPullToRefreshListener(this);
-        CarRecyclerView.startUpRefresh();
+//        CarRecyclerView.startUpRefresh();
+        remoteRepo.queryCusrometCarLists(cusrometId, this);
     }
 
     @Override

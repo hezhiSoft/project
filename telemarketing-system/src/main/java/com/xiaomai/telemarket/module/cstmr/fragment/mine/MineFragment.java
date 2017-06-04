@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.dialog.DialogFactory;
+import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.BuildConfig;
@@ -104,6 +105,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
                         // TODO: 19/05/2017 退出登录接口
                         ISharedPreferencesUtils.setValue(getContext(), Constant.PASSWORD_KEY, "");
                         ISharedPreferencesUtils.setValue(getActivity(), Constant.ISLOGIN_KEY, false);
+                        IActivityManage.getInstance().exit();
                         ISkipActivityUtil.startIntent(getActivity(), LoginActivity.class);
 //                        IActivityManage.getInstance().exit();
                     }

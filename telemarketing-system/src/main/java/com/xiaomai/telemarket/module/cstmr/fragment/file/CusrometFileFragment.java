@@ -83,7 +83,8 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
         EdbtoRecyclerView.setRecyclerViewAdapter(adapter);
         EdbtoRecyclerView.setMode(PullToRefreshRecyclerView.Mode.DISABLED);
         EdbtoRecyclerView.setPullToRefreshListener(this);
-        EdbtoRecyclerView.startUpRefresh();
+//        EdbtoRecyclerView.startUpRefresh();
+        remoteRepo.queryCusrometFileLists(cusrometId, this);
     }
 
     @Subscribe
