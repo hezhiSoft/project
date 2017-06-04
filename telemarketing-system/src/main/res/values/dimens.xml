@@ -25,4 +25,5 @@
     <dimen name="text_size_content_20">20sp</dimen>
     <dimen name="text_size_content_18">18sp</dimen>
     <dimen name="text_size_bottom_16">16sp</dimen>
+    <dimen name="text_size_bottom_14">14sp</dimen>
 </resources>
