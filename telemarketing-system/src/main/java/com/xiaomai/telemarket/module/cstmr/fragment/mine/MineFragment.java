@@ -11,7 +11,6 @@ import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
-import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.BuildConfig;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
@@ -62,12 +61,22 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUI();
+    }
+
     private void initUI() {
-        tvUserState.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
-        if (ISharedPreferencesUtils.getValue(getActivity(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE).equals(Constant.DIAL_NUMBER_CODE_PUBLIC)) {
-            tvDialingSource.setText(getResources().getString(R.string.text_number_library_public));
-        } else {
-            tvDialingSource.setText(getResources().getString(R.string.text_number_dialing_private));
+        if (tvUserState != null) {
+            tvUserState.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
+        }
+        if (tvDialingSource!=null) {
+            if (ISharedPreferencesUtils.getValue(getActivity(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE).equals(Constant.DIAL_NUMBER_CODE_PUBLIC)) {
+                tvDialingSource.setText(getResources().getString(R.string.text_number_library_public));
+            } else {
+                tvDialingSource.setText(getResources().getString(R.string.text_number_dialing_private));
+            }
         }
     }
 

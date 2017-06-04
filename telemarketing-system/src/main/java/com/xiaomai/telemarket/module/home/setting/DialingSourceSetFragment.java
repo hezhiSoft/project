@@ -63,6 +63,9 @@ public class DialingSourceSetFragment extends BaseFragment {
                 changeUIState(false);
                 break;
         }
+        if (getActivity()!=null) {
+            getActivity().finish();
+        }
     }
 
     private void changeUIState(boolean isPublic) {
