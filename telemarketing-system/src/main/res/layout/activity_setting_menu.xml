@@ -50,8 +50,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dimen_35dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_bottom_16"
+                android:textColor="@color/gray_dark_mid"
+                android:textSize="@dimen/text_size_bottom_14"
                 android:visibility="visible" />
 
         </RelativeLayout>
@@ -87,8 +87,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dimen_35dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_bottom_16"
+                android:textColor="@color/gray_dark_mid"
+                android:textSize="@dimen/text_size_bottom_14"
                 android:visibility="visible" />
 
         </RelativeLayout>

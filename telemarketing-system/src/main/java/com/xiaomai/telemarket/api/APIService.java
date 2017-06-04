@@ -14,12 +14,12 @@ import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.home.setting.data.UserStateEntity;
 
-import java.io.File;
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -107,6 +107,14 @@ public interface APIService {
      */
     @POST("api/customer/DelFromList")
     Call<Responese<Void>> DelFromList(@Body RequestBody body);
+
+    /**
+     * 设置客户号码为空号
+     * @param body
+     * @return
+     */
+    @POST("api/customer/SetEmptyTel")
+    Call<Response<Void>> SetEmptyTel(@Body RequestBody body);
 
     /**
      * 获取过滤每件

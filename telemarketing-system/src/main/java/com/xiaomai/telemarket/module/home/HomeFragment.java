@@ -81,14 +81,6 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
      * 拨号相关
      */
     private HomeDialingPresenter homeDialingPresenter;
-//    private DialingPresenter dialingPresenter;
-//    private String preDialCusFollowTime = "";//前一个已经拨号的用户时间
-//    private String preUserID = "";//前一个已经拨号的用户时间
-//    private boolean isStopped = true;
-//
-//    private boolean isFromPublic;//拨号来源 true -public,false-private
-//    private boolean isDialingByGroup;//拨号方式 tur -by group，false - by single
-//    public static final int MSG_DIAL_REQUEST = 0x001;
 
     private boolean isRecordPermissible;
     public static final int RECORD_PERMISSION_REQUEST_CODE = 0x001;
@@ -193,7 +185,6 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                 break;
             case R.id.Home_singCall_Layout:/*点呼*/
                 homeDialingPresenter.startDialingBySingle();
-//                dialingSingle();
                 break;
             case R.id.Home_customer_TextView:/*客户管理*/
                 if (homeMenuItemClickListener != null) {
@@ -286,6 +277,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         });
     }
 
+    @Deprecated
     private void dialingSingle() {
         if (!isRecordPermissible) {
             ToastUtil.showToast(getActivity(), "录音权限被禁止！请在权限管理中允许录音权限");

@@ -43,16 +43,11 @@ public class PhoneCallStateService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        //------以下应放在onStartCommand中，但2.3.5以下版本不会因service重新启动而重新调用--------
-        //监听电话状态，如果是打入且接听 或者 打出 则开始自动录音
-        //通话结束，保存文件到外部存储器上
         Log.i(TAG, "启动去电监听服务，正在监听中...");
         outgoingCallState = new OutgoingCallState(this);
         outgoingCallState.startListen();
         recorder = PhoneRecordUtil.getINSTANCE();
         outgoingCallReciver = new OutgoingCallReciver(recorder);
-//        ToastUtil.showToast(this,"服务已启动");
         //去电 注册
         IntentFilter outgoingCallFilter = new IntentFilter();
         outgoingCallFilter.addAction(OutgoingCallState.ForeGroundCallState.IDLE);
