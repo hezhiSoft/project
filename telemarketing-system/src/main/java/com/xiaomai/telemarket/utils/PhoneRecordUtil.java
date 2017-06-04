@@ -4,6 +4,8 @@ import android.media.MediaRecorder;
 import android.util.Log;
 
 import com.jinggan.library.utils.IFileUtils;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class PhoneRecordUtil {
     private MediaRecorder mrecorder;
     private boolean started = false; //录音机是否已经启动
     private boolean isCommingNumber = false;//是否是来电
+    private CustomerLocalDataSource mLocalCustomerDataSource;
 
     private static PhoneRecordUtil INSTANCE;
 
@@ -47,10 +50,21 @@ public class PhoneRecordUtil {
         if (isCommingNumber) {
             callDir = "呼入";
         }
+        String directoryName = IFileUtils.getRecordDirectory();
+        if (mLocalCustomerDataSource==null) {
+            mLocalCustomerDataSource = CustomerLocalDataSource.getInstance();
+        }
+        CusrometListEntity customerEntity = mLocalCustomerDataSource.getPreCustomer();
+        if (customerEntity!=null) {
+            directoryName +=File.separator+customerEntity.getID();
+            File file = new File(directoryName);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+        }
         String fileName = callDir + "-" + phoneNumber + "-"+ new SimpleDateFormat("yyyyMMddHHmmss")
                 .format(new Date(System.currentTimeMillis())) + ".mp3";//实际是3gp
-        File recordName = new File(IFileUtils.getRecordDirectory(), fileName);
-
+        File recordName = new File(directoryName, fileName);
         try {
             recordName.createNewFile();
             Log.d("recorder", "创建文件" + recordName.getName());

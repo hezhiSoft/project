@@ -27,8 +27,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -1022,8 +1020,56 @@ public class CusrometRemoteRepo implements BaseDataSourse {
                 MultipartBody.Part part = MultipartBody.Part.createFormData("file" + (i + 1), list.get(i).getName(), requestBody);
                 parts.add(part);
             }
-        }
+        }//Duration
         String pamar = "api/file/upload?param={\"filename\":\"" + fileName + "\",\"BusinessID\":\"" + cusrometId + "\"}";
+        final Call<Responese<FileEntity>> call = XiaomaiRetrofitManager.getAPIService().addFile(pamar, parts);
+        call.enqueue(new RetrofitCallback<Responese<FileEntity>>() {
+            @Override
+            public void onSuccess(Responese<FileEntity> data) {
+                if (data.getCode() == 213) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 上传录音
+     * @param fileName
+     * @param cusrometId
+     * @param file
+     * @param callback
+     */
+    public void addRecordFile(String fileName, String cusrometId,int duration, File file, final RemetoRepoCallback<FileEntity> callback) {
+        List<MultipartBody.Part> parts = new ArrayList<>();
+        if (file != null) {//做一个文件非空判断
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("record", file.getName(), requestBody);// TODO: 04/06/2017 record 这个名字不知什么参数
+            parts.add(part);
+        }
+        String pamar = "api/file/upload?param={\"filename\":\"" + fileName + "\",\"BusinessID\":\"" + cusrometId + "\",\"Duration\":"+duration+"}";
         final Call<Responese<FileEntity>> call = XiaomaiRetrofitManager.getAPIService().addFile(pamar, parts);
         call.enqueue(new RetrofitCallback<Responese<FileEntity>>() {
             @Override

@@ -21,6 +21,7 @@
 
         <service android:name=".service.DownloadInitDataService" />
         <service android:name=".service.PhoneCallStateService" />
+        <service android:name=".service.UploadService" />
 
         <activity
             android:name=".module.account.SplashActivity"

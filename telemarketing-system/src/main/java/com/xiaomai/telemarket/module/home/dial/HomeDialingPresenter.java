@@ -30,8 +30,6 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     private CustomerLocalDataSource mLocalCustomerDataSource;
 
     private boolean isDialingGroupFinished;//群呼是否结束
-//    private String[] numberArray = {"17817814397", "10010", "10086"};
-//    private int currentIndex = 0;
 
     public HomeDialingPresenter(HomeDialingContract.View mView) {
         this.mView = mView;
@@ -62,14 +60,6 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
         isDialingGroupFinished = getIsDialingGroupStoped();
         boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
         if (!isDialingGroupFinished && !isDialingOffHook) {
-//            if (currentIndex >= numberArray.length) {
-//                currentIndex = 0;
-//            }
-//            CusrometListEntity entity = new CusrometListEntity();
-//            entity.setCustomerTel(numberArray[currentIndex]);
-//            SystemClock.sleep(1000);
-//            mView.showDialingOutStarted(entity);
-//            currentIndex++;
             startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
         }
         mView.showIsDialingGroupUnStopped(isDialingGroupFinished);

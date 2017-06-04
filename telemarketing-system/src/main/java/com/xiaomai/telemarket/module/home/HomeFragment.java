@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ import com.xiaomai.telemarket.module.home.dial.HomeDialingPresenter;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingEditActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
+import com.xiaomai.telemarket.service.UploadService;
 import com.xiaomai.telemarket.utils.RegexUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -351,6 +353,10 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
             case 0x10102:
                 //通话结束通知
                 homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOut();
+                if (getActivity()!=null) {
+                    Intent intent = new Intent(getActivity(),UploadService.class);
+                    getActivity().startService(intent);
+                }
                 break;
         }
     }
