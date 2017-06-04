@@ -15,6 +15,7 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -115,7 +116,7 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
         FormWriteTopTitleView PropertyVillageName=ButterKnife.findById(view,R.id.Property_VillageName);
         FormWriteTopTitleView PropertyDetailedAddress=ButterKnife.findById(view,R.id.Property_DetailedAddress);
         FormWriteTopTitleView PropertyRemark=ButterKnife.findById(view,R.id.Property_Remark);
-        FormSelectTopTitleView PropertyIsMortgage=ButterKnife.findById(view,R.id.Property_IsMortgage);
+        SelecteConditionTileView PropertyIsMortgage=ButterKnife.findById(view,R.id.Property_IsMortgage);
         FormSelectTopTitleView PropertyMortgageBank=ButterKnife.findById(view,R.id.Property_MortgageBank);
         FormWriteTopTitleView PropertyMonthlyPaymentLoan=ButterKnife.findById(view,R.id.Property_MonthlyPaymentLoan);
         FormWriteTopTitleView PropertyMortgageTimeLimit=ButterKnife.findById(view,R.id.Property_MortgageTimeLimit);
@@ -140,7 +141,7 @@ public class CusrometPropertyAdapter extends BaseRecyclerViewAdapter<PropertyEnt
         /*备注*/
         PropertyRemark.setContentText(entity.getRemark()).setItemEnabled(false);
         /*是否按揭*/
-        PropertyIsMortgage.setContentText(entity.getIsMortgage()+"").setArrowDropVisibility(View.GONE);
+        PropertyIsMortgage.setStatus(entity.getIsMortgage()).setRadioGropEnabled(false);
         /*按揭银行*/
         PropertyMortgageBank.setContentText(DictionaryHelper.ParseBank(entity.getMortgageBank())).setArrowDropVisibility(View.GONE);
         /*每月还款*/

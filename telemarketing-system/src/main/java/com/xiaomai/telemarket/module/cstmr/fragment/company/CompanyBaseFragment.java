@@ -21,6 +21,7 @@ import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+import com.xiaomai.telemarket.view.widget.SelecteConditionTileView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,7 +52,7 @@ public class CompanyBaseFragment extends BaseFragment {
     @BindView(R.id.Company_AccountWater)
     FormWriteTopTitleView CompanyAccountWater;
     @BindView(R.id.Company_IsRentTransfer)
-    FormSelectTopTitleView CompanyIsRentTransfer;
+    SelecteConditionTileView CompanyIsRentTransfer;
     @BindView(R.id.Company_AmountDebt)
     FormWriteTopTitleView CompanyAmountDebt;
     @BindView(R.id.Company_Remark)
@@ -97,12 +98,12 @@ public class CompanyBaseFragment extends BaseFragment {
                 dialog.show();
             }
         });
-        CompanyIsRentTransfer.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
-            @Override
-            public void onClick(TextView textView) {
-                DictionaryHelper.showSelectDialog(getContext(),CompanyIsRentTransfer.getTextView(),CompanyIsRentTransfer.getContentText());
-            }
-        });
+//        CompanyIsRentTransfer.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
+//            @Override
+//            public void onClick(TextView textView) {
+//                DictionaryHelper.showSelectDialog(getContext(),CompanyIsRentTransfer.getTextView(),CompanyIsRentTransfer.getContentText());
+//            }
+//        });
     }
 
     protected void initUI(CompanyEntity entity) {
@@ -115,7 +116,7 @@ public class CompanyBaseFragment extends BaseFragment {
         CompanyBusinessScope.setContentText(entity.getBusinessScope());
         CompanySharesProportion.setContentText(entity.getSharesProportion() + "");
         CompanyAccountWater.setContentText(entity.getAccountWater() + "");
-        CompanyIsRentTransfer.setContentText(entity.getIsRentTransfer()==0?"否":"是");
+        CompanyIsRentTransfer.setStatus(entity.getIsRentTransfer());
         CompanyAmountDebt.setContentText(entity.getAmountDebt()+"");
         CompanyRemark.setContentText(entity.getRemark());
     }
@@ -128,7 +129,7 @@ public class CompanyBaseFragment extends BaseFragment {
         entity.setBusinessScope(CompanyBusinessScope.getContentText());
         entity.setSharesProportion(IStringUtils.toInt(CompanySharesProportion.getContentText()));
         entity.setAccountWater(IStringUtils.toInt(CompanyAccountWater.getContentText()));
-        entity.setIsRentTransfer("否".equals(CompanyIsRentTransfer.getContentText())?0:1);
+        entity.setIsRentTransfer(CompanyIsRentTransfer.getStatus());
         entity.setAmountDebt(IStringUtils.toInt(CompanyAmountDebt.getContentText()));
         entity.setRemark(CompanyRemark.getContentText());
         return entity;

@@ -50,11 +50,11 @@
         app:wvItemName="租金"
         app:wvInputType="number"/>
 
-    <com.jinggan.library.ui.widget.FormSelectTopTitleView
+    <com.xiaomai.telemarket.view.widget.SelecteConditionTileView
         android:id="@+id/Company_IsRentTransfer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:svItemName="租金是否转账"/>
+        app:selectTitle="租金是否转账"/>
 
     <com.jinggan.library.ui.widget.FormWriteTopTitleView
         android:id="@+id/Company_AmountDebt"
