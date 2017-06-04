@@ -83,6 +83,18 @@ public class CusrometDetailsActivity extends BaseActivity {
         initTabLayout();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+         /*判断当前是否处于群呼状态,通知群呼下一个号码*/
+        boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, false).toString());
+        if (isCall){
+            EventBusValues busValues = new EventBusValues();
+            busValues.setWhat(0x10101);
+            busValues.setObject(true);
+            EventBus.getDefault().post(busValues);
+        }
+    }
 
     private void initTabLayout() {
         InfoFragment = new CusrometInfoShowFragment();
