@@ -77,26 +77,23 @@ public class FollowActivity extends BaseActivity {
                             transaction.replace(R.id.Follow_Content_Layout, followEditFragment);
                             transaction.commit();
                         } else {
-                            showToast("数据为空");
-                            finish();
+                            switchToAddDebtoFragment();
                         }
                     }
 
                     @Override
                     public void onFailure(int code, String msg) {
-                        showToast(msg);
-                        finish();
+                        switchToAddDebtoFragment();
                     }
 
                     @Override
                     public void onThrowable(Throwable t) {
-                        showToast("数据异常");
-                        finish();
+                        switchToAddDebtoFragment();
                     }
 
                     @Override
                     public void onUnauthorized() {
-
+                        switchToAddDebtoFragment();
                     }
 
                     @Override
