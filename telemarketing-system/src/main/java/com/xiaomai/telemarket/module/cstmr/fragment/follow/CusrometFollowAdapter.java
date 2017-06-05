@@ -165,6 +165,13 @@ public class CusrometFollowAdapter extends BaseRecyclerViewAdapter<FollowEntity>
                         player = new MediaPlayer();
                         player.setDataSource(entity.getFileUrl());
                         player.prepare();
+                        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                vodieButton.setText("播放");
+                                player.stop();
+                            }
+                        });
                         player.start();
                     } catch (IOException e) {
                         vodieButton.setText("播放");
