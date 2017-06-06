@@ -199,7 +199,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
         if (pageIndex==1){
             adapter.clearList();
             if (CustomerAllRecyclerView!=null) {// TODO: 30/05/2017 连续两次重启app这里报空指针错误
-                CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+                CustomerAllRecyclerView.setPageHint(R.mipmap.icon_data_empty,"资料为空");
             }
         }else {
 //            showToast(msg);
@@ -210,7 +210,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     public void onThrowable(Throwable t) {
 //        showToast("数据异常");
         if (CustomerAllRecyclerView != null) {
-            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
         }
     }
 
@@ -218,7 +218,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     public void onUnauthorized() {
 //        showToast("数据获取失败");
         if (CustomerAllRecyclerView != null) {
-            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
         }
     }
 

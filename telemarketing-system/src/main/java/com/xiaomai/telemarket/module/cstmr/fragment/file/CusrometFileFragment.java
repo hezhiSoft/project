@@ -129,7 +129,7 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
         } else {
             DetailsNumberTextView.setText("文件资料");
             if (EdbtoRecyclerView!=null){
-                EdbtoRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+                EdbtoRecyclerView.setPageHint(R.mipmap.icon_data_empty,"资料为空");
             }
         }
     }

@@ -41,8 +41,8 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
     }
 
     @Subscribe
-    public void onCallStatus(EventBusValues values){
-        if (values.getWhat()==0x10102){
+    public void onCallStatus(EventBusValues values) {
+        if (values.getWhat() == 0x10102) {
             CusrometRemoteRepo.getInstance().editCusromet(getCusrometEntity(), this);
         }
     }
@@ -54,7 +54,7 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
 
         /*判断当前是否处于群呼状态,通知群呼下一个号码*/
         boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(getActivity(), Constant.IS_DIALING_GROUP_FINISHED, false).toString());
-        if (isCall){
+        if (isCall) {
             EventBusValues busValues = new EventBusValues();
             busValues.setWhat(0x10101);
             busValues.setObject(true);
@@ -65,7 +65,8 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
     @Override
     public void onSubmit() {
         super.onSubmit();
-        dialog = DialogFactory.createLoadingDialog(getActivity(), "提交...");
+        if (isShowDialog)
+            dialog = DialogFactory.createLoadingDialog(getActivity(), "提交...");
         CusrometRemoteRepo.getInstance().editCusromet(getCusrometEntity(), this);
     }
 
@@ -76,7 +77,8 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
         values.setObject(data);
         EventBus.getDefault().post(values);
 
-        showToast("保存成功");
+        if (isShowDialog)
+            showToast("保存成功");
         getActivity().finish();
     }
 
@@ -87,7 +89,8 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
 
     @Override
     public void onThrowable(Throwable t) {
-        showToast("数据异常");
+        if (isShowDialog)
+            showToast("数据异常");
     }
 
     @Override
@@ -97,6 +100,7 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
 
     @Override
     public void onFinish() {
-        DialogFactory.dimissDialog(dialog);
+        if (isShowDialog)
+            DialogFactory.dimissDialog(dialog);
     }
 }

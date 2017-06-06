@@ -294,7 +294,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="功能服务"
+                android:text="数据分析"
                 android:textColor="@color/gray" />
 
             <LinearLayout

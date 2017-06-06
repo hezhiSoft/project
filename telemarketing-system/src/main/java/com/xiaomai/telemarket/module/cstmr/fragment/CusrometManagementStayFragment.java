@@ -187,7 +187,7 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     public void onFailure(int code, String msg) {
         if (pageIndex == 1) {
             adapter.clearList();
-            CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            CustomerAllRecyclerView.setPageHint(R.mipmap.icon_data_empty,"资料为空");
         } else {
 //            showToast(msg);
         }
@@ -196,13 +196,13 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     @Override
     public void onThrowable(Throwable t) {
 //        showToast("数据异常");
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+        CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
     public void onUnauthorized() {
-        showToast("数据获取失败");
-        CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+//        showToast("数据获取失败");
+        CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
