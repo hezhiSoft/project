@@ -11,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
@@ -76,6 +78,7 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
                     Bundle bundle=new Bundle();
                     bundle.putSerializable("entity",mLists.get(position));
                     ISkipActivityUtil.startIntent(mContent, CusrometDetailsActivity.class,bundle);
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, false);
                 }else if (flag==2){
                     FollowActivity.startIntentToQuery((Activity)mContent,mLists.get(position).getCustomerTel(),mLists.get(position).getID());
                 }

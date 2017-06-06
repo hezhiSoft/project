@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.utils.IFileUtils;
@@ -19,6 +20,8 @@ import java.io.IOException;
  * @createtime 04/06/2017 4:23 PM
  **/
 public class UploadService extends IntentService {
+
+    private static final String TAG = "UploadService";
 
     private CusrometRemoteRepo mRepo;
     private MediaPlayer mediaPlayer;
@@ -57,10 +60,12 @@ public class UploadService extends IntentService {
                                     //这里文件单个上传
                                     File recordFile = recordFiles[j];
                                     if (recordFile != null&&recordFile.exists()) {
+                                        Log.i(TAG, "start upload..." + recordFile.getAbsolutePath());
                                         mRepo.addRecordFile(recordFile.getName(), customerId,getRecordDuration(mediaPlayer,recordFile), recordFile, new RemetoRepoCallback<FileEntity>() {
                                             @Override
                                             public void onSuccess(FileEntity data) {
                                                 try {
+                                                    Log.i(TAG, "onSuccess: "+data.getFileName());
                                                     File fileData = new File(data.getFileUrl());
                                                     if (fileData!=null&&fileData.exists()) {
                                                         fileData.delete();//上传完成删除文件
@@ -72,17 +77,17 @@ public class UploadService extends IntentService {
 
                                             @Override
                                             public void onFailure(int code, String msg) {
-
+                                                Log.i(TAG, "onFailure: Error#" + "code=" + code + ",msg=" + msg);
                                             }
 
                                             @Override
                                             public void onThrowable(Throwable t) {
-
+                                                Log.i(TAG, "onThrowable: Error#");
                                             }
 
                                             @Override
                                             public void onUnauthorized() {
-
+                                                Log.i(TAG, "onUnauthorized: Error#");
                                             }
 
                                             @Override

@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.jinggan.library.utils.ISharedPreferencesUtils.setValue;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -153,7 +156,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
             isCallPhonePermissible = false;
         }
         if (isRecordPermissible && isCallPhonePermissible) {
-            homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOut();
+            homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
         }
         if (HomeUserStateTextView != null) {
             HomeUserStateTextView.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
@@ -192,13 +195,22 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                 break;
             case R.id.Home_groupCall_Layout:/*群呼*/
                 if (homeDialingPresenter.getIsDialingGroupStoped()) {
-                    homeDialingPresenter.startDialingByGroup();
+                    // TODO: 04/06/2017 判断正在通话中禁止群呼
+                    boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+                    if (!isDialingOffHook) {
+                        homeDialingPresenter.startDialingByGroup();
+                    } else {
+                        //正在通话中,不让继续拨出
+//                        showToast("");
+                    }
                 } else {
                     homeDialingPresenter.stopDialingByGroup();
                 }
                 break;
             case R.id.Home_singCall_Layout:/*点呼*/
-                homeDialingPresenter.startDialingBySingle();
+                if (TextUtils.equals(tvDialGroupState.getText().toString(),getResources().getString(R.string.dial_star_by_group))) {
+                    homeDialingPresenter.startDialingBySingle();
+                }
                 break;
             case R.id.Home_customer_TextView:/*客户管理*/
                 if (homeMenuItemClickListener != null) {
@@ -270,10 +282,11 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
             Bundle bundle=new Bundle();
             bundle.putSerializable("entity",entity);
             ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
+            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, true);//从群拨跳转到客户信息界面
             //
-            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
+            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
             //这里停止群拨状态 等待客户信息编辑界面返回消息后再判断是否继续拨出
-            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
             ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
         }
     }
@@ -300,7 +313,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         if (homeDialingPresenter != null) {
             homeDialingPresenter.stopDialingByGroup();
         }
-        DialogFactory.showMsgDialog(getActivity(), "提示", msg+"是否停止拨号?", "停止", "取消",null, new View.OnClickListener() {
+        DialogFactory.warningDialog(getActivity(),"提示",msg+"是否停止拨号?","停止",new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 homeDialingPresenter.stopDialingByGroup();
@@ -353,16 +366,23 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         Log.i(TAG, "onMainUserEvent: "+values.getWhat()+" ,object="+values.getObject());
         switch (values.getWhat()) {
             case 0x10101://客户信息保存通知
-                Object obj = values.getObject();
-                boolean isResume = obj != null ? (boolean) values.getObject() : false;//是否继续拨号
-                if (isResume) {
-                    homeDialingPresenter.startDialingByGroup();// TODO: 04/06/2017 继续拨号
+                boolean isFromGroupDialing = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, false);
+                if (isFromGroupDialing) {
+                    Object obj = values.getObject();
+                    boolean isResume = obj != null ? (boolean) values.getObject() : false;//保存成功后，继续拨号
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, !isResume);
+                    if (isResume) {
+                        homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+                    }
                 }
-                ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, !isResume);
                 break;
             case 0x10102:
                 //通话结束通知
-                homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOut();
+                boolean isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
+                if (isDialingByGroup) {
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, false);
+                    homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+                }
                 if (getActivity()!=null) {
                     Intent intent = new Intent(getActivity(),UploadService.class);
                     getActivity().startService(intent);
