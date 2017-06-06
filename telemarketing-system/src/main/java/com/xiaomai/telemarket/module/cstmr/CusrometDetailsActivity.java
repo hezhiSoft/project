@@ -146,13 +146,14 @@ public class CusrometDetailsActivity extends BaseActivity {
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
                 /*判断当前是否处于群呼状态,通知群呼当前处理编辑状态*/
-                boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, false).toString());
-                if (isCall) {
-                    EventBusValues values = new EventBusValues();
-                    values.setWhat(0x10101);
-                    values.setObject(false);
-                    EventBus.getDefault().post(values);
-                }
+                //这时候群拨已经暂停了 ，不需要再通知暂停
+//                boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, false).toString());
+//                if (isCall) {
+//                    EventBusValues values = new EventBusValues();
+//                    values.setWhat(0x10101);
+//                    values.setObject(false);
+//                    EventBus.getDefault().post(values);
+//                }
 
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/

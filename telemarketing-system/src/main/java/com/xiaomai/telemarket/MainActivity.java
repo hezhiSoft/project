@@ -5,11 +5,9 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.jinggan.library.base.BaseActivity;
-import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
-import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.appCheck.AppCheckHelper;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
@@ -18,7 +16,6 @@ import com.xiaomai.telemarket.module.cstmr.fragment.CusrometManagementStayFragme
 import com.xiaomai.telemarket.module.cstmr.fragment.mine.MineFragment;
 import com.xiaomai.telemarket.module.home.HomeFragment;
 import com.xiaomai.telemarket.module.home.HomeMenuItemClickListener;
-import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.service.PhoneCallStateService;
 
 import butterknife.BindView;

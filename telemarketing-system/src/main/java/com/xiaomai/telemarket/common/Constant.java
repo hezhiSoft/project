@@ -22,12 +22,14 @@ public class Constant {
     public static final String DIAL_NUMBER_SOURCE = "dial_number_source";
 
     /**dialing*/
-    public static final String IS_DIALING_KEY= "is_dialing";//接通正在通话中
+    public static final String IS_DIALING_KEY= "is_dialing";//是否接通正在通话中
     public static final String IS_DIALING_GROUP_FINISHED = "is_dialing_group_finished";//群呼是否结束
     public static final String PRE_CUSTOMER_KEY = "pre_customer_key";//上一个拨号的用户信息
     public static final String IS_FROM_HOME_GROUP_DIALING = "is_from_group_dialing";//是否从群拨跳转到的客户信息界面
-    public static final String IS_DIALING_BY_GROUP= "is_dial_by_group";//是否群呼
+    public static final String DIALING_TYPE_KEY = "is_dial_by_group";//拨号类别 群呼1／点呼0 停止拨号后会置未空串
 
+    public static final String DIALING_TYPE_BY_GROUP = "group";//拨号类别 群呼
+    public static final String DIALING_TYPE_BY_SINGLE = "single";//拨号类别 点呼
 
     /**
      * 意向状态

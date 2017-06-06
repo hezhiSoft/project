@@ -3,6 +3,7 @@ package com.xiaomai.telemarket.module.home.dial;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.ToastUtil;
@@ -40,19 +41,20 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     @Override
     public void startDialingBySingle() {
         startDialing(true);
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, Constant.DIALING_TYPE_BY_SINGLE);
     }
 
     @Override
     public void startDialingByGroup() {
         startDialing(false);
         mView.showDialingByGroupStarted();
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, true);
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, Constant.DIALING_TYPE_BY_GROUP);
     }
 
     @Override
     public void stopDialingByGroup() {
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//TODO 手动停止群呼
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");//停止群拨，置空拨号类型
         mRepo.cancelRequest();
         mView.showDialingStopped();
     }
@@ -61,8 +63,8 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     public void checkIsDialingGroupUnStoppedAndDialingOut() {
         isDialingGroupFinished = getIsDialingGroupStoped();
         boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
-        boolean isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
-        if (!isDialingGroupFinished && !isDialingOffHook&&isDialingByGroup) {
+        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
+        if (!isDialingGroupFinished && !isDialingOffHook && TextUtils.equals(dialingType, Constant.DIALING_TYPE_BY_GROUP)) {
             startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
         }
         mView.showIsDialingGroupUnStopped(isDialingGroupFinished);
@@ -71,8 +73,8 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     public void checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI() {
         isDialingGroupFinished = getIsDialingGroupStoped();
         boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
-        boolean isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
-        if (!isDialingGroupFinished && !isDialingOffHook&&isDialingByGroup) {
+        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
+        if (!isDialingGroupFinished && !isDialingOffHook && TextUtils.equals(dialingType, Constant.DIALING_TYPE_BY_GROUP)) {
             startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
         }
     }
@@ -83,6 +85,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
      * @param isDialingGroupFinished 群呼是否结束 点拨：true ，群拨：false
      */
     private void startDialing(final boolean isDialingGroupFinished) {
+        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, isDialingGroupFinished);//TODO 手动开始或者重检测群呼状态后开始群呼
         //检测权限
         if (ContextCompat.checkSelfPermission(DataApplication.getInstance().getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(), "录音权限被禁止！请在权限管理中允许录音权限");
@@ -97,8 +100,6 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
             //正在通话中
             return;
         }
-        //设置群呼是否结束
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, isDialingGroupFinished);
         CusrometListEntity mPreCustomerEnity = mLocalCustomerDataSource.getPreCustomer();
         if (mPreCustomerEnity != null) {
             mRepo.deleteFromList(mPreCustomerEnity.getID(), new RemetoRepoCallback<Void>() {
@@ -157,7 +158,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
                 public void onFailure(int code, String msg) {
                     if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
                         setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
-                        mView.showDialingFinished(msg);//所有号码请求完成
+                        mView.showDialingFinished(msg);//TODO 所有号码请求完成,停止群呼
                     } else {
                         mView.showRequestNumberFailed(msg);
                     }
@@ -196,7 +197,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
                 public void onFailure(int code, String msg) {
                     if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
                         setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
-                        mView.showDialingFinished(msg);//所有号码请求完成
+                        mView.showDialingFinished(msg);//TODO 所有号码请求完成,停止群呼
                     } else {
                         mView.showRequestNumberFailed(msg);
                     }

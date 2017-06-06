@@ -283,10 +283,9 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
             bundle.putSerializable("entity",entity);
             ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
             setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, true);//从群拨跳转到客户信息界面
-            //
-            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
-            //这里停止群拨状态 等待客户信息编辑界面返回消息后再判断是否继续拨出
-            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);//拨出，设置正在通话中状态
+            //TODO 这里停止群拨状态 等待接收到客户信息编辑界面返回的消息后再判断是否继续拨出
+            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//点保存
             ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
         }
     }
@@ -313,6 +312,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         if (homeDialingPresenter != null) {
             homeDialingPresenter.stopDialingByGroup();
         }
+        showToast(msg);
         DialogFactory.warningDialog(getActivity(),"提示",msg+"是否停止拨号?","停止",new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -364,24 +364,40 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMainUserEvent(EventBusValues values) {
         Log.i(TAG, "onMainUserEvent: "+values.getWhat()+" ,object="+values.getObject());
+        //只需要判断当前是否处于群拨，并且未手动结束，才接受消息处理
+        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
         switch (values.getWhat()) {
             case 0x10101://客户信息保存通知
-                boolean isFromGroupDialing = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, false);
-                if (isFromGroupDialing) {
+                if (TextUtils.equals(dialingType,Constant.DIALING_TYPE_BY_GROUP)) {
                     Object obj = values.getObject();
-                    boolean isResume = obj != null ? (boolean) values.getObject() : false;//保存成功后，继续拨号
-                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, !isResume);
+                    boolean isResume = obj != null ? (boolean) values.getObject() : false;
                     if (isResume) {
-                        homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+                        //TODO 保存成功后，在群拨状态下要继续拨号
+                        if (homeDialingPresenter != null) {
+                            homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+                        }
+                        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, false);
+                    } else {
+                        //TODO 保存失败，出错，暂停群拨
+                        if (homeDialingPresenter!=null) {
+                            homeDialingPresenter.stopDialingByGroup();
+                        }
+                        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
                     }
                 }
                 break;
             case 0x10102:
                 //通话结束通知
-                boolean isDialingByGroup = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_BY_GROUP, false);
-                if (isDialingByGroup) {
+                ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//结束消息
+                if (TextUtils.equals(dialingType,Constant.DIALING_TYPE_BY_GROUP)) {
+                    //TODO 群呼通话被挂断之前离开了详情页，没有接受到msg，也要继续拨出
+                    //但如果还是停留在详情页面，这里不做处理，等待通话挂断消息被详情页面接收并且保存处理，再根据0x10101消息判断是否继续群拨
+                    // TODO: 06/06/2017 这里还要判断是否处在一客户详情界面
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, false);
                     homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+                }else{
+                    //点拨挂断电话后，置空拨号类型
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");
                 }
                 if (getActivity()!=null) {
                     Intent intent = new Intent(getActivity(),UploadService.class);
