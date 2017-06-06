@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.EventBus;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class DebtoActivity extends BaseActivity {
+public class DebtoActivity extends XiaoMaiBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

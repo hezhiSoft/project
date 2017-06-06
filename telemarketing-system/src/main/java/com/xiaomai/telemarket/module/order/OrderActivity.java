@@ -3,9 +3,9 @@ package com.xiaomai.telemarket.module.order;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class OrderActivity extends BaseActivity {
+public class OrderActivity extends XiaoMaiBaseActivity {
 
 
     @BindView(R.id.Order_RecyclerView)

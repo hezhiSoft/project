@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
@@ -19,7 +18,7 @@ import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
 import com.xiaomai.telemarket.R;
-import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 
@@ -38,7 +37,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class FollowActivity extends BaseActivity {
+public class FollowActivity extends XiaoMaiBaseActivity {
 
     @BindView(R.id.FollowActivity_titleView)
     TextView mTitleTextView;

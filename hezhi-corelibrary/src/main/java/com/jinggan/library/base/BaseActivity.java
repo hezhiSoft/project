@@ -31,12 +31,18 @@ import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.ui.widget.SwipeBackLayout;
 import com.jinggan.library.utils.IActivityManage;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
+
+import static com.tencent.bugly.crashreport.crash.c.e;
 
 /**
  * BaseActivity

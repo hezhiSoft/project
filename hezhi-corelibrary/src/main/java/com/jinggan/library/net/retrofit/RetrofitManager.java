@@ -43,9 +43,9 @@ public class RetrofitManager {
      */
     public static <T> T getService(String domain, OkHttpClient client, Class<T> cls) {
         Retrofit mRetrofit = new Retrofit.Builder()
-                .client(client)
                 .baseUrl(domain)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .build();
         T service = mRetrofit.create(cls);
         return service;

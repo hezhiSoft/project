@@ -5,15 +5,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.BuildConfig;
 import com.xiaomai.telemarket.MainActivity;
 import com.xiaomai.telemarket.R;
-import com.xiaomai.telemarket.appCheck.AppCheckHelper;
-import com.xiaomai.telemarket.appCheck.data.VersionEntity;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.LoginActivity;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
@@ -27,7 +25,7 @@ import butterknife.OnClick;
  * @description 设置界面
  * @createtime 06/05/2017 4:12 PM
  **/
-public class SettingActivity extends BaseActivity implements TitleLayout.OnNaviBarClickListener {
+public class SettingActivity extends XiaoMaiBaseActivity implements TitleLayout.OnNaviBarClickListener {
 
     @BindView(R.id.tv_user_state_set)
     TextView tvUserStateSet;
