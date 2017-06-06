@@ -79,6 +79,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
     protected CusrometListEntity entity;
 
     protected Dialog dialog;
+    protected boolean isShowDialog=true;
 
 
     @Override
@@ -279,16 +280,19 @@ public class ShowInfoBaseFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
 //                        FollowActivity.startIntentToAdd(getActivity());
+                       isShowDialog=false;
                         FollowActivity.startIntentToQuery(getActivity(),entity.getCustomerTel(),entity.getID());
-
+                        onSubmit();
                     }
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        isShowDialog=true;
                         onSubmit();
                     }
                 });
             }else {
+                isShowDialog=true;
                 onSubmit();
             }
         }
