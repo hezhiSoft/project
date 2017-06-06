@@ -116,7 +116,7 @@ public class CusrometInsurancePolicyFragment extends BaseFragment implements Cus
         } else {
             DetailsNumberTextView.setText("保单信息");
             if (PropertyRecyclerView != null) {
-                PropertyRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+                PropertyRecyclerView.setPageHint(R.mipmap.icon_data_empty, "资料为空");
             }
         }
     }

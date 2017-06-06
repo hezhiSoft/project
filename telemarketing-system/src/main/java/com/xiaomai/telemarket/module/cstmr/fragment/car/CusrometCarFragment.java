@@ -121,7 +121,7 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
         } else {
             DetailsNumberTextView.setText("洗车明细");
             if (CarRecyclerView!=null){
-                CarRecyclerView.setPageHint(R.mipmap.icon_page_null,"资料为空");
+                CarRecyclerView.setPageHint(R.mipmap.icon_data_empty,"资料为空");
             }
         }
     }

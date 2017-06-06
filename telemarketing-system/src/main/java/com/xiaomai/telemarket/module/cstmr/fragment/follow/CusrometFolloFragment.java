@@ -132,7 +132,7 @@ public class CusrometFolloFragment extends BaseFragment implements PullToRefresh
         } else {
             DetailsNumberTextView.setText("跟进明细");
             if (FollowRecyclerView != null) {
-                FollowRecyclerView.setPageHint(R.mipmap.icon_page_null, "资料为空");
+                FollowRecyclerView.setPageHint(R.mipmap.icon_data_empty, "资料为空");
             }
         }
     }
