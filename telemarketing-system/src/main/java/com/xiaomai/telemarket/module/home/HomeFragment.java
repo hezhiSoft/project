@@ -399,6 +399,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                     // TODO: 06/06/2017 这里还要判断是否处在一客户详情界面
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, false);
                     homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+                    boolean isInCustomerDetailUI=ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_IN_CUSTOMER_DETAIL_UI, false);
                 }else{
                     //点拨挂断电话后，置空拨号类型
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");

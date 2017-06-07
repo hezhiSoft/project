@@ -27,6 +27,7 @@ public class Constant {
     public static final String PRE_CUSTOMER_KEY = "pre_customer_key";//上一个拨号的用户信息
     public static final String IS_FROM_HOME_GROUP_DIALING = "is_from_group_dialing";//是否从群拨跳转到的客户信息界面
     public static final String DIALING_TYPE_KEY = "is_dial_by_group";//拨号类别 群呼1／点呼0 停止拨号后会置未空串
+    public static final String IS_IN_CUSTOMER_DETAIL_UI = "is_in_customer_detail";//在查看或编辑客户信息界面CusrometDetailsActivity／
 
     public static final String DIALING_TYPE_BY_GROUP = "group";//拨号类别 群呼
     public static final String DIALING_TYPE_BY_SINGLE = "single";//拨号类别 点呼

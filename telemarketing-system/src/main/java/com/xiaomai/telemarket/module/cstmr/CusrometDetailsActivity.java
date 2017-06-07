@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.jinggan.library.base.BaseFragment;
@@ -80,6 +81,8 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
         entity = (CusrometListEntity) getIntent().getSerializableExtra("entity");
         tabNames = getResources().getStringArray(R.array.cusromet_details_tab_array);
         initTabLayout();
+        ISharedPreferencesUtils.setValue(this, Constant.IS_IN_CUSTOMER_DETAIL_UI, true);
+        Log.i("DUY", "customer detail onCreate");
     }
 
     @Override
@@ -100,6 +103,8 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ISharedPreferencesUtils.setValue(this, Constant.IS_IN_CUSTOMER_DETAIL_UI, false);
+        Log.i("DUY", "customer detail activity onDestroy() ");
          /*判断当前是否处于群呼状态,通知群呼下一个号码*/
         boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, false).toString());
         if (isCall){

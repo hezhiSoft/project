@@ -99,7 +99,11 @@ public class UploadService extends IntentService {
                                                     Log.i(TAG, "onSuccess: FileName="+data.getFileName()+"  Url="+data.getFileUrl());
                                                     //Url=/Files/20170607/38e01abd-e4f3-4675-ac63-6a1099aaaf7a/20170607032728_1251.mp3 非标准格式
                                                     if (recordFile != null && recordFile.exists()) {
+                                                        File fileParant = recordFile.getParentFile();
                                                         recordFile.delete();//上传完成删除文件
+                                                        if (fileParant!=null&&fileParant.isDirectory()) {
+                                                            fileParant.delete();//删除空文件夹
+                                                        }
                                                         Log.i(TAG, "delete success#: FileName=" + data.getFileName() + "  Url=" + recordFile.getAbsolutePath());
                                                     } else {
                                                         Log.i(TAG, "delete failed # not exits");

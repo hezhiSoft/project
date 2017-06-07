@@ -15,8 +15,6 @@ import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.data.AccountRemetoRepo;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
 
-import static com.jinggan.library.utils.ISharedPreferencesUtils.setValue;
-
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
  * version: V1.0
@@ -31,9 +29,10 @@ public class SplashActivity extends BaseActivity implements RemetoRepoCallback<U
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         setToolbarVisibility(View.GONE);
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//初始化，重置群拨为停止状态
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//初始化，重置正在通话中状态为停止
-        setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");//初始化，重置通话类型为空
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//初始化，重置群拨为停止状态
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//初始化，重置正在通话中状态为停止
+        ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");//初始化，重置通话类型为空
+        ISharedPreferencesUtils.setValue(this, Constant.IS_IN_CUSTOMER_DETAIL_UI, false);//初始化，重置false
         String account = ISharedPreferencesUtils.getValue(this, Constant.ACCOUNT_KEY, "").toString();
         String password = ISharedPreferencesUtils.getValue(this, Constant.PASSWORD_KEY, "").toString();
         boolean isLogin= (boolean) ISharedPreferencesUtils.getValue(this, Constant.ISLOGIN_KEY, false);
