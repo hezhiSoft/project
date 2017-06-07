@@ -38,9 +38,13 @@ public class TelListener extends PhoneStateListener {
                     mRecord.stop();
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
                     // TODO: 04/06/2017 挂断电话 通知到客户信息编辑界面
-                    EventBusValues values=new EventBusValues();
-                    values.setWhat(0x10102);
-                    EventBus.getDefault().post(values);
+                    boolean notSendMsg= (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.NOT_SEND_DIALING_MSG, false);
+                    if (!notSendMsg) {
+                        EventBusValues values=new EventBusValues();
+                        values.setWhat(0x10102);
+                        EventBus.getDefault().post(values);
+                    }
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.NOT_SEND_DIALING_MSG, false);//重置
                     Log.i(TAG, "onCallStateChanged #CALL_STATE_IDLE" + "挂断");
                 }
                 break;
