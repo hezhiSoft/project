@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
@@ -18,10 +18,13 @@ import com.xiaomai.telemarket.module.home.HomeFragment;
 import com.xiaomai.telemarket.module.home.HomeMenuItemClickListener;
 import com.xiaomai.telemarket.service.PhoneCallStateService;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener, HomeMenuItemClickListener {
+public class MainActivity extends XiaoMaiBaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener, HomeMenuItemClickListener {
     /*模块标记*/
     public static final int TAB_HOME = 0;
     public static final int TAB_CUSROMENTMANAGEMENT = 1;
@@ -139,6 +142,12 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
             IActivityManage.getInstance().exit();
             System.exit(0);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Override
+    public void onMainUserEvent(EventBusValues values) {
+        super.onMainUserEvent(values);
     }
 
     @Override

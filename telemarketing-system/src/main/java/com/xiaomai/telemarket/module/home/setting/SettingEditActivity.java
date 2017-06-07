@@ -5,9 +5,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
 
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * @description 编辑设置界面
  * @createtime 06/05/2017 6:54 PM
  **/
-public class SettingEditActivity extends BaseActivity implements TitleLayout.OnNaviBarClickListener{
+public class SettingEditActivity extends XiaoMaiBaseActivity implements TitleLayout.OnNaviBarClickListener{
 
 //    @BindView(R.id.layout_title)
 //    TitleLayout layoutTitle;

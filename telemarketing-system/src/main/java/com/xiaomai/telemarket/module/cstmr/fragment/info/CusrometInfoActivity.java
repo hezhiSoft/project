@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.EventBus;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CusrometInfoActivity extends BaseActivity {
+public class CusrometInfoActivity extends XiaoMaiBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -2,12 +2,10 @@ package com.xiaomai.telemarket.module.function.callOut;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
 
-import com.jinggan.library.base.BaseActivity;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,7 +17,7 @@ import butterknife.ButterKnife;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CallOutActivity extends BaseActivity {
+public class CallOutActivity extends XiaoMaiBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

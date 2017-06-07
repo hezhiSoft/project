@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
-import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
@@ -279,14 +278,17 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     @Override
     public void showDialingOutStarted(CusrometListEntity entity) {
         if (entity!=null) {
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("entity",entity);
-            ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
-            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, true);//从群拨跳转到客户信息界面
-            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);//拨出，设置正在通话中状态
-            //TODO 这里停止群拨状态 等待接收到客户信息编辑界面返回的消息后再判断是否继续拨出
-            setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//点保存
-            ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
+            String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
+            if (!TextUtils.isEmpty(dialingType)) {
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("entity",entity);
+                ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
+                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, true);//从群拨跳转到客户信息界面
+                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);//拨出，设置正在通话中状态
+                //TODO 这里停止群拨状态 等待接收到客户信息编辑界面返回的消息后再判断是否继续拨出
+                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//点保存
+                ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
+            }
         }
     }
 
@@ -309,16 +311,18 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
 
     @Override
     public void showDialingFinished(String msg) {
+        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
         if (homeDialingPresenter != null) {
             homeDialingPresenter.stopDialingByGroup();
         }
-        showToast(msg);
-        DialogFactory.warningDialog(getActivity(),"提示",msg+"是否停止拨号?","停止",new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                homeDialingPresenter.stopDialingByGroup();
-            }
-        });
+        if (TextUtils.equals(dialingType, Constant.DIALING_TYPE_BY_GROUP)) {
+            //群呼则发送切换名单源消息
+            EventBusValues values = new EventBusValues();
+            values.setWhat(0x666666);
+            EventBus.getDefault().post(values);
+        } else {
+            showToast(msg);
+        }
     }
 
     @Deprecated

@@ -1,12 +1,12 @@
 package com.xiaomai.telemarket.module.cstmr;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
@@ -15,6 +15,7 @@ import com.jinggan.library.utils.IStringUtils;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.fragment.car.CarActivity;
@@ -51,7 +52,7 @@ import butterknife.OnClick;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CusrometDetailsActivity extends BaseActivity {
+public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
 
     @BindView(R.id.CusrometDetails_tabLayout)
     WaytoTabLayout CusrometDetailsTabLayout;
@@ -79,6 +80,17 @@ public class CusrometDetailsActivity extends BaseActivity {
         entity = (CusrometListEntity) getIntent().getSerializableExtra("entity");
         tabNames = getResources().getStringArray(R.array.cusromet_details_tab_array);
         initTabLayout();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            entity = (CusrometListEntity) intent.getSerializableExtra("entity");
+            if (entity != null) {
+                // TODO: 07/06/2017 singletask 需要在这里重新更新每个fragment的UI数据
+            }
+        }
     }
 
     @Override

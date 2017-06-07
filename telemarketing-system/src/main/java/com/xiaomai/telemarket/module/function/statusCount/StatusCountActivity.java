@@ -3,8 +3,8 @@ package com.xiaomai.telemarket.module.function.statusCount;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.jinggan.library.base.BaseActivity;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -14,7 +14,7 @@ import com.xiaomai.telemarket.R;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class StatusCountActivity extends BaseActivity {
+public class StatusCountActivity extends XiaoMaiBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

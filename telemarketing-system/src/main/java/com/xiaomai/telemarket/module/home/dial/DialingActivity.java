@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISystemUtil;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.utils.RegexUtils;
@@ -29,7 +29,8 @@ import butterknife.OnClick;
  * @description 拨号界面
  * @createtime 26/05/2017 2:17 AM
  **/
-public class DialingActivity extends BaseActivity implements DialingContract.View {
+@Deprecated
+public class DialingActivity extends XiaoMaiBaseActivity implements DialingContract.View {
     private static final String TAG = "DialingActivity";
 
     @BindView(R.id.img_dial_switch)

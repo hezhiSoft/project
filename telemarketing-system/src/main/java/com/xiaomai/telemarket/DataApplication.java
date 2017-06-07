@@ -32,14 +32,22 @@ public class DataApplication extends BaseApplication implements Thread.UncaughtE
     public void onCreate() {
         super.onCreate();
          /*初始化Bugly*/
-        CrashReport.initCrashReport(getApplicationContext(), "05c5820e16", false);
         instance=this;
+        CrashReport.initCrashReport(getApplicationContext(), "05c5820e16", false);
+        ISharedPreferencesUtils.setValue(this, Constant.IS_DIALING_GROUP_FINISHED, true);//初始化，重置群拨为停止状态
+        ISharedPreferencesUtils.setValue(this, Constant.IS_DIALING_KEY, false);//初始化，重置正在通话中状态为停止
+        ISharedPreferencesUtils.setValue(this, Constant.DIALING_TYPE_KEY, "");//初始化，重置通话类型为空
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         try {
             PhoneCallStateService.StopService(getApplicationContext());
+//            UploadService.stopService(getApplicationContext());
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//初始化，重置群拨为停止状态
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//初始化，重置正在通话中状态为停止
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");//初始化，重置通话类型为空
+
         }catch (Exception ex){
             Log.i(TAG, e.getMessage());
         }

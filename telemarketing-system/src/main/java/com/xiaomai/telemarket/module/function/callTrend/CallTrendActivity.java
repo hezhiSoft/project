@@ -3,8 +3,8 @@ package com.xiaomai.telemarket.module.function.callTrend;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.jinggan.library.base.BaseActivity;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -14,7 +14,7 @@ import com.xiaomai.telemarket.R;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class CallTrendActivity extends BaseActivity {
+public class CallTrendActivity extends XiaoMaiBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
