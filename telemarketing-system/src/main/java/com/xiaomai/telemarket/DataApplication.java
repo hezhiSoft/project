@@ -37,6 +37,7 @@ public class DataApplication extends BaseApplication implements Thread.UncaughtE
         ISharedPreferencesUtils.setValue(this, Constant.IS_DIALING_GROUP_FINISHED, true);//初始化，重置群拨为停止状态
         ISharedPreferencesUtils.setValue(this, Constant.IS_DIALING_KEY, false);//初始化，重置正在通话中状态为停止
         ISharedPreferencesUtils.setValue(this, Constant.DIALING_TYPE_KEY, "");//初始化，重置通话类型为空
+        ISharedPreferencesUtils.setValue(this, Constant.IS_IN_CUSTOMER_DETAIL_UI, false);//初始化，重置false
     }
 
     @Override
@@ -47,6 +48,7 @@ public class DataApplication extends BaseApplication implements Thread.UncaughtE
             ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//初始化，重置群拨为停止状态
             ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//初始化，重置正在通话中状态为停止
             ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");//初始化，重置通话类型为空
+            ISharedPreferencesUtils.setValue(this, Constant.IS_IN_CUSTOMER_DETAIL_UI, false);//初始化，重置false
 
         }catch (Exception ex){
             Log.i(TAG, e.getMessage());
