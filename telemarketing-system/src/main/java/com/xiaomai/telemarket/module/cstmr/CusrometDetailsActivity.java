@@ -88,7 +88,7 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
         if (intent != null) {
             entity = (CusrometListEntity) intent.getSerializableExtra("entity");
             if (entity != null) {
-                // TODO: 07/06/2017 重新更新每个fragment的UI数据 singletask
+                // TODO: 07/06/2017 singletask 需要在这里重新更新每个fragment的UI数据
             }
         }
     }
