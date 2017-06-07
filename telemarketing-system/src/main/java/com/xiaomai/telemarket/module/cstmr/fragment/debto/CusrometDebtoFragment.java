@@ -94,6 +94,10 @@ public class CusrometDebtoFragment extends BaseFragment implements PullToRefresh
         if (values.getWhat()==0x202){
             EdbtoRecyclerView.startUpRefresh();
         }
+        if (values.getWhat()==0x890){
+            cusrometId=((CusrometListEntity)values.getObject()).getID();
+            remoteRepo.queryCusrometDebtoLists(cusrometId, this);
+        }
     }
     @Override
     public void onDownRefresh() {

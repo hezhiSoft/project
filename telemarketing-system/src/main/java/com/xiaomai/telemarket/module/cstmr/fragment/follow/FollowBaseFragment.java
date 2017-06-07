@@ -3,6 +3,7 @@ package com.xiaomai.telemarket.module.cstmr.fragment.follow;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,8 @@ public class FollowBaseFragment extends BaseFragment {
 
     protected Dialog dialog;
 
-    private String FollowTypeCode,InterestedStatusCode,LoanTypeCode,NextFollowTypeCode;
+    private String FollowTypeCode, InterestedStatusCode, LoanTypeCode, NextFollowTypeCode;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,23 +91,23 @@ public class FollowBaseFragment extends BaseFragment {
         EventBus.getDefault().unregister(true);
     }
 
-    private void setListener(){
+    private void setListener() {
         FollowFollowType.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                List<DictionaryEntity> list= DictionaryHelper.getFollowType();
-                DictionaryDialog dictionaryDialog=new DictionaryDialog();
+                List<DictionaryEntity> list = DictionaryHelper.getFollowType();
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
                 dictionaryDialog.setSelectContent(FollowFollowType.getContentText())
                         .setItemData(list)
                         .setClickListener(new DictionaryDialog.OnClickItemListener() {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
-                                if (entity!=null){
-                                    FollowTypeCode=entity.getCode();
+                                if (entity != null) {
+                                    FollowTypeCode = entity.getCode();
                                     FollowFollowType.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
         FollowFollowDate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
@@ -120,60 +122,61 @@ public class FollowBaseFragment extends BaseFragment {
                         FollowFollowDate.setContentText(date.getYear() + "-" + date.getMoth() + "-" + date.getDay());
                     }
                 });
-                dialog.show();}
+                dialog.show();
+            }
         });
         FollowInterestedStatus.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                List<DictionaryEntity> list=DictionaryHelper.getInterestedStatus();
-                DictionaryDialog dictionaryDialog=new DictionaryDialog();
+                List<DictionaryEntity> list = DictionaryHelper.getInterestedStatus();
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
                 dictionaryDialog.setSelectContent(FollowInterestedStatus.getContentText())
                         .setItemData(list)
                         .setClickListener(new DictionaryDialog.OnClickItemListener() {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
-                                if (entity!=null){
-                                    InterestedStatusCode=entity.getCode();
+                                if (entity != null) {
+                                    InterestedStatusCode = entity.getCode();
                                     FollowInterestedStatus.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
         FollowLoanType.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                List<DictionaryEntity> list=DictionaryHelper.getLoanType();
-                DictionaryDialog dictionaryDialog=new DictionaryDialog();
+                List<DictionaryEntity> list = DictionaryHelper.getLoanType();
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
                 dictionaryDialog.setSelectContent(FollowLoanType.getContentText())
                         .setItemData(list)
                         .setClickListener(new DictionaryDialog.OnClickItemListener() {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
-                                if (entity!=null){
-                                    LoanTypeCode=entity.getCode();
+                                if (entity != null) {
+                                    LoanTypeCode = entity.getCode();
                                     FollowLoanType.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
         FollowNextFollowType.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
             @Override
             public void onClick(TextView textView) {
-                List<DictionaryEntity> list= DictionaryHelper.getFollowType();
-                DictionaryDialog dictionaryDialog=new DictionaryDialog();
+                List<DictionaryEntity> list = DictionaryHelper.getFollowType();
+                DictionaryDialog dictionaryDialog = new DictionaryDialog();
                 dictionaryDialog.setSelectContent(FollowNextFollowType.getContentText())
                         .setItemData(list)
                         .setClickListener(new DictionaryDialog.OnClickItemListener() {
                             @Override
                             public void onClickItem(DictionaryEntity entity) {
-                                if (entity!=null){
-                                    NextFollowTypeCode=entity.getCode();
+                                if (entity != null) {
+                                    NextFollowTypeCode = entity.getCode();
                                     FollowNextFollowType.setContentText(entity.getName());
                                 }
                             }
-                        }).show(getFragmentManager(),getClass().getSimpleName());
+                        }).show(getFragmentManager(), getClass().getSimpleName());
             }
         });
         FollowNextFollowDate.setArrowDropListener(new FormSelectTopTitleView.onArrowDropClick() {
@@ -188,33 +191,34 @@ public class FollowBaseFragment extends BaseFragment {
                         FollowNextFollowDate.setContentText(date.getYear() + "-" + date.getMoth() + "-" + date.getDay());
                     }
                 });
-                dialog.show();}
+                dialog.show();
+            }
         });
     }
 
-    protected void initUI(FollowEntity entity){
-        if (entity==null){
+    protected void initUI(FollowEntity entity) {
+        if (entity == null) {
             return;
         }
-        FollowTypeCode=entity.getFollowType()+"";
-        InterestedStatusCode=entity.getInterestedStatus()+"";
-        LoanTypeCode=entity.getLoanType()+"";
-        NextFollowTypeCode=entity.getNextFollowType()+"";
+        FollowTypeCode = entity.getFollowType() + "";
+        InterestedStatusCode = entity.getInterestedStatus() + "";
+        LoanTypeCode = entity.getLoanType() + "";
+        NextFollowTypeCode = entity.getNextFollowType() + "";
 
-        FollowFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getFollowType()+""));
-        FollowFollowDate.setContentText(entity.getFollowDate().replaceAll("T"," ")).setArrowDropVisibility(View.GONE);
-        FollowInterestedStatus.setContentText(DictionaryHelper.ParseInterestedStatus(entity.getInterestedStatus()+""));
-        FollowLoanType.setContentText(DictionaryHelper.ParseLoanType(entity.getLoanType()+""));
-        FollowAmount.setContentText(entity.getAmount()+"");
-        FollowNextFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getNextFollowType()+""));
-        FollowNextFollowDate.setContentText(entity.getNextFollowDate().replaceAll("T"," "));
-        FollowNextFollowTime.setContentText(entity.getNextFollowTime()+"");
+        FollowFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getFollowType() + ""));
+        FollowFollowDate.setContentText(entity.getFollowDate().replaceAll("T", " ")).setArrowDropVisibility(View.GONE);
+        FollowInterestedStatus.setContentText(DictionaryHelper.ParseInterestedStatus(entity.getInterestedStatus() + ""));
+        FollowLoanType.setContentText(DictionaryHelper.ParseLoanType(entity.getLoanType() + ""));
+        FollowAmount.setContentText(entity.getAmount() + "");
+        FollowNextFollowType.setContentText(DictionaryHelper.ParseFollowType(entity.getNextFollowType() + ""));
+        FollowNextFollowDate.setContentText(entity.getNextFollowDate().replaceAll("T", " "));
+        FollowNextFollowTime.setContentText(entity.getNextFollowTime() + "");
         FollowRemark.setContentText(entity.getRemark());
         FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName()).setItemEnabled(false);
     }
 
-    protected FollowEntity getFollowEntity(){
-        FollowEntity entity=new FollowEntity();
+    protected FollowEntity getFollowEntity() {
+        FollowEntity entity = new FollowEntity();
         entity.setFollowType(IStringUtils.toInt(FollowTypeCode));
         entity.setFollowDate(FollowFollowDate.getContentText());
         entity.setInterestedStatus(IStringUtils.toInt(InterestedStatusCode));
@@ -237,6 +241,12 @@ public class FollowBaseFragment extends BaseFragment {
     @Subscribe
     public void onEventBusSubmit(EventBusValues values) {
         if (values.getWhat() == 0x1007) {
+            if (FollowActivity.isSetNextData) {
+                if (TextUtils.isEmpty(FollowNextFollowDate.getContentText())) {
+                    showToast("设置下次跟进日期");
+                    return;
+                }
+            }
             DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
