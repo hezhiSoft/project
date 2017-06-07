@@ -85,8 +85,8 @@ public class CusrometInfoShowFragment extends BaseFragment {
 
         CusInfoCustomerTel.setText(entity.getCustomerTel());
         CusInfoIsSZHukou.setText(entity.getIsSZHukou() == 0 ? "否" : "是");
-        CusInfoSex.setText(DictionaryHelper.ParseSex(entity.getSex()+""));
-        CusInfoMaritalStatus.setText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus()+""));
+        CusInfoSex.setText(DictionaryHelper.ParseSex(entity.getSex() + ""));
+        CusInfoMaritalStatus.setText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus() + ""));
         CusInfoPayroll.setText(entity.getWage() + "");
         CusInfoBankFlow.setText(entity.getAccountWater() + "");
         CusInfoAccumulationFundAccount.setText(entity.getAccumulationFundAccount() + "");
@@ -95,10 +95,13 @@ public class CusrometInfoShowFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onUpdateUIData(EventBusValues values){
-        if (values.getWhat()==0x201){
-            entity=(CusrometListEntity)values.getObject();
+    public void onUpdateUIData(EventBusValues values) {
+        if (values.getWhat() == 0x201) {
+            entity = (CusrometListEntity) values.getObject();
             initUI(entity);
+        }
+        if (values.getWhat() == 0x890) {
+            initUI((CusrometListEntity) values.getObject());
         }
     }
 
@@ -115,7 +118,7 @@ public class CusrometInfoShowFragment extends BaseFragment {
         return "";
     }
 
-    public CusrometListEntity getCusromentEntity(){
+    public CusrometListEntity getCusromentEntity() {
         return entity;
     }
 }

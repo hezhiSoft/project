@@ -15,6 +15,7 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerVie
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -94,6 +95,10 @@ public class CusrometCarFragment extends BaseFragment implements CusrometCarAdap
     @Subscribe
     public void onUpdateUIData(EventBusValues values){
         if (values.getWhat()==0x205){
+            remoteRepo.queryCusrometCarLists(cusrometId, this);
+        }
+        if (values.getWhat()==0x890){
+            cusrometId=((CusrometListEntity)values.getObject()).getID();
             remoteRepo.queryCusrometCarLists(cusrometId, this);
         }
     }

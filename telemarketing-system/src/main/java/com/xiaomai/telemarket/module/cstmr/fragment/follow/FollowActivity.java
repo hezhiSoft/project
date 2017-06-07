@@ -48,6 +48,8 @@ public class FollowActivity extends XiaoMaiBaseActivity {
 
     private String tel;
 
+    public static boolean isSetNextData=false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,10 @@ public class FollowActivity extends XiaoMaiBaseActivity {
         ButterKnife.bind(this);
         try {
             if (getIntent().getExtras().containsKey("entity")) {
+                isSetNextData=false;
                 switchToEditDebtoFragment();
             } else if (getIntent().getExtras().containsKey("customerid")) {
+                isSetNextData=true;
                 tel=getIntent().getStringExtra("tel");
                 dialog = DialogFactory.createLoadingDialog(this, "查询...");
                 CusrometRemoteRepo.getInstance().queryFollowDetails(getIntent().getExtras().getString("customerid"), new RemetoRepoCallback<List<FollowEntity>>() {
@@ -101,6 +105,7 @@ public class FollowActivity extends XiaoMaiBaseActivity {
                     }
                 });
             } else {
+                isSetNextData=false;
                 switchToAddDebtoFragment();
             }
         } catch (Exception e) {

@@ -14,6 +14,7 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DebtoEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
@@ -93,6 +94,10 @@ public class CusrometPropertyFragment extends BaseFragment implements CusrometPr
     public void onUpdateUIData(EventBusValues values){
         if (values.getWhat()==0x203){
             PropertyRecyclerView.startUpRefresh();
+        }
+        if (values.getWhat()==0x890){
+            cusrometId=((CusrometListEntity)values.getObject()).getID();
+            remoteRepo.queryCusrometHouseLists(cusrometId, this);
         }
     }
 

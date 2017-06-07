@@ -15,6 +15,7 @@ import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerVie
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsuranceAdapter;
@@ -93,6 +94,10 @@ public class CusrometCompanyFragment extends BaseFragment implements CusrometCom
     @Subscribe
     public void onUpdateUIData(EventBusValues values){
         if (values.getWhat()==0x206){
+            remoteRepo.queryCusrometCompanyLists(cusrometId, this);
+        }
+        if (values.getWhat()==0x890){
+            cusrometId=((CusrometListEntity)values.getObject()).getID();
             remoteRepo.queryCusrometCompanyLists(cusrometId, this);
         }
     }

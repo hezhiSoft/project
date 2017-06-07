@@ -14,6 +14,7 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
+import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FileEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.fragment.debto.DebtoActivity;
@@ -90,6 +91,10 @@ public class CusrometFileFragment extends BaseFragment implements PullToRefreshR
     @Subscribe
     public void onUpdateUIData(EventBusValues values){
         if (values.getWhat()==0x207){
+            remoteRepo.queryCusrometFileLists(cusrometId, this);
+        }
+        if (values.getWhat()==0x890){
+            cusrometId=((CusrometListEntity)values.getObject()).getID();
             remoteRepo.queryCusrometFileLists(cusrometId, this);
         }
     }
