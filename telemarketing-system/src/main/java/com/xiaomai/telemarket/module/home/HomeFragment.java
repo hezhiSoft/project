@@ -315,14 +315,10 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         if (homeDialingPresenter != null) {
             homeDialingPresenter.stopDialingByGroup();
         }
-        if (TextUtils.equals(dialingType, Constant.DIALING_TYPE_BY_GROUP)) {
-            //群呼则发送切换名单源消息
-            EventBusValues values = new EventBusValues();
-            values.setWhat(0x666666);
-            EventBus.getDefault().post(values);
-        } else {
-            showToast(msg);
-        }
+        //发送切换名单源消息
+        EventBusValues values = new EventBusValues();
+        values.setWhat(0x666666);
+        EventBus.getDefault().post(values);
     }
 
     @Deprecated
