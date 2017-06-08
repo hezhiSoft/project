@@ -142,7 +142,8 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
         CusrometListEntity mPreCustomerEnity = mLocalCustomerDataSource.getPreCustomer();
         if (getDialingNumberSource() == Constant.DIAL_NUMBER_CODE_PRIVATE) {
             //私有库
-            mRepo.requestPhoneNumberFromPrivate(mPreCustomerEnity != null ? mPreCustomerEnity.getFollowDate() : "", new RemetoRepoCallback<List<CusrometListEntity>>() {
+            // TODO: 08/06/2017 foloowDate 改为createdate
+            mRepo.requestPhoneNumberFromPrivate(mPreCustomerEnity != null ? mPreCustomerEnity.getCreatedDate() : "", new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
                     if (data != null && data.size() > 0) {
@@ -226,6 +227,13 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
 
     private int getDialingNumberSource() {
         return Integer.valueOf(ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE) + "");
+    }
+
+    /**
+     * 重置客户信息
+     */
+    public void resetPreCustomerInfoWhenFinished() {
+        mLocalCustomerDataSource.setPreCustomer(null);
     }
 
 }

@@ -43,6 +43,7 @@ import com.xiaomai.telemarket.module.function.statusCount.StatusCountActivity;
 import com.xiaomai.telemarket.module.function.statusQuery.StatusQueryActivity;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingContract;
 import com.xiaomai.telemarket.module.home.dial.HomeDialingPresenter;
+import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
 import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingEditActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
@@ -314,6 +315,11 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
         if (homeDialingPresenter != null) {
             homeDialingPresenter.stopDialingByGroup();
+            homeDialingPresenter.resetPreCustomerInfoWhenFinished();
+        } else {
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//TODO 手动停止群呼
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");//停止群拨，置空拨号类型
+            CustomerLocalDataSource.getInstance().setPreCustomer(null);
         }
         //发送切换名单源消息
         EventBusValues values = new EventBusValues();
