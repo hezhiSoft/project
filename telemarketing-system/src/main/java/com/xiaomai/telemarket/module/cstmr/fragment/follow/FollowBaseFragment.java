@@ -68,7 +68,7 @@ public class FollowBaseFragment extends BaseFragment {
 
     protected Dialog dialog;
 
-    private String FollowTypeCode, InterestedStatusCode, LoanTypeCode, NextFollowTypeCode;
+    protected String FollowTypeCode, InterestedStatusCode, LoanTypeCode, NextFollowTypeCode;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -241,12 +241,6 @@ public class FollowBaseFragment extends BaseFragment {
     @Subscribe
     public void onEventBusSubmit(EventBusValues values) {
         if (values.getWhat() == 0x1007) {
-            if (FollowActivity.isSetNextData) {
-                if (TextUtils.isEmpty(FollowNextFollowDate.getContentText())) {
-                    showToast("设置下次跟进日期");
-                    return;
-                }
-            }
             DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

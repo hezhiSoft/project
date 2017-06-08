@@ -188,6 +188,7 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
         if (pageIndex == 1) {
             adapter.clearList();
             CustomerAllRecyclerView.setPageHint(R.mipmap.icon_data_empty,"资料为空");
+            ((MainActivity) getActivity()).getMainBottomNavigationBar().addTabSign(2, 0);
         } else {
 //            showToast(msg);
         }

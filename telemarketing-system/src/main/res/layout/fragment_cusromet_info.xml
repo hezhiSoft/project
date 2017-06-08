@@ -76,6 +76,29 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
+                android:text="意向状态"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/CusInfo_YiXiang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#888888"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
                 android:text="性别"
                 android:textColor="#666666"
                 android:textSize="16sp" />

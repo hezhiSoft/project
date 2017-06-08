@@ -9,10 +9,14 @@ import com.jinggan.library.ui.dialog.DialogFactory;
 import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.api.Responese;
 import com.xiaomai.telemarket.module.cstmr.CusrometDetailsActivity;
+import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
+import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -28,22 +32,37 @@ public class FollowAddFragment extends FollowBaseFragment implements RemetoRepoC
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FollowFollowPerson.setContentText(DataApplication.getInstance().getUserInfoEntity().getDisplayName()).setItemEnabled(false);
-
+        List<DictionaryEntity> list = DictionaryHelper.getFollowType();
+        for (DictionaryEntity entity : list) {
+            if (entity.getName().equals("电话")) {
+                FollowFollowType.setContentText(entity.getName());
+                FollowTypeCode = entity.getCode();
+                break;
+            }
+        }
+        List<DictionaryEntity> statusList = DictionaryHelper.getInterestedStatus();
+        for (DictionaryEntity entity:statusList){
+            if (entity.getName().equals("有意向")){
+                FollowInterestedStatus.setContentText(entity.getName());
+                InterestedStatusCode=entity.getCode();
+                break;
+            }
+        }
     }
 
     @Override
     public void onSubmit() {
         super.onSubmit();
-        FollowEntity entity=getFollowEntity();
+        FollowEntity entity = getFollowEntity();
         entity.setCustomerID(CusrometDetailsActivity.entity.getID());
 
-        dialog=DialogFactory.createLoadingDialog(getActivity(),"提交...");
-        CusrometRemoteRepo.getInstance().addFollow(entity,this);
+        dialog = DialogFactory.createLoadingDialog(getActivity(), "提交...");
+        CusrometRemoteRepo.getInstance().addFollow(entity, this);
     }
 
     @Override
     public void onSuccess(Responese data) {
-        EventBusValues values=new EventBusValues();
+        EventBusValues values = new EventBusValues();
         values.setWhat(0x208);
         EventBus.getDefault().post(values);
 

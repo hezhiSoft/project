@@ -84,13 +84,20 @@ public class CusrometInfoEditFragment extends ShowInfoBaseFragment implements Re
 
     @Override
     public void onFailure(int code, String msg) {
-        showToast(msg);
+        if (isShowDialog) {
+            getActivity().finish();
+        }else {
+            showToast(msg);
+        }
     }
 
     @Override
     public void onThrowable(Throwable t) {
-        if (isShowDialog)
+        if (isShowDialog) {
             showToast("数据异常");
+        } else {
+            getActivity().finish();
+        }
     }
 
     @Override

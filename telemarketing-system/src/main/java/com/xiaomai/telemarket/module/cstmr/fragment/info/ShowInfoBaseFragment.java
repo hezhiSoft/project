@@ -22,6 +22,7 @@ import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
 import com.jinggan.library.utils.IStringUtils;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
@@ -79,7 +80,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
     protected CusrometListEntity entity;
 
     protected Dialog dialog;
-    protected boolean isShowDialog=true;
+    protected boolean isShowDialog = true;
 
 
     @Override
@@ -244,6 +245,8 @@ public class ShowInfoBaseFragment extends BaseFragment {
         InfoAccumulationFundAccount.setContentText(entity.getAccumulationFundAccount() + "");
         InfoSocialSecurityAccount.setContentText(entity.getSocialSecurityAccount() + "");
         InfoRemark.setContentText(entity.getRemark());
+
+        InfoIntentionStatus.setStatus(entity.getInterestedStatus());
     }
 
     protected CusrometListEntity getCusrometEntity() {
@@ -260,6 +263,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
         entity.setAccumulationFundAccount(IStringUtils.toInt(InfoAccumulationFundAccount.getContentText()));
         entity.setSocialSecurityAccount(IStringUtils.toInt(InfoSocialSecurityAccount.getContentText()));
         entity.setRemark(InfoRemark.getContentText());
+        entity.setInterestedStatus(InfoIntentionStatus.getStatus());
 
         return entity;
     }
@@ -267,32 +271,32 @@ public class ShowInfoBaseFragment extends BaseFragment {
     @Subscribe
     public void onEventBusSubmit(EventBusValues values) {
         if (values.getWhat() == 0x10010) {
-            if (TextUtils.isEmpty(InfoCustomerName.getContentText())){
+            if (TextUtils.isEmpty(InfoCustomerName.getContentText())) {
                 showToast("客户名字不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(InfoCustomerTel.getContentText())){
+            if (TextUtils.isEmpty(InfoCustomerTel.getContentText())) {
                 showToast("客户电话号码不能为空");
                 return;
             }
-            if (InfoIntentionStatus.getStatus() == 1) {
+            if (InfoIntentionStatus.getStatus() == Constant.Description.YesInterested.getValue()) {
                 DialogFactory.showMsgDialog(getContext(), "设置提示", "是否设置下次跟进时间?", "设置", "提交", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 //                        FollowActivity.startIntentToAdd(getActivity());
-                       isShowDialog=false;
-                        FollowActivity.startIntentToQuery(getActivity(),entity.getCustomerTel(),entity.getID());
+                        isShowDialog = false;
+                        FollowActivity.startIntentToQuery(getActivity(), entity.getCustomerTel(), entity.getID());
                         onSubmit();
                     }
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        isShowDialog=true;
+                        isShowDialog = true;
                         onSubmit();
                     }
                 });
-            }else {
-                isShowDialog=true;
+            } else {
+                isShowDialog = true;
                 onSubmit();
             }
         }
