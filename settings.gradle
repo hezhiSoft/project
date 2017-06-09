@@ -1,1 +1,1 @@
-include ':hezhi-corelibrary', ':telemarketing-system'
+include ':hezhi-corelibrary', ':telemarketing-system', ':ChaoPu-system'

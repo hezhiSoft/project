@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:bar="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/main_container_FrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_bottom_navigationBar"
+        android:visibility="visible" />
+
+    <com.jinggan.library.ui.view.MainBottomNavigationBar
+        android:id="@+id/main_bottom_navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        bar:tab_active="@color/colorAccent"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
