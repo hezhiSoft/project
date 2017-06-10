@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.Constant;
 
 import butterknife.ButterKnife;
 
@@ -56,10 +57,10 @@ public class SelecteConditionTileView extends LinearLayout{
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId){
                     case R.id.Selecte_condition_yes_radioButton:
-                        status=1;
+                        status= Constant.Description.YesInterested.getValue();
                         break;
                     case R.id.Selecte_condition_no_radioButton:
-                        status=0;
+                        status=Constant.Description.NoInterested.getValue();
                         break;
                 }
             }
@@ -86,9 +87,9 @@ public class SelecteConditionTileView extends LinearLayout{
 
     public SelecteConditionTileView setStatus(int status){
         this.status=status;
-        if (status==0){
+        if (status==1){
             noRadioButton.setChecked(true);
-        }else if (status==1){
+        }else if (status==2){
             yesRadioButton.setChecked(true);
         }
         return this;

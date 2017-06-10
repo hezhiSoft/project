@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 
@@ -50,6 +51,8 @@ public class CusrometInfoShowFragment extends BaseFragment {
     TextView CusInfoSocialSecurityAccount;
     @BindView(R.id.CusInfo_Remark)
     TextView CusInfoRemark;
+    @BindView(R.id.CusInfo_YiXiang)
+    TextView YiXiangStatus;
     Unbinder unbinder;
 
     private CusrometListEntity entity;
@@ -92,6 +95,13 @@ public class CusrometInfoShowFragment extends BaseFragment {
         CusInfoAccumulationFundAccount.setText(entity.getAccumulationFundAccount() + "");
         CusInfoSocialSecurityAccount.setText(entity.getSocialSecurityAccount() + "");
         CusInfoRemark.setText(entity.getRemark());
+        /*意向状态*/
+        int status = entity.getInterestedStatus();
+        if (status == Constant.Description.YesInterested.getValue()) {
+            YiXiangStatus.setText("有意向");
+        } else if (status == Constant.Description.NoInterested.getValue()) {
+            YiXiangStatus.setText("无意向");
+        }
     }
 
     @Subscribe
