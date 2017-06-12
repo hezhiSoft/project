@@ -7,4 +7,15 @@
     <string name="tab_scann">扫一扫</string>
     <string name="tab_mine">我的</string>
 
+    <string-array name="home_tab_array">
+        <item>精选</item>
+        <item>美食</item>
+        <item>娱乐</item>
+        <item>住宿</item>
+        <item>爱车</item>
+        <item>健身</item>
+        <item>丽人</item>
+        <item>生活</item>
+    </string-array>
+
 </resources>
