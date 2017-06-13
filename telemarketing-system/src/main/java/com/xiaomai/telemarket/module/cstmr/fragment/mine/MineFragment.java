@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
@@ -18,6 +19,7 @@ import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.appCheck.AppCheckHelper;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.LoginActivity;
+import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.home.setting.SettingEditActivity;
 import com.xiaomai.telemarket.view.widget.TitleLayout;
 
@@ -51,6 +53,8 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
     @BindView(R.id.tv_dialing_source)
     TextView tvDialingSource;
     Unbinder unbinder;
+    @BindView(R.id.tv_clear_rent_client)
+    TextView tvClearRentClient;
 
     @Nullable
     @Override
@@ -72,7 +76,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
         if (tvUserState != null) {
             tvUserState.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
         }
-        if (tvDialingSource!=null) {
+        if (tvDialingSource != null) {
             if (ISharedPreferencesUtils.getValue(getActivity(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE).equals(Constant.DIAL_NUMBER_CODE_PUBLIC)) {
                 tvDialingSource.setText(getResources().getString(R.string.text_number_library_public));
             } else {
@@ -86,7 +90,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
         VersionUpdate.setText("版本更新V" + BuildConfig.VERSION_NAME);
     }
 
-    @OnClick({R.id.Version_update, R.id.tv_user_state_set, R.id.tv_dialing_source_set, R.id.tv_exit})
+    @OnClick({R.id.Version_update, R.id.tv_user_state_set, R.id.tv_dialing_source_set, R.id.tv_exit,R.id.tv_clear_rent_client})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -114,7 +118,64 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
             case R.id.Version_update:
                 AppCheckHelper.getInstance().checkVersion(getActivity(), true);
                 break;
+            case R.id.tv_clear_rent_client:
+                DialogFactory.showMsgDialog(getContext(), "停用系统提示", "确定停用系统?", "停用", "取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showProgressDlg("操作中...");
+                        setRentInvalid();
+                    }
+                }, null);
+
+                break;
         }
+    }
+
+    /**
+     * 设置租户过期
+     */
+    private void setRentInvalid() {
+        CusrometRemoteRepo.getInstance().setRentInvalid(new RemetoRepoCallback<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                DialogFactory.warningDialog(getActivity(), "操作提示", "停用成功！", "确定", null);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                DialogFactory.showMsgDialog(getActivity(), "操作提示", "停用失败！"+msg, "重试", "取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setRentInvalid();
+                    }
+                }, null);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                DialogFactory.showMsgDialog(getActivity(), "操作提示", "停用失败！"+t.getMessage(), "重试", "取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setRentInvalid();
+                    }
+                }, null);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                DialogFactory.showMsgDialog(getActivity(), "操作提示", "停用失败！"+"onUnauthorizedw", "重试", "取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setRentInvalid();
+                    }
+                }, null);
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDlg();
+            }
+        });
     }
 
     @Override

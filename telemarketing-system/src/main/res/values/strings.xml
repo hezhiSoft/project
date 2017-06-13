@@ -32,6 +32,7 @@
     <string name="set_user_state">状态管理</string>
     <string name="set_dialing_source">拨号名单源</string>
     <string name="set_exit">退出当前账号</string>
+    <string name="set_clear_rent_client">停用系统</string>
     <string name="set_userstate_online">我在线上</string>
     <string name="set_userstate_away">离开</string>
     <string name="text_userstate_busy">忙碌</string>
@@ -54,5 +55,24 @@
 
     <string name="dial_star_by_group">开始群呼</string>
     <string name="dial_star_by_single">点呼</string>
+
+    <!--statistic-->
+    <string name="statistic_username">员工姓名</string>
+    <string name="statistic_username_hint">请输入员工姓名</string>
+    <string name="statistic_date">呼叫日期</string>
+    <string name="statistic_date_start">呼叫日期起</string>
+    <string name="statistic_date_end">呼叫日期止</string>
+    <string name="statistic_out_count">外呼数量</string>
+    <string name="statistic_out_count_start">外呼数量起</string>
+    <string name="statistic_out_count_end">外呼数量止</string>
+    <string name="statistic_connect_count">接通数量</string>
+    <string name="statistic_connect_count_start">接通数量起</string>
+    <string name="statistic_connect_count_end">接通数量止</string>
+    <string name="statistic_reservation">预约上门数</string>
+    <string name="statistic_reservation_start">预约上门数起</string>
+    <string name="statistic_reservation_end">预约上门数止</string>
+    <string name="statistic_connect_duration">接通时长</string>
+    <string name="statistic_connect_duration_start">接通时长起</string>
+    <string name="statistic_connect_duration_end">接通时长止</string>
 
 </resources>

@@ -1327,6 +1327,47 @@ public class CusrometRemoteRepo implements BaseDataSourse {
         });
     }
 
+    /**
+     * 设置租户过期
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/3 18:23
+     */
+    public void setRentInvalid(final RemetoRepoCallback<Void> callback) {
+        Call<Responese<Void>> call = XiaomaiRetrofitManager.getAPIService().setRentInValid();
+        call.enqueue(new RetrofitCallback<Responese<Void>>() {
+            @Override
+            public void onSuccess(Responese<Void> data) {
+                if (callback != null)
+                    callback.onSuccess(data.getData());
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                if (callback != null)
+                    callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                if (callback != null)
+                    callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                if (callback != null)
+                    callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                if (callback != null)
+                    callback.onFinish();
+            }
+        });
+    }
+
     @Override
     public void cancelRequest() {
         if (listCusrometListCall != null && !listCusrometListCall.isCanceled()) {

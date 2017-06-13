@@ -71,4 +71,8 @@ public class DataApplication extends BaseApplication implements Thread.UncaughtE
         }
         return userInfoEntity;
     }
+
+    public void setUserInfoEntity(UserInfoEntity entity) {
+        userInfoEntity = entity;
+    }
 }

@@ -12,6 +12,8 @@ import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
+import com.xiaomai.telemarket.module.function.data.CallOutDepStaticsEntity;
+import com.xiaomai.telemarket.module.function.data.CallOutStaticsEntity;
 import com.xiaomai.telemarket.module.home.setting.data.UserStateEntity;
 
 import java.util.List;
@@ -19,7 +21,6 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -114,7 +115,25 @@ public interface APIService {
      * @return
      */
     @POST("api/customer/SetEmptyTel")
-    Call<Response<Void>> SetEmptyTel(@Body RequestBody body);
+    Call<Responese<Void>> SetEmptyTel(@Body RequestBody body);
+
+    /**
+     * 员工外呼统计
+     *
+     * @param body {"FromDate":"2017-1-1","ToDate":"2017-6-10"}
+     * @return
+     */
+    @POST("api/statics/byuser")
+    Call<Responese<List<CallOutStaticsEntity>>> queryStaticsByUser(@Body RequestBody body);
+
+    /**
+     * 外呼走势统计
+     *
+     * @param body {"DeptId":"252D62CE-63D4-4E9B-8328-A722011CA3F7","Year":2017,"Type":"call"}
+     * @return
+     */
+    @POST("api/statics/byuser")
+    Call<Responese<List<CallOutDepStaticsEntity>>> queryStaticsByMonth(@Body RequestBody body);
 
     /**
      * 获取过滤每件
@@ -381,4 +400,15 @@ public interface APIService {
      */
     @POST("api/customer/SetEmptyTel")
     Call<Responese<Void>> setEmptyTel(@Body RequestBody body);
+
+    /**
+     * 设置租户过期
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/3 18:18
+     */
+    @POST("api/user/InValid")
+    Call<Responese<Void>> setRentInValid();
+
+
 }

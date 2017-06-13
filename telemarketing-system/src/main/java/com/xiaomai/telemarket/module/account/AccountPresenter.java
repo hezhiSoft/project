@@ -8,6 +8,7 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.dialog.ToastUtil;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.account.data.AccountRemetoRepo;
 import com.xiaomai.telemarket.module.account.data.UserInfoEntity;
@@ -35,6 +36,7 @@ public class AccountPresenter implements AccountContract.Presenter {
             @Override
             public void onSuccess(UserInfoEntity data) {
                 if (data!=null){
+                    DataApplication.getInstance().setUserInfoEntity(data);
                     ISharedPreferencesUtils.setValue(activity, Constant.USERINFO_KEY,new Gson().toJson(data));
                 }
                 loginView.onLoginSuccess(data);

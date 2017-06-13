@@ -4,15 +4,19 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:drawableTop="@mipmap/icon_unopen"
-        android:text="很抱歉，该功能暂未开放"
-        android:textColor="@color/gray"
-        android:textSize="18sp" />
+    <com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView
+        android:id="@+id/user_state_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:drawablePadding="10dp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:drawableTop="@mipmap/icon_unopen"-->
+        <!--android:text="很抱歉，该功能暂未开放"-->
+        <!--android:textColor="@color/gray"-->
+        <!--android:textSize="18sp" />-->
 
 </RelativeLayout>

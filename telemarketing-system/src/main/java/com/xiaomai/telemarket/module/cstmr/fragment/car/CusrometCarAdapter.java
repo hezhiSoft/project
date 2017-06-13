@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,7 +71,7 @@ public class CusrometCarAdapter extends BaseRecyclerViewAdapter<CarEntity> {
         }
 
         View carView = inflater.inflate(R.layout.cusromet_car_layout, null);
-        setDetailsData(carView, mLists.get(position));
+        setDetailsData(carView, mLists.get(position));// TODO: 12/06/2017 这里会重复添加
         viewHodler.DetailsContentLayout.addView(carView);
     }
 
