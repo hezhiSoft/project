@@ -36,7 +36,7 @@ public class HomeFragment extends BaseFragment {
     Unbinder unbinder;
 
     private String[] tabNames;
-    private String[] tabKeys = new String[]{"jx", "ms", "yl", "zs", "ac", "js", "lr", "sh"};
+    private String[] tabKeys = new String[]{"jx", "ms", "yl", "zs", "ac", "js", "ls", "sh"};
 
     private List<BaseFragment> fragments = new ArrayList<>();
 
