@@ -24,6 +24,10 @@
 
         <activity android:name=".module.home.MainActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".module.message.MessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
     </application>
 
 </manifest>

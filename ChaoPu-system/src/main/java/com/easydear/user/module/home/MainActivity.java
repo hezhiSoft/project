@@ -58,7 +58,8 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 .addTabItem(R.mipmap.ic_tab_mine,R.string.tab_mine,new MineFragment())
                 .setTabSelectedListener(this)
                 .setFirstSelectedTab(TAB_HOME);
-        setToolbarCenterTitle(R.string.tab_home);
+        setToolbarVisibility(View.GONE);
+//        setToolbarCenterTitle(R.string.tab_home);
     }
 
     @Override
@@ -66,18 +67,23 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         switch (position){
             case TAB_HOME:
                 setToolbarCenterTitle(R.string.tab_home);
+                setToolbarVisibility(View.GONE);
                 break;
             case TAB_DYNAMIC:
-                setToolbarCenterTitle(R.string.tab_dynamic);
+                setToolbarCenterTitle("商家动态");
+                setToolbarVisibility(View.VISIBLE);
                 break;
             case TAB_CARDS:
                 setToolbarCenterTitle(R.string.tab_cards);
+                setToolbarVisibility(View.VISIBLE);
                 break;
             case TAB_SCANN:
                 setToolbarCenterTitle(R.string.tab_scann);
+                setToolbarVisibility(View.VISIBLE);
                 break;
             case TAB_MINE:
                 setToolbarCenterTitle(R.string.tab_mine);
+                setToolbarVisibility(View.VISIBLE);
                 break;
         }
     }
