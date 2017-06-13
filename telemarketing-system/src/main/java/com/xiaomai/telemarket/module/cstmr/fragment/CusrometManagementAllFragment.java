@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,6 +152,15 @@ public class CusrometManagementAllFragment extends BaseFragment implements Cusro
                 for (FiltersEntity filtersEntity:entity){
                     filters.put(filtersEntity.getKey(),filtersEntity.getCode());
                 }
+                filters.put("CustomerName",name);
+                filters.put("CustomerTel",phone);
+                filters.put("Remark",remark);
+                CustomerAllRecyclerView.startUpRefresh();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else if (!TextUtils.isEmpty(name)||!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(remark)){
+            try {
                 filters.put("CustomerName",name);
                 filters.put("CustomerTel",phone);
                 filters.put("Remark",remark);
