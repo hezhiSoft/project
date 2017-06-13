@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementAllFragment extends BaseFragment implements FiltersButtomDialog.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallback<List<CusrometListEntity>>{
+public class CusrometManagementAllFragment extends BaseFragment implements CusrometManagementFilterManager.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallback<List<CusrometListEntity>>{
 
     Unbinder unbinder;
     @BindView(R.id.CustomerAll_recyclerView)
@@ -108,8 +109,9 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
                 break;
             case R.id.Customer_toolBar_screen_ImageView:
                 FiltersButtomDialog dialog=new FiltersButtomDialog();
-                dialog.setSelectContent(filtersEntities).setListener(this);
-                dialog.show(getFragmentManager(),getClass().getSimpleName());
+                CusrometManagementFilterManager managementFilterManager=new CusrometManagementFilterManager(getView(),getActivity());
+                managementFilterManager.setSelectContent(filtersEntities).setListener(this);
+               // dialog.show(getFragmentManager(),getClass().getSimpleName());
                 break;
             case R.id.Time_sor_TextView:
 //                sorTextView.set
@@ -142,14 +144,26 @@ public class CusrometManagementAllFragment extends BaseFragment implements Filte
     }
 
     @Override
-    public void onClickItem(List<FiltersEntity> entity) {
+    public void onClickItem(List<FiltersEntity> entity,String name,String phone,String remark) {
+        filters=new JSONObject();
         if (entity!=null&&entity.size()>0){
             this.filtersEntities=entity;
             try {
-                filters=new JSONObject();
                 for (FiltersEntity filtersEntity:entity){
                     filters.put(filtersEntity.getKey(),filtersEntity.getCode());
                 }
+                filters.put("CustomerName",name);
+                filters.put("CustomerTel",phone);
+                filters.put("Remark",remark);
+                CustomerAllRecyclerView.startUpRefresh();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else if (!TextUtils.isEmpty(name)||!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(remark)){
+            try {
+                filters.put("CustomerName",name);
+                filters.put("CustomerTel",phone);
+                filters.put("Remark",remark);
                 CustomerAllRecyclerView.startUpRefresh();
             } catch (JSONException e) {
                 e.printStackTrace();

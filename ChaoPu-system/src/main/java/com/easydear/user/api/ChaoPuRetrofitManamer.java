@@ -1,6 +1,5 @@
 package com.easydear.user.api;
 
-import com.easydear.user.BuildConfig;
 import com.jinggan.library.net.retrofit.RetrofitManager;
 
 /**
@@ -20,6 +19,6 @@ public class ChaoPuRetrofitManamer {
      * created at 2017/5/20 11:40
      */
     public static APIService getAPIService() {
-        return RetrofitManager.getService("http://www.somember.com/",APIService.class);
+        return RetrofitManager.getService("http://www.chaopoo.com//",APIService.class);
     }
 }
