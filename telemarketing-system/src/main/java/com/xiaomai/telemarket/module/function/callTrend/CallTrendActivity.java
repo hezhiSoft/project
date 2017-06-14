@@ -18,13 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 部门外呼走势
- * author: hezhiWu <wuhezhi007@gmail.com>
- * version: V1.0
- * created at 2017/5/28$ 下午12:24$
- * <p>
- * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
- */
+ * @description 部门外呼走势
+ * @author yangdu <youngdu29@gmail.com>
+ * @createtime 14/06/2017 4:17 PM
+ **/
 
 public class CallTrendActivity extends XiaoMaiBaseActivity implements DepStatisticFilterBottomDialog.OnConfirmClickListener {
 
