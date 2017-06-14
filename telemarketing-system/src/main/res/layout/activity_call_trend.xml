@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:drawableTop="@mipmap/icon_unopen"
-        android:text="很抱歉，该功能暂未开放"
-        android:textColor="@color/gray"
-        android:textSize="18sp" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:drawablePadding="10dp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:drawableTop="@mipmap/icon_unopen"-->
+        <!--android:text="很抱歉，该功能暂未开放"-->
+        <!--android:textColor="@color/gray"-->
+        <!--android:textSize="18sp" />-->
+
+    <com.jinggan.library.ui.widget.WaytoTabLayout
+        android:id="@+id/TrendStatistics_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:tabLayout_mode="MODE_FIXED"
+        app:tabLayout_indicatorColor="@color/colorAccent"
+        app:tabLayout_tab_textColor="@color/colorAccent"
+        app:tabLayout_tab_defaultTextColor="#666666"/>
 
 </RelativeLayout>

@@ -132,7 +132,7 @@ public interface APIService {
      * @param body {"DeptId":"252D62CE-63D4-4E9B-8328-A722011CA3F7","Year":2017,"Type":"call"}
      * @return
      */
-    @POST("api/statics/byuser")
+    @POST("api/statics/bymonth")
     Call<Responese<List<CallOutDepStaticsEntity>>> queryStaticsByMonth(@Body RequestBody body);
 
     /**

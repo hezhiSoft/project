@@ -23,6 +23,14 @@
         <item>跟进明细</item>
     </array>
 
+    <array name="statistic_dep_details_tab_array">
+        <item>外呼数量</item>
+        <item>接通数量</item>
+        <item>意向客户</item>
+        <item>预约上门</item>
+    </array>
+
+
     <!--common-->
     <string name="common_back">返回</string>
     <string name="common_progress_dlg_tip">操作中...</string>
@@ -60,6 +68,8 @@
     <string name="statistic_username">员工姓名</string>
     <string name="statistic_username_hint">请输入员工姓名</string>
     <string name="statistic_date">呼叫日期</string>
+    <string name="statistic_year">呼叫年份</string>
+    <string name="statistic_year_hint">选择呼叫年份</string>
     <string name="statistic_date_start">呼叫日期起</string>
     <string name="statistic_date_end">呼叫日期止</string>
     <string name="statistic_out_count">外呼数量</string>

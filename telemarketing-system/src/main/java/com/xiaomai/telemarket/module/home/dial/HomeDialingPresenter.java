@@ -13,6 +13,7 @@ import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
 import com.xiaomai.telemarket.module.home.dial.data.source.remote.CustomerPhoneNumberRemoteRepo;
+import com.xiaomai.telemarket.utils.PhoneRecordUtil;
 
 import java.util.List;
 
@@ -61,19 +62,19 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
 
     @Override
     public void checkIsDialingGroupUnStoppedAndDialingOut() {
-        isDialingGroupFinished = getIsDialingGroupStoped();
-        boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
-        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
-        if (!isDialingGroupFinished && !isDialingOffHook && TextUtils.equals(dialingType, Constant.DIALING_TYPE_BY_GROUP)) {
-            startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
-        }
+        checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
         mView.showIsDialingGroupUnStopped(isDialingGroupFinished);
     }
 
     public void checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI() {
-        isDialingGroupFinished = getIsDialingGroupStoped();
-        boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
-        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
+        isDialingGroupFinished = getIsDialingGroupStoped();//群拨是否结束
+        boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//是否正在通话中
+        String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();//拨号类型
+        //判断是否正在录音 辅助判断双卡取消拨号后无法再进行拨号的问题
+        if (!PhoneRecordUtil.getINSTANCE().isStarted()) {
+            isDialingOffHook=false;
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//检测未在通话录音状态 即不再通话中
+        }
         if (!isDialingGroupFinished && !isDialingOffHook && TextUtils.equals(dialingType, Constant.DIALING_TYPE_BY_GROUP)) {
             startDialingByGroup();//检查群拨状态未结束并且上次通话已结束，则继续拨出
         }
@@ -96,6 +97,10 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
             return;
         }
         boolean isDialingOffHook = (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
+        if (!PhoneRecordUtil.getINSTANCE().isStarted()) {
+            isDialingOffHook=false;//判断是否正在录音 辅助判断双卡取消拨号后无法再进行拨号的问题
+            ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);//检测未在通话录音状态 即不再通话中
+        }
         if (isDialingOffHook) {
             //正在通话中
             return;

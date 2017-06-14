@@ -126,6 +126,13 @@ public class CallOutActivity extends XiaoMaiBaseActivity implements PullToRefres
         if (userStateRecyclerview!=null) {
             userStateRecyclerview.closeDownRefresh();
         }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (callOutRemoteRepo!=null) {
+            callOutRemoteRepo.cancelRequest();
+        }
     }
 }
