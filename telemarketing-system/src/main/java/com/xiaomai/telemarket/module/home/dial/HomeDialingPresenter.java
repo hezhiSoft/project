@@ -103,39 +103,48 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
         }
         if (isDialingOffHook) {
             //正在通话中
+            ToastUtil.showToast(DataApplication.getInstance().getApplicationContext(), "正在通话中，请稍后！");
             return;
         }
-        CusrometListEntity mPreCustomerEnity = mLocalCustomerDataSource.getPreCustomer();
-        if (mPreCustomerEnity != null) {
-            mRepo.deleteFromList(mPreCustomerEnity.getID(), new RemetoRepoCallback<Void>() {
-                @Override
-                public void onSuccess(Void data) {
-                    startRequestNumber(isDialingGroupFinished);
-                }
-
-                @Override
-                public void onFailure(int code, String msg) {
-                    // TODO: 30/05/2017 删除记录失败 暂时不做处理，删除接口后台均返回成功
-                }
-
-                @Override
-                public void onThrowable(Throwable t) {
-
-                }
-
-                @Override
-                public void onUnauthorized() {
-
-                }
-
-                @Override
-                public void onFinish() {
-
-                }
-            });
-        } else {
-            startRequestNumber(isDialingGroupFinished);
-        }
+        // TODO: 15/06/2017 start request
+        mView.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mView.showDialingRequestStarted();
+            }
+        });
+        startRequestNumber(isDialingGroupFinished);//不再需要删除接口调用
+//        CusrometListEntity mPreCustomerEnity = mLocalCustomerDataSource.getPreCustomer();
+//        if (mPreCustomerEnity != null) {
+//            mRepo.deleteFromList(mPreCustomerEnity.getID(), new RemetoRepoCallback<Void>() {
+//                @Override
+//                public void onSuccess(Void data) {
+//                    startRequestNumber(isDialingGroupFinished);
+//                }
+//
+//                @Override
+//                public void onFailure(int code, String msg) {
+//                    // TODO: 30/05/2017 删除记录失败 暂时不做处理，删除接口后台均返回成功
+//                }
+//
+//                @Override
+//                public void onThrowable(Throwable t) {
+//
+//                }
+//
+//                @Override
+//                public void onUnauthorized() {
+//
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//
+//                }
+//            });
+//        } else {
+//            startRequestNumber(isDialingGroupFinished);
+//        }
     }
 
     /**
@@ -151,6 +160,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
             mRepo.requestPhoneNumberFromPrivate(mPreCustomerEnity != null ? mPreCustomerEnity.getCreatedDate() : "", new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
+                    requestFinished();
                     if (data != null && data.size() > 0) {
                         CusrometListEntity entity = data.get(0);
                         mLocalCustomerDataSource.setPreCustomer(entity);
@@ -162,6 +172,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
 
                 @Override
                 public void onFailure(int code, String msg) {
+                    requestFinished();
                     if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
                         setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
                         mView.showDialingFinished(msg);//TODO 所有号码请求完成,停止群呼
@@ -182,7 +193,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
 
                 @Override
                 public void onFinish() {
-
+                    requestFinished();
                 }
             });
         } else if (getDialingNumberSource() == Constant.DIAL_NUMBER_CODE_PUBLIC) {
@@ -190,6 +201,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
             mRepo.requestPhoneNumberFromPublic(new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
+                    requestFinished();
                     if (data != null && data.size() > 0) {
                         CusrometListEntity entity = data.get(0);
                         mLocalCustomerDataSource.setPreCustomer(entity);
@@ -201,6 +213,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
 
                 @Override
                 public void onFailure(int code, String msg) {
+                    requestFinished();
                     if (code == Constant.RESPONSE_CODE_DIALING_FINISH) {
                         setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
                         mView.showDialingFinished(msg);//TODO 所有号码请求完成,停止群呼
@@ -221,6 +234,18 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
 
                 @Override
                 public void onFinish() {
+                    requestFinished();
+                }
+            });
+        }
+    }
+
+    public void requestFinished() {
+        if (mView.getActivity()!=null) {
+            mView.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mView.showDialingRequestFinished();
                 }
             });
         }
@@ -231,7 +256,8 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
     }
 
     private int getDialingNumberSource() {
-        return Integer.valueOf(ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PRIVATE) + "");
+        //默认公共库
+        return Integer.valueOf(ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIAL_NUMBER_SOURCE, Constant.DIAL_NUMBER_CODE_PUBLIC) + "");
     }
 
     /**

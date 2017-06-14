@@ -85,9 +85,14 @@ public class PhoneRecordUtil {
             e.printStackTrace();
             Log.e(TAG, e.getMessage());
         }
-        mrecorder.start();
-        started = true;
-        Log.d(TAG, "录音开始");
+        try {
+            mrecorder.start();
+            started = true;
+            Log.d(TAG, "录音开始");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "录音启动失败");
+        }
     }
 
     public void stop() {

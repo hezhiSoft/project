@@ -1,5 +1,7 @@
 package com.xiaomai.telemarket.module.home.dial;
 
+import android.app.Activity;
+
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 
 /**
@@ -10,9 +12,13 @@ import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 public class HomeDialingContract {
 
     public interface View{
+        void showDialingRequestStarted();
+
         void showDialingByGroupStarted();
 
         void showDialingOutStarted(CusrometListEntity entity);
+
+        void showDialingRequestFinished();
 
         void showDialingStopped();
 
@@ -21,6 +27,8 @@ public class HomeDialingContract {
         void showDialingFinished(String msg);
 
         void showIsDialingGroupUnStopped(boolean isStopped);
+
+        Activity getActivity();
 
     }
 
