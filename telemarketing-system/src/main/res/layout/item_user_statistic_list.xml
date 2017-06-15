@@ -8,7 +8,7 @@
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_10dp"
+        android:layout_margin="@dimen/dimen_5dp"
         android:padding="@dimen/dimen_5dp"
         android:orientation="horizontal">
 
@@ -16,8 +16,8 @@
             android:id="@+id/tv_username"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="left"
             android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
             android:text="张阙"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_content_18" />
@@ -26,9 +26,8 @@
             android:id="@+id/user_tel"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="right"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5dp"
+            android:gravity="right|center_vertical"
             android:text="123456789"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_bottom_16" />
@@ -39,9 +38,8 @@
         android:id="@+id/layout_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_10dp"
-        android:layout_marginTop="@dimen/dimen_5dp"
-        android:visibility="gone"
+        android:layout_margin="@dimen/dimen_5dp"
+        android:visibility="visible"
         android:orientation="vertical">
 
     </LinearLayout>
