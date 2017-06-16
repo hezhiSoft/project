@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 break;
             case TAB_MINE:
                 setToolbarCenterTitle(R.string.tab_mine);
-                setToolbarVisibility(View.VISIBLE);
+                setToolbarVisibility(View.GONE);
                 break;
         }
     }
