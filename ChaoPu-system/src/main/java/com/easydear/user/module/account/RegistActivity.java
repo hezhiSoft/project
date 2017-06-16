@@ -45,9 +45,16 @@ public class RegistActivity extends BaseActivity {
         setToolbarVisibility(View.GONE);
     }
 
-    @OnClick(R.id.Regist_button)
-    public void onClick() {
-        ISkipActivityUtil.startIntent(this, MainActivity.class);
-        finish();
+    @OnClick({R.id.Regist_button, R.id.Regist_account})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.Regist_account:
+                ISkipActivityUtil.startIntent(this, LoginActivity.class);
+                break;
+            case R.id.Regist_button:
+                ISkipActivityUtil.startIntent(this, MainActivity.class);
+                finish();
+                break;
+        }
     }
 }

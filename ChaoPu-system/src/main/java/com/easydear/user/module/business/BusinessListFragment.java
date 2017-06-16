@@ -82,6 +82,11 @@ public class BusinessListFragment extends BaseFragment implements PullToRefreshR
     }
 
     @Override
+    public void onReqStart() {
+
+    }
+
+    @Override
     public void onSuccess(List<BusinessEntity> data) {
         if (pageSize==1){
             adapter.clearList();

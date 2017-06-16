@@ -45,8 +45,8 @@ public class BussinessRepo implements BaseDataSourse {
      * @param callback
      */
     public void queryBusiness(int pageSize, int pageCount, String keywords, String type, String province, String city, String area, final RemetoRepoCallbackV2<List<BusinessEntity>> callback) {
-        callback.onStart();
-        String url = "article/listByKey?pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
+        callback.onReqStart();
+        String url = "business/listByKey?pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
         businessCall = ChaoPuRetrofitManamer.getAPIService().queryBusiness(url);
         businessCall.enqueue(new RetrofitCallbackV2<ResponeEntity<List<BusinessEntity>>>() {
             @Override
