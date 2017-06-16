@@ -15,12 +15,47 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+    /*签名文件*/
+    signingConfigs {
+        config {
+            keyAlias 'yunwei'
+            keyPassword 'yunwei@163.com'
+            storeFile file('yunwei.keystore.jks')
+            storePassword 'yunwei@163.com'
+        }
+    }
+
+    /*打包输出*/
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name.replace(".apk", "ChapBu_${currentTime()}_${defaultConfig.versionCode}.${defaultConfig.versionName}.apk")
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+
+    /*APK打包配制*/
     buildTypes {
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+/*获取系统当前时间*/
+def currentTime() {
+    return new Date().format("yyyyMMdd")
 }
 
 dependencies {
