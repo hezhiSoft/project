@@ -257,4 +257,45 @@ public class IFileUtils {
         return data;
     }
 
+    /**
+     * 删除文件或整个文件夹
+     * @param file
+     */
+    public static void deleteFileAndDir(File file) {
+        try {
+            if (file != null&&file.exists()) {
+                if (file.isDirectory()) {
+                    File[] files = file.listFiles();
+                    for (File f : files) {
+                        if (f.isDirectory()) {
+                            deleteFileAndDir(f);
+                        } else if(f.isFile()){
+                            f.delete();
+                        }
+                    }
+                    file.delete();
+                } else if (file.isFile()) {
+                    file.delete();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取文件后缀名
+     * @param file
+     * @return
+     */
+    public static String getFileExtension(File file) {
+        String extension="";
+        if (file != null) {
+            String fileName = file.getName();
+            if (fileName.lastIndexOf(".")!=0) {
+                extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+            }
+        }
+        return extension;
+    }
 }

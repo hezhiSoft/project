@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
@@ -31,6 +32,7 @@ public class UploadService extends IntentService {
     private MediaPlayer mediaPlayer;
     private UploadHandler uploadHandler;
 
+    public static final int MIN_RECORD_DURATION=5;//过滤最小录音文件5s
     public static final int MSG_UPLOAD_RECORD = 0x001;
 
 
@@ -90,49 +92,59 @@ public class UploadService extends IntentService {
                                 for (int j = 0; j < recordFiles.length; j++) {
                                     //这里文件单个上传
                                     final File recordFile = recordFiles[j];
-                                    if (recordFile != null&&recordFile.exists()) {
-                                        Log.i(TAG, "start upload..." + recordFile.getAbsolutePath());
-                                        mRepo.addRecordFile(recordFile.getName(), customerId,getRecordDuration(mediaPlayer,recordFile), recordFile, new RemetoRepoCallback<FileEntity>() {
-                                            @Override
-                                            public void onSuccess(FileEntity data) {
-                                                try {
-                                                    Log.i(TAG, "onSuccess: FileName="+data.getFileName()+"  Url="+data.getFileUrl());
-                                                    //Url=/Files/20170607/38e01abd-e4f3-4675-ac63-6a1099aaaf7a/20170607032728_1251.mp3 非标准格式
-                                                    if (recordFile != null && recordFile.exists()) {
-                                                        File fileParant = recordFile.getParentFile();
-                                                        recordFile.delete();//上传完成删除文件
-                                                        if (fileParant!=null&&fileParant.isDirectory()) {
-                                                            fileParant.delete();//删除空文件夹
+                                    if (recordFile != null && recordFile.exists() && TextUtils.equals(IFileUtils.getFileExtension(recordFile), "mp3")) {
+                                        //创建temp文件
+                                        int duration = getRecordDuration(mediaPlayer, recordFile);
+                                        if (duration <= MIN_RECORD_DURATION) {
+                                            //过滤掉无效文件
+                                            Log.i(TAG, "--------invalid file-------less than 5s------");
+                                            deleteFileAndParentDir(recordFile);
+                                            break;
+                                        }
+                                        final File tempFile = new File(recordFile.getParent(), recordFile.getName()+".temp");
+                                        if (tempFile.exists()) {
+                                            break;
+                                        }
+                                        try {
+                                            tempFile.createNewFile();//创建锁文件
+                                            Log.i(TAG, "start upload..." + recordFile.getAbsolutePath());
+                                            mRepo.addRecordFile(recordFile.getName(), customerId, duration, recordFile, new RemetoRepoCallback<FileEntity>() {
+                                                @Override
+                                                public void onSuccess(FileEntity data) {
+                                                    try {
+                                                        Log.i(TAG, "onSuccess: FileName=" + data.getFileName() + "  Url=" + data.getFileUrl());
+                                                        deleteFileAndParentDir(recordFile);
+                                                        if (tempFile!=null&&tempFile.exists()) {
+                                                            tempFile.delete();//删除
                                                         }
-                                                        Log.i(TAG, "delete success#: FileName=" + data.getFileName() + "  Url=" + recordFile.getAbsolutePath());
-                                                    } else {
-                                                        Log.i(TAG, "delete failed # not exits");
+                                                    } catch (Exception e) {
+                                                        Log.i(TAG, "error #" + e.getMessage());
                                                     }
-                                                }catch (Exception e){
-                                                    Log.i(TAG, "error #" + e.getMessage());
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onFailure(int code, String msg) {
-                                                Log.i(TAG, "onFailure: Error#" + "code=" + code + ",msg=" + msg);
-                                            }
+                                                @Override
+                                                public void onFailure(int code, String msg) {
+                                                    Log.i(TAG, "onFailure: Error#" + "code=" + code + ",msg=" + msg);
+                                                }
 
-                                            @Override
-                                            public void onThrowable(Throwable t) {
-                                                Log.i(TAG, "onThrowable: Error#");
-                                            }
+                                                @Override
+                                                public void onThrowable(Throwable t) {
+                                                    Log.i(TAG, "onThrowable: Error#");
+                                                }
 
-                                            @Override
-                                            public void onUnauthorized() {
-                                                Log.i(TAG, "onUnauthorized: Error#");
-                                            }
+                                                @Override
+                                                public void onUnauthorized() {
+                                                    Log.i(TAG, "onUnauthorized: Error#");
+                                                }
 
-                                            @Override
-                                            public void onFinish() {
+                                                @Override
+                                                public void onFinish() {
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
                             }
@@ -140,6 +152,18 @@ public class UploadService extends IntentService {
                     }
                 }
             }
+        }
+    }
+
+    private void deleteFileAndParentDir(File recordFile) {
+        //Url=/Files/20170607/38e01abd-e4f3-4675-ac63-6a1099aaaf7a/20170607032728_1251.mp3 非标准格式
+        if (recordFile != null && recordFile.exists()) {
+            Log.i(TAG, "delete success#: FileName=" + recordFile.getName() + "  Url=" + recordFile.getAbsolutePath());
+            File fileParant = recordFile.getParentFile();
+            recordFile.delete();//上传完成删除文件
+            IFileUtils.deleteFileAndDir(fileParant);
+        } else {
+            Log.i(TAG, "delete failed # not exits");
         }
     }
 

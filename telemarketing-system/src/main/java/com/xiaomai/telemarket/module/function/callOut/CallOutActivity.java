@@ -22,14 +22,10 @@ import butterknife.ButterKnife;
 import static com.xiaomai.telemarket.R.id.user_state_recyclerview;
 
 /**
- * 员工外呼
- * author: hezhiWu <wuhezhi007@gmail.com>
- * version: V1.0
- * created at 2017/5/28$ 下午12:23$
- * <p>
- * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
- */
-
+ * @description 员工外呼
+ * @author yangdu <youngdu29@gmail.com>
+ * @createtime 14/06/2017 4:17 PM
+ **/
 public class CallOutActivity extends XiaoMaiBaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,StatisticFilterBottomDialog.OnConfirmClickListener ,RemetoRepoCallback<List<CallOutStaticsEntity>> {
 
 
@@ -126,6 +122,13 @@ public class CallOutActivity extends XiaoMaiBaseActivity implements PullToRefres
         if (userStateRecyclerview!=null) {
             userStateRecyclerview.closeDownRefresh();
         }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (callOutRemoteRepo!=null) {
+            callOutRemoteRepo.cancelRequest();
+        }
     }
 }

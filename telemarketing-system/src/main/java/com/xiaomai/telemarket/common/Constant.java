@@ -71,6 +71,28 @@ public class Constant {
     }
 
     /**
+     * 外呼趋势查询类别
+     * author: Yang Du
+     * call 外呼数量、connect 接通数量、intent 意向用户、appoint 预约上门
+     */
+    public enum StatisticType{
+        CALL("call"),
+        CONNECT("connect"),
+        INTENT("intent"),
+        APPOINT("appoint");
+
+        private String type;
+
+        public String getType() {
+            return type;
+        }
+
+        StatisticType(String type){
+            this.type=type;
+        }
+    }
+
+    /**
      * 拨号来源：公共库
      */
     public static final int DIAL_NUMBER_CODE_PUBLIC=1;

@@ -11,9 +11,6 @@ import com.jinggan.library.ui.date.view.WheelView;
 
 import java.util.Date;
 
-import static android.R.attr.data;
-import static android.R.attr.y;
-
 /**
  * Created by codbking on 2016/8/10.
  */
@@ -111,6 +108,14 @@ class DatePicker extends BaseWheelPick {
                 this.dayView.setVisibility(GONE);
                 this.monthView.setVisibility(GONE);
                 this.yearView.setVisibility(GONE);
+                break;
+            case TYPE_YY:
+                this.minuteView.setVisibility(GONE);
+                this.hourView.setVisibility(GONE);
+                this.weekView.setVisibility(GONE);
+                this.dayView.setVisibility(GONE);
+                this.monthView.setVisibility(GONE);
+                this.yearView.setVisibility(VISIBLE);
                 break;
         }
 
