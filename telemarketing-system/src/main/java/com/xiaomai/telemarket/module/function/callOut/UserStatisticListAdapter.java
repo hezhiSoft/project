@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 
 /**
  * @author yangdu <youngdu29@gmail.com>
- * @description 用户状态
+ * @description 用户外呼统计
  * @createtime 20/05/2017 5:20 PM
  **/
 public class UserStatisticListAdapter extends BaseRecyclerViewAdapter<CallOutStaticsEntity> {

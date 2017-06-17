@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_10dp">
+
+    <TextView
+        android:id="@+id/tv_month_label"
+        android:layout_width="0dp"
+        android:layout_weight="1.5"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen_5dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="right"
+        android:text="12月"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_bottom_16" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="0dp"
+        android:layout_weight="8"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        style="@style/custom_progressbar_horizontal"
+        android:max="10000"
+        android:progress="0"/>
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/dimen_10dp"
+        android:text="10000"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_bottom_16" />
+
+</LinearLayout>

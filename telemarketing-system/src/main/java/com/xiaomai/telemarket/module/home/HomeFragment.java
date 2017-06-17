@@ -269,6 +269,16 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     }
 
     @Override
+    public void showDialingRequestStarted() {
+        showProgressDlg("正在获取号码中...");
+    }
+
+    @Override
+    public void showDialingRequestFinished() {
+        dismissProgressDlg();
+    }
+
+    @Override
     public void showDialingByGroupStarted() {
         if (tvDialGroupState!=null) {
             tvDialGroupState.setText(getResources().getString(R.string.dial_stop_group));

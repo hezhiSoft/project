@@ -1,10 +1,13 @@
 package com.xiaomai.telemarket.module.function.data;
 
+import java.io.Serializable;
+
 /**
  * Created by yangdu on 11/06/2017.
+ * 部门按月统计
  */
 
-public class StaticsByMonthParam {
+public class StatisticsByMonthParam implements Serializable{
 
     /**
      * 部门ID
@@ -13,7 +16,7 @@ public class StaticsByMonthParam {
     /**
      * 统计年份
      */
-    private int Year;
+    private String Year;
 
     /**
      * 统计类型：call 外呼数量、connect 接通数量、intent 意向用户、appoint 预约上门
@@ -28,11 +31,11 @@ public class StaticsByMonthParam {
         DeptId = deptId;
     }
 
-    public int getYear() {
+    public String getYear() {
         return Year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         Year = year;
     }
 
