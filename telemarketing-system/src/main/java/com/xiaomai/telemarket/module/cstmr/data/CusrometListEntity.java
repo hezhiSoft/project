@@ -28,6 +28,7 @@ public class CusrometListEntity implements Serializable{
     private int SocialSecurityAccount;
     private int AccountWater;
     private String FollowDate;
+    private String LastFollowDate;
     private String Remark;
     private String CreatedBy;
     private String CreatedDate;
@@ -156,6 +157,14 @@ public class CusrometListEntity implements Serializable{
 
     public void setSocialSecurityAccount(int SocialSecurityAccount) {
         this.SocialSecurityAccount = SocialSecurityAccount;
+    }
+
+    public String getLastFollowDate() {
+        return LastFollowDate;
+    }
+
+    public void setLastFollowDate(String lastFollowDate) {
+        LastFollowDate = lastFollowDate;
     }
 
     public int getAccountWater() {
