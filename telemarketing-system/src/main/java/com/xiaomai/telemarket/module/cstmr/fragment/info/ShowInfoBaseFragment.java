@@ -238,6 +238,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
         InfoCustomerName.setContentText(entity.getCustomerName()).setItemEnabled(false);
         InfoCustomerTel.setContentText(entity.getCustomerTel()).setItemEnabled(false);
         InfoIsSZHukou.setStatus(entity.getIsSZHukou());
+        InfoTelStatus.setStatus(entity.getIsEmpty());
         InfoSex.setContentText(DictionaryHelper.ParseSex(entity.getSex() + ""));
         InfoMaritalStatus.setContentText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus() + ""));
         InfoPayroll.setContentText(entity.getWage() + "");
@@ -256,6 +257,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
         entity.setCustomerName(InfoCustomerName.getContentText());
         entity.setCustomerTel(InfoCustomerTel.getContentText());
         entity.setIsSZHukou(InfoIsSZHukou.getStatus());
+        entity.setIsEmpty(InfoTelStatus.getStatus());
         entity.setSex(IStringUtils.toInt(SexCode));
         entity.setMaritalStatus(IStringUtils.toInt(MaritalStatusCode));
         entity.setWage(IStringUtils.toInt(InfoPayroll.getContentText()));

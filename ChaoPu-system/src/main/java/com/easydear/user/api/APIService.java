@@ -1,7 +1,8 @@
 package com.easydear.user.api;
 
-import com.easydear.user.api.data.UserInfoEntity;
+import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
+import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 
 import java.util.List;
@@ -42,4 +43,13 @@ public interface APIService {
      */
     @POST
     Call<ResponeEntity<List<DynamicEntity>>> queryDynamics(@Url String url);
+
+    /**
+     * 查询卡包列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/16 下午8:31
+     */
+    @POST
+    Call<ResponeEntity<List<CardEntity>>> queryCards(@Url String url);
 }

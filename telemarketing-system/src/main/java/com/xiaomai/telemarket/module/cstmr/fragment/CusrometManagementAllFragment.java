@@ -224,7 +224,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Cusro
     public void onThrowable(Throwable t) {
 //        showToast("数据异常");
         if (CustomerAllRecyclerView != null) {
-            CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+          //  CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
         }
     }
 
@@ -232,7 +232,7 @@ public class CusrometManagementAllFragment extends BaseFragment implements Cusro
     public void onUnauthorized() {
 //        showToast("数据获取失败");
         if (CustomerAllRecyclerView != null) {
-            CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+         //   CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
         }
     }
 

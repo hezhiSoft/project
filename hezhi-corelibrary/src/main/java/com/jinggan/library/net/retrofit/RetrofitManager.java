@@ -14,6 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 public class RetrofitManager {
+
+    private static Retrofit retrofitV2;
+
     /**
      * 返回APIService 返回JSON格式
      * author: hezhiWu
@@ -42,12 +45,14 @@ public class RetrofitManager {
      * @param cls    API位类
      */
     public static <T> T getService(String domain, OkHttpClient client, Class<T> cls) {
-        Retrofit mRetrofit = new Retrofit.Builder()
-                .baseUrl(domain)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-        T service = mRetrofit.create(cls);
+        if (retrofitV2 == null) {
+            retrofitV2 = new Retrofit.Builder()
+                    .baseUrl(domain)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+        }
+        T service = retrofitV2.create(cls);
         return service;
     }
 

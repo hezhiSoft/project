@@ -53,6 +53,9 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
         viewHolder.ItemCusrometUserName.setText(mLists.get(position).getCustomerName());
         viewHolder.ItemCusrometLastTime.setText(mLists.get(position).getFollowDate().replaceAll("T", " "));
         viewHolder.ItemCusrometRemark.setText(mLists.get(position).getRemark());
+        if (flag==2){
+            viewHolder.LastTimeLab.setText("下次跟进时间");
+        }
         /*意向状态*/
         int InterestedStatus = mLists.get(position).getInterestedStatus();
         if (InterestedStatus == Constant.Description.NoInterested.getValue()) {
@@ -95,6 +98,8 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
         TextView ItemCusrometStatus;
         @BindView(R.id.ItemCusromet_lastTime)
         TextView ItemCusrometLastTime;
+        @BindView(R.id.ItemCusromet_lastTime_lab)
+        TextView LastTimeLab;
         @BindView(R.id.ItemCusromet_remark)
         TextView ItemCusrometRemark;
         @BindView(R.id.ItemCusromet_layout)

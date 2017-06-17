@@ -9,7 +9,7 @@ package com.jinggan.library.net.retrofit;
  */
 public interface RemetoRepoCallbackV2<T> {
 
-      void onStart();
+      void onReqStart();
 
       void onSuccess(T data);
 

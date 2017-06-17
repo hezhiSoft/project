@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- unavailable in API 23 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
     <application
@@ -43,19 +43,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".module.account.RegistActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.account.RegistActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".module.account.LoginActivity"
+        <activity
+            android:name=".module.account.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".module.home.MainActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.home.MainActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".module.message.MessageActivity"
+        <activity
+            android:name=".module.message.MessageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.account.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <!-- 高德地图配制[吴和志] -->
         <meta-data

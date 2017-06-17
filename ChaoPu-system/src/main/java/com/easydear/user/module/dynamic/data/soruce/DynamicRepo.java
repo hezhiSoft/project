@@ -3,6 +3,7 @@ package com.easydear.user.module.dynamic.data.soruce;
 
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponeEntity;
+import com.easydear.user.api.RetrofitManager;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
@@ -41,7 +42,7 @@ public class DynamicRepo implements BaseDataSourse {
     public void queryDynamics(int pageSize, int pageCount, String keywords, String type, String province, String city, String area, final RemetoRepoCallbackV2<List<DynamicEntity>> callback) {
         callback.onReqStart();
         String url = "article/listByKey??pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
-        dynamicsCall = ChaoPuRetrofitManamer.getAPIService().queryDynamics(url);
+        dynamicsCall = RetrofitManager.getInstance().getService().queryDynamics(url);
         dynamicsCall.enqueue(new RetrofitCallbackV2<ResponeEntity<List<DynamicEntity>>>() {
             @Override
             public void onSuccess(ResponeEntity<List<DynamicEntity>> data) {

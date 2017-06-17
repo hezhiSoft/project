@@ -8,8 +8,8 @@ import android.view.View;
 
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
-import com.easydear.user.api.data.UserInfoEntity;
-import com.easydear.user.api.data.source.AccountRepo;
+import com.easydear.user.module.account.data.UserInfoEntity;
+import com.easydear.user.module.account.data.source.AccountRepo;
 import com.easydear.user.common.Constant;
 import com.easydear.user.module.home.MainActivity;
 import com.jinggan.library.base.BaseActivity;

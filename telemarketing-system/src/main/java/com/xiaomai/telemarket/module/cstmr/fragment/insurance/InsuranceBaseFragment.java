@@ -213,12 +213,12 @@ public class InsuranceBaseFragment extends BaseFragment {
     @Subscribe
     public void onEventBusSubmit(EventBusValues values) {
         if (values.getWhat() == 0x1003) {
-            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+//            DialogFactory.showMsgDialog(getContext(), "提交", "确定提交当前记录?", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
                     onSubmit();
-                }
-            });
+//                }
+//            });
         }
     }
 

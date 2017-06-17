@@ -12,9 +12,11 @@ import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
-import com.easydear.user.api.data.UserInfoEntity;
+import com.easydear.user.module.account.SettingActivity;
+import com.easydear.user.module.account.data.UserInfoEntity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +82,7 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.MineFragment_set:
+                ISkipActivityUtil.startIntent(getContext(), SettingActivity.class);
                 break;
             case R.id.MineFragment_consumeCar:
                 break;
