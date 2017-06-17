@@ -22,6 +22,8 @@ import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,14 +53,14 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     private CusrometManagementAdapter adapter;
 
     private int pageIndex;
-    private String sort = "desc";/*默认降序*/
+    private String sort = "asc";/*默认降序*/
     private CusrometRemoteRepo remoteRepo;
 
     private JSONObject filters;
 
     private List<FiltersEntity> filtersEntities = new ArrayList<>();
 
-    private boolean desc = true;
+    private boolean desc = false;
 
     private boolean hidden = true;
 
@@ -66,6 +68,7 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         remoteRepo = CusrometRemoteRepo.getInstance();
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -73,12 +76,34 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_customer_stay, null);
         ButterKnife.bind(this, rootView);
+        Drawable drawable;
+        if (Build.VERSION.SDK_INT >= 21) {
+            drawable = getResources().getDrawable(R.mipmap.ic_sor_up, getActivity().getTheme());
+        } else {
+            drawable = getResources().getDrawable(R.mipmap.ic_sor_up);
+        }
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+        sorTextView.setCompoundDrawables(null, null, drawable, null);
+
         adapter = new CusrometManagementAdapter(getContext(), 2);
         CustomerAllRecyclerView.setRecyclerViewAdapter(adapter);
         CustomerAllRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
         CustomerAllRecyclerView.setPullToRefreshListener(this);
         CustomerAllRecyclerView.startUpRefresh();
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onFreshUI(EventBusValues values){
+        if (values.getWhat()==0x208||values.getWhat()==0x204){
+            CustomerAllRecyclerView.startUpRefresh();
+        }
     }
 
     @OnClick({R.id.Time_sor_TextView, R.id.Stay_toolBar_add_ImageView, R.id.Stay_toolBar_screen_ImageView})
@@ -197,13 +222,13 @@ public class CusrometManagementStayFragment extends BaseFragment implements Reme
     @Override
     public void onThrowable(Throwable t) {
 //        showToast("数据异常");
-        CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+        //CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override
     public void onUnauthorized() {
 //        showToast("数据获取失败");
-        CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
+       // CustomerAllRecyclerView.setPageHint(R.mipmap.icon_page_error,"页面出错");
     }
 
     @Override

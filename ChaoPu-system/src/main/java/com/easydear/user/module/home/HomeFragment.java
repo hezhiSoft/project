@@ -5,8 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.easydear.user.DataApplication;
 import com.easydear.user.R;
+import com.easydear.user.common.LocationManager;
 import com.easydear.user.module.business.BusinessListFragment;
 import com.easydear.user.module.message.MessageActivity;
 import com.jinggan.library.base.BaseFragment;
@@ -34,6 +38,8 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.HomeFragment_TabLayout)
     WaytoTabLayout HomeFragmentTabLayout;
     Unbinder unbinder;
+    @BindView(R.id.HomeFragment_location_textView)
+    TextView HomeFragmentLocationTextView;
 
     private String[] tabNames;
     private String[] tabKeys = new String[]{"jx", "ms", "yl", "zs", "ac", "js", "ls", "sh"};
@@ -54,6 +60,7 @@ public class HomeFragment extends BaseFragment {
 
             fragments.add(fragment);
         }
+
     }
 
     @Nullable
@@ -62,6 +69,14 @@ public class HomeFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_home, null);
         unbinder = ButterKnife.bind(this, rootView);
         initTab();
+        LocationManager.getInstance().startLocation(new LocationManager.LocationCallBack() {
+            @Override
+            public void onLocation(AMapLocation location) {
+                if (location!=null){
+                    HomeFragmentLocationTextView.setText(location.getCity());
+                }
+            }
+        });
         return rootView;
     }
 
@@ -75,8 +90,15 @@ public class HomeFragment extends BaseFragment {
         HomeFragmentTabLayout.initTabLayout(getChildFragmentManager(), fragments, tabNames);
     }
 
-    @OnClick(R.id.HomeFragment_Message_Layout)
-    public void onClick() {
-        ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+    @OnClick({R.id.HomeFragment_Message_Layout,R.id.HomeFragment_location_layout})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.HomeFragment_location_textView:
+                break;
+            case R.id.HomeFragment_Message_Layout:
+                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+                break;
+        }
+
     }
 }

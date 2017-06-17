@@ -1,6 +1,7 @@
 package com.easydear.user.api;
 
-import com.jinggan.library.net.retrofit.RetrofitManager;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.io.IOException;
 
@@ -12,35 +13,32 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Describe:
- * Author: hezhiWu
- * Date: 2017-06-11
- * Time: 01:51
- * Version:1.0
+ * @author hezhiWu
+ * @version V1.0
+ * @Package com.yunwei.frame.common.retrofit
+ * @Description:
+ * @date 2016/11/29 19:59
  */
 
-public class ChaoPuRetrofitManamer {
+public class RetrofitManager {
+
+    private static RetrofitManager instance;
 
     private static Retrofit mRetrofit;
-    /**
-     * 获取API
-     * <p>
-     * author: hezhiWu
-     * created at 2017/5/20 11:40
-     */
-    public static APIService getAPIService() {
-        return getService();
-//        return RetrofitManager.getService("http://www.chaopoo.com/", APIService.class);
+
+    public static RetrofitManager getInstance() {
+        if (instance == null) {
+            instance = new RetrofitManager();
+        }
+        return instance;
     }
-
-
 
     /**
      * 返回Service
      *
      * @return
      */
-    public static APIService getService() {
+    public APIService getService() {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
                     .client(getClient())
@@ -62,7 +60,7 @@ public class ChaoPuRetrofitManamer {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "bearer XXXXXXXX" )
+                        .addHeader("Authorization", "bearer ")
                         .build();
                 return chain.proceed(request);
             }
