@@ -55,6 +55,7 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
         viewHolder.ItemCusrometRemark.setText(mLists.get(position).getRemark());
         if (flag==2){
             viewHolder.LastTimeLab.setText("下次跟进时间");
+            viewHolder.ItemCusrometLastTime.setText(mLists.get(position).getLastFollowDate().replaceAll("T", " "));
         }
         /*意向状态*/
         int InterestedStatus = mLists.get(position).getInterestedStatus();
