@@ -9,8 +9,8 @@ android {
         applicationId "com.xiaomai.telemarket"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.5.3"
+        versionCode 13
+        versionName "1.5.7"
     }
     buildTypes {
         release {

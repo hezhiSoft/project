@@ -20,10 +20,11 @@
             android:textSize="@dimen/text_size_bottom_16" />
 
         <TextView
+            android:id="@+id/tv_label_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="(千)"
+            android:text="@string/statistic_dep_unit"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_bottom_16" />
 

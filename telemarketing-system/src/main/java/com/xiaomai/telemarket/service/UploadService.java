@@ -103,7 +103,7 @@ public class UploadService extends IntentService {
                                         }
                                         final File tempFile = new File(recordFile.getParent(), recordFile.getName()+".temp");
                                         if (tempFile.exists()) {
-                                            break;
+                                            break;//加锁状态，表示正在上传中，防止重复上传
                                         }
                                         try {
                                             tempFile.createNewFile();//创建锁文件

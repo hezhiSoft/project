@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -48,6 +50,7 @@ import com.xiaomai.telemarket.module.home.setting.SettingActivity;
 import com.xiaomai.telemarket.module.home.setting.SettingEditActivity;
 import com.xiaomai.telemarket.module.order.OrderActivity;
 import com.xiaomai.telemarket.service.UploadService;
+import com.xiaomai.telemarket.utils.ContactsUtils;
 import com.xiaomai.telemarket.utils.RegexUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -96,6 +99,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     private boolean isCallPhonePermissible=true;
     public static final int RECORD_PERMISSION_REQUEST_CODE = 0x001;
     public static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 0x002;
+    public static final int CONTACT_PERMISSION_REQUEST_CODE = 0x003;
 
     private HomeMenuItemClickListener homeMenuItemClickListener;
 
@@ -146,20 +150,30 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     @Override
     public void onResume() {
         super.onResume();
-        //检测录音权限
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_PERMISSION_REQUEST_CODE);
-            isRecordPermissible = false;
-        }
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_PERMISSION_REQUEST_CODE);
-            isCallPhonePermissible = false;
-        }
+        checkPermission();
         if (isRecordPermissible && isCallPhonePermissible) {
             homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
         }
         if (HomeUserStateTextView != null) {
             HomeUserStateTextView.setText(ISharedPreferencesUtils.getValue(getActivity(), Constant.USER_STATE_NAME_KEY, "上线").toString());
+        }
+    }
+
+    private void checkPermission() {
+        //检测录音权限
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_PERMISSION_REQUEST_CODE);
+            isRecordPermissible = false;
+        }
+        //检测通话权限
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_PERMISSION_REQUEST_CODE);
+            isCallPhonePermissible = false;
+        }
+        //检测联系人读写权限
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                ||ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS,Manifest.permission.WRITE_CALL_LOG}, CONTACT_PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -287,18 +301,32 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     }
 
     @Override
-    public void showDialingOutStarted(CusrometListEntity entity) {
+    public void showDialingOutStarted(final CusrometListEntity entity) {
         if (entity!=null) {
             String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
             if (!TextUtils.isEmpty(dialingType)) {
+                //通知更新客户列表
+                EventBusValues busValues = new EventBusValues();
+                busValues.setWhat(0x201);
+                EventBus.getDefault().post(busValues);
+                //从群拨跳转到客户信息界面
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("entity",entity);
                 ISkipActivityUtil.startIntent(getActivity(), CusrometDetailsActivity.class,bundle);
-                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, true);//从群拨跳转到客户信息界面
-                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);//拨出，设置正在通话中状态
-                //TODO 这里停止群拨状态 等待接收到客户信息编辑界面返回的消息后再判断是否继续拨出
-                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//点保存
-                ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
+                //拨出，设置正在通话中状态
+                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, true);
+                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, true);
+                setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
+                //保存到系统通讯录
+                ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        //拨出
+                        ISystemUtil.makeCall(getActivity(), entity.getCustomerTel(), true);
+                        dismissProgressDlg();
+                    }
+                });
             }
         }
     }
@@ -315,9 +343,11 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     public void showRequestNumberFailed(String msg) {
         // TODO: 30/05/2017 请求号码错误
         showToast(msg);
-        if (homeDialingPresenter!=null&&!homeDialingPresenter.getIsDialingGroupStoped()) {
-            homeDialingPresenter.startDialingByGroup();// TODO: 30/05/2017 请求号码失败,只有处于群拨状态时才重拨
+        if (homeDialingPresenter!=null) {
+//            homeDialingPresenter.startDialingByGroup();// TODO: 30/05/2017 请求号码失败,只有处于群拨状态时才重拨
+            homeDialingPresenter.stopDialingByGroup();
         }
+
     }
 
     @Override
@@ -416,6 +446,9 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                     //点拨挂断电话后，置空拨号类型
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");
                 }
+                //
+//                ContactsUtils.getINSTANCE().deleteCallLog(DataApplication.getInstance().getApplicationContext(), CustomerLocalDataSource.getInstance().getPreCustomer().getCustomerTel());
+                //upload record files
                 if (getActivity()!=null) {
                     Intent intent = new Intent(getActivity(),UploadService.class);
                     getActivity().startService(intent);

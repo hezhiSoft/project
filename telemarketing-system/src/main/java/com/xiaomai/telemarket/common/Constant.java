@@ -53,6 +53,25 @@ public class Constant {
     }
 
     /**
+     * 意向状态
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/17 22:00
+     */
+    public enum ISEmpty {
+        NoEmpty(1), YesEmpty(2);
+        private int value;
+
+        public int getValue() {
+            return value;
+        }
+
+        ISEmpty(int value) {
+            this.value = value;
+        }
+    }
+
+    /**
      *用户状态枚举
      *
      *author: Yang Du <youngdu29@gmail.com>

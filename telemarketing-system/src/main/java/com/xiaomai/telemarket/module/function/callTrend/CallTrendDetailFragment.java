@@ -2,14 +2,17 @@ package com.xiaomai.telemarket.module.function.callTrend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.function.data.CallOutDepStaticsEntity;
 import com.xiaomai.telemarket.module.function.data.StatisticsByMonthParam;
 import com.xiaomai.telemarket.module.function.data.source.CallOutRemoteRepo;
@@ -29,6 +32,8 @@ public class CallTrendDetailFragment extends BaseFragment implements PullToRefre
 
     @BindView(R.id.MonthStatistic_recyclerView)
     PullToRefreshRecyclerView MonthStatisticRecyclerView;
+    @BindView(R.id.tv_label_unit)
+    TextView tvLabelUnit;
     Unbinder unbinder;
 
     private DepStatisticListAdapter mAdapter;
@@ -63,6 +68,15 @@ public class CallTrendDetailFragment extends BaseFragment implements PullToRefre
         MonthStatisticRecyclerView.setMode(PullToRefreshRecyclerView.Mode.PULL_FROM_START);
         MonthStatisticRecyclerView.setPullToRefreshListener(this);
         MonthStatisticRecyclerView.startUpRefresh();//
+        if (paramEntity!=null) {
+            String unitType = "千";
+            if (TextUtils.equals(paramEntity.getType(), Constant.StatisticType.INTENT.getType())) {
+                unitType = "百";
+            }else if (TextUtils.equals(paramEntity.getType(), Constant.StatisticType.APPOINT.getType())) {
+                unitType = "个";
+            }
+            tvLabelUnit.setText(String.format(tvLabelUnit.getText().toString(),unitType));
+        }
     }
 
     public void setParamEntity(StatisticsByMonthParam paramEntity) {

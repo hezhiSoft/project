@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
-import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.module.cstmr.CusrometManagementAdapter;
@@ -43,7 +42,7 @@ import butterknife.Unbinder;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CusrometManagementAllFragment extends BaseFragment implements CusrometManagementFilterManager.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallback<List<CusrometListEntity>>{
+public class CusrometManagementAllFragment extends BaseFragment implements CusrometManagementFilterManager.OnClickItemListener, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,CustomerManageMentDao<List<CusrometListEntity>> {
 
     Unbinder unbinder;
     @BindView(R.id.CustomerAll_recyclerView)
@@ -62,6 +61,8 @@ public class CusrometManagementAllFragment extends BaseFragment implements Cusro
     private List<FiltersEntity> filtersEntities=new ArrayList<>();
 
     private boolean desc=true;
+    private int mTotal;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,13 +192,23 @@ public class CusrometManagementAllFragment extends BaseFragment implements Cusro
     @Override
     public void onPullRefresh() {
         pageIndex++;
-        remoteRepo.requestCusrometLists(pageIndex,sort,filters,this);
+        if (pageIndex * 20 < mTotal) {
+            remoteRepo.requestCusrometLists(pageIndex, sort, filters, this);
+        } else {
+            pageIndex--;
+            CustomerAllRecyclerView.onLoadMoreFinish();
+        }
     }
 
     @Override
-    public void onSuccess(List<CusrometListEntity> data) {
+    public void onSuccess(Object data) {
+    }
+
+    @Override
+    public void onSuccess(List<CusrometListEntity> data,int total) {
         CustomerAllRecyclerView.setEmptyTextViewVisiblity(View.GONE);
         if (pageIndex==1){
+            mTotal = total;
             adapter.clearList();
             adapter.addItems(data);
         }else {
