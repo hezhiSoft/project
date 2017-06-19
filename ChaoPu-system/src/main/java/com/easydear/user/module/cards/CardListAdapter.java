@@ -34,11 +34,6 @@ public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
 
 
     @Override
-    public int getItemCount() {
-        return 4;
-    }
-
-    @Override
     public RecyclerView.ViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(inflater.inflate(R.layout.item_cards, parent, false));
     }
