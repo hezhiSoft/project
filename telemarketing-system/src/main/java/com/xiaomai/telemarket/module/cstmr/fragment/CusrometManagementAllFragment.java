@@ -196,7 +196,9 @@ public class CusrometManagementAllFragment extends BaseFragment implements Cusro
             remoteRepo.requestCusrometLists(pageIndex, sort, filters, this);
         } else {
             pageIndex--;
-            CustomerAllRecyclerView.onLoadMoreFinish();
+            adapter.setLoadMore(false);
+            CustomerAllRecyclerView.closeDownRefresh();
+//            CustomerAllRecyclerView.onLoadMoreFinish();
         }
     }
 

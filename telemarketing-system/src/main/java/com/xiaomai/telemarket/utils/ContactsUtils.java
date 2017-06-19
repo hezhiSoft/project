@@ -7,11 +7,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Data;
@@ -29,6 +29,7 @@ public class ContactsUtils {
     private ContentResolver resolver;
     private MyContentObserver myContentObserver;
     private MyContentObserver myCallObserver;
+    public static final String CONTACT_NAME_SUFFIX = "-麦麦";
 
     public static ContactsUtils getINSTANCE() {
         if (INSTANCE == null) {
@@ -80,7 +81,7 @@ public class ContactsUtils {
         // 内容类型  
         values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
         // 联系人名字  
-        values.put(StructuredName.GIVEN_NAME, name+"-麦麦");
+        values.put(StructuredName.GIVEN_NAME, name+CONTACT_NAME_SUFFIX);
         // 向联系人URI添加联系人名字  
         resolver.insert(Data.CONTENT_URI, values);
         values.clear();
@@ -95,14 +96,29 @@ public class ContactsUtils {
         resolver.insert(Data.CONTENT_URI, values);
         values.clear();
 
-        values.put(Data.RAW_CONTACT_ID, rawContactId);
-        values.put(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
-        // 联系人的Email地址  
-        values.put(Email.DATA, "zhangphil@xxx.com");
-        // 电子邮件的类型  
-        values.put(Email.TYPE, Email.TYPE_WORK);
+//        values.put(Data.RAW_CONTACT_ID, rawContactId);
+//        values.put(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
+//        // 联系人的Email地址
+//        values.put(Email.DATA, "zhangphil@xxx.com");
+//        // 电子邮件的类型
+//        values.put(Email.TYPE, Email.TYPE_WORK);
         // 向联系人Email URI添加Email数据  
-        resolver.insert(Data.CONTENT_URI, values);
+//        resolver.insert(Data.CONTENT_URI, values);
+    }
+
+    public void deleteContact(Context context,String name) {
+        //根据姓名求id
+        Uri uri = ContactsContract.RawContacts.CONTENT_URI;//Uri.parse("content://com.android.contacts/raw_contacts");
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(uri, new String[]{Data._ID},"display_name=?", new String[]{name+CONTACT_NAME_SUFFIX}, null);
+        if(cursor.moveToFirst()){
+            int id = cursor.getInt(0);
+            //根据id删除data中的相应数据
+            resolver.delete(uri, "display_name=?", new String[]{name+CONTACT_NAME_SUFFIX});
+            uri = Uri.parse("content://com.android.contacts/data");
+            resolver.delete(uri, "raw_contact_id=?", new String[]{id+""});
+        }
+
     }
 
     /**

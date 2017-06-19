@@ -218,7 +218,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
 //                        showToast("");
                     }
                 } else {
-                    homeDialingPresenter.stopDialingByGroup();
+                    homeDialingPresenter.stopDialingByGroup();//手动停止
                 }
                 break;
             case R.id.Home_singCall_Layout:/*点呼*/
@@ -344,8 +344,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
         // TODO: 30/05/2017 请求号码错误
         showToast(msg);
         if (homeDialingPresenter!=null) {
-//            homeDialingPresenter.startDialingByGroup();// TODO: 30/05/2017 请求号码失败,只有处于群拨状态时才重拨
-            homeDialingPresenter.stopDialingByGroup();
+            homeDialingPresenter.stopDialingByGroup();//出错停止
         }
 
     }
@@ -354,7 +353,7 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
     public void showDialingFinished(String msg) {
         String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
         if (homeDialingPresenter != null) {
-            homeDialingPresenter.stopDialingByGroup();
+            homeDialingPresenter.stopDialingByGroup();//取号完成 结束
             homeDialingPresenter.resetPreCustomerInfoWhenFinished();
         } else {
             ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);//TODO 手动停止群呼
@@ -418,15 +417,14 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                     Object obj = values.getObject();
                     boolean isResume = obj != null ? (boolean) values.getObject() : false;
                     if (isResume) {
-                        //TODO 保存成功后，在群拨状态下要继续拨号
-                        if (homeDialingPresenter != null) {
-                            homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
-                        }
+                        //TODO 保存成功后，在群拨状态下要继续拨号 直接在挂断监听那里执行重拨操作，这里只处理异常停止
+//                        if (homeDialingPresenter != null) {
+//                            homeDialingPresenter.checkIsDialingGroupUnStoppedAndDialingOutNotRefreshUI();
+//                        }
                         ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, false);
                     } else {
-                        //TODO 保存失败，出错，暂停群拨
                         if (homeDialingPresenter!=null) {
-                            homeDialingPresenter.stopDialingByGroup();
+                            homeDialingPresenter.stopDialingByGroup();//TODO 保存失败，出错，暂停群拨
                         }
                         ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_GROUP_FINISHED, true);
                     }
@@ -446,8 +444,6 @@ public class HomeFragment extends BaseFragment implements HomeDialingContract.Vi
                     //点拨挂断电话后，置空拨号类型
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "");
                 }
-                //
-//                ContactsUtils.getINSTANCE().deleteCallLog(DataApplication.getInstance().getApplicationContext(), CustomerLocalDataSource.getInstance().getPreCustomer().getCustomerTel());
                 //upload record files
                 if (getActivity()!=null) {
                     Intent intent = new Intent(getActivity(),UploadService.class);

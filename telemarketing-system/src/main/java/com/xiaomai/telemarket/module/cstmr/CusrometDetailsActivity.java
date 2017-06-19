@@ -38,6 +38,7 @@ import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsuranceP
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.InsuranceActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.CusrometPropertyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.PropertyActivity;
+import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
 import com.xiaomai.telemarket.utils.ContactsUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -172,6 +173,7 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
                             //拨出
+                            CustomerLocalDataSource.getInstance().setPreCustomer(entity);
                             ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
                         }
                     });
@@ -242,6 +244,7 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
                     //拨出
+                    CustomerLocalDataSource.getInstance().setPreCustomer(entity);
                     ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
                 }
             });
