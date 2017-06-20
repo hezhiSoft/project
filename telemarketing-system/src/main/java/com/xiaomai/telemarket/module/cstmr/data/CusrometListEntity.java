@@ -17,6 +17,7 @@ public class CusrometListEntity implements Serializable{
     private String UserID;
     private String CustomerName;
     private String CustomerTel;
+    private int IsEmpty;
     private int Sex;
     private int InterestedStatus;
     private int MaritalStatus;
@@ -27,6 +28,7 @@ public class CusrometListEntity implements Serializable{
     private int SocialSecurityAccount;
     private int AccountWater;
     private String FollowDate;
+    private String LastFollowDate;
     private String Remark;
     private String CreatedBy;
     private String CreatedDate;
@@ -36,6 +38,14 @@ public class CusrometListEntity implements Serializable{
     private String RowVersion;
     private int RowIndex;
     private String Extend;
+
+    public int getIsEmpty() {
+        return IsEmpty;
+    }
+
+    public void setIsEmpty(int isEmpty) {
+        IsEmpty = isEmpty;
+    }
 
     public String getID() {
         return ID;
@@ -147,6 +157,14 @@ public class CusrometListEntity implements Serializable{
 
     public void setSocialSecurityAccount(int SocialSecurityAccount) {
         this.SocialSecurityAccount = SocialSecurityAccount;
+    }
+
+    public String getLastFollowDate() {
+        return LastFollowDate;
+    }
+
+    public void setLastFollowDate(String lastFollowDate) {
+        LastFollowDate = lastFollowDate;
     }
 
     public int getAccountWater() {

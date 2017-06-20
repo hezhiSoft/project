@@ -13,7 +13,7 @@ public class DebtoEntity implements Serializable{
     private String ID;
     private String CustomerID;
     private String TypeDept;
-    private int LoanAmount;
+    private double LoanAmount;
     private int RemainingLoanAmount;
     private int MonthlyPayments;
     private String LoanDate;
@@ -58,11 +58,11 @@ public class DebtoEntity implements Serializable{
         this.TypeDept = TypeDept;
     }
 
-    public int getLoanAmount() {
+    public double getLoanAmount() {
         return LoanAmount;
     }
 
-    public void setLoanAmount(int LoanAmount) {
+    public void setLoanAmount(double LoanAmount) {
         this.LoanAmount = LoanAmount;
     }
 

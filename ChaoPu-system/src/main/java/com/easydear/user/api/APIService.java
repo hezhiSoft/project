@@ -1,7 +1,8 @@
 package com.easydear.user.api;
 
-import com.easydear.user.api.data.UserInfoEntity;
+import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
+import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.easydear.user.module.message.data.MessageDetailEntity;
 import com.easydear.user.module.message.data.MessageItemEntity;
@@ -65,4 +66,13 @@ public interface APIService {
      */
     @POST
     Call<ResponseEntity<List<MessageDetailEntity>>> queryMessageDetail(@Url String url);
+
+    /**
+     * 查询卡包列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/16 下午8:31
+     */
+    @POST
+    Call<ResponseEntity<List<CardEntity>>> queryCards(@Url String url);
 }

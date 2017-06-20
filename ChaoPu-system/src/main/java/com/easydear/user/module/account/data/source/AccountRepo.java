@@ -1,13 +1,16 @@
-package com.easydear.user.api.data.source;
+package com.easydear.user.module.account.data.source;
 
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
-import com.easydear.user.api.data.UserInfoEntity;
+import com.easydear.user.module.account.data.UserInfoEntity;
+import com.easydear.user.api.RetrofitManager;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
 
 import retrofit2.Call;
+
+import static android.R.attr.data;
 
 
 /**
@@ -34,6 +37,7 @@ public class AccountRepo implements BaseDataSourse {
     public void login(String account, String pwd, final RemetoRepoCallbackV2<UserInfoEntity> callback) {
         callback.onReqStart();
         loginCall = ChaoPuRetrofitManamer.getAPIService().login(account, pwd);
+        loginCall = RetrofitManager.getInstance().getService().login(account, pwd);
         loginCall.enqueue(new RetrofitCallbackV2<ResponseEntity<UserInfoEntity>>() {
             @Override
             public void onSuccess(ResponseEntity<UserInfoEntity> data) {

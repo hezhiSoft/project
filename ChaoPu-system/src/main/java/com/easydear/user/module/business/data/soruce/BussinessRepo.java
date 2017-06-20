@@ -2,6 +2,7 @@ package com.easydear.user.module.business.data.soruce;
 
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
+import com.easydear.user.api.RetrofitManager;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
@@ -48,6 +49,7 @@ public class BussinessRepo implements BaseDataSourse {
         callback.onReqStart();
         String url = "business/listByKey?pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
         businessCall = ChaoPuRetrofitManamer.getAPIService().queryBusiness(url);
+        businessCall = RetrofitManager.getInstance().getService().queryBusiness(url);
         businessCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<BusinessEntity>>>() {
             @Override
             public void onSuccess(ResponseEntity<List<BusinessEntity>> data) {

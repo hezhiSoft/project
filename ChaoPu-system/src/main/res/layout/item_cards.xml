@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_seletor"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#888888"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ItemCards_Business_Logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/default_head_img" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/ItemCards_Business_Logo"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ItemCard_Business_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商家名"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/ItemCard_Business_Desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="商家介绍"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/ItemCard_Level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="V1会员"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/ItemCard_CardSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/ItemCard_Level"
+                android:text="我有卡卷 8 张"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

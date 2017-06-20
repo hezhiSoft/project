@@ -3,7 +3,7 @@ package com.easydear.user;
 import android.app.Application;
 
 import com.amap.api.location.AMapLocation;
-import com.easydear.user.api.data.UserInfoEntity;
+import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.common.Constant;
 import com.easydear.user.common.LocationManager;
 import com.google.gson.Gson;

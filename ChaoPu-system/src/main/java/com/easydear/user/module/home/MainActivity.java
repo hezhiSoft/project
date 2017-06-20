@@ -2,6 +2,7 @@ package com.easydear.user.module.home;
 
 import android.os.Bundle;
 import android.text.style.DynamicDrawableSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -12,6 +13,7 @@ import com.easydear.user.module.mine.MineFragment;
 import com.easydear.user.module.scann.ScanningFragment;
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
+import com.jinggan.library.utils.IActivityManage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +35,8 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
     @BindView(R.id.main_bottom_navigationBar)
     MainBottomNavigationBar mainBottomNavigationBar;
+
+    private long exitTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,8 +87,27 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 break;
             case TAB_MINE:
                 setToolbarCenterTitle(R.string.tab_mine);
-                setToolbarVisibility(View.VISIBLE);
+                setToolbarVisibility(View.GONE);
                 break;
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            showToast("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            IActivityManage.getInstance().exit();
+            System.exit(0);
         }
     }
 }

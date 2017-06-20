@@ -1,4 +1,4 @@
-package com.easydear.user.api.data;
+package com.easydear.user.module.account.data;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>

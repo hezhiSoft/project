@@ -119,7 +119,7 @@ public class MineFragment extends BaseFragment implements TitleLayout.OnNaviBarC
                 AppCheckHelper.getInstance().checkVersion(getActivity(), true);
                 break;
             case R.id.tv_clear_rent_client:
-                DialogFactory.showMsgDialog(getContext(), "停用系统提示", "确定停用系统?", "停用", "取消", new View.OnClickListener() {
+                DialogFactory.showMsgDialog(getContext(), "系统提示", "确定停用系统?", "停用", "取消", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showProgressDlg("操作中...");
