@@ -167,7 +167,6 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
                 break;
             case R.id.CusrometDetails_phone_ImageView:
                 if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x999)) {
-                    ISharedPreferencesUtils.setValue(this, Constant.NOT_SEND_DIALING_MSG, true);
                     ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
                         @Override
                         public void handleMessage(Message msg) {
@@ -238,7 +237,6 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 0x999) {
-            ISharedPreferencesUtils.setValue(this, Constant.NOT_SEND_DIALING_MSG, true);
             ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
                 @Override
                 public void handleMessage(Message msg) {

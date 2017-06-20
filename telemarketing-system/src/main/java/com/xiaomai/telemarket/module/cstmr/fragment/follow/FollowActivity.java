@@ -16,14 +16,12 @@ import android.widget.TextView;
 import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
-import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
 import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.XiaoMaiBaseActivity;
-import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
@@ -135,7 +133,6 @@ public class FollowActivity extends XiaoMaiBaseActivity {
                     return;
                 }
                 if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x998)) {
-                    ISharedPreferencesUtils.setValue(this, Constant.NOT_SEND_DIALING_MSG, true);
                     ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), cusrometListEntity.getCustomerName(), cusrometListEntity.getCustomerTel(), new Handler() {
                         @Override
                         public void handleMessage(Message msg) {
@@ -195,7 +192,6 @@ public class FollowActivity extends XiaoMaiBaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 0x998) {
-            ISharedPreferencesUtils.setValue(this, Constant.NOT_SEND_DIALING_MSG, true);
             ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), cusrometListEntity.getCustomerName(), cusrometListEntity.getCustomerTel(), new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
