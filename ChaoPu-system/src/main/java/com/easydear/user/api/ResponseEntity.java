@@ -1,6 +1,6 @@
 package com.easydear.user.api;
 
-public class ResponeEntity<T> {
+public class ResponseEntity<T> {
 
     private int Code;
     private String Message;

@@ -1,7 +1,7 @@
 package com.easydear.user.api.data.source;
 
 import com.easydear.user.api.ChaoPuRetrofitManamer;
-import com.easydear.user.api.ResponeEntity;
+import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.api.data.UserInfoEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
@@ -20,7 +20,7 @@ import retrofit2.Call;
 
 public class AccountRepo implements BaseDataSourse {
 
-    private Call<ResponeEntity<UserInfoEntity>> loginCall;
+    private Call<ResponseEntity<UserInfoEntity>> loginCall;
 
     private static AccountRepo instance;
 
@@ -34,9 +34,9 @@ public class AccountRepo implements BaseDataSourse {
     public void login(String account, String pwd, final RemetoRepoCallbackV2<UserInfoEntity> callback) {
         callback.onReqStart();
         loginCall = ChaoPuRetrofitManamer.getAPIService().login(account, pwd);
-        loginCall.enqueue(new RetrofitCallbackV2<ResponeEntity<UserInfoEntity>>() {
+        loginCall.enqueue(new RetrofitCallbackV2<ResponseEntity<UserInfoEntity>>() {
             @Override
-            public void onSuccess(ResponeEntity<UserInfoEntity> data) {
+            public void onSuccess(ResponseEntity<UserInfoEntity> data) {
                 if (data.getCode() == 200) {
                     callback.onSuccess(data.getData());
                 } else {

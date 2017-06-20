@@ -1,7 +1,7 @@
 package com.easydear.user.module.business.data.soruce;
 
 import com.easydear.user.api.ChaoPuRetrofitManamer;
-import com.easydear.user.api.ResponeEntity;
+import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
@@ -21,7 +21,7 @@ import retrofit2.Call;
 
 public class BussinessRepo implements BaseDataSourse {
 
-    private Call<ResponeEntity<List<BusinessEntity>>> businessCall;
+    private Call<ResponseEntity<List<BusinessEntity>>> businessCall;
 
     private static BussinessRepo instance;
 
@@ -48,9 +48,9 @@ public class BussinessRepo implements BaseDataSourse {
         callback.onReqStart();
         String url = "business/listByKey?pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
         businessCall = ChaoPuRetrofitManamer.getAPIService().queryBusiness(url);
-        businessCall.enqueue(new RetrofitCallbackV2<ResponeEntity<List<BusinessEntity>>>() {
+        businessCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<BusinessEntity>>>() {
             @Override
-            public void onSuccess(ResponeEntity<List<BusinessEntity>> data) {
+            public void onSuccess(ResponseEntity<List<BusinessEntity>> data) {
                 if (data.getCode() == 200) {
                     callback.onSuccess(data.getData());
                 } else {
