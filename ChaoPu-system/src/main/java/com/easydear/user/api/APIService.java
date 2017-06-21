@@ -4,6 +4,8 @@ import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
+import com.easydear.user.module.message.data.MessageDetailEntity;
+import com.easydear.user.module.message.data.MessageItemEntity;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public interface APIService {
 
 
     @POST("login/loginUser")
-    Call<ResponeEntity<UserInfoEntity>> login(@Query("mobile") String mobile, @Query("password") String password);
+    Call<ResponseEntity<UserInfoEntity>> login(@Query("mobile") String mobile, @Query("password") String password);
 
     /**
      * 查询商家列表
@@ -33,7 +35,7 @@ public interface APIService {
      * @return
      */
     @POST
-    Call<ResponeEntity<List<BusinessEntity>>> queryBusiness(@Url String url);
+    Call<ResponseEntity<List<BusinessEntity>>> queryBusiness(@Url String url);
 
     /**
      * 查询动态列表
@@ -42,7 +44,28 @@ public interface APIService {
      * created at 2017/6/16 下午3:14
      */
     @POST
-    Call<ResponeEntity<List<DynamicEntity>>> queryDynamics(@Url String url);
+    Call<ResponseEntity<List<DynamicEntity>>> queryDynamics(@Url String url);
+
+    /**
+     * 查询系统消息列表
+     * author: Colin
+     */
+    @POST
+    Call<ResponseEntity<List<MessageItemEntity>>> queryTuiMessages(@Url String url);
+
+    /**
+     * 查询商家消息列表
+     * author: Colin
+     */
+    @POST
+    Call<ResponseEntity<List<MessageItemEntity>>> queryBusMessages(@Url String url);
+
+    /**
+     * 查询单个商家的消息详情
+     * author: Colin
+     */
+    @POST
+    Call<ResponseEntity<List<MessageDetailEntity>>> queryMessageDetail(@Url String url);
 
     /**
      * 查询卡包列表
@@ -51,5 +74,5 @@ public interface APIService {
      * created at 2017/6/16 下午8:31
      */
     @POST
-    Call<ResponeEntity<List<CardEntity>>> queryCards(@Url String url);
+    Call<ResponseEntity<List<CardEntity>>> queryCards(@Url String url);
 }
