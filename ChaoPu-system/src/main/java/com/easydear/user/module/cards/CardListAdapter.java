@@ -27,11 +27,9 @@ import butterknife.ButterKnife;
 
 public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
 
-
     public CardListAdapter(Context context) {
         super(context);
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
@@ -73,6 +71,4 @@ public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
             ButterKnife.bind(this, view);
         }
     }
-
-
 }
