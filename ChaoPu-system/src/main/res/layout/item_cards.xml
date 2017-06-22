@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ItemCards_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -14,9 +15,10 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/ItemCards_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#888888"
+            android:background="@drawable/card_item_bag"
             android:padding="10dp">
 
             <ImageView
@@ -38,7 +40,6 @@
                     android:id="@+id/ItemCard_Business_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="商家名"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -47,7 +48,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="商家介绍"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -62,7 +62,6 @@
                 android:id="@+id/ItemCard_Level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="V1会员"
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
@@ -73,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/ItemCard_Level"
-                android:text="我有卡卷 8 张"
                 android:textColor="#666666"
                 android:textSize="14sp" />
         </RelativeLayout>
