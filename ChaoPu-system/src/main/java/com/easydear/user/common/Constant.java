@@ -14,4 +14,6 @@ public class Constant {
     public static final String PASSWORD_KEY = "password";
     public static final String USERINFO_KEY = "userInfo";
 
+
+    public static final int DEFAULT_LOAD_SIZE = 10;
 }
