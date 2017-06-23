@@ -47,11 +47,11 @@ public class CallTrendActivity extends XiaoMaiBaseActivity implements DepStatist
 
     private void initTabLayout() {
         tabNames = getResources().getStringArray(R.array.statistic_dep_details_tab_array);
-        Bundle bundle = new Bundle();
 
         outCountFragment = new CallTrendDetailFragment();
         paramEntity = getParamEntity();
         paramEntity.setType(Constant.StatisticType.CALL.getType());
+        Bundle bundle = new Bundle();
         bundle.putSerializable(CallTrendDetailFragment.EXTRA_PARAM, paramEntity);
         outCountFragment.setArguments(bundle);
         fragments.add(outCountFragment);//外呼数量
@@ -59,6 +59,7 @@ public class CallTrendActivity extends XiaoMaiBaseActivity implements DepStatist
         connectFragment = new CallTrendDetailFragment();
         paramEntity = getParamEntity();
         paramEntity.setType(Constant.StatisticType.CONNECT.getType());
+        bundle = new Bundle();
         bundle.putSerializable(CallTrendDetailFragment.EXTRA_PARAM, paramEntity);
         connectFragment.setArguments(bundle);
         fragments.add(connectFragment);//接通数量
@@ -66,6 +67,7 @@ public class CallTrendActivity extends XiaoMaiBaseActivity implements DepStatist
         intentFragment = new CallTrendDetailFragment();
         paramEntity = getParamEntity();
         paramEntity.setType(Constant.StatisticType.INTENT.getType());
+        bundle = new Bundle();
         bundle.putSerializable(CallTrendDetailFragment.EXTRA_PARAM, paramEntity);
         intentFragment.setArguments(bundle);
         fragments.add(intentFragment);//意向状态
@@ -73,6 +75,7 @@ public class CallTrendActivity extends XiaoMaiBaseActivity implements DepStatist
         reservationFragment = new CallTrendDetailFragment();
         paramEntity = getParamEntity();
         paramEntity.setType(Constant.StatisticType.APPOINT.getType());
+        bundle = new Bundle();
         bundle.putSerializable(CallTrendDetailFragment.EXTRA_PARAM, paramEntity);
         reservationFragment.setArguments(bundle);
         fragments.add(reservationFragment);//预约上门

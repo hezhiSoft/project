@@ -33,7 +33,7 @@ public class IFileUtils {
     /*图片文件夹*/
     public static final String IMAGE_DEIRECTORY = "image";
     /*录音文件夹*/
-    public static final String RECORD_DIRECTORY = "record";
+    public static final String RECORD_DIRECTORY = "records";
     /*缓存文件夹*/
     public static final String IMAGE_CATCH_DIR = "catch";
     /*下载目录*/

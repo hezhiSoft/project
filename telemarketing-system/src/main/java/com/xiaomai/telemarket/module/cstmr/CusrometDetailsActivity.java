@@ -35,6 +35,7 @@ import com.xiaomai.telemarket.module.cstmr.fragment.insurance.CusrometInsuranceP
 import com.xiaomai.telemarket.module.cstmr.fragment.insurance.InsuranceActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.CusrometPropertyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.PropertyActivity;
+import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -162,21 +163,21 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
                 break;
             case R.id.CusrometDetails_phone_ImageView:
                 if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x999)) {
-                    ISharedPreferencesUtils.setValue(this, Constant.NOT_SEND_DIALING_MSG, true);
-                    ISystemUtil.makeCall(this, entity.getCustomerTel(), true);
+                    //拨出
+                    CustomerLocalDataSource.getInstance().setPreCustomer(entity);
+                    ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
+//                    ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
+//                        @Override
+//                        public void handleMessage(Message msg) {
+//                            super.handleMessage(msg);
+//                            //拨出
+//                            CustomerLocalDataSource.getInstance().setPreCustomer(entity);
+//                            ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
+//                        }
+//                    });
                 }
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
-                /*判断当前是否处于群呼状态,通知群呼当前处理编辑状态*/
-                //这时候群拨已经暂停了 ，不需要再通知暂停
-//                boolean isCall = IStringUtils.toBool(ISharedPreferencesUtils.getValue(this, Constant.IS_DIALING_GROUP_FINISHED, false).toString());
-//                if (isCall) {
-//                    EventBusValues values = new EventBusValues();
-//                    values.setWhat(0x10101);
-//                    values.setObject(false);
-//                    EventBus.getDefault().post(values);
-//                }
-
                 int currentItem = CusrometDetailsTabLayout.getViewPager().getCurrentItem();
                 if (currentItem == 0) {/*客户信息*/
                     CusrometInfoActivity.startIntentToEdit(this, InfoFragment.getCusromentEntity());
@@ -235,8 +236,16 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 0x999) {
-            ISharedPreferencesUtils.setValue(this, Constant.NOT_SEND_DIALING_MSG, true);
-            ISystemUtil.makeCall(this, entity.getCustomerTel(), true);
+            //拨出
+            CustomerLocalDataSource.getInstance().setPreCustomer(entity);
+            ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
+//            ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    super.handleMessage(msg);
+//
+//                }
+//            });
         }
     }
 }

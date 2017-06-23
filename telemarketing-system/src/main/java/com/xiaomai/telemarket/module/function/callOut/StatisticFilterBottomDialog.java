@@ -1,10 +1,6 @@
 package com.xiaomai.telemarket.module.function.callOut;
 
-import android.app.Dialog;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +13,7 @@ import com.jinggan.library.ui.date.bean.DateBean;
 import com.jinggan.library.ui.date.bean.DateType;
 import com.jinggan.library.utils.IDateTimeUtils;
 import com.xiaomai.telemarket.R;
+import com.xiaomai.telemarket.common.CommPopupWindow;
 import com.xiaomai.telemarket.module.function.data.StatisticByUserParam;
 
 import butterknife.BindView;
@@ -28,8 +25,9 @@ import butterknife.Unbinder;
  * Created by yangdu on 12/06/2017.
  */
 
-public class StatisticFilterBottomDialog extends BottomSheetDialogFragment {
+public class StatisticFilterBottomDialog {
 
+    private final Context mContext;
     @BindView(R.id.edt_statistic_username)
     EditText edtStatisticUsername;
     @BindView(R.id.tv_statistic_date_start)
@@ -54,38 +52,34 @@ public class StatisticFilterBottomDialog extends BottomSheetDialogFragment {
     EditText edtStatisticDurationEnd;
     Unbinder unbinder;
 
+    private CommPopupWindow commPopupWindow;
+
     private StatisticByUserParam userParamntity;
 
     private OnConfirmClickListener onConfirmClickListener;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.statistic_filter_user_dialog, null);
+    public StatisticFilterBottomDialog(Context context,StatisticByUserParam userParamntity) {
+        mContext = context;
+        this.userParamntity = userParamntity;
+        View view=initView(context);
+        commPopupWindow = new CommPopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    private View initView(Context context) {
+        View view = LayoutInflater.from(context).inflate(R.layout.statistic_filter_user_dialog, null);
         unbinder = ButterKnife.bind(this, view);
         resetParams(userParamntity);
-        setMaxHeight(view);
-        ViewGroup viewParent = (ViewGroup) view.getParent();
-        if (viewParent != null) {
-            viewParent.removeView(view);
-        }
         return view;
     }
 
     // TODO: 12/06/2017 设置bottom sheet dialog 高度
-    private void setMaxHeight(View contentView) {
-        Dialog dialog = getDialog();
-        dialog.setContentView(contentView);
-        View view = dialog.getWindow().findViewById(android.support.design.R.id.design_bottom_sheet);
-        BottomSheetBehavior.from(view).setState(BottomSheetBehavior.STATE_EXPANDED);
-//        BottomSheetBehavior.from(view).setPeekHeight(ScreenUtils.getScreenHeight(getActivity()));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+//    private void setMaxHeight(View contentView) {
+//        Dialog dialog = getDialog();
+//        dialog.setContentView(contentView);
+//        View view = dialog.getWindow().findViewById(android.support.design.R.id.design_bottom_sheet);
+//        BottomSheetBehavior.from(view).setState(BottomSheetBehavior.STATE_EXPANDED);
+////        BottomSheetBehavior.from(view).setPeekHeight(ScreenUtils.getScreenHeight(getActivity()));
+//    }
 
     @OnClick({R.id.DialogFilters_close_ImageView, R.id.tv_statistic_date_start, R.id.tv_statistic_date_end, R.id.DialogTaskFilters_replace, R.id.DialogTaskFilters_confirm})
     public void onViewClicked(View view) {
@@ -96,7 +90,7 @@ public class StatisticFilterBottomDialog extends BottomSheetDialogFragment {
                 break;
             case R.id.tv_statistic_date_start:
                 //开始日期
-                dialog = new DatePickDialog(getContext());
+                dialog = new DatePickDialog(mContext);
                 dialog.setTitle("选择开始日期");
                 dialog.setType(DateType.TYPE_YMD);
                 dialog.setOnSureLisener(new OnSureLisener() {
@@ -109,7 +103,7 @@ public class StatisticFilterBottomDialog extends BottomSheetDialogFragment {
                 break;
             case R.id.tv_statistic_date_end:
                 //结束日期
-                dialog = new DatePickDialog(getContext());
+                dialog = new DatePickDialog(mContext);
                 dialog.setTitle("选择结束日期");
                 dialog.setType(DateType.TYPE_YMD);
                 dialog.setOnSureLisener(new OnSureLisener() {
@@ -132,11 +126,6 @@ public class StatisticFilterBottomDialog extends BottomSheetDialogFragment {
                 dismiss();
                 break;
         }
-    }
-
-    public StatisticFilterBottomDialog setUserParamntity(StatisticByUserParam userParamntity) {
-        this.userParamntity = userParamntity;
-        return this;
     }
 
     private void resetParams(StatisticByUserParam paramEntity) {
@@ -201,6 +190,18 @@ public class StatisticFilterBottomDialog extends BottomSheetDialogFragment {
         }
         if (edtStatisticDurationEnd.getText().length() > 0) {
             userParamntity.setToDuration(Integer.valueOf(edtStatisticDurationEnd.getText().toString()));
+        }
+    }
+
+    public void showAtAnchor(View anchor) {
+        if (commPopupWindow!=null&&anchor!=null) {
+            commPopupWindow.showAtButton(anchor);
+        }
+    }
+
+    public void dismiss() {
+        if (commPopupWindow!=null&&commPopupWindow.isShowing()) {
+            commPopupWindow.dismiss();
         }
     }
 

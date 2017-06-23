@@ -85,4 +85,6 @@
     <string name="statistic_connect_duration_start">接通时长起</string>
     <string name="statistic_connect_duration_end">接通时长止</string>
 
+    <string name="statistic_dep_unit">(%1$s)</string>
+
 </resources>

@@ -1,7 +1,7 @@
 android {
     buildTypes {
         release {
-            buildConfigField "String", "DOMAIN", "\"http://101.37.174.53:88/Beta/\""
+                buildConfigField "String", "DOMAIN", "\"http://101.37.174.53:88/Beta/\""
         }
         debug {
             buildConfigField "String", "DOMAIN", "\"http://101.37.174.53:88/Beta/\""
