@@ -60,12 +60,12 @@ public class UserStatisticListAdapter extends BaseRecyclerViewAdapter<CallOutSta
         final TextView tvDuration = ButterKnife.findById(view, R.id.tv_duration);
         final TextView tvIntentCount = ButterKnife.findById(view, R.id.tv_intent_count);
         final TextView tvReservation = ButterKnife.findById(view, R.id.tv_reservation_count);
-        tvOutCount.setText(entity.getCntCall()+"");
-        tvConnectCount.setText(entity.getCntConnect()+"");
-        tvRate.setText(entity.getRateConnect()+"");
-        tvDuration.setText(entity.getCntDuration()+"");
-        tvIntentCount.setText(entity.getCntIntent()+"");
-        tvReservation.setText(entity.getCntAppoint() + "");
+        tvOutCount.setText(entity.getCntCallLbl()+"");
+        tvConnectCount.setText(entity.getCntConnectLbl()+"");
+        tvRate.setText(entity.getRateConnectLbl()+"");
+        tvDuration.setText(entity.getCntDurationLbl()+"");
+        tvIntentCount.setText(entity.getCntIntentLbl()+"");
+        tvReservation.setText(entity.getCntAppointLbl() + "");
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

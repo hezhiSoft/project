@@ -160,7 +160,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
             mRepo.requestPhoneNumberFromPrivate(mPreCustomerEnity != null ? mPreCustomerEnity.getCreatedDate() : "", new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
-                    requestFinished();
+//                    requestFinished();//成功之后等拨出后再消失进度条
                     if (data != null && data.size() > 0) {
                         CusrometListEntity entity = data.get(0);
                         mLocalCustomerDataSource.setPreCustomer(entity);
@@ -201,7 +201,7 @@ public class HomeDialingPresenter implements HomeDialingContract.Presenter {
             mRepo.requestPhoneNumberFromPublic(new RemetoRepoCallback<List<CusrometListEntity>>() {
                 @Override
                 public void onSuccess(List<CusrometListEntity> data) {
-                    requestFinished();
+//                    requestFinished();//成功之后等拨出后再消失进度条
                     if (data != null && data.size() > 0) {
                         CusrometListEntity entity = data.get(0);
                         mLocalCustomerDataSource.setPreCustomer(entity);

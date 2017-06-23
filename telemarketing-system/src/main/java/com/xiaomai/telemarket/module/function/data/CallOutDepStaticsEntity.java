@@ -15,7 +15,7 @@ public class CallOutDepStaticsEntity {
      */
 
     private String DeptId;
-    private int Cnt;
+    private float Cnt;
     private int DateMonth;
 
     public String getDeptId() {
@@ -26,11 +26,11 @@ public class CallOutDepStaticsEntity {
         this.DeptId = DeptId;
     }
 
-    public int getCnt() {
+    public float getCnt() {
         return Cnt;
     }
 
-    public void setCnt(int Cnt) {
+    public void setCnt(float Cnt) {
         this.Cnt = Cnt;
     }
 

@@ -1,22 +1,16 @@
 package com.xiaomai.telemarket.module.cstmr.fragment.info;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
-import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.widget.FormSelectTopTitleView;
 import com.jinggan.library.ui.widget.FormWriteTopTitleView;
@@ -25,7 +19,6 @@ import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.DictionaryEntity;
-import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryDialog;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
 import com.xiaomai.telemarket.module.cstmr.fragment.follow.FollowActivity;
@@ -257,7 +250,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
         entity.setCustomerName(InfoCustomerName.getContentText());
         entity.setCustomerTel(InfoCustomerTel.getContentText());
         entity.setIsSZHukou(InfoIsSZHukou.getStatus());
-        entity.setIsEmpty(InfoTelStatus.getStatus());
+        entity.setIsEmpty(InfoTelStatus.getStatus()==0?Constant.ISEmpty.NoEmpty.getValue():InfoTelStatus.getStatus());
         entity.setSex(IStringUtils.toInt(SexCode));
         entity.setMaritalStatus(IStringUtils.toInt(MaritalStatusCode));
         entity.setWage(IStringUtils.toInt(InfoPayroll.getContentText()));
@@ -287,7 +280,7 @@ public class ShowInfoBaseFragment extends BaseFragment {
                     public void onClick(View v) {
 //                        FollowActivity.startIntentToAdd(getActivity());
                         isShowDialog = false;
-                        FollowActivity.startIntentToQuery(getActivity(), entity.getCustomerTel(), entity.getID());
+                        FollowActivity.startIntentToQuery(getActivity(), entity, entity.getID());
                         onSubmit();
                     }
                 }, new View.OnClickListener() {

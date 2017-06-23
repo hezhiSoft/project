@@ -9,16 +9,21 @@ import android.widget.TextView;
 
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
+import com.jinggan.library.net.retrofit.RemetoRepoCallback;
+import com.jinggan.library.ui.dialog.DialogFactory;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
+import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.cstmr.dictionary.DictionaryHelper;
+import com.xiaomai.telemarket.module.cstmr.fragment.follow.FollowActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -37,6 +42,8 @@ public class CusrometInfoShowFragment extends BaseFragment {
     TextView CusInfoCustomerTel;
     @BindView(R.id.CusInfo_IsSZHukou)
     TextView CusInfoIsSZHukou;
+    @BindView(R.id.CusInfo_IsEmptyTel)
+    TextView CusInfoIsEmptyTel;
     @BindView(R.id.CusInfo_Sex)
     TextView CusInfoSex;
     @BindView(R.id.CusInfo_MaritalStatus)
@@ -53,9 +60,14 @@ public class CusrometInfoShowFragment extends BaseFragment {
     TextView CusInfoRemark;
     @BindView(R.id.CusInfo_YiXiang)
     TextView YiXiangStatus;
+    @BindView(R.id.CustomerInfo_Mark_Empty)
+    TextView CustomerInfoMarkEmpty;
+    @BindView(R.id.CustomerInfo_Set_Intent)
+    TextView CustomerInfoSetIntent;
     Unbinder unbinder;
 
     private CusrometListEntity entity;
+    private boolean isSkipToFollow;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +100,7 @@ public class CusrometInfoShowFragment extends BaseFragment {
 
         CusInfoCustomerTel.setText(entity.getCustomerTel());
         CusInfoIsSZHukou.setText(entity.getIsSZHukou() == 0 ? "否" : "是");
+        CusInfoIsEmptyTel.setText(entity.getIsEmpty() == Constant.ISEmpty.YesEmpty.getValue() ? "是" : "否");
         CusInfoSex.setText(DictionaryHelper.ParseSex(entity.getSex() + ""));
         CusInfoMaritalStatus.setText(DictionaryHelper.ParseMaritalStatus(entity.getMaritalStatus() + ""));
         CusInfoPayroll.setText(entity.getWage() + "");
@@ -102,6 +115,102 @@ public class CusrometInfoShowFragment extends BaseFragment {
         } else if (status == Constant.Description.NoInterested.getValue()) {
             YiXiangStatus.setText("无意向");
         }
+    }
+
+    @OnClick({R.id.CustomerInfo_Mark_Empty, R.id.CustomerInfo_Set_Intent})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.CustomerInfo_Mark_Empty:
+                //标记空号
+                if (entity != null) {
+                    showProgressDlg("操作中...");
+                    CusrometRemoteRepo.getInstance().setEmptyTel(entity.getID(), new RemetoRepoCallback<Void>() {
+                        @Override
+                        public void onSuccess(Void data) {
+                            showToast("设置成功！");
+                            // TODO: 18/06/2017 刷新ui
+                            entity.setIsEmpty(1);
+                            initUI(entity);
+                        }
+
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            showToast(msg);
+                        }
+
+                        @Override
+                        public void onThrowable(Throwable t) {
+                            showToast("服务器异常！");
+                        }
+
+                        @Override
+                        public void onUnauthorized() {
+                            showToast("服务器异常！");
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            dismissProgressDlg();
+                        }
+                    });
+                }
+                break;
+            case R.id.CustomerInfo_Set_Intent:
+                //设置意向
+                if (entity != null) {
+                    DialogFactory.showMsgDialog(getContext(), "设置提示", "是否设置下次跟进时间?", "设置", "提交", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            isSkipToFollow = true;
+                            setInterested();
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            isSkipToFollow = false;
+                            setInterested();
+                        }
+                    });
+                }
+                break;
+        }
+    }
+
+    private void setInterested() {
+        showProgressDlg("操作中...");
+        CusrometRemoteRepo.getInstance().setInterested(entity.getID(), new RemetoRepoCallback<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                entity.setInterestedStatus(2);
+                if (entity.getIsEmpty()==0) {
+                    entity.setIsEmpty(Constant.ISEmpty.NoEmpty.getValue());
+                }
+                initUI(entity);
+                if (isSkipToFollow) {
+                    FollowActivity.startIntentToQuery(getActivity(), entity, entity.getID());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                showToast(msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                showToast("服务器异常！");
+            }
+
+            @Override
+            public void onUnauthorized() {
+                showToast("服务器异常！");
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDlg();
+            }
+        });
     }
 
     @Subscribe
@@ -131,4 +240,5 @@ public class CusrometInfoShowFragment extends BaseFragment {
     public CusrometListEntity getCusromentEntity() {
         return entity;
     }
+
 }

@@ -84,7 +84,7 @@ public class CusrometManagementAdapter extends BaseRecyclerViewAdapter<CusrometL
                     ISkipActivityUtil.startIntent(mContent, CusrometDetailsActivity.class,bundle);
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_FROM_HOME_GROUP_DIALING, false);
                 }else if (flag==2){
-                    FollowActivity.startIntentToQuery((Activity)mContent,mLists.get(position).getCustomerTel(),mLists.get(position).getID());
+                    FollowActivity.startIntentToQuery((Activity)mContent,mLists.get(position),mLists.get(position).getID());
                 }
 
             }

@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/default_background_color"
                     android:padding="@dimen/dimen_10dp"
+                    android:visibility="gone"
                     android:text="其他条件" />
 
                 <LinearLayout
@@ -126,7 +127,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="备注:"
+                        android:text="备        注:"
                         android:textColor="#666666"
                         android:textSize="14sp" />
 

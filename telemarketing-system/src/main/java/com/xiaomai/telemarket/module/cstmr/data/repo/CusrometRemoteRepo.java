@@ -5,6 +5,7 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallback;
 import com.jinggan.library.net.retrofit.RetrofitCallback;
 import com.xiaomai.telemarket.api.Responese;
 import com.xiaomai.telemarket.api.XiaomaiRetrofitManager;
+import com.xiaomai.telemarket.common.Constant;
 import com.xiaomai.telemarket.module.cstmr.data.CarEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CompanyEntity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
@@ -15,6 +16,7 @@ import com.xiaomai.telemarket.module.cstmr.data.FiltersEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.InsuranceEntity;
 import com.xiaomai.telemarket.module.cstmr.data.PropertyEntity;
+import com.xiaomai.telemarket.module.cstmr.fragment.CustomerManageMentDao;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -187,7 +189,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
      * @param pageIndex
      * @param callback
      */
-    public void requestCusrometLists(int pageIndex, String sort, JSONObject filter, final RemetoRepoCallback<List<CusrometListEntity>> callback) {
+    public void requestCusrometLists(int pageIndex, String sort, JSONObject filter, final CustomerManageMentDao<List<CusrometListEntity>> callback) {
         RequestBody body = null;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -206,7 +208,7 @@ public class CusrometRemoteRepo implements BaseDataSourse {
             @Override
             public void onSuccess(Responese<List<CusrometListEntity>> data) {
                 if (data.getData() != null && data.getData().size() >= 0) {
-                    callback.onSuccess(data.getData());
+                    callback.onSuccess(data.getData(),data.getTotal());
                 } else {
                     callback.onFailure(data.getCode(), data.getMsg());
                 }
@@ -1294,6 +1296,55 @@ public class CusrometRemoteRepo implements BaseDataSourse {
             e.printStackTrace();
         }
         Call<Responese<Void>> call = XiaomaiRetrofitManager.getAPIService().setEmptyTel(body);
+        call.enqueue(new RetrofitCallback<Responese<Void>>() {
+            @Override
+            public void onSuccess(Responese<Void> data) {
+                if (callback != null)
+                    callback.onSuccess(data.getData());
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                if (callback != null)
+                    callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onThrowable(Throwable t) {
+                if (callback != null)
+                    callback.onThrowable(t);
+            }
+
+            @Override
+            public void onUnauthorized() {
+                if (callback != null)
+                    callback.onUnauthorized();
+            }
+
+            @Override
+            public void onFinish() {
+                if (callback != null)
+                    callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 设置有意向状态
+     * @param customerId
+     * @param callback
+     */
+    public void setInterested(String customerId, final RemetoRepoCallback<Void> callback) {
+        RequestBody body = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("customerid", customerId);
+            jsonObject.put("interested", Constant.Description.YesInterested.getValue());
+            body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Call<Responese<Void>> call = XiaomaiRetrofitManager.getAPIService().setInterested(body);
         call.enqueue(new RetrofitCallback<Responese<Void>>() {
             @Override
             public void onSuccess(Responese<Void> data) {

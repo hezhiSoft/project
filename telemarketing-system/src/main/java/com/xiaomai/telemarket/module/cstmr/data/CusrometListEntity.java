@@ -38,6 +38,7 @@ public class CusrometListEntity implements Serializable{
     private String RowVersion;
     private int RowIndex;
     private String Extend;
+    private int PushRedisFlag;
 
     public int getIsEmpty() {
         return IsEmpty;
@@ -252,5 +253,13 @@ public class CusrometListEntity implements Serializable{
 
     public void setExtend(String extend) {
         Extend = extend;
+    }
+
+    public int getPushRedisFlag() {
+        return PushRedisFlag;
+    }
+
+    public void setPushRedisFlag(int pushRedisFlag) {
+        PushRedisFlag = pushRedisFlag;
     }
 }

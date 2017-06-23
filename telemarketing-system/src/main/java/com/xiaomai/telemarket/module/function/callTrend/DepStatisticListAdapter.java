@@ -36,8 +36,8 @@ public class DepStatisticListAdapter extends BaseRecyclerViewAdapter<CallOutDepS
         CallOutDepStaticsEntity entity = mLists.get(position);
         if (entity!=null) {
             viewHolder.tvMonthLabel.setText(entity.getDateMonth()+"月");
-            viewHolder.progressbar.setProgress(entity.getCnt()/1000);
-            viewHolder.tvNumber.setText(entity.getCnt()+"");
+            viewHolder.progressbar.setProgress(Math.round(entity.getCnt()));
+            viewHolder.tvNumber.setText((entity.getCnt()>0?entity.getCnt():0)+"");
         }
     }
 
