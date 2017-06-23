@@ -4,8 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -19,14 +17,12 @@ import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
-import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.module.cstmr.data.CusrometListEntity;
 import com.xiaomai.telemarket.module.cstmr.data.FollowEntity;
 import com.xiaomai.telemarket.module.cstmr.data.repo.CusrometRemoteRepo;
 import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
-import com.xiaomai.telemarket.utils.ContactsUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -133,15 +129,18 @@ public class FollowActivity extends XiaoMaiBaseActivity {
                     return;
                 }
                 if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x998)) {
-                    ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), cusrometListEntity.getCustomerName(), cusrometListEntity.getCustomerTel(), new Handler() {
-                        @Override
-                        public void handleMessage(Message msg) {
-                            super.handleMessage(msg);
-                            //
-                            CustomerLocalDataSource.getInstance().setPreCustomer(cusrometListEntity);
-                            ISystemUtil.makeCall(FollowActivity.this, cusrometListEntity.getCustomerTel(), true);
-                        }
-                    });
+                    //
+                    CustomerLocalDataSource.getInstance().setPreCustomer(cusrometListEntity);
+                    ISystemUtil.makeCall(FollowActivity.this, cusrometListEntity.getCustomerTel(), true);
+//                    ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), cusrometListEntity.getCustomerName(), cusrometListEntity.getCustomerTel(), new Handler() {
+//                        @Override
+//                        public void handleMessage(Message msg) {
+//                            super.handleMessage(msg);
+//                            //
+//                            CustomerLocalDataSource.getInstance().setPreCustomer(cusrometListEntity);
+//                            ISystemUtil.makeCall(FollowActivity.this, cusrometListEntity.getCustomerTel(), true);
+//                        }
+//                    });
                 }
                 break;
             case R.id.FollowActivity_Edit_ImageView:
@@ -192,15 +191,18 @@ public class FollowActivity extends XiaoMaiBaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 0x998) {
-            ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), cusrometListEntity.getCustomerName(), cusrometListEntity.getCustomerTel(), new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    //拨出
-                    CustomerLocalDataSource.getInstance().setPreCustomer(cusrometListEntity);
-                    ISystemUtil.makeCall(FollowActivity.this, cusrometListEntity.getCustomerTel(), true);
-                }
-            });
+            //拨出
+            CustomerLocalDataSource.getInstance().setPreCustomer(cusrometListEntity);
+            ISystemUtil.makeCall(FollowActivity.this, cusrometListEntity.getCustomerTel(), true);
+//            ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), cusrometListEntity.getCustomerName(), cusrometListEntity.getCustomerTel(), new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    super.handleMessage(msg);
+//                    //拨出
+//                    CustomerLocalDataSource.getInstance().setPreCustomer(cusrometListEntity);
+//                    ISystemUtil.makeCall(FollowActivity.this, cusrometListEntity.getCustomerTel(), true);
+//                }
+//            });
         }
     }
 }

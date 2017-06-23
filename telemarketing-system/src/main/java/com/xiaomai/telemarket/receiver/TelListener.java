@@ -9,8 +9,6 @@ import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.common.Constant;
-import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
-import com.xiaomai.telemarket.utils.ContactsUtils;
 import com.xiaomai.telemarket.utils.PhoneRecordUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +45,7 @@ public class TelListener extends PhoneStateListener {
                         values.setWhat(0x10102);
                         EventBus.getDefault().post(values);
                     }
-                    ContactsUtils.getINSTANCE().deleteContact(DataApplication.getInstance().getApplicationContext(), CustomerLocalDataSource.getInstance().getPreCustomer().getCustomerName());
+//                    ContactsUtils.getINSTANCE().deleteContact(DataApplication.getInstance().getApplicationContext(), CustomerLocalDataSource.getInstance().getPreCustomer().getCustomerName());
                     Log.i(TAG, "onCallStateChanged #CALL_STATE_IDLE" + "挂断");
                 }
                 break;

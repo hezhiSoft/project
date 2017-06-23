@@ -3,8 +3,6 @@ package com.xiaomai.telemarket.module.cstmr;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -17,7 +15,6 @@ import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.IStringUtils;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
-import com.xiaomai.telemarket.DataApplication;
 import com.xiaomai.telemarket.R;
 import com.xiaomai.telemarket.XiaoMaiBaseActivity;
 import com.xiaomai.telemarket.common.Constant;
@@ -39,7 +36,6 @@ import com.xiaomai.telemarket.module.cstmr.fragment.insurance.InsuranceActivity;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.CusrometPropertyFragment;
 import com.xiaomai.telemarket.module.cstmr.fragment.property.PropertyActivity;
 import com.xiaomai.telemarket.module.home.dial.data.source.local.CustomerLocalDataSource;
-import com.xiaomai.telemarket.utils.ContactsUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -167,15 +163,18 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
                 break;
             case R.id.CusrometDetails_phone_ImageView:
                 if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x999)) {
-                    ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
-                        @Override
-                        public void handleMessage(Message msg) {
-                            super.handleMessage(msg);
-                            //拨出
-                            CustomerLocalDataSource.getInstance().setPreCustomer(entity);
-                            ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
-                        }
-                    });
+                    //拨出
+                    CustomerLocalDataSource.getInstance().setPreCustomer(entity);
+                    ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
+//                    ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
+//                        @Override
+//                        public void handleMessage(Message msg) {
+//                            super.handleMessage(msg);
+//                            //拨出
+//                            CustomerLocalDataSource.getInstance().setPreCustomer(entity);
+//                            ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
+//                        }
+//                    });
                 }
                 break;
             case R.id.CusrometDetails_Edit_ImageView:
@@ -237,15 +236,16 @@ public class CusrometDetailsActivity extends XiaoMaiBaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 0x999) {
-            ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    //拨出
-                    CustomerLocalDataSource.getInstance().setPreCustomer(entity);
-                    ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
-                }
-            });
+            //拨出
+            CustomerLocalDataSource.getInstance().setPreCustomer(entity);
+            ISystemUtil.makeCall(CusrometDetailsActivity.this, entity.getCustomerTel(), true);
+//            ContactsUtils.getINSTANCE().saveCustomerToContacts(DataApplication.getInstance().getApplicationContext(), entity.getCustomerName(), entity.getCustomerTel(), new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    super.handleMessage(msg);
+//
+//                }
+//            });
         }
     }
 }
