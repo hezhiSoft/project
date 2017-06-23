@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_background"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+
+        <ImageView
+            android:id="@+id/message_detail_business_head"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"/>
+
+        <LinearLayout
+            android:id="@+id/message_detail_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/message_detail_business_head"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp">
+
+
+            <TextView
+                android:id="@+id/message_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/message_detail_time"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/message_detail_consume_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:padding="3dp"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
