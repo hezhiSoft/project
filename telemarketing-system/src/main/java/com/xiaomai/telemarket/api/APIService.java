@@ -402,6 +402,15 @@ public interface APIService {
     Call<Responese<Void>> setEmptyTel(@Body RequestBody body);
 
     /**
+     * 设置有意向状态
+     * <p> {"customerid":"5BE01E0A-3417-4F7B-A757-0BDE2F975E6A","interested":1}
+     * author: hezhiWu
+     * created at 2017/6/3 18:18
+     */
+    @POST("api/customer/SetInterested")
+    Call<Responese<Void>> setInterested(@Body RequestBody body);
+
+    /**
      * 设置租户过期
      * <p>
      * author: hezhiWu

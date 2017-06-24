@@ -28,7 +28,6 @@ public class Constant {
     public static final String IS_FROM_HOME_GROUP_DIALING = "is_from_group_dialing";//是否从群拨跳转到的客户信息界面
     public static final String DIALING_TYPE_KEY = "is_dial_by_group";//拨号类别 群呼1／点呼0 停止拨号后会置未空串
     public static final String IS_IN_CUSTOMER_DETAIL_UI = "is_in_customer_detail";//在查看或编辑客户信息界面CusrometDetailsActivity／
-    public static final String NOT_SEND_DIALING_MSG = "not_send_dialing_msg";//客户详情中单独拨号不需要接受挂断监听
 
     public static final String DIALING_TYPE_BY_GROUP = "group";//拨号类别 群呼
     public static final String DIALING_TYPE_BY_SINGLE = "single";//拨号类别 点呼
@@ -48,6 +47,25 @@ public class Constant {
         }
 
         Description(int value) {
+            this.value = value;
+        }
+    }
+
+    /**
+     * 意向状态
+     * <p>
+     * author: hezhiWu
+     * created at 2017/5/17 22:00
+     */
+    public enum ISEmpty {
+        NoEmpty(1), YesEmpty(2);
+        private int value;
+
+        public int getValue() {
+            return value;
+        }
+
+        ISEmpty(int value) {
             this.value = value;
         }
     }

@@ -8,8 +8,11 @@
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_5dp"
-        android:padding="@dimen/dimen_5dp"
+        android:layout_marginLeft="@dimen/dimen_5dp"
+        android:layout_marginRight="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_3dp"
+        android:layout_marginBottom="@dimen/dimen_3dp"
+        android:padding="@dimen/dimen_3dp"
         android:orientation="horizontal">
 
         <TextView
@@ -38,7 +41,7 @@
         android:id="@+id/layout_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_5dp"
+        android:layout_margin="@dimen/dimen_3dp"
         android:visibility="visible"
         android:orientation="vertical">
 

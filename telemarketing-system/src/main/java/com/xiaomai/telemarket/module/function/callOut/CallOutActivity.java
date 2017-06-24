@@ -61,9 +61,9 @@ public class CallOutActivity extends XiaoMaiBaseActivity implements PullToRefres
     @Override
     public void onClickToolbarRightLayout() {
         super.onClickToolbarRightLayout();
-        StatisticFilterBottomDialog dialog = new StatisticFilterBottomDialog();
-        dialog.setUserParamntity(userParamEntity).setOnConfirmClickListener(this);
-        dialog.show(getSupportFragmentManager(), getClass().getSimpleName());
+        StatisticFilterBottomDialog dialog = new StatisticFilterBottomDialog(CallOutActivity.this,userParamEntity);
+        dialog.setOnConfirmClickListener(this);
+        dialog.showAtAnchor(userStateRecyclerview);
     }
 
     @Override
@@ -105,6 +105,7 @@ public class CallOutActivity extends XiaoMaiBaseActivity implements PullToRefres
 
     @Override
     public void onThrowable(Throwable t) {
+        mAdatper.clearList();
         if (userStateRecyclerview != null) {
             userStateRecyclerview.setPageHint(R.mipmap.icon_page_error,"页面出错");
         }
@@ -112,6 +113,7 @@ public class CallOutActivity extends XiaoMaiBaseActivity implements PullToRefres
 
     @Override
     public void onUnauthorized() {
+        mAdatper.clearList();
         if (userStateRecyclerview != null) {
             userStateRecyclerview.setPageHint(R.mipmap.icon_page_error,"页面出错");
         }

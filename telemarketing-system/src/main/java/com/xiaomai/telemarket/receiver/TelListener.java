@@ -2,6 +2,7 @@ package com.xiaomai.telemarket.receiver;
 
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jinggan.library.base.EventBusValues;
@@ -38,13 +39,13 @@ public class TelListener extends PhoneStateListener {
                     mRecord.stop();
                     ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.IS_DIALING_KEY, false);
                     // TODO: 04/06/2017 挂断电话 通知到客户信息编辑界面
-                    boolean notSendMsg= (boolean) ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.NOT_SEND_DIALING_MSG, false);
-                    if (!notSendMsg) {
+                    String dialingType = ISharedPreferencesUtils.getValue(DataApplication.getInstance().getApplicationContext(), Constant.DIALING_TYPE_KEY, "").toString();
+                    if (!TextUtils.isEmpty(dialingType)) {
                         EventBusValues values=new EventBusValues();
                         values.setWhat(0x10102);
                         EventBus.getDefault().post(values);
                     }
-                    ISharedPreferencesUtils.setValue(DataApplication.getInstance().getApplicationContext(), Constant.NOT_SEND_DIALING_MSG, false);//重置
+//                    ContactsUtils.getINSTANCE().deleteContact(DataApplication.getInstance().getApplicationContext(), CustomerLocalDataSource.getInstance().getPreCustomer().getCustomerName());
                     Log.i(TAG, "onCallStateChanged #CALL_STATE_IDLE" + "挂断");
                 }
                 break;
