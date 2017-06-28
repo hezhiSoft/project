@@ -57,17 +57,22 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.business.BusinessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
             android:name=".module.message.MessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.account.SettingActivity"
+            android:name=".module.message.MessageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.message.MessageDetailActivity"
+            android:name=".module.account.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
