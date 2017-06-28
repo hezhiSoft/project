@@ -1,12 +1,15 @@
 package com.easydear.user.module.account.data.source;
 
+import com.easydear.user.DataApplication;
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
+import com.easydear.user.common.Constant;
 import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.api.RetrofitManager;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 
 import retrofit2.Call;
 
@@ -50,6 +53,7 @@ public class AccountRepo implements BaseDataSourse {
             @Override
             public void onSuccess(ResponseEntity<UserInfoEntity> data) {
                 if (data.getCode() == 200) {
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance(), Constant.TOKEN_KEN,data.getToken());
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMessage());
@@ -82,6 +86,7 @@ public class AccountRepo implements BaseDataSourse {
             @Override
             public void onSuccess(ResponseEntity<UserInfoEntity> data) {
                 if (data.getCode() == 200) {
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance(), Constant.TOKEN_KEN,data.getToken());
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMessage());

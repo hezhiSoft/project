@@ -43,7 +43,7 @@ public interface APIService {
      * created at 2017/6/28 21:29
      */
     @POST("neweasydear-app/register/insertUser")
-    Call<ResponseEntity<UserInfoEntity>> regist(@Query("mobile") String mobile,@Query("password") String password, @Query("mobileCode") String mobileCode);
+    Call<ResponseEntity<UserInfoEntity>> regist(@Query("mobile") String mobile, @Query("password") String password, @Query("mobileCode") String mobileCode);
 
     /**
      * 发送验证码
@@ -101,4 +101,23 @@ public interface APIService {
      */
     @POST
     Call<ResponseEntity<List<CardEntity>>> queryCards(@Url String url);
+
+    /**
+     * 获取卡卷数量
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 22:07
+     */
+    @GET("neweasydear-app/user/countByUserNo")
+    Call<ResponseEntity<String>> getCardSize(@Query("userNo") String userNo);
+
+    /**
+     * 获取商家数量
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 22:21
+     */
+    @GET("neweasydear-app/user/countBussinessByUserNo")
+    Call<ResponseEntity<String>> getBussinessSize(@Query("userNo") String userNo);
+
 }

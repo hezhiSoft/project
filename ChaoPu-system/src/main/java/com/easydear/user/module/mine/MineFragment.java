@@ -14,7 +14,9 @@ import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.module.account.SettingActivity;
 import com.easydear.user.module.account.data.UserInfoEntity;
+import com.easydear.user.module.mine.data.source.MineRepo;
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.utils.ISkipActivityUtil;
 
@@ -52,6 +54,7 @@ public class MineFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_mine, null);
         unbinder = ButterKnife.bind(this, rootView);
         initUI();
+        request();
         return rootView;
     }
 
@@ -99,5 +102,52 @@ public class MineFragment extends BaseFragment {
             case R.id.MineFragment_AboutMe:
                 break;
         }
+    }
+
+
+    private void request() {
+        MineRepo.getInstance().getCardSize(new RemetoRepoCallbackV2<String>() {
+            @Override
+            public void onReqStart() {
+
+            }
+
+            @Override
+            public void onSuccess(String data) {
+                MineFragmentConsumeCar.setText("消费卷   " + data);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+
+        MineRepo.getInstance().getBussinessSize(new RemetoRepoCallbackV2<String>() {
+            @Override
+            public void onReqStart() {
+
+            }
+
+            @Override
+            public void onSuccess(String data) {
+                MineFragmentBusinessNumber.setText(data);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 }

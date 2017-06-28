@@ -82,7 +82,7 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:text="消费卷    8"
+            android:text="消费卷"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -103,7 +103,7 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:text="会员商家    8"
+            android:text="会员商家"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
