@@ -24,6 +24,8 @@ import static android.R.attr.data;
 public class AccountRepo implements BaseDataSourse {
 
     private Call<ResponseEntity<UserInfoEntity>> loginCall;
+    private Call<ResponseEntity<UserInfoEntity>> registCall;
+    private Call<ResponseEntity<String>> validateCodeCall;
 
     private static AccountRepo instance;
 
@@ -34,6 +36,12 @@ public class AccountRepo implements BaseDataSourse {
         return instance;
     }
 
+    /**
+     * 登录
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 20:53
+     */
     public void login(String account, String pwd, final RemetoRepoCallbackV2<UserInfoEntity> callback) {
         callback.onReqStart();
         loginCall = ChaoPuRetrofitManamer.getAPIService().login(account, pwd);
@@ -60,10 +68,77 @@ public class AccountRepo implements BaseDataSourse {
         });
     }
 
+
+    /**
+     * 注册
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 21:32
+     */
+    public void regist(String mobile, String password, String valiCode, final RemetoRepoCallbackV2<UserInfoEntity> callback) {
+        callback.onReqStart();
+        registCall = ChaoPuRetrofitManamer.getService().regist(mobile, password, valiCode);
+        registCall.enqueue(new RetrofitCallbackV2<ResponseEntity<UserInfoEntity>>() {
+            @Override
+            public void onSuccess(ResponseEntity<UserInfoEntity> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 发送验证码
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 20:52
+     */
+    public void sendMobileValidateCode(String mobile, final RemetoRepoCallbackV2<String> callback) {
+        callback.onReqStart();
+        validateCodeCall = ChaoPuRetrofitManamer.getService().sendMobileValidateCode(mobile);
+        validateCodeCall.enqueue(new RetrofitCallbackV2<ResponseEntity<String>>() {
+            @Override
+            public void onSuccess(ResponseEntity<String> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess("验证已发送");
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
     @Override
     public void cancelRequest() {
-        if (loginCall!=null&&!loginCall.isCanceled()){
+        if (loginCall != null && !loginCall.isCanceled()) {
             loginCall.cancel();
+        }
+
+        if (validateCodeCall != null && !validateCodeCall.isCanceled()) {
+            validateCodeCall.cancel();
         }
     }
 }

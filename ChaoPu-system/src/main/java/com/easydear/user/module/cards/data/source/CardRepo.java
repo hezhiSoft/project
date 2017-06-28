@@ -34,7 +34,7 @@ public class CardRepo implements BaseDataSourse {
 
     public void queryCards(int pageSize, String keywords, final RemetoRepoCallbackV2<List<CardEntity>> callback) {
         callback.onReqStart();
-        String url = "card/listByKey?pageSize=" + pageSize + "&pageCount=10&keywords=" + keywords+"&userNo="+ DataApplication.getInstance().getUserInfoEntity().getUserNo();
+        String url = "neweasydear-app/card/listByKey?pageSize=" + pageSize + "&pageCount=10&keywords=" + keywords+"&userNo="+ DataApplication.getInstance().getUserInfoEntity().getUserNo();
         cardsCall = RetrofitManager.getInstance().getService().queryCards(url);
         cardsCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<CardEntity>>>() {
             @Override

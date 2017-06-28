@@ -28,12 +28,45 @@
             app:edit_hint="输入手机号码"
             app:edite_icon="@mipmap/ic_phone" />
 
-        <com.jinggan.library.ui.widget.ResetEditView
-            android:id="@+id/Regist_Ver_Code"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:edit_hint="输入验证码"
-            app:edite_icon="@mipmap/ic_ver_code" />
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/ver_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_ver_code" />
+
+            <EditText
+                android:id="@+id/validateCode_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:hint="输入验证码"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/ver_icon"
+                android:background="@color/white" />
+
+            <Button
+                android:id="@+id/SendValiCode_Button"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/wayto_button_green_selector"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View style="@style/line_horizontal" />
 
         <com.jinggan.library.ui.widget.ResetEditView
             android:id="@+id/Regist_Pass"
@@ -49,7 +82,6 @@
             app:edit_hint="输入确认密码"
             app:edite_icon="@mipmap/ic_password" />
 
-
         <Button
             android:id="@+id/Regist_button"
             android:layout_width="match_parent"
@@ -57,6 +89,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/wayto_button_red_selector"
             android:text="确认登录"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
