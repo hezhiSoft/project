@@ -1,6 +1,9 @@
 package com.easydear.user.api;
 
+import com.easydear.user.DataApplication;
+import com.easydear.user.common.Constant;
 import com.jinggan.library.net.retrofit.RetrofitManager;
+import com.jinggan.library.utils.ISharedPreferencesUtils;
 
 import java.io.IOException;
 
@@ -62,7 +65,7 @@ public class ChaoPuRetrofitManamer {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "bearer XXXXXXXX" )
+                        .addHeader("Token", ISharedPreferencesUtils.getValue(DataApplication.getInstance(), Constant.TOKEN_KEN,"").toString())
                         .build();
                 return chain.proceed(request);
             }

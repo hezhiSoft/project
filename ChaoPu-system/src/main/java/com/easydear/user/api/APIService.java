@@ -11,7 +11,9 @@ import com.easydear.user.module.message.data.MessageItemEntity;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -26,8 +28,32 @@ import retrofit2.http.Url;
 public interface APIService {
 
 
-    @POST("login/loginUser")
+    /**
+     * 验证码
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 20:48
+     */
+    @POST("neweasydear-app/login/loginUser")
     Call<ResponseEntity<UserInfoEntity>> login(@Query("mobile") String mobile, @Query("password") String password);
+
+    /**
+     * 注册
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 21:29
+     */
+    @POST("neweasydear-app/register/insertUser")
+    Call<ResponseEntity<UserInfoEntity>> regist(@Query("mobile") String mobile, @Query("password") String password, @Query("mobileCode") String mobileCode);
+
+    /**
+     * 发送验证码
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 20:48
+     */
+    @GET("neweasydear-app/user/sendMobile?mobile={mobile}")
+    Call<ResponseEntity<String>> sendMobileValidateCode(@Part("mobile") String mobile);
 
     /**
      * 查询商家列表
@@ -85,4 +111,23 @@ public interface APIService {
      */
     @POST
     Call<ResponseEntity<List<CardEntity>>> queryCards(@Url String url);
+
+    /**
+     * 获取卡卷数量
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 22:07
+     */
+    @GET("neweasydear-app/user/countByUserNo")
+    Call<ResponseEntity<String>> getCardSize(@Query("userNo") String userNo);
+
+    /**
+     * 获取商家数量
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 22:21
+     */
+    @GET("neweasydear-app/user/countBussinessByUserNo")
+    Call<ResponseEntity<String>> getBussinessSize(@Query("userNo") String userNo);
+
 }

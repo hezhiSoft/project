@@ -41,7 +41,7 @@ public class DynamicRepo implements BaseDataSourse {
      */
     public void queryDynamics(int pageSize, int pageCount, String keywords, String type, String province, String city, String area, final RemetoRepoCallbackV2<List<DynamicEntity>> callback) {
         callback.onReqStart();
-        String url = "article/listByKey??pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
+        String url = "neweasydear-app/article/listByKey??pageSize=" + pageSize + "&pageCount=" + pageCount + "&keywords=" + keywords + "&type=" + type + "&province=" + province + "&city=" + city + "&area=" + area;
         dynamicsCall = ChaoPuRetrofitManamer.getAPIService().queryDynamics(url);
         dynamicsCall = RetrofitManager.getInstance().getService().queryDynamics(url);
         dynamicsCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<DynamicEntity>>>() {

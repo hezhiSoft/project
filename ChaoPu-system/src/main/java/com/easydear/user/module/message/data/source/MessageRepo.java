@@ -41,7 +41,7 @@ public class MessageRepo implements BaseDataSourse {
     public void queryTuiMessages(String userNo, final RemetoRepoCallbackV2<List<MessageItemEntity>> callback) {
         callback.onReqStart();
         ILogcat.i(TAG, "queryTuiMessages, useNo = " + userNo);
-        String url = "information/tuiList?userNo=" + userNo + "&pageSize=1" + "&pageCount=1";
+        String url = "neweasydear-app/information/tuiList?userNo=" + userNo + "&pageSize=1" + "&pageCount=1";
         mMessageCall = ChaoPuRetrofitManamer.getAPIService().queryTuiMessages(url);
         mMessageCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<MessageItemEntity>>>() {
             @Override
@@ -77,7 +77,7 @@ public class MessageRepo implements BaseDataSourse {
     public void queryBusMessages(String userNo, final RemetoRepoCallbackV2<List<MessageItemEntity>> callback) {
         callback.onReqStart();
         ILogcat.i(TAG, "queryBusMessages, useNo = " + userNo);
-        String url = "information/busInforList?userNo=" + userNo + "&pageSize=1" + "&pageCount=1";
+        String url = "neweasydear-app/information/busInforList?userNo=" + userNo + "&pageSize=1" + "&pageCount=1";
         mMessageCall = ChaoPuRetrofitManamer.getAPIService().queryBusMessages(url);
         mMessageCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<MessageItemEntity>>>() {
             @Override
@@ -116,7 +116,7 @@ public class MessageRepo implements BaseDataSourse {
      */
     public void reqMsgDetail(String userNo, String businessNo, int pageCount, int pageSize, final RemetoRepoCallbackV2<List<MessageDetailEntity>> callback) {
         ILogcat.i(TAG, "reqMsgDetail, userNo = " + userNo + ", businessNo = " + businessNo + ", pageCount = " + pageCount + ", pageSize = " + pageSize);
-        String url = "information/busDetailInforList?userNo=" + userNo + "&businessNo=" + businessNo + "&pageSize=1" + "&pageCount=1";
+        String url = "neweasydear-app/information/busDetailInforList?userNo=" + userNo + "&businessNo=" + businessNo + "&pageSize=1" + "&pageCount=1";
         mMsgDetailCall = ChaoPuRetrofitManamer.getAPIService().queryMessageDetail(url);
         mMsgDetailCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<MessageDetailEntity>>>() {
             @Override

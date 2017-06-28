@@ -4,6 +4,7 @@ public class ResponseEntity<T> {
 
     private int Code;
     private String Message;
+    private String Token;
     private T Data;
 
     public int getCode() {
@@ -28,5 +29,13 @@ public class ResponseEntity<T> {
 
     public void setData(T data) {
         Data = data;
+    }
+
+    public String getToken() {
+        return Token;
+    }
+
+    public void setToken(String token) {
+        Token = token;
     }
 }
