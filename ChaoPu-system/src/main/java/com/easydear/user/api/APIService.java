@@ -3,6 +3,7 @@ package com.easydear.user.api;
 import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
+import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.easydear.user.module.message.data.MessageDetailEntity;
 import com.easydear.user.module.message.data.MessageItemEntity;
@@ -71,6 +72,15 @@ public interface APIService {
      */
     @POST
     Call<ResponseEntity<List<DynamicEntity>>> queryDynamics(@Url String url);
+
+    /**
+     * 软文详情
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/29 20:51
+     */
+    @POST("neweasydear-app/article/detailById")
+    Call<ResponseEntity<DynamicDetailsEntity>> queryDynamic(@Query("articleId") int articleId);
 
     /**
      * 查询系统消息列表
