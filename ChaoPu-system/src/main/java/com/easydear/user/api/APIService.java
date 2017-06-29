@@ -1,6 +1,7 @@
 package com.easydear.user.api;
 
 import com.easydear.user.module.account.data.UserInfoEntity;
+import com.easydear.user.module.business.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
@@ -63,6 +64,15 @@ public interface APIService {
      */
     @POST
     Call<ResponseEntity<List<BusinessEntity>>> queryBusiness(@Url String url);
+
+    /**
+     * 查询商家详情
+     *
+     * @param url
+     * @return
+     */
+    @POST
+    Call<ResponseEntity<BusinessDetailEntity>> queryBusinessDetail(@Url String url);
 
     /**
      * 查询动态列表

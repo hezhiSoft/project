@@ -15,6 +15,7 @@ import com.easydear.user.module.business.BusinessListFragment;
 import com.easydear.user.module.message.MessageActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
+import com.jinggan.library.utils.ILogcat;
 import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.util.ArrayList;
@@ -72,8 +73,10 @@ public class HomeFragment extends BaseFragment {
         LocationManager.getInstance().startLocation(new LocationManager.LocationCallBack() {
             @Override
             public void onLocation(AMapLocation location) {
+                ILogcat.i(getClass().getSimpleName(), "onCreateView, location = " + location);
                 if (location!=null){
                     HomeFragmentLocationTextView.setText(location.getCity());
+                    ILogcat.i(getClass().getSimpleName(), "onCreateView, location.getCity() = " + location.getCity());
                 }
             }
         });

@@ -87,11 +87,17 @@ public class MessageFragment extends BaseFragment implements PullToRefreshRecycl
 
     @Override
     public void onSuccess(List<MessageItemEntity> data) {
-        if (data == null) {
+        if (data == null || data.size() == 0) {
 //            mRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
             return;
         }
-        mAdapter.addItems(data, 0);
+        // 系统消息加到数据列表开头部位
+        String businessName = data.get(0).getBusinessName();
+        if (businessName != null && !businessName.isEmpty()) {
+            mAdapter.addItems(data);
+        } else {
+            mAdapter.addItems(data, 0);
+        }
     }
 
     @Override

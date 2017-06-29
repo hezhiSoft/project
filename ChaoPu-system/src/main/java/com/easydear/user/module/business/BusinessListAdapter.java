@@ -1,6 +1,7 @@
 package com.easydear.user.module.business;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
+import com.jinggan.library.utils.ILogcat;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.util.List;
 
@@ -61,7 +65,7 @@ public class BusinessListAdapter extends BaseRecyclerViewAdapter<BusinessEntity>
                 .error(R.mipmap.main_img_defaultpic_small)
                 .into(viewHolder.BusinessListBgImageView);
 
-        List<BusinessEntity.ActivityQueryListBean> activityQueryListBean=mLists.get(position).getActivityQueryList();
+        final List<BusinessEntity.ActivityQueryListBean> activityQueryListBean=mLists.get(position).getActivityQueryList();
         if (activityQueryListBean!=null&&activityQueryListBean.size()>0){
             viewHolder.BusinessListSubtilelogoImageView.setVisibility(View.VISIBLE);
             viewHolder.BusinessListSubtilelogoImageView.setText(activityQueryListBean.get(0).getTitle());
@@ -76,10 +80,15 @@ public class BusinessListAdapter extends BaseRecyclerViewAdapter<BusinessEntity>
             });
         }
 
+        final BusinessEntity businessEntity = mLists.get(position);
         viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", businessEntity.getBusinessNo());
+                businessBundle.putString("businessName", businessEntity.getBusinessName());
+                businessBundle.putString("businessLogo", businessEntity.getLogo());
+                ISkipActivityUtil.startIntent(mContent, BusinessActivity.class, businessBundle);
             }
         });
     }
