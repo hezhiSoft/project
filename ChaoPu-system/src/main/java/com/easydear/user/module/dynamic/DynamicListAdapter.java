@@ -1,6 +1,7 @@
 package com.easydear.user.module.dynamic;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,7 +42,7 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
     }
 
     @Override
-    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
 
         /*商家Logo*/
@@ -65,7 +66,9 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
             @Override
             public void onClick(View v) {
                 //TODO 跳转
-                ISkipActivityUtil.startIntent(mContent,DynamicDetailsActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("id",mLists.get(position).getArticleId());
+                ISkipActivityUtil.startIntent(mContent,DynamicDetailsActivity.class,bundle);
             }
         });
     }

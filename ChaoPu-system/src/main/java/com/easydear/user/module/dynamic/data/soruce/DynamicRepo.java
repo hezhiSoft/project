@@ -4,10 +4,13 @@ package com.easydear.user.module.dynamic.data.soruce;
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.api.RetrofitManager;
+import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ import retrofit2.Call;
 public class DynamicRepo implements BaseDataSourse {
 
     private Call<ResponseEntity<List<DynamicEntity>>> dynamicsCall;
+    private Call<ResponseEntity<DynamicDetailsEntity>> detailsCall;
 
     private static DynamicRepo instance;
 
@@ -51,6 +55,37 @@ public class DynamicRepo implements BaseDataSourse {
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 软文详情
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/29 20:54
+     */
+    public void queryDynamic(int articleId, final RemetoRepoCallbackV2<DynamicDetailsEntity> callback) {
+        callback.onFinish();
+        detailsCall = ChaoPuRetrofitManamer.getAPIService().queryDynamic(articleId);
+        detailsCall.enqueue(new RetrofitCallbackV2<ResponseEntity<DynamicDetailsEntity>>() {
+            @Override
+            public void onSuccess(ResponseEntity<DynamicDetailsEntity> data) {
+                if (data.getCode()==200){
+                    callback.onSuccess(data.getData());
+                }else {
+                    callback.onFailure(data.getCode(),data.getMessage());
                 }
             }
 
