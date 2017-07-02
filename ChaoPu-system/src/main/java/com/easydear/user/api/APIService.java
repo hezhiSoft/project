@@ -4,10 +4,13 @@ import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
+import com.easydear.user.module.cards.data.InterestsEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.easydear.user.module.message.data.MessageDetailEntity;
 import com.easydear.user.module.message.data.MessageItemEntity;
+import com.easydear.user.module.order.data.OrderDetailsEntity;
+import com.easydear.user.module.order.data.OrderEntity;
 
 import java.util.List;
 
@@ -84,6 +87,15 @@ public interface APIService {
     Call<ResponseEntity<List<DynamicEntity>>> queryDynamics(@Url String url);
 
     /**
+     * 点赞
+     *
+     * @param articleId
+     * @return
+     */
+    @POST("neweasydear-app/rticleForward/addArticleForward")
+    Call<ResponseEntity<String>> addArticleGood(@Query("articleId") int articleId);
+
+    /**
      * 软文详情
      * <p>
      * author: hezhiWu
@@ -123,6 +135,15 @@ public interface APIService {
     Call<ResponseEntity<List<CardEntity>>> queryCards(@Url String url);
 
     /**
+     * 我的权益
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/16 下午8:31
+     */
+    @POST("neweasydear-app/card/listByUserNo")
+    Call<ResponseEntity<List<InterestsEntity>>> queryInterests(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**
      * 获取卡卷数量
      * <p>
      * author: hezhiWu
@@ -140,4 +161,21 @@ public interface APIService {
     @GET("neweasydear-app/user/countBussinessByUserNo")
     Call<ResponseEntity<String>> getBussinessSize(@Query("userNo") String userNo);
 
+    /**
+     * 订单列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 22:21
+     */
+    @POST("neweasydear-app/user/listOrderByUserNo")
+    Call<ResponseEntity<List<OrderEntity>>> queryOrders(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**
+     * 订单详情
+     * <p>
+     * author: hezhiWu
+     * created at 2017/6/28 22:21
+     */
+    @POST("neweasydear-app/user/detailOrder")
+    Call<ResponseEntity<OrderDetailsEntity>> queryOrderDetails(@Query("orderNo") String billNo);
 }

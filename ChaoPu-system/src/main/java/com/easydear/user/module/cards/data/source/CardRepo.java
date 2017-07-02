@@ -1,9 +1,11 @@
 package com.easydear.user.module.cards.data.source;
 
 import com.easydear.user.DataApplication;
+import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.api.RetrofitManager;
 import com.easydear.user.module.cards.data.CardEntity;
+import com.easydear.user.module.cards.data.InterestsEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
@@ -11,6 +13,7 @@ import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Query;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -23,6 +26,8 @@ import retrofit2.Call;
 public class CardRepo implements BaseDataSourse {
 
     private Call<ResponseEntity<List<CardEntity>>> cardsCall;
+    private Call<ResponseEntity<List<InterestsEntity>>> interestsCall;
+
     private static CardRepo instance;
 
     public static CardRepo getInstance() {
@@ -49,6 +54,30 @@ public class CardRepo implements BaseDataSourse {
             @Override
             public void onFailure(int code, String msg) {
                 callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    public void queryInterests(int pageSize, int pageCount, final RemetoRepoCallbackV2<List<InterestsEntity>> callback){
+        interestsCall= ChaoPuRetrofitManamer.getAPIService().queryInterests(DataApplication.getInstance().getUserInfoEntity().getUserNo(),pageSize,pageCount);
+        interestsCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<InterestsEntity>>>() {
+            @Override
+            public void onSuccess(ResponseEntity<List<InterestsEntity>> data) {
+                if (data.getCode()==200){
+                    callback.onSuccess(data.getData());
+                }else {
+                    callback.onFailure(data.getCode(),data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code,msg);
             }
 
             @Override

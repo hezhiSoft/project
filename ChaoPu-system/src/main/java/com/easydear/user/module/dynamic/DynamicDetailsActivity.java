@@ -3,6 +3,7 @@ package com.easydear.user.module.dynamic;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.soruce.DynamicRepo;
+import com.easydear.user.module.order.data.source.OrderRepo;
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.dialog.DialogFactory;
@@ -19,6 +21,7 @@ import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * author: hezhiWu <hezhi.woo@gmail.com>
@@ -53,7 +56,14 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
         setToolbarTitle("潮铺正文");
         ButterKnife.bind(this);
 
+        setToolbarRightImage(R.mipmap.icon_shared);
+
         DynamicRepo.getInstance().queryDynamic(getIntent().getIntExtra("id", -1), this);
+    }
+
+    @Override
+    public void onClickToolbarRightLayout() {
+        super.onClickToolbarRightLayout();
     }
 
     @Override
@@ -90,5 +100,36 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
     @Override
     public void onFinish() {
         DialogFactory.dimissDialog(dialog);
+    }
+
+    @OnClick({R.id.Dynamic_support, R.id.Dynamic_relay})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.Dynamic_support:
+                OrderRepo.getInstance().addArticleGood(getIntent().getIntExtra("id", -1), new RemetoRepoCallbackV2<String>() {
+                    @Override
+                    public void onReqStart() {
+                        dialog=DialogFactory.createLoadingDialog(DynamicDetailsActivity.this,"点赞...");
+                    }
+
+                    @Override
+                    public void onSuccess(String data) {
+                        supportTextView.setText(data);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        DialogFactory.dimissDialog(dialog);
+                    }
+                });
+                break;
+            case R.id.Dynamic_relay:
+                break;
+        }
     }
 }

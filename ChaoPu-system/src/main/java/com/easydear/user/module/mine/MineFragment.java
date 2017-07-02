@@ -1,6 +1,8 @@
 package com.easydear.user.module.mine;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,16 @@ import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.module.account.SettingActivity;
 import com.easydear.user.module.account.data.UserInfoEntity;
+import com.easydear.user.module.cards.InterestsActivity;
 import com.easydear.user.module.mine.data.source.MineRepo;
+import com.easydear.user.module.order.OrderActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
+import com.jinggan.library.ui.dialog.CommPopupWindow;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.ISystemUtil;
+import com.jinggan.library.utils.PermissionHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +54,8 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.MineFragment_businessNumber)
     TextView MineFragmentBusinessNumber;
     Unbinder unbinder;
+
+    private CommPopupWindow commPopupWindow;
 
     @Nullable
     @Override
@@ -88,18 +97,24 @@ public class MineFragment extends BaseFragment {
                 ISkipActivityUtil.startIntent(getContext(), SettingActivity.class);
                 break;
             case R.id.MineFragment_consumeCar:
+                ISkipActivityUtil.startIntent(getContext(), InterestsActivity.class);
                 break;
             case R.id.MineFragment_businessNumber:
                 break;
             case R.id.MineFragment_track:
                 break;
             case R.id.MineFragment_order:
+                ISkipActivityUtil.startIntent(getContext(), OrderActivity.class);
                 break;
             case R.id.MineFragment_feedback:
                 break;
             case R.id.MineFragment_constomer:
+                if (PermissionHelper.checkPermission(getActivity(), Manifest.permission.CALL_PHONE,0x990)) {
+                    showConstomerDialog();
+                }
                 break;
             case R.id.MineFragment_AboutMe:
+                ISkipActivityUtil.startIntent(getContext(), AboutActivity.class);
                 break;
         }
     }
@@ -114,7 +129,7 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String data) {
-                MineFragmentConsumeCar.setText("消费卷   " + data);
+                MineFragmentConsumeCar.setText("权益数   " + data);
             }
 
             @Override
@@ -136,7 +151,7 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String data) {
-                MineFragmentBusinessNumber.setText(data);
+                MineFragmentBusinessNumber.setText("会员商家   " + data);
             }
 
             @Override
@@ -149,5 +164,40 @@ public class MineFragment extends BaseFragment {
 
             }
         });
+    }
+
+
+    private void showConstomerDialog() {
+        View businessView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_tontact_layout, null);
+        final TextView tell1 = (TextView) businessView.findViewById(R.id.dialog_tontact_tel1);
+        final TextView tell2 = (TextView) businessView.findViewById(R.id.dialog_tontact_tel2);
+        businessView.findViewById(R.id.dialog_tontact_calcel_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commPopupWindow.dismiss();
+            }
+        });
+        tell1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ISystemUtil.makeCall(getActivity(), tell1.getText().toString(), true);
+            }
+        });
+        tell2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ISystemUtil.makeCall(getActivity(), tell1.getText().toString(), true);
+            }
+        });
+        commPopupWindow = new CommPopupWindow(businessView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        commPopupWindow.showAtButton(getView());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==0x990){
+            showConstomerDialog();
+        }
     }
 }

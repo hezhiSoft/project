@@ -47,4 +47,12 @@
         <item name="android:background">@color/line</item>
     </style>
 
+    <!--Button style-->
+    <style name="default_button_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_height">45dip</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
 </resources>
