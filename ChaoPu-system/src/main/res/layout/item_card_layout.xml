@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/business_card_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="5dp" />
+
+
+        <TextView
+            android:id="@+id/business_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/business_card_logo"
+            android:lineSpacingMultiplier="1.3"
+            android:text="汽车常规保养"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/business_card_business_name"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/business_card_name"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/business_card_logo"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.3"
+            android:maxLines="1"
+            android:text="宁波宝恒宝马"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <View style="@style/line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/business_card_serialNo"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/business_card_validity"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/business_card_serialNo"
+            android:gravity="center_vertical|right"
+            android:text="有效期: 2017-08-26"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

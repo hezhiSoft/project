@@ -3,31 +3,30 @@ package com.easydear.user.module.business;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
-import com.easydear.user.module.business.data.BusinessEntity;
+import com.easydear.user.common.Constant;
+import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.soruce.BussinessRepo;
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
+import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
-import com.jinggan.library.utils.ILogcat;
-import com.jinggan.library.utils.ISkipActivityUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
@@ -37,39 +36,51 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
 
     private final String TAG = this.getClass().getSimpleName();
 
-//    @BindView(R.id.business_scroll_vp)
+    //    @BindView(R.id.business_scroll_vp)
 //    ViewPager mScrollViewPager;
     @BindView(R.id.business_scroll_dot_layout)
     LinearLayout mDotLayout;
 
+    @BindView(R.id.business_bg_img)
+    ImageView mBusinessLogoImg;
+    @BindView(R.id.business_name)
+    TextView mBusinessNameTV;
     @BindView(R.id.business_address)
     TextView mBusinessAddress;
-    @BindView(R.id.business_tel)
-    TextView mBusinessTelephone;
-    @BindView(R.id.business_member_container)
-    RelativeLayout mBusinessMemberContainer;
-    @BindView(R.id.business_member_vip_level)
-    TextView mBusinessMemberVipLevel;
-    @BindView(R.id.business_member_card_amount)
-    TextView mBusinessMemberCardAmount;
-    @BindView(R.id.business_member_credit)
-    TextView mBusinessMemberCredit;
-    @BindView(R.id.business_cardlist_recyclerView)
-    PullToRefreshRecyclerView mCardListRecyclerView;
-    @BindView(R.id.business_article_listview)
-    ListView mBusinessArticleListView;
+//    @BindView(R.id.business_tel)
+//    TextView mBusinessTelephone;
+
+    //    @BindView(R.id.business_member_container)
+//    RelativeLayout mBusinessMemberContainer;
+//    @BindView(R.id.business_member_vip_level)
+//    TextView mBusinessMemberVipLevel;
+//    @BindView(R.id.business_member_card_amount)
+//    TextView mBusinessMemberCardAmount;
+//    @BindView(R.id.business_member_credit)
+//    TextView mBusinessMemberCredit;
+//    @BindView(R.id.business_cardlist_recyclerView)
+//    PullToRefreshRecyclerView mCardListRecyclerView;
+//    @BindView(R.id.business_article_listview)
+//    ListView mBusinessArticleListView;
+    @BindView(R.id.business_tab_layout)
+    WaytoTabLayout mBusinessTabLayout;
+
 //    List<ArticleItemEntity> mBusinessArticleList;
 
     private String mBusinessNo;
     private String mBusinessName;
     private String mBusinessLogo;
 
-//    private BusinessPresenter mBusinessPresenter;
+    //    private BusinessPresenter mBusinessPresenter;
     private BussinessRepo mBussinessRepo;
     private static final int BUSINESS_SCROLL_IMAGE = 1001;
     private List<ImageView> dots = new ArrayList<ImageView>();
 //    private ArrayList<ArticleItemEntity> mArticleItemList;
 //    private CardAdapter mCardAdapter;
+
+    private String[] mTabNames;
+    private String[] mTabKeys = new String[]{"mdhd", "sjxq", "hyzx"};
+    private List<BaseFragment> mFragments = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,18 +95,14 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
         mBussinessRepo = BussinessRepo.getInstance();
-        initCardListRecyclerView();
+        initTab();
 
-        //TODO To be deleted!
-        String[] urls = new String[4];
-        ILogcat.i(TAG, "---------->, AAA getBusinessNo = " + mBusinessNo);
-        ILogcat.i(TAG, "---------->, BBB getBusinessName = " + mBusinessName);
-
+//        initCardListRecyclerView();
 //        initScrollImages(urls);
 //        setScrollViewListener();
 
         requestBusinessDetail();
-        requestBusinessArticles();
+//        requestBusinessArticles();
     }
 
     /**
@@ -106,6 +113,35 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
 //        mCardListRecyclerView.setPullToRefreshListener(this);
 //        mCardListRecyclerView.setRecyclerViewAdapter(mCardAdapter);
 //        mCardListRecyclerView.startUpRefresh();
+    }
+
+    private void initTab() {
+        mTabNames = getResources().getStringArray(R.array.business_tab_array);
+        for (int i = 0; i < mTabKeys.length; i++) {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("key", mTabKeys[i]);
+            switch (i) {
+                case 0:
+                    ShopFragment shopFragment = new ShopFragment();
+                    shopFragment.setArguments(bundle);
+                    mFragments.add(shopFragment);
+                    break;
+                case 1:
+                    BusinessDetailFragment businessDetailFragment = new BusinessDetailFragment();
+                    businessDetailFragment.setArguments(bundle);
+                    mFragments.add(businessDetailFragment);
+                    break;
+                case 2:
+                    MemberFragment memberFragment = new MemberFragment();
+                    memberFragment.setArguments(bundle);
+                    mFragments.add(memberFragment);
+                    break;
+                default:
+                    break;
+            }
+        }
+        mBusinessTabLayout.initTabLayout(getSupportFragmentManager(), mFragments, mTabNames);
     }
 
     @Override
@@ -260,20 +296,16 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
     }
 
     @Override
-    public void onSuccess(BusinessDetailEntity entity) {
+    public void onSuccess(BusinessDetailEntity data) {
+        BusinessDetailEntity entity = data;
         if (entity == null) {
             return;
         }
-        String address = entity.getProvinceAdd() + entity.getCityAdd() + entity.getAreaAdd() + entity.getAddress();
-        setToolbarTitle(entity.getBusinessName());
-        mBusinessAddress.setText(address);
-        mBusinessTelephone.setText(entity.getTelephone());
-        if (entity.getIsVip().equalsIgnoreCase("Yes") || entity.getIsVip().equalsIgnoreCase("是")) {
-            mBusinessMemberContainer.setVisibility(View.VISIBLE);
-            mBusinessMemberVipLevel.setText(entity.getVipLevel() + "\n认证会员");
-            mBusinessMemberCardAmount.setText("您有" + entity.getCardSize() + "张礼券");
-            mBusinessMemberCredit.setText("您距离会员升级还需" + entity.getIntegral() + "积分");
-        }
+        /** Set All Details */
+        setBusinessInfo(entity);
+        setShopActivity(entity);
+        setBusinessDetail(entity);
+        setMemberInfo(entity);
     }
 
     @Override
@@ -284,5 +316,49 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
     @Override
     public void onFinish() {
 
+    }
+
+    private void setBusinessInfo(BusinessDetailEntity businessDetailEntity) {
+        String province = businessDetailEntity.getProvinceAdd();
+        String city = businessDetailEntity.getCityAdd();
+        String area = businessDetailEntity.getAreaAdd();
+        String street = businessDetailEntity.getStreetAdd();
+        String address = (province == null ? "" : province) +
+                (city == null ? "" : city) +
+                (area == null ? "" : area) +
+                (street == null ? "" : street) +
+                businessDetailEntity.getAddress();
+        setToolbarTitle(businessDetailEntity.getBusinessName());
+        mBusinessNameTV.setText(businessDetailEntity.getBusinessName());
+        mBusinessAddress.setText(address);
+//        mBusinessTelephone.setText(entity.getTelephone());
+                /*商家Logo*/
+        Glide.with(this).load(BuildConfig.DOMAIN + businessDetailEntity.getBusinessimages())
+//                .asBitmap()
+                .centerCrop()
+//                .placeholder(R.mipmap.default_image)
+//                .error(R.mipmap.default_image)
+                .into(mBusinessLogoImg);
+    }
+
+    private void setShopActivity(BusinessDetailEntity businessDetailEntity) {
+        EventBusValues busValue = new EventBusValues();
+        busValue.setWhat(Constant.EventValue.SET_SHOP_ACTIVITY);
+        busValue.setObject(businessDetailEntity);
+        EventBus.getDefault().post(busValue);
+    }
+
+    private void setBusinessDetail(BusinessDetailEntity businessDetailEntity) {
+        EventBusValues busValue = new EventBusValues();
+        busValue.setWhat(Constant.EventValue.SET_BUSINESS_DETAIL);
+        busValue.setObject(businessDetailEntity);
+        EventBus.getDefault().post(busValue);
+    }
+
+    private void setMemberInfo(BusinessDetailEntity businessDetailEntity) {
+        EventBusValues busValue = new EventBusValues();
+        busValue.setWhat(Constant.EventValue.SET_MEMBER_INFO);
+        busValue.setObject(businessDetailEntity);
+        EventBus.getDefault().post(busValue);
     }
 }

@@ -3,7 +3,7 @@ package com.easydear.user.module.business.data.soruce;
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.api.RetrofitManager;
-import com.easydear.user.module.business.BusinessDetailEntity;
+import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
@@ -82,7 +82,7 @@ public class BussinessRepo implements BaseDataSourse {
      */
     public void queryBusinessDetail(String businessNo, final RemetoRepoCallbackV2<BusinessDetailEntity> callback) {
         callback.onReqStart();
-        String url = "business/businessIndex?businessNo=" + businessNo;
+        String url = "neweasydear-app/business/businessIndex?businessNo=" + businessNo;
         businessDetailCall = ChaoPuRetrofitManamer.getAPIService().queryBusinessDetail(url);
         businessDetailCall.enqueue(new RetrofitCallbackV2<ResponseEntity<BusinessDetailEntity>>() {
             @Override

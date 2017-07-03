@@ -18,4 +18,10 @@
         <item>生活</item>
     </string-array>
 
+    <string-array name="business_tab_array">
+        <item>门店活动</item>
+        <item>商家详情</item>
+        <item>会员中心</item>
+    </string-array>
+
 </resources>

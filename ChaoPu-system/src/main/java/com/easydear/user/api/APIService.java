@@ -1,7 +1,7 @@
 package com.easydear.user.api;
 
 import com.easydear.user.module.account.data.UserInfoEntity;
-import com.easydear.user.module.business.BusinessDetailEntity;
+import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
