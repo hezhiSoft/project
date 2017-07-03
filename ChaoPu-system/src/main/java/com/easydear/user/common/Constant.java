@@ -17,6 +17,8 @@ public class Constant {
 
     public static final int DEFAULT_LOAD_SIZE = 10;
 
+    public static final int HOME_SELECT_CITY_REQUEST_CODE = 1001;
+
     public interface EventValue {
         int SET_SHOP_ACTIVITY = 5001;
         int SET_BUSINESS_DETAIL = 5002;
