@@ -40,10 +40,12 @@ public class MemberCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> {
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         final CardItemEntity entity = mLists.get(position);
-        viewHolder.cardNameText.setText(entity.getCardName());
-        viewHolder.cardSerialNoText.setText("序列号:  " + entity.getCardNo());
+        if (entity != null) {
+            viewHolder.cardNameText.setText(entity.getCardName());
+            viewHolder.cardSerialNoText.setText("序列号:  " + entity.getCardNo());
 //        viewHolder.cardValidDateText.setText(entity.get);
 //        Glide.with(mContent).load(BuildConfig.DOMAI + entity.get()).into(viewHolder.logoView);
+        }
         Glide.with(mContext).load(BuildConfig.DOMAIN + mBusinessLogo)
                 .asBitmap()
                 .centerCrop()
