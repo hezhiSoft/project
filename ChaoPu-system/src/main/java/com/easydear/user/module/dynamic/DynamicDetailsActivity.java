@@ -1,6 +1,7 @@
 package com.easydear.user.module.dynamic;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -115,6 +116,11 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
                     @Override
                     public void onSuccess(String data) {
                         supportTextView.setText(data);
+                        Drawable drawable= getResources().getDrawable(R.mipmap.ic_support_press);
+                        /// 这一步必须要做,否则不会显示.
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        supportTextView.setCompoundDrawables(drawable,null,null,null);
+
                     }
 
                     @Override

@@ -86,17 +86,35 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".module.order.OrderDetailsActivity"
+        <activity
+            android:name=".module.order.OrderDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".module.cards.InterestsActivity"
+        <activity
+            android:name=".module.cards.InterestsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".module.mine.AboutActivity"
+        <activity
+            android:name=".module.mine.AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.mine.UserBusinessListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".module.mine.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name="com.zxing.activity.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <!-- 高德地图配制[吴和志] -->
         <meta-data

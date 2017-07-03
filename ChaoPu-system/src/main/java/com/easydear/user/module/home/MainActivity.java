@@ -1,5 +1,6 @@
 package com.easydear.user.module.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.style.DynamicDrawableSpan;
 import android.view.KeyEvent;
@@ -14,6 +15,8 @@ import com.easydear.user.module.scann.ScanningFragment;
 import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
+import com.jinggan.library.utils.ISkipActivityUtil;
+import com.zxing.activity.CaptureActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +40,8 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     MainBottomNavigationBar mainBottomNavigationBar;
 
     private long exitTime = 0;
+
+    private int currentPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,22 +77,33 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
             case TAB_HOME:
                 setToolbarCenterTitle(R.string.tab_home);
                 setToolbarVisibility(View.GONE);
+                currentPosition=TAB_HOME;
                 break;
             case TAB_DYNAMIC:
                 setToolbarCenterTitle("商家动态");
                 setToolbarVisibility(View.VISIBLE);
+                currentPosition=TAB_DYNAMIC;
                 break;
             case TAB_CARDS:
                 setToolbarCenterTitle(R.string.tab_cards);
                 setToolbarVisibility(View.VISIBLE);
+                currentPosition=TAB_CARDS;
                 break;
             case TAB_SCANN:
-                setToolbarCenterTitle(R.string.tab_scann);
-                setToolbarVisibility(View.VISIBLE);
+                mainBottomNavigationBar.setFirstSelectedTab(currentPosition);
+
+//                setToolbarCenterTitle(R.string.tab_scann);
+//                setToolbarVisibility(View.VISIBLE);
+
+//                Intent intent=new Intent(this, CaptureActivity.class);
+//                startActivity(intent);
+
+                ISkipActivityUtil.startIntent(this,CaptureActivity.class);
                 break;
             case TAB_MINE:
                 setToolbarCenterTitle(R.string.tab_mine);
                 setToolbarVisibility(View.GONE);
+                currentPosition=TAB_MINE;
                 break;
         }
     }

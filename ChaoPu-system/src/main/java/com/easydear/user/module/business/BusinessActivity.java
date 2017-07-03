@@ -3,6 +3,7 @@ package com.easydear.user.module.business;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -68,8 +69,6 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
 //    List<ArticleItemEntity> mBusinessArticleList;
 
     private String mBusinessNo;
-    private String mBusinessName;
-    private String mBusinessLogo;
 
     //    private BusinessPresenter mBusinessPresenter;
     private BussinessRepo mBussinessRepo;
@@ -87,10 +86,7 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_business);
         mBusinessNo = getIntent().getStringExtra("businessNo");
-        mBusinessName = getIntent().getStringExtra("businessName");
-        mBusinessLogo = getIntent().getStringExtra("businessLogo");
 
-        setToolbarTitle(mBusinessName);
 //        setToolbarRightImage(R.mipmap.icon_add);
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
@@ -319,6 +315,11 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
     }
 
     private void setBusinessInfo(BusinessDetailEntity businessDetailEntity) {
+        if (businessDetailEntity==null){
+            return;
+        }
+        setToolbarTitle(TextUtils.isEmpty(businessDetailEntity.getBusinessName())?"商家详情":businessDetailEntity.getBusinessName());
+
         String province = businessDetailEntity.getProvinceAdd();
         String city = businessDetailEntity.getCityAdd();
         String area = businessDetailEntity.getAreaAdd();
@@ -328,16 +329,15 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
                 (area == null ? "" : area) +
                 (street == null ? "" : street) +
                 businessDetailEntity.getAddress();
-        setToolbarTitle(businessDetailEntity.getBusinessName());
+
+
         mBusinessNameTV.setText(businessDetailEntity.getBusinessName());
         mBusinessAddress.setText(address);
 //        mBusinessTelephone.setText(entity.getTelephone());
                 /*商家Logo*/
         Glide.with(this).load(BuildConfig.DOMAIN + businessDetailEntity.getBusinessimages())
-//                .asBitmap()
-                .centerCrop()
-//                .placeholder(R.mipmap.default_image)
-//                .error(R.mipmap.default_image)
+               .placeholder(R.mipmap.default_image)
+                .error(R.mipmap.main_img_defaultpic_small)
                 .into(mBusinessLogoImg);
     }
 

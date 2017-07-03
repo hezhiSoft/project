@@ -92,8 +92,8 @@ public interface APIService {
      * @param articleId
      * @return
      */
-    @POST("neweasydear-app/rticleForward/addArticleForward")
-    Call<ResponseEntity<String>> addArticleGood(@Query("articleId") int articleId);
+    @POST("neweasydear-app/articleGood/addArticleGood")
+    Call<ResponseEntity<Object>> addArticleGood(@Query("articleId") int articleId);
 
     /**
      * 软文详情
@@ -140,7 +140,7 @@ public interface APIService {
      * author: hezhiWu
      * created at 2017/6/16 下午8:31
      */
-    @POST("neweasydear-app/card/listByUserNo")
+    @POST("neweasydear-app/user/userCardList")
     Call<ResponseEntity<List<InterestsEntity>>> queryInterests(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
     /**
@@ -150,7 +150,7 @@ public interface APIService {
      * created at 2017/6/28 22:07
      */
     @GET("neweasydear-app/user/countByUserNo")
-    Call<ResponseEntity<String>> getCardSize(@Query("userNo") String userNo);
+    Call<ResponseEntity<Object>> getCardSize();
 
     /**
      * 获取商家数量
@@ -159,7 +159,16 @@ public interface APIService {
      * created at 2017/6/28 22:21
      */
     @GET("neweasydear-app/user/countBussinessByUserNo")
-    Call<ResponseEntity<String>> getBussinessSize(@Query("userNo") String userNo);
+    Call<ResponseEntity<Object>> getBussinessSize();
+
+    /**
+     * 查询用户商家
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/3 20:03
+     */
+    @GET("neweasydear-app/user/listUserBusiness")
+    Call<ResponseEntity<List<BusinessEntity>>> queryUserBusiness();
 
     /**
      * 订单列表
@@ -178,4 +187,13 @@ public interface APIService {
      */
     @POST("neweasydear-app/user/detailOrder")
     Call<ResponseEntity<OrderDetailsEntity>> queryOrderDetails(@Query("orderNo") String billNo);
+
+    /**
+     * 添加反馈
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/3 20:49
+     */
+    @POST("neweasydear-app/feedback/addFeedback")
+    Call<ResponseEntity<Void>> addFeedback(@Query("content") String content);
 }

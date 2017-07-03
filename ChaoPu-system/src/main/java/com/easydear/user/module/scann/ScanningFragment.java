@@ -9,5 +9,6 @@ import com.jinggan.library.base.BaseFragment;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class ScanningFragment extends BaseFragment {
+public class ScanningFragment extends BaseFragment{
+
 }

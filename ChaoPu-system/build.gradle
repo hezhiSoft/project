@@ -61,4 +61,6 @@ def currentTime() {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':hezhi-corelibrary')
+
+    compile 'com.google.zxing:core:3.3.0'
 }
