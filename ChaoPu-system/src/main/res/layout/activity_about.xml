@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.jinggan.library.ui.view.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:src="@mipmap/icon_app" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="潮铺于2016年8月成立，基于SAAS会员系统的线上线下双向营销体系，致力于更好的服务是线下商家。借助移动互联网、信息技术、线下服务及传统传媒，潮铺为中高端消费者甄选值得信赖的区域化商家、消费评价和优惠信息，覆盖了餐饮、电影、酒店、休闲娱乐、丽人、结婚、4S店、房地产等区域化服务行业。潮铺手机客户端是集合了本地线下商家，为线下商家提供更优质的展示及推广平台，降低商家推广及营运成本，必定会成为消费者的必备工具。我们团队的奋斗目标是：用全球最优质的营销方式，为商家和消费者打造更好用更便利的线下实体商家导流平台."
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="商家入驻"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="宋小姐\n0754-87733021"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="HR招聘"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="唐先生\n0754-28777029"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </com.jinggan.library.ui.view.OverScrollView>
+</LinearLayout>

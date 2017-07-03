@@ -31,70 +31,91 @@ public class DynamicDetailsEntity {
 
     private String Logo;
 
-    public void setType(String Type){
+    public void setType(String Type) {
         this.Type = Type;
     }
-    public String getType(){
+
+    public String getType() {
         return this.Type;
     }
-    public void setArticleForward(int ArticleForward){
+
+    public void setArticleForward(int ArticleForward) {
         this.ArticleForward = ArticleForward;
     }
-    public int getArticleForward(){
+
+    public int getArticleForward() {
         return this.ArticleForward;
     }
-    public void setBusinessNO(String BusinessNO){
+
+    public void setBusinessNO(String BusinessNO) {
         this.BusinessNO = BusinessNO;
     }
-    public String getBusinessNO(){
+
+    public String getBusinessNO() {
         return this.BusinessNO;
     }
-    public void setBusinessName(String BusinessName){
+
+    public void setBusinessName(String BusinessName) {
         this.BusinessName = BusinessName;
     }
-    public String getBusinessName(){
+
+    public String getBusinessName() {
         return this.BusinessName;
     }
-    public void setArticleImage(String ArticleImage){
+
+    public void setArticleImage(String ArticleImage) {
         this.ArticleImage = ArticleImage;
     }
-    public String getArticleImage(){
+
+    public String getArticleImage() {
         return this.ArticleImage;
     }
-    public void setContent(String Content){
+
+    public void setContent(String Content) {
         this.Content = Content;
     }
-    public String getContent(){
+
+    public String getContent() {
         return this.Content;
     }
-    public void setTitle(String Title){
+
+    public void setTitle(String Title) {
         this.Title = Title;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return this.Title;
     }
-    public void setArticleId(int ArticleId){
+
+    public void setArticleId(int ArticleId) {
         this.ArticleId = ArticleId;
     }
-    public int getArticleId(){
+
+    public int getArticleId() {
         return this.ArticleId;
     }
-    public void setIsArticleGood(String IsArticleGood){
+
+    public void setIsArticleGood(String IsArticleGood) {
         this.IsArticleGood = IsArticleGood;
     }
-    public String getIsArticleGood(){
+
+    public String getIsArticleGood() {
         return this.IsArticleGood;
     }
-    public void setArticleGood(int ArticleGood){
+
+    public void setArticleGood(int ArticleGood) {
         this.ArticleGood = ArticleGood;
     }
-    public int getArticleGood(){
+
+    public int getArticleGood() {
         return this.ArticleGood;
     }
-    public void setLogo(String Logo){
+
+    public void setLogo(String Logo) {
         this.Logo = Logo;
     }
-    public String getLogo(){
+
+    public String getLogo() {
         return this.Logo;
     }
 }
