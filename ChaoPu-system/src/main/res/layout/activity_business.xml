@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,8 +17,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:background="@color/red"
-                android:layout_height="140dp">
+                android:layout_height="150dp">
 
                 <ImageView
                     android:id="@+id/business_bg_img"
@@ -35,8 +35,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:background="@color/FF00FF00"
-                android:layout_height="240dp">
+                android:layout_height="140dp"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/business_name"
@@ -44,8 +44,8 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:gravity="center_vertical"
-                    android:text="宁波宝恒宝马诚信路店A"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/business_info"
@@ -54,8 +54,7 @@
                     android:layout_below="@id/business_name"
                     android:layout_marginLeft="20dp"
                     android:gravity="center_vertical"
-                    android:text="4S店 | 鄞州下应"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/business_address"
@@ -63,37 +62,55 @@
                     android:layout_height="40dp"
                     android:layout_below="@id/business_info"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="60dp"
                     android:gravity="center_vertical"
-                    android:text="宁波市鄞州区诚信路399号"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/business_address"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/business_tele" />
 
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/white"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:scaleType="fitXY" />
+                <TextView
+                    android:id="@+id/business_privilege_pay"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/bright_red"
+                    android:gravity="center"
+                    android:text="优惠买单"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/business_address2"
+                    android:id="@+id/business_privilege_info"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/business_privilege_pay"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="在线买享受9.5折"
                     android:textSize="15sp" />
-            </LinearLayout>
+            </RelativeLayout>
 
+<!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -111,68 +128,25 @@
                     android:gravity="center_vertical"
                     android:textSize="15sp" />
             </LinearLayout>
+-->
 
-            <RelativeLayout
-                android:id="@+id/business_member_container"
+            <com.jinggan.library.ui.widget.WaytoTabLayout
+                android:id="@+id/business_tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:padding="5dp"
-                android:visibility="gone">
+                android:layout_height="500dp"
+                app:tabLayout_indicatorColor="@color/colorPrimary"
+                app:tabLayout_mode="MODE_FIXED"
+                app:tabLayout_tab_defaultTextColor="@color/black"
+                app:tabLayout_tab_textColor="@color/colorPrimary" />
 
-                <TextView
-                    android:id="@+id/business_member_vip_level"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/business_member_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp" />
-
-                <TextView
-                    android:id="@+id/business_member_card_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toLeftOf="@id/business_member_arrow"
-                    android:layout_toRightOf="@id/business_member_vip_level"
-                    android:lineSpacingMultiplier="1.3"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/business_member_credit"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/business_member_arrow"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_toLeftOf="@id/business_member_arrow"
-                    android:layout_toRightOf="@id/business_member_vip_level"
-                    android:lineSpacingMultiplier="1.3"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
-
-            <com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView
+<!--            <com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView
                 android:id="@+id/business_cardlist_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp" />-->
 
-            <View style="@style/line" />
+ <!--           <View style="@style/line" />-->
 
-            <ListView
+<!--            <ListView
                 android:id="@+id/business_article_listview"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -192,7 +166,7 @@
                 android:paddingRight="15dp"
                 android:text="更多资讯>>"
                 android:textColor="@color/gray"
-                android:visibility="gone" />
+                android:visibility="gone" />-->
 
         </LinearLayout>
 

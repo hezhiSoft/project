@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.amap.api.location.AMapLocation;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
+import com.easydear.user.common.Constant;
 import com.easydear.user.common.LocationManager;
 import com.easydear.user.module.business.BusinessListFragment;
+import com.easydear.user.module.location.LocationActivity;
 import com.easydear.user.module.message.MessageActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
@@ -105,6 +107,10 @@ public class HomeFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.HomeFragment_location_textView:
+                Bundle bundle = new Bundle();
+//                bundle.putString("city", mCity);
+//                bundle.putString("city_code", mCityCode);
+                ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, Constant.HOME_SELECT_CITY_REQUEST_CODE);
                 break;
             case R.id.HomeFragment_Message_Layout:
                 ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
