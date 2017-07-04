@@ -1,5 +1,6 @@
 package com.easydear.user.api;
 
+import com.easydear.user.common.ResponseModel;
 import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
@@ -7,6 +8,7 @@ import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.cards.data.InterestsEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
+import com.easydear.user.module.location.data.LocationEntity;
 import com.easydear.user.module.message.data.MessageDetailEntity;
 import com.easydear.user.module.message.data.MessageItemEntity;
 import com.easydear.user.module.order.data.OrderDetailsEntity;
@@ -178,4 +180,16 @@ public interface APIService {
      */
     @POST("neweasydear-app/user/detailOrder")
     Call<ResponseEntity<OrderDetailsEntity>> queryOrderDetails(@Query("orderNo") String billNo);
+
+    /**
+     * 获取城市列表
+     */
+    @GET("neweasydear-app/city/changeCity")
+    Call<ResponseModel<List<LocationEntity>>> reqCity();
+
+    /**
+     * 获取区域列表
+     */
+    @GET("neweasydear-app/city/changeArea")
+    Call<ResponseModel<List<LocationEntity>>> reqDistrict(@Query("code") String code);
 }
