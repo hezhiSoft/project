@@ -40,6 +40,9 @@ public class MemberCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> {
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         final CardItemEntity entity = mLists.get(position);
+        if (entity==null){
+            return;
+        }
         viewHolder.cardNameText.setText(entity.getCardName());
         viewHolder.cardSerialNoText.setText("序列号:  " + entity.getCardNo());
 //        viewHolder.cardValidDateText.setText(entity.get);

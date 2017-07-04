@@ -64,9 +64,14 @@ public class MineFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mine, null);
         unbinder = ButterKnife.bind(this, rootView);
-        initUI();
         request();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUI();
     }
 
     @Override
@@ -87,8 +92,6 @@ public class MineFragment extends BaseFragment {
                     .into(new RoundedBitmapImageViewTarget(getContext(), MineFragmentUserHearImageView));
 
             MineFragmentUserName.setText(entity.getNickName());
-
-
         }
     }
 

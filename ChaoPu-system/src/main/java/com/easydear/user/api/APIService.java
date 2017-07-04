@@ -60,6 +60,15 @@ public interface APIService {
     Call<ResponseEntity<String>> sendMobileValidateCode(@Part("mobile") String mobile);
 
     /**
+     * 更新Nick
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/4 17:08
+     */
+    @POST("neweasydear-app/user/updateNickName")
+    Call<ResponseEntity<Void>> updateNick(@Query("nickName") String nickName);
+
+    /**
      * 查询商家列表
      *
      * @param url

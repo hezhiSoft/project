@@ -1,5 +1,6 @@
 package com.easydear.user.module.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -14,11 +15,15 @@ import com.easydear.user.R;
 import com.easydear.user.common.Constant;
 import com.easydear.user.module.account.data.UserInfoEntity;
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.media.picture.SelectPictureActivity;
+import com.jinggan.library.media.picture.data.PictureEntity;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +58,11 @@ public class SettingActivity extends BaseActivity {
         setToolbarTitle("设置");
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initUI();
     }
 
@@ -78,10 +88,12 @@ public class SettingActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Setting_Modify_Heard_Layout:
+                SelectPictureActivity.startIntent(this, 1);
                 break;
             case R.id.Setting_Modify_Phone_Layout:
                 break;
             case R.id.Setting_Modify_nick_Layout:
+                ISkipActivityUtil.startIntent(this, UpdateNickActivity.class);
                 break;
             case R.id.Setting_Modify_pwd_Layout:
                 break;
@@ -101,5 +113,23 @@ public class SettingActivity extends BaseActivity {
                 ISkipActivityUtil.startIntent(SettingActivity.this, LoginActivity.class);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == SelectPictureActivity.SELECT_PICTURE_RESULT_CODE) {
+            List<PictureEntity> lists = (List<PictureEntity>) data.getSerializableExtra("result");
+
+            if (lists != null && lists.size() > 0) {
+                  /*商家Logo*/
+                Glide.with(this).load(lists.get(0).getUrl())
+                        .asBitmap()
+                        .centerCrop()
+                        .placeholder(R.mipmap.default_head_img)
+                        .error(R.mipmap.default_head_img)
+                        .into(new RoundedBitmapImageViewTarget(this, SettingUserHead));
+            }
+        }
     }
 }
