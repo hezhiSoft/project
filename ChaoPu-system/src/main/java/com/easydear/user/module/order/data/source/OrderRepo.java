@@ -12,6 +12,7 @@ import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.http.Query;
@@ -91,13 +92,13 @@ public class OrderRepo implements BaseDataSourse{
     }
 
     public void addArticleGood(int articleId, final RemetoRepoCallbackV2<String> callback){
-        Call<ResponseEntity<String>> call=ChaoPuRetrofitManamer.getAPIService().addArticleGood(articleId);
-        call.enqueue(new RetrofitCallbackV2<ResponseEntity<String>>() {
+        Call<ResponseEntity<Object>> call=ChaoPuRetrofitManamer.getAPIService().addArticleGood(articleId);
+        call.enqueue(new RetrofitCallbackV2<ResponseEntity<Object>>() {
             @Override
-            public void onSuccess(ResponseEntity<String> data) {
+            public void onSuccess(ResponseEntity<Object> data) {
                 if (data.getCode()==200){
                     try {
-                        JSONObject jsonObject=new JSONObject(data.getData());
+                        JSONObject jsonObject=new JSONObject(data.getData().toString());
                         String ArticleGoodSize=jsonObject.getString("ArticleGoodSize");
                         callback.onSuccess(ArticleGoodSize);
                     }catch (Exception e){

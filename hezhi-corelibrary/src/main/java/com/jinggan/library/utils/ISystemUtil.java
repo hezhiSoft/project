@@ -175,7 +175,7 @@ public class ISystemUtil {
      * @author  <youngdu29@gmail.com>
      * @createtime 14/04/2017 9:54 AM
      */
-    public static void makeCall(Activity activity, String teleNumber, boolean isDirect) {
+    public static void makeCall(Context activity, String teleNumber, boolean isDirect) {
         if (activity!=null&&!TextUtils.isEmpty(teleNumber)) {
             Intent intent = new Intent();
             intent.setAction(isDirect?Intent.ACTION_CALL:Intent.ACTION_DIAL);

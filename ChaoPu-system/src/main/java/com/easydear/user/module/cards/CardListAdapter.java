@@ -3,20 +3,24 @@ package com.easydear.user.module.cards;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
+import com.easydear.user.module.business.BusinessActivity;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,9 +45,9 @@ public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
     }
 
     @Override
-    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-          /*商家Logo*/
+        /*商家Logo*/
         Glide.with(mContent).load(BuildConfig.DOMAIN + mLists.get(position).getLogo())
                 .asBitmap()
                 .centerCrop()
@@ -61,9 +65,17 @@ public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
             if (!TextUtils.isEmpty(mLists.get(position).getBackgroundColor())) {
                 drawable.setColor(Color.parseColor(mLists.get(position).getBackgroundColor()));
             } else {
-                drawable.setColor(Color.parseColor("#888888"));
+                drawable.setColor(Color.parseColor("#58C35B"));
             }
         }
+        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
+                ISkipActivityUtil.startIntent(mContent, BusinessActivity.class, businessBundle);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,6 +91,8 @@ public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
         TextView ItemCardCardSize;
         @BindView(R.id.ItemCards_bg)
         RelativeLayout bgLayout;
+        @BindView(R.id.ItemCards_Layout)
+        LinearLayout layout;
 
         public ViewHolder(View view) {
             super(view);

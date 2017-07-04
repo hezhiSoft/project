@@ -27,6 +27,8 @@ import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.ISystemUtil;
 import com.jinggan.library.utils.PermissionHelper;
 
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,9 +64,14 @@ public class MineFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mine, null);
         unbinder = ButterKnife.bind(this, rootView);
-        initUI();
         request();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUI();
     }
 
     @Override
@@ -85,8 +92,6 @@ public class MineFragment extends BaseFragment {
                     .into(new RoundedBitmapImageViewTarget(getContext(), MineFragmentUserHearImageView));
 
             MineFragmentUserName.setText(entity.getNickName());
-
-
         }
     }
 
@@ -100,6 +105,7 @@ public class MineFragment extends BaseFragment {
                 ISkipActivityUtil.startIntent(getContext(), InterestsActivity.class);
                 break;
             case R.id.MineFragment_businessNumber:
+                ISkipActivityUtil.startIntent(getContext(), UserBusinessListActivity.class);
                 break;
             case R.id.MineFragment_track:
                 break;
@@ -107,9 +113,10 @@ public class MineFragment extends BaseFragment {
                 ISkipActivityUtil.startIntent(getContext(), OrderActivity.class);
                 break;
             case R.id.MineFragment_feedback:
+                ISkipActivityUtil.startIntent(getContext(), FeedbackActivity.class);
                 break;
             case R.id.MineFragment_constomer:
-                if (PermissionHelper.checkPermission(getActivity(), Manifest.permission.CALL_PHONE,0x990)) {
+                if (PermissionHelper.checkPermission(getActivity(), Manifest.permission.CALL_PHONE, 0x990)) {
                     showConstomerDialog();
                 }
                 break;
@@ -129,7 +136,13 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String data) {
-                MineFragmentConsumeCar.setText("权益数   " + data);
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    MineFragmentConsumeCar.setText("权益数   " + jsonObject.getString("CardSize"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -151,7 +164,12 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String data) {
-                MineFragmentBusinessNumber.setText("会员商家   " + data);
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    MineFragmentBusinessNumber.setText("会员商家   " + jsonObject.getString("BusinessSize"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -196,7 +214,7 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode==0x990){
+        if (requestCode == 0x990) {
             showConstomerDialog();
         }
     }

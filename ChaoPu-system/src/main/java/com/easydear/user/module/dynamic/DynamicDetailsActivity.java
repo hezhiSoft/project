@@ -1,6 +1,7 @@
 package com.easydear.user.module.dynamic;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
+import com.easydear.user.common.SharedManager;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.soruce.DynamicRepo;
 import com.easydear.user.module.order.data.source.OrderRepo;
@@ -55,8 +57,6 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
         setContentView(R.layout.activity_dynamic_details);
         setToolbarTitle("潮铺正文");
         ButterKnife.bind(this);
-
-        setToolbarRightImage(R.mipmap.icon_shared);
 
         DynamicRepo.getInstance().queryDynamic(getIntent().getIntExtra("id", -1), this);
     }
@@ -115,6 +115,11 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
                     @Override
                     public void onSuccess(String data) {
                         supportTextView.setText(data);
+                        Drawable drawable= getResources().getDrawable(R.mipmap.ic_support_press);
+                        /// 这一步必须要做,否则不会显示.
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        supportTextView.setCompoundDrawables(drawable,null,null,null);
+
                     }
 
                     @Override
@@ -129,6 +134,7 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
                 });
                 break;
             case R.id.Dynamic_relay:
+                SharedManager.getInstance().showShared(this);
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.easydear.user.module.account.data.source;
 
 import com.easydear.user.DataApplication;
+import com.easydear.user.R;
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.common.Constant;
@@ -14,6 +15,7 @@ import com.jinggan.library.utils.ISharedPreferencesUtils;
 import retrofit2.Call;
 
 import static android.R.attr.data;
+import static android.R.attr.maxDate;
 
 
 /**
@@ -127,6 +129,30 @@ public class AccountRepo implements BaseDataSourse {
             @Override
             public void onFailure(int code, String msg) {
                 callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    public void updateNickName(String nickName, final RemetoRepoCallbackV2<Void> callback){
+        Call<ResponseEntity<Void>> call=ChaoPuRetrofitManamer.getService().updateNick(nickName);
+        call.enqueue(new RetrofitCallbackV2<ResponseEntity<Void>>() {
+            @Override
+            public void onSuccess(ResponseEntity<Void> data) {
+                if (data.getCode()==200){
+                    callback.onSuccess(data.getData());
+                }else {
+                    callback.onFailure(data.getCode(),data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code,msg);
             }
 
             @Override

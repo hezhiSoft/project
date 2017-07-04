@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/Nick_EditView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:hint="输入昵称"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1、此昵称非登陆会员名，仅在易兑评论等社区场景显示"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="2、与易兑业务或者商家品牌冲突的昵称，易兑将有可能收回"
+        android:textColor="@color/gray"
+        android:layout_marginBottom="20dp"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/Nick_Submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/wayto_button_bule_selector"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:textSize="16sp" />
+
+</LinearLayout>
