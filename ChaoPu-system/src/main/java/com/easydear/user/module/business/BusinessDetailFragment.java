@@ -65,7 +65,7 @@ public class BusinessDetailFragment extends BaseFragment {
         if (value.getWhat() == Constant.EventValue.SET_BUSINESS_DETAIL) {
             ILogcat.i(TAG, "onUpdateUIData SET_BUSINESS_DETAIL = " + value.getWhat());
             BusinessDetailEntity businessDetailEntity = (BusinessDetailEntity) value.getObject();
-            mBusiDetailOpenTime.setText(businessDetailEntity.getOpentime());
+            mBusiDetailOpenTime.setText(businessDetailEntity.getOpenTime());
             mBusiDetailBrandName.setText(businessDetailEntity.getBrandName());
             mBusiDetailBusiTime.setText(businessDetailEntity.getBusinessTime());
             mBusiDetailDescription.setText(businessDetailEntity.getBusinessDescription());

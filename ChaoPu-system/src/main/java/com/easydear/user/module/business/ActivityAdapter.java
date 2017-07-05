@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.easydear.user.R;
-import com.easydear.user.module.business.data.ActivityItemEntity;
+import com.easydear.user.module.business.data.BusinessDetailEntity.ActivityItemEntity;
 
 import java.util.List;
 
@@ -65,8 +65,8 @@ public class ActivityAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.typeTextView.setText(mActivityList.get(position).getType());
-        viewHolder.contentTextView.setText(mActivityList.get(position).getContent());
+        viewHolder.typeTextView.setText(mActivityList.get(position).getTitle());
+        viewHolder.contentTextView.setText(mActivityList.get(position).getActivityName());
         return convertView;
     }
 

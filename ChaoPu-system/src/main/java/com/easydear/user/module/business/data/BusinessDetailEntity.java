@@ -1,7 +1,5 @@
 package com.easydear.user.module.business.data;
 
-import com.easydear.user.module.business.data.CardItemEntity;
-
 import java.util.ArrayList;
 
 /**
@@ -9,61 +7,61 @@ import java.util.ArrayList;
  */
 
 public class BusinessDetailEntity {
-    private String Brandname;
-    private String Businessname;
-    private String Opentime;
-    private String Businessno;
+    private String BrandName;
+    private String BusinessName;
+    private String OpenTime;
+    private String BusinessNo;
     private String Logo;
-    private String Provinceadd;
-    private String Cityadd;
-    private String Areaadd;
-    private String Streetadd;
+    private String ProvinceAdd;
+    private String CityAdd;
+    private String AreaAdd;
+    private String StreetAdd;
     private String Address;
     private String Telephone;
-    private String Businesstime;
-    private String Businessimagesnext;
-    private String Businessimageslast;
+    private String BusinessTime;
+    private String BusinessImagesNext;
+    private String BusinessImagesLast;
     private String Latitude;
     private String Longitude;
-    private ArrayList<String> ActivityList;
+    private ArrayList<ActivityItemEntity> ActivityList;
     private ArrayList<CardItemEntity> CardList;
     private ArrayList<String> UserCardList;
-    private String Merchantservices;
+    private String MerchantServices;
     private String IsVip;
     private ArrayList<String> VipList;
-    private String Businessimages;
-    private String Businessdescription;
+    private String BusinessImages;
+    private String BusinessDescription;
 
     public String getBrandName() {
-        return Brandname;
+        return BrandName;
     }
 
-    public void setBrandName(String brandname) {
-        Brandname = brandname;
+    public void setBrandName(String brandName) {
+        BrandName = brandName;
     }
 
     public String getBusinessName() {
-        return Businessname;
+        return BusinessName;
     }
 
-    public void setBusinessName(String businessname) {
-        Businessname = businessname;
+    public void setBusinessName(String businessName) {
+        BusinessName = businessName;
     }
 
-    public String getOpentime() {
-        return Opentime;
+    public String getOpenTime() {
+        return OpenTime;
     }
 
-    public void setOpentime(String opentime) {
-        Opentime = opentime;
+    public void setOpenTime(String openTime) {
+        OpenTime = openTime;
     }
 
     public String getBusinessNo() {
-        return Businessno;
+        return BusinessNo;
     }
 
-    public void setBusinessNo(String businessno) {
-        Businessno = businessno;
+    public void setBusinessNo(String businessNo) {
+        BusinessNo = businessNo;
     }
 
     public String getLogo() {
@@ -75,35 +73,35 @@ public class BusinessDetailEntity {
     }
 
     public String getProvinceAdd() {
-        return Provinceadd;
+        return ProvinceAdd;
     }
 
-    public void setProvinceAdd(String provinceadd) {
-        Provinceadd = provinceadd;
+    public void setProvinceAdd(String provinceAdd) {
+        ProvinceAdd = provinceAdd;
     }
 
     public String getCityAdd() {
-        return Cityadd;
+        return CityAdd;
     }
 
-    public void setCityAdd(String cityadd) {
-        Cityadd = cityadd;
+    public void setCityAdd(String cityAdd) {
+        CityAdd = cityAdd;
     }
 
     public String getAreaAdd() {
-        return Areaadd;
+        return AreaAdd;
     }
 
-    public void setAreaAdd(String areaadd) {
-        Areaadd = areaadd;
+    public void setAreaAdd(String areaAdd) {
+        AreaAdd = areaAdd;
     }
 
     public String getStreetAdd() {
-        return Streetadd;
+        return StreetAdd;
     }
 
-    public void setStreetAdd(String streetadd) {
-        Streetadd = streetadd;
+    public void setStreetAdd(String streetAdd) {
+        StreetAdd = streetAdd;
     }
 
     public String getAddress() {
@@ -123,27 +121,27 @@ public class BusinessDetailEntity {
     }
 
     public String getBusinessTime() {
-        return Businesstime;
+        return BusinessTime;
     }
 
-    public void setBusinessTime(String businesstime) {
-        Businesstime = businesstime;
+    public void setBusinessTime(String businessTime) {
+        BusinessTime = businessTime;
     }
 
-    public String getBusinessimagesnext() {
-        return Businessimagesnext;
+    public String getBusinessImagesNext() {
+        return BusinessImagesNext;
     }
 
-    public void setBusinessimagesnext(String businessimagesnext) {
-        Businessimagesnext = businessimagesnext;
+    public void setBusinessImagesNext(String businessImagesNext) {
+        BusinessImagesNext = businessImagesNext;
     }
 
-    public String getBusinessimageslast() {
-        return Businessimageslast;
+    public String getBusinessImagesLast() {
+        return BusinessImagesLast;
     }
 
-    public void setBusinessimageslast(String businessimageslast) {
-        Businessimageslast = businessimageslast;
+    public void setBusinessImagesLast(String businessImagesLast) {
+        BusinessImagesLast = businessImagesLast;
     }
 
     public String getLatitude() {
@@ -162,11 +160,11 @@ public class BusinessDetailEntity {
         Longitude = longitude;
     }
 
-    public ArrayList<String> getActivityList() {
+    public ArrayList<ActivityItemEntity> getActivityList() {
         return ActivityList;
     }
 
-    public void setActivityList(ArrayList<String> activityList) {
+    public void setActivityList(ArrayList<ActivityItemEntity> activityList) {
         ActivityList = activityList;
     }
 
@@ -187,11 +185,11 @@ public class BusinessDetailEntity {
     }
 
     public String getMerchantServices() {
-        return Merchantservices;
+        return MerchantServices;
     }
 
-    public void setMerchantServices(String merchantservices) {
-        Merchantservices = merchantservices;
+    public void setMerchantServices(String merchantServices) {
+        MerchantServices = merchantServices;
     }
 
     public String getIsVip() {
@@ -210,19 +208,114 @@ public class BusinessDetailEntity {
         VipList = vipList;
     }
 
-    public String getBusinessimages() {
-        return Businessimages;
+    public String getBusinessImages() {
+        return BusinessImages;
     }
 
-    public void setBusinessimages(String businessimages) {
-        Businessimages = businessimages;
+    public void setBusinessImages(String businessImages) {
+        BusinessImages = businessImages;
     }
 
     public String getBusinessDescription() {
-        return Businessdescription;
+        return BusinessDescription;
     }
 
-    public void setBusinessDescription(String businessdescription) {
-        Businessdescription = businessdescription;
+    public void setBusinessDescription(String businessDescription) {
+        BusinessDescription = businessDescription;
+    }
+
+    /**
+     * Created by LJH on 2017/7/2.
+     */
+    public static class CardItemEntity {
+
+        private String CardNo;
+        private String CardEndTime;
+        private String CardName;
+        private String IsHaveCard;
+        private String CardPrice;
+        private String Difference;
+
+        public String getCardNo() {
+            return CardNo;
+        }
+
+        public void setCardNo(String cardNo) {
+            CardNo = cardNo;
+        }
+
+        public String getCardEndTime() {
+            return CardEndTime;
+        }
+
+        public void setCardEndTime(String cardEndTime) {
+            CardEndTime = cardEndTime;
+        }
+
+        public String getCardName() {
+            return CardName;
+        }
+
+        public void setCardName(String cardName) {
+            CardName = cardName;
+        }
+
+        public String getIsHaveCard() {
+            return IsHaveCard;
+        }
+
+        public void setIsHaveCard(String isHaveCard) {
+            IsHaveCard = isHaveCard;
+        }
+
+        public String getCardPrice() {
+            return CardPrice;
+        }
+
+        public void setCardPrice(String cardPrice) {
+            CardPrice = cardPrice;
+        }
+
+        public String getDifference() {
+            return Difference;
+        }
+
+        public void setDifference(String difference) {
+            Difference = difference;
+        }
+    }
+
+    /**
+     * Created by LJH on 2017/7/5.
+     */
+    public static class ActivityItemEntity {
+
+        private String ActivityName;
+        private String Title;
+        private int Id;
+
+        public String getActivityName() {
+            return ActivityName;
+        }
+
+        public void setActivityName(String activityName) {
+            ActivityName = activityName;
+        }
+
+        public String getTitle() {
+            return Title;
+        }
+
+        public void setTitle(String title) {
+            Title = title;
+        }
+
+        public int getId() {
+            return Id;
+        }
+
+        public void setId(int id) {
+            Id = id;
+        }
     }
 }

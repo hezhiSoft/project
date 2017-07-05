@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +23,7 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
+import com.jinggan.library.utils.ILogcat;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.IStringUtils;
 import com.jinggan.library.utils.ISystemUtil;
@@ -79,8 +79,6 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
         ButterKnife.bind(this);
         mBussinessRepo = BussinessRepo.getInstance();
         initTab();
-
-
         requestBusinessDetail();
     }
 
@@ -215,7 +213,7 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
 //        mBusinessTelephone.setText(entity.getTelephone());
 
         /*商家宣传图片*/
-        Glide.with(this).load(BuildConfig.DOMAIN + businessDetailEntity.getBusinessimages())
+        Glide.with(this).load(BuildConfig.DOMAIN + businessDetailEntity.getBusinessImages())
                 .placeholder(R.mipmap.default_image)
                 .error(R.mipmap.main_img_defaultpic_small)
                 .into(mBusinessLogoImg);
@@ -255,7 +253,7 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0x3001) {
+        if (requestCode == 0x3001 && entity != null) {
             ISystemUtil.makeCall(this, entity.getTelephone(), false);
         }
     }
