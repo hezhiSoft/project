@@ -8,15 +8,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.easydear.user.R;
+import com.easydear.user.common.Constant;
 import com.easydear.user.module.cards.CardsFragment;
 import com.easydear.user.module.dynamic.DynamicFragment;
 import com.easydear.user.module.mine.MineFragment;
 import com.easydear.user.module.scann.ScanningFragment;
 import com.jinggan.library.base.BaseActivity;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.view.MainBottomNavigationBar;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.zxing.activity.CaptureActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,6 +120,28 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        EventBusValues event = new EventBusValues();
+        if (resultCode == RESULT_OK){
+            switch (requestCode) {
+                case Constant.HOME_SELECT_CITY_REQUEST_CODE:
+                    event.setWhat(Constant.NOTICE_HOME_UPDATE_CITY);
+                    event.setObject(data);
+                    EventBus.getDefault().post(event);
+                    break;
+//                case Constant.HOME_SEARCH_KEY_REQUEST_CODE:
+//                    event.setFlag(EventConstant.NOTICE_HOME_SEARCH);
+//                    event.setObj(data);
+//                    EventBus.getDefault().post(event);
+//                    break;
+            }
+        }
+    }
+
 
     private void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {

@@ -1,6 +1,7 @@
 package com.easydear.user.module.home;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,11 +18,16 @@ import com.easydear.user.common.LocationManager;
 import com.easydear.user.module.business.BusinessListFragment;
 import com.easydear.user.module.location.LocationActivity;
 import com.easydear.user.module.message.MessageActivity;
+import com.easydear.user.util.ISpfUtil;
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.base.EventBusValues;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
 import com.jinggan.library.utils.ILogcat;
 import com.jinggan.library.utils.ISkipActivityUtil;
 import com.jinggan.library.utils.PermissionHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +48,16 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.HomeFragment_TabLayout)
     WaytoTabLayout HomeFragmentTabLayout;
-    Unbinder unbinder;
     @BindView(R.id.HomeFragment_location_textView)
     TextView HomeFragmentLocationTextView;
+
+    Unbinder unbinder;
+
+    private String mCity = "";
+    private String mCityCode = "";
+    private String mDistrict = "";
+    private String mDistrictCode;
+    private String mSearchKey = "";
 
     private String[] tabNames;
     private String[] tabKeys = new String[]{"jx", "ms", "yl", "zs", "ac", "js", "ls", "sh"};
@@ -73,6 +86,7 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, null);
         unbinder = ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
         initTab();
 
         if (PermissionHelper.checkPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION,0x9002)){
@@ -86,7 +100,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onLocation(AMapLocation location) {
                 if (location!=null){
-                    HomeFragmentLocationTextView.setText(location.getCity());
+                    mCity = location.getCity();
+                    ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
+                    HomeFragmentLocationTextView.setText(mCity);
                     ILogcat.i(getClass().getSimpleName(), "onCreateView, location.getCity() = " + location.getCity());
                 }
             }
@@ -97,19 +113,62 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initTab() {
         HomeFragmentTabLayout.initTabLayout(getChildFragmentManager(), fragments, tabNames);
     }
 
+    /**
+     * EventBus 更新 Location City
+     */
+    @Subscribe
+    public void onEventMainThread(EventBusValues value) {
+        if (value == null) {
+            return;
+        }
+        switch (value.getWhat()) {
+//            case EventConstant.NOTICE11:
+//                setLocationCity();
+//                break;
+            case Constant.NOTICE_HOME_UPDATE_CITY:
+                Intent intent = (Intent) value.getObject();
+                mCity = intent.getStringExtra("city");
+                mCityCode = intent.getStringExtra("city_code");
+                if (intent.hasExtra("district") && intent.hasExtra("district_code")) {
+                    mDistrictCode = intent.getStringExtra("district_code");
+                    mDistrict = intent.getStringExtra("district");
+                    HomeFragmentLocationTextView.setText(mDistrict);
+//                    mSelectDistrictTextView.setText(mDistrict);
+                } else {
+                    HomeFragmentLocationTextView.setText(mCity);
+//                    mSelectDistrictTextView.setText("");
+                    mDistrict = "";
+                    mDistrictCode = "";
+                }
+                mSearchKey = "";
+//                requestTopScrollArticles();
+                break;
+/*            case EventConstant.NOTICE_HOME_SEARCH:
+                Intent search = (Intent) event.getObj();
+                mSearchKey = search.getStringExtra("search_key");
+                ILog.v(TAG, "Current Search Key = " + mSearchKey);
+                requestTopScrollArticles();
+                break;*/
+            default:
+                break;
+        }
+    }
+
     @OnClick({R.id.HomeFragment_Message_Layout,R.id.HomeFragment_location_layout})
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.HomeFragment_location_layout:
             case R.id.HomeFragment_location_textView:
                 Bundle bundle = new Bundle();
-//                bundle.putString("city", mCity);
-//                bundle.putString("city_code", mCityCode);
+                bundle.putString("city", mCity);
+                bundle.putString("city_code", mCityCode);
                 ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, Constant.HOME_SELECT_CITY_REQUEST_CODE);
                 break;
             case R.id.HomeFragment_Message_Layout:
