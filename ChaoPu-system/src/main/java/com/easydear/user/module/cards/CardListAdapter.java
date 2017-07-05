@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
 import com.easydear.user.module.business.BusinessActivity;
+import com.easydear.user.module.business.BusinessDetailsActivity;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
@@ -73,7 +74,7 @@ public class CardListAdapter extends BaseRecyclerViewAdapter<CardEntity> {
             public void onClick(View view) {
                 Bundle businessBundle = new Bundle();
                 businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
-                ISkipActivityUtil.startIntent(mContent, BusinessActivity.class, businessBundle);
+                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
             }
         });
     }

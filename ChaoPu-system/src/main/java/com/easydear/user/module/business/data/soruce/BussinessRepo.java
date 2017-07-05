@@ -106,6 +106,30 @@ public class BussinessRepo implements BaseDataSourse {
         });
     }
 
+    public void addVIP(String businessNo, final RemetoRepoCallbackV2<Void> callback){
+        Call<ResponseEntity<Void>> call=ChaoPuRetrofitManamer.getAPIService().addVip(businessNo);
+        call.enqueue(new RetrofitCallbackV2<ResponseEntity<Void>>() {
+            @Override
+            public void onSuccess(ResponseEntity<Void> data) {
+                if (data.getCode()==200){
+                    callback.onSuccess(data.getData());
+                }else {
+                    callback.onFailure(data.getCode(),data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code,msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
     @Override
     public void cancelRequest() {
         if (businessCall != null && !businessCall.isCanceled()) {
