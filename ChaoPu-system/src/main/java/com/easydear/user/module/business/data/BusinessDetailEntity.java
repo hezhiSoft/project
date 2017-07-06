@@ -1,233 +1,263 @@
 package com.easydear.user.module.business.data;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by LJH on 2017/2/11.
  */
 
-public class BusinessDetailEntity {
-    private String BrandName;
-    private String BusinessName;
-    private String OpenTime;
-    private String BusinessNo;
-    private String Logo;
-    private String ProvinceAdd;
-    private String CityAdd;
-    private String AreaAdd;
+public class BusinessDetailEntity implements Serializable{
+
     private String StreetAdd;
+    private String BusinessNo;
+    private String BusinessName;
     private String Address;
     private String Telephone;
-    private String BusinessTime;
-    private String BusinessImagesNext;
     private String BusinessImagesLast;
-    private String Latitude;
-    private String Longitude;
-    private ArrayList<ActivityItemEntity> ActivityList;
-    private ArrayList<CardItemEntity> CardList;
-    private ArrayList<String> UserCardList;
-    private String MerchantServices;
     private String IsVip;
-    private ArrayList<String> VipList;
-    private String BusinessImages;
+    private String Latitude;
+    private String BusinessImagesNext;
+    private String AreaAdd;
+    private String Longitude;
+    private String Logo;
     private String BusinessDescription;
+    private String BrandName;
+    private String OpenTime;
+    private String BusinessImages;
+    private String MerchantServices;
+    private String ProvinceAdd;
+    private String BusinessTime;
+    private String CityAdd;
+    private List<?> VipList;
+    private List<ActivityListBean> ActivityList;
+    private List<CardListBean> CardList;
+    private List<?> UserCardList;
 
-    public String getBrandName() {
-        return BrandName;
+    public String getStreetAdd() {
+        return StreetAdd;
     }
 
-    public void setBrandName(String brandName) {
-        BrandName = brandName;
-    }
-
-    public String getBusinessName() {
-        return BusinessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        BusinessName = businessName;
-    }
-
-    public String getOpenTime() {
-        return OpenTime;
-    }
-
-    public void setOpenTime(String openTime) {
-        OpenTime = openTime;
+    public void setStreetAdd(String StreetAdd) {
+        this.StreetAdd = StreetAdd;
     }
 
     public String getBusinessNo() {
         return BusinessNo;
     }
 
-    public void setBusinessNo(String businessNo) {
-        BusinessNo = businessNo;
+    public void setBusinessNo(String BusinessNo) {
+        this.BusinessNo = BusinessNo;
     }
 
-    public String getLogo() {
-        return Logo;
+    public String getBusinessName() {
+        return BusinessName;
     }
 
-    public void setLogo(String logo) {
-        Logo = logo;
-    }
-
-    public String getProvinceAdd() {
-        return ProvinceAdd;
-    }
-
-    public void setProvinceAdd(String provinceAdd) {
-        ProvinceAdd = provinceAdd;
-    }
-
-    public String getCityAdd() {
-        return CityAdd;
-    }
-
-    public void setCityAdd(String cityAdd) {
-        CityAdd = cityAdd;
-    }
-
-    public String getAreaAdd() {
-        return AreaAdd;
-    }
-
-    public void setAreaAdd(String areaAdd) {
-        AreaAdd = areaAdd;
-    }
-
-    public String getStreetAdd() {
-        return StreetAdd;
-    }
-
-    public void setStreetAdd(String streetAdd) {
-        StreetAdd = streetAdd;
+    public void setBusinessName(String BusinessName) {
+        this.BusinessName = BusinessName;
     }
 
     public String getAddress() {
         return Address;
     }
 
-    public void setAddress(String address) {
-        Address = address;
+    public void setAddress(String Address) {
+        this.Address = Address;
     }
 
     public String getTelephone() {
         return Telephone;
     }
 
-    public void setTelephone(String telephone) {
-        Telephone = telephone;
-    }
-
-    public String getBusinessTime() {
-        return BusinessTime;
-    }
-
-    public void setBusinessTime(String businessTime) {
-        BusinessTime = businessTime;
-    }
-
-    public String getBusinessImagesNext() {
-        return BusinessImagesNext;
-    }
-
-    public void setBusinessImagesNext(String businessImagesNext) {
-        BusinessImagesNext = businessImagesNext;
+    public void setTelephone(String Telephone) {
+        this.Telephone = Telephone;
     }
 
     public String getBusinessImagesLast() {
         return BusinessImagesLast;
     }
 
-    public void setBusinessImagesLast(String businessImagesLast) {
-        BusinessImagesLast = businessImagesLast;
-    }
-
-    public String getLatitude() {
-        return Latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        Latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return Longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        Longitude = longitude;
-    }
-
-    public ArrayList<ActivityItemEntity> getActivityList() {
-        return ActivityList;
-    }
-
-    public void setActivityList(ArrayList<ActivityItemEntity> activityList) {
-        ActivityList = activityList;
-    }
-
-    public ArrayList<CardItemEntity> getCardList() {
-        return CardList;
-    }
-
-    public void setCardList(ArrayList<CardItemEntity> cardList) {
-        CardList = cardList;
-    }
-
-    public ArrayList<String> getUserCardList() {
-        return UserCardList;
-    }
-
-    public void setUserCardList(ArrayList<String> userCardList) {
-        UserCardList = userCardList;
-    }
-
-    public String getMerchantServices() {
-        return MerchantServices;
-    }
-
-    public void setMerchantServices(String merchantServices) {
-        MerchantServices = merchantServices;
+    public void setBusinessImagesLast(String BusinessImagesLast) {
+        this.BusinessImagesLast = BusinessImagesLast;
     }
 
     public String getIsVip() {
         return IsVip;
     }
 
-    public void setIsVip(String isVip) {
-        IsVip = isVip;
+    public void setIsVip(String IsVip) {
+        this.IsVip = IsVip;
     }
 
-    public ArrayList<String> getVipList() {
-        return VipList;
+    public String getLatitude() {
+        return Latitude;
     }
 
-    public void setVipList(ArrayList<String> vipList) {
-        VipList = vipList;
+    public void setLatitude(String Latitude) {
+        this.Latitude = Latitude;
     }
 
-    public String getBusinessImages() {
-        return BusinessImages;
+    public String getBusinessImagesNext() {
+        return BusinessImagesNext;
     }
 
-    public void setBusinessImages(String businessImages) {
-        BusinessImages = businessImages;
+    public void setBusinessImagesNext(String BusinessImagesNext) {
+        this.BusinessImagesNext = BusinessImagesNext;
+    }
+
+    public String getAreaAdd() {
+        return AreaAdd;
+    }
+
+    public void setAreaAdd(String AreaAdd) {
+        this.AreaAdd = AreaAdd;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(String Longitude) {
+        this.Longitude = Longitude;
+    }
+
+    public String getLogo() {
+        return Logo;
+    }
+
+    public void setLogo(String Logo) {
+        this.Logo = Logo;
     }
 
     public String getBusinessDescription() {
         return BusinessDescription;
     }
 
-    public void setBusinessDescription(String businessDescription) {
-        BusinessDescription = businessDescription;
+    public void setBusinessDescription(String BusinessDescription) {
+        this.BusinessDescription = BusinessDescription;
     }
 
-    /**
-     * Created by LJH on 2017/7/2.
-     */
-    public static class CardItemEntity {
+    public String getBrandName() {
+        return BrandName;
+    }
+
+    public void setBrandName(String BrandName) {
+        this.BrandName = BrandName;
+    }
+
+    public String getOpenTime() {
+        return OpenTime;
+    }
+
+    public void setOpenTime(String OpenTime) {
+        this.OpenTime = OpenTime;
+    }
+
+    public String getBusinessImages() {
+        return BusinessImages;
+    }
+
+    public void setBusinessImages(String BusinessImages) {
+        this.BusinessImages = BusinessImages;
+    }
+
+    public String getMerchantServices() {
+        return MerchantServices;
+    }
+
+    public void setMerchantServices(String MerchantServices) {
+        this.MerchantServices = MerchantServices;
+    }
+
+    public String getProvinceAdd() {
+        return ProvinceAdd;
+    }
+
+    public void setProvinceAdd(String ProvinceAdd) {
+        this.ProvinceAdd = ProvinceAdd;
+    }
+
+    public String getBusinessTime() {
+        return BusinessTime;
+    }
+
+    public void setBusinessTime(String BusinessTime) {
+        this.BusinessTime = BusinessTime;
+    }
+
+    public String getCityAdd() {
+        return CityAdd;
+    }
+
+    public void setCityAdd(String CityAdd) {
+        this.CityAdd = CityAdd;
+    }
+
+    public List<?> getVipList() {
+        return VipList;
+    }
+
+    public void setVipList(List<?> VipList) {
+        this.VipList = VipList;
+    }
+
+    public List<ActivityListBean> getActivityList() {
+        return ActivityList;
+    }
+
+    public void setActivityList(List<ActivityListBean> ActivityList) {
+        this.ActivityList = ActivityList;
+    }
+
+    public List<CardListBean> getCardList() {
+        return CardList;
+    }
+
+    public void setCardList(List<CardListBean> CardList) {
+        this.CardList = CardList;
+    }
+
+    public List<?> getUserCardList() {
+        return UserCardList;
+    }
+
+    public void setUserCardList(List<?> UserCardList) {
+        this.UserCardList = UserCardList;
+    }
+
+    public static class ActivityListBean implements Serializable{
+
+        private String ActivityName;
+        private String Title;
+        private int Id;
+
+        public String getActivityName() {
+            return ActivityName;
+        }
+
+        public void setActivityName(String ActivityName) {
+            this.ActivityName = ActivityName;
+        }
+
+        public String getTitle() {
+            return Title;
+        }
+
+        public void setTitle(String Title) {
+            this.Title = Title;
+        }
+
+        public int getId() {
+            return Id;
+        }
+
+        public void setId(int Id) {
+            this.Id = Id;
+        }
+    }
+
+    public static class CardListBean implements Serializable{
 
         private String CardNo;
         private String CardEndTime;
@@ -240,82 +270,48 @@ public class BusinessDetailEntity {
             return CardNo;
         }
 
-        public void setCardNo(String cardNo) {
-            CardNo = cardNo;
+        public void setCardNo(String CardNo) {
+            this.CardNo = CardNo;
         }
 
         public String getCardEndTime() {
             return CardEndTime;
         }
 
-        public void setCardEndTime(String cardEndTime) {
-            CardEndTime = cardEndTime;
+        public void setCardEndTime(String CardEndTime) {
+            this.CardEndTime = CardEndTime;
         }
 
         public String getCardName() {
             return CardName;
         }
 
-        public void setCardName(String cardName) {
-            CardName = cardName;
+        public void setCardName(String CardName) {
+            this.CardName = CardName;
         }
 
         public String getIsHaveCard() {
             return IsHaveCard;
         }
 
-        public void setIsHaveCard(String isHaveCard) {
-            IsHaveCard = isHaveCard;
+        public void setIsHaveCard(String IsHaveCard) {
+            this.IsHaveCard = IsHaveCard;
         }
 
         public String getCardPrice() {
             return CardPrice;
         }
 
-        public void setCardPrice(String cardPrice) {
-            CardPrice = cardPrice;
+        public void setCardPrice(String CardPrice) {
+            this.CardPrice = CardPrice;
         }
 
         public String getDifference() {
             return Difference;
         }
 
-        public void setDifference(String difference) {
-            Difference = difference;
-        }
-    }
-
-    /**
-     * Created by LJH on 2017/7/5.
-     */
-    public static class ActivityItemEntity {
-
-        private String ActivityName;
-        private String Title;
-        private int Id;
-
-        public String getActivityName() {
-            return ActivityName;
-        }
-
-        public void setActivityName(String activityName) {
-            ActivityName = activityName;
-        }
-
-        public String getTitle() {
-            return Title;
-        }
-
-        public void setTitle(String title) {
-            Title = title;
-        }
-
-        public int getId() {
-            return Id;
-        }
-
-        public void setId(int id) {
-            Id = id;
+        public void setDifference(String Difference) {
+            this.Difference = Difference;
         }
     }
 }

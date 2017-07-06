@@ -86,7 +86,7 @@ public class BusinessListAdapter extends BaseRecyclerViewAdapter<BusinessEntity>
             public void onClick(View v) {
                 Bundle businessBundle = new Bundle();
                 businessBundle.putString("businessNo", businessEntity.getBusinessNo());
-                ISkipActivityUtil.startIntent(mContent, BusinessActivity.class, businessBundle);
+                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
             }
         });
     }

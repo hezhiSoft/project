@@ -22,10 +22,10 @@ import butterknife.ButterKnife;
  * Created by LJH on 2017/7/6.
  */
 
-public class BusinessCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailEntity.CardItemEntity> {
+public class BusinessCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailEntity.CardListBean> {
 
     private Context mContext;
-    private List<BusinessDetailEntity.CardItemEntity> mCardList;
+    private List<BusinessDetailEntity.CardListBean> mCardList;
 
     public BusinessCardAdapter(Context context) {
         super(context);
@@ -41,7 +41,7 @@ public class BusinessCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailE
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        final BusinessDetailEntity.CardItemEntity entity = mLists.get(position);
+        final BusinessDetailEntity.CardListBean entity = mLists.get(position);
         if (entity != null) {
             viewHolder.cardNameTV.setText(entity.getCardName());
             viewHolder.cardPriceTV.setText("¥" + entity.getCardPrice());

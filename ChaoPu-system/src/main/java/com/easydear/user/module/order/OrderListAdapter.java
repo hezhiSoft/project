@@ -26,13 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Describe:
- * Author: hezhiWu
- * Date: 2017-07-01
- * Time: 08:54
- * Version:1.0
+ * 订单列表适配器
+ * <p>
+ * author: hezhiWu <hezhi.woo@gmail.com>
+ * version: V1.0
+ * created at 2017/7/5 21:00
+ * <p>
+ * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-
 public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderEntity> {
 
 
@@ -66,13 +67,13 @@ public class OrderListAdapter extends BaseRecyclerViewAdapter<OrderEntity> {
         viewHolder.ItemOrderTotal.setText("合计：￥ " + totalPirce);
 
         String status = mLists.get(position).getStatus();
-        if ("待付款".equals(status)) {
+        if ("NOPAY".equals(status)) {
             viewHolder.ItemOrderTuiKuanButton.setVisibility(View.GONE);
+            viewHolder.ItemOrderStatusButton.setText("支付");
         } else {
             viewHolder.ItemOrderTuiKuanButton.setVisibility(View.VISIBLE);
+            viewHolder.ItemOrderStatusButton.setText("支付成功");
         }
-
-        viewHolder.ItemOrderStatusButton.setText(status);
 
         viewHolder.ItemOrderLayout.setOnClickListener(new View.OnClickListener() {
             @Override

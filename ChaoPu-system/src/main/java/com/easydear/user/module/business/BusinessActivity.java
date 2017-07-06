@@ -86,6 +86,10 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.business_location:
+                if (entity==null){
+                    showToast("数据异常");
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putDouble("lng", IStringUtils.toDouble(entity.getLongitude()));
                 bundle.putDouble("lat", IStringUtils.toDouble(entity.getLatitude()));
@@ -93,6 +97,11 @@ public class BusinessActivity extends BaseActivity implements PullToRefreshRecyc
                 ISkipActivityUtil.startIntent(this, LocationActivity.class,bundle);
                 break;
             case R.id.business_phone:
+                if (entity==null){
+                    showToast("数据异常");
+                    return;
+                }
+
                 if (PermissionHelper.checkPermission(this, Manifest.permission.CALL_PHONE, 0x3001)) {
                     ISystemUtil.makeCall(this, entity.getTelephone(), false);
                 }

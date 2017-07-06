@@ -47,30 +47,32 @@ public class BusinessDetailFragment extends BaseFragment {
 
     Unbinder unbinder;
 
+    private BusinessDetailEntity entity;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        entity = (BusinessDetailEntity) getArguments().getSerializable("entity");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_business_detail, null);
         unbinder = ButterKnife.bind(this, rootView);
-        EventBus.getDefault().register(this);
+        initUI(entity);
         return rootView;
     }
 
-    @Subscribe
-    public void onUpdateUIData(EventBusValues value) {
-        if (value.getWhat() == Constant.EventValue.SET_BUSINESS_DETAIL) {
-            ILogcat.i(TAG, "onUpdateUIData SET_BUSINESS_DETAIL = " + value.getWhat());
-            BusinessDetailEntity businessDetailEntity = (BusinessDetailEntity) value.getObject();
-            mBusiDetailOpenTime.setText(businessDetailEntity.getOpenTime());
-            mBusiDetailBrandName.setText(businessDetailEntity.getBrandName());
-            mBusiDetailBusiTime.setText(businessDetailEntity.getBusinessTime());
-            mBusiDetailDescription.setText(businessDetailEntity.getBusinessDescription());
-            mBusiDetailService.setAdapter(new TextGridAdapter(getActivity(), getServiceList(businessDetailEntity.getMerchantServices())));
+    private void initUI(BusinessDetailEntity entity){
+        if (entity==null){
+            return;
         }
+        mBusiDetailOpenTime.setText(entity.getOpenTime());
+        mBusiDetailBrandName.setText(entity.getBrandName());
+        mBusiDetailBusiTime.setText(entity.getBusinessTime());
+        mBusiDetailDescription.setText(entity.getBusinessDescription());
+        mBusiDetailService.setAdapter(new TextGridAdapter(getActivity(), getServiceList(entity.getMerchantServices())));
+
     }
 
     private List<String> getServiceList(String merchantServices) {
@@ -90,6 +92,5 @@ public class BusinessDetailFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 }

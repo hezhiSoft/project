@@ -89,6 +89,15 @@ public interface APIService {
     Call<ResponseEntity<BusinessDetailEntity>> queryBusinessDetail(@Url String url);
 
     /**
+     * 申请成为会员
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/5 23:11
+     */
+    @POST("userMember/insertUserMember")
+    Call<ResponseEntity<Void>> addVip(@Query("businessNo") String businessNo);
+
+    /**
      * 查询动态列表
      * <p>
      * author: hezhiWu

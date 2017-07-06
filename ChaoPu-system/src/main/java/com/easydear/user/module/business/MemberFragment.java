@@ -69,7 +69,7 @@ public class MemberFragment extends BaseFragment {
             BusinessDetailEntity businessDetailEntity = (BusinessDetailEntity) value.getObject();
             mBusiMemCardNumber.setText("可用卡券  " + businessDetailEntity.getCardList().size());
             mCardAdapter.setBusinessLogo(businessDetailEntity.getLogo());
-            mCardAdapter.addItems(businessDetailEntity.getCardList());
+//            mCardAdapter.addItems(businessDetailEntity.getCardList());
         }
     }
 

@@ -66,6 +66,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
+        <activity android:name=".module.business.BusinessDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
         <activity
             android:name=".module.business.LocationActivity"
             android:screenOrientation="portrait"

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by LJH on 2017/7/3.
  */
 
-public class MemberCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailEntity.CardItemEntity> {
+public class MemberCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailEntity.CardListBean> {
 
     private Context mContext;
     private String mBusinessLogo;
@@ -39,7 +39,7 @@ public class MemberCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailEnt
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        final BusinessDetailEntity.CardItemEntity entity = mLists.get(position);
+        final BusinessDetailEntity.CardListBean entity = mLists.get(position);
         if (entity != null) {
             viewHolder.cardNameText.setText(entity.getCardName());
             viewHolder.cardSerialNoText.setText("序列号:  " + entity.getCardNo());

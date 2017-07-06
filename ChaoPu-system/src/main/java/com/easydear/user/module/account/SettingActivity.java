@@ -80,7 +80,6 @@ public class SettingActivity extends BaseActivity {
             SettingNickTextView.setText(entity.getNickName());
             SettingPhoneTextView.setText(entity.getMobile());
 
-
         }
     }
 
