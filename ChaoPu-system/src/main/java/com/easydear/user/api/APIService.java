@@ -14,6 +14,7 @@ import com.easydear.user.module.message.data.MessageItemEntity;
 import com.easydear.user.module.order.data.OrderDetailsEntity;
 import com.easydear.user.module.order.data.OrderEntity;
 
+import java.io.File;
 import java.util.List;
 
 import retrofit2.Call;
@@ -69,6 +70,16 @@ public interface APIService {
      */
     @POST("neweasydear-app/user/updateNickName")
     Call<ResponseEntity<Void>> updateNick(@Query("nickName") String nickName);
+
+
+    /**
+     * 修改头像
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/6 15:21
+     */
+    @POST
+    Call<ResponseEntity<Object>> updateHead(@Url String url);
 
     /**
      * 查询商家列表

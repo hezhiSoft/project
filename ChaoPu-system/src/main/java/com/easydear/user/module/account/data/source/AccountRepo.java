@@ -12,6 +12,8 @@ import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 
+import java.io.File;
+
 import retrofit2.Call;
 
 import static android.R.attr.data;
@@ -160,6 +162,10 @@ public class AccountRepo implements BaseDataSourse {
                 callback.onFinish();
             }
         });
+    }
+
+    public void updateHead(String path,RemetoRepoCallbackV2<String> callback){
+        String url="neweasydear-app/uploadUserImagery?userNo=&file=&filename=";
     }
 
     @Override
