@@ -22,6 +22,7 @@ import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.utils.IActivityManage;
 import com.jinggan.library.utils.ISharedPreferencesUtils;
 import com.jinggan.library.utils.ISkipActivityUtil;
+import com.jinggan.library.utils.IUtil;
 
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class SettingActivity extends BaseActivity {
 
             if (lists != null && lists.size() > 0) {
                   /*商家Logo*/
-                Glide.with(this).load(lists.get(0).getUrl())
+                Glide.with(this).load(IUtil.fitterUrl(lists.get(0).getUrl()))
                         .asBitmap()
                         .centerCrop()
                         .placeholder(R.mipmap.default_head_img)

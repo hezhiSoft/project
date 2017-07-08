@@ -25,7 +25,7 @@ public class IUtil {
      * @param url
      * @return
      */
-    public static String fitterUrl(String url) {
+    public static String  fitterUrl(String url) {
         if (TextUtils.isEmpty(url)){
             return url;
         }
