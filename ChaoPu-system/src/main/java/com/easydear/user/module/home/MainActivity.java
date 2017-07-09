@@ -2,10 +2,8 @@ package com.easydear.user.module.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.style.DynamicDrawableSpan;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
@@ -133,11 +131,13 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                     event.setObject(data);
                     EventBus.getDefault().post(event);
                     break;
-//                case Constant.HOME_SEARCH_KEY_REQUEST_CODE:
-//                    event.setFlag(EventConstant.NOTICE_HOME_SEARCH);
-//                    event.setObj(data);
-//                    EventBus.getDefault().post(event);
-//                    break;
+                case Constant.HOME_SEARCH_KEY_REQUEST_CODE:
+                    event.setWhat(Constant.NOTICE_HOME_SEARCH);
+                    event.setObject(data);
+                    EventBus.getDefault().post(event);
+                    break;
+                default:
+                    break;
             }
         }
     }
