@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.easydear.user.DataApplication;
 import com.jinggan.library.utils.ILogcat;
 
