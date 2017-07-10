@@ -18,6 +18,7 @@ import com.easydear.user.common.LocationManager;
 import com.easydear.user.module.business.BusinessListFragment;
 import com.easydear.user.module.location.LocationActivity;
 import com.easydear.user.module.message.MessageActivity;
+import com.easydear.user.module.search.SearchActivity;
 import com.easydear.user.util.ISpfUtil;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.base.EventBusValues;
@@ -45,6 +46,8 @@ import butterknife.Unbinder;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 public class HomeFragment extends BaseFragment {
+
+    private final String TAG = getClass().getSimpleName();
 
     @BindView(R.id.HomeFragment_TabLayout)
     WaytoTabLayout HomeFragmentTabLayout;
@@ -150,12 +153,12 @@ public class HomeFragment extends BaseFragment {
                 mSearchKey = "";
 //                requestTopScrollArticles();
                 break;
-/*            case EventConstant.NOTICE_HOME_SEARCH:
-                Intent search = (Intent) event.getObj();
+            case Constant.NOTICE_HOME_SEARCH:
+                Intent search = (Intent) value.getObject();
                 mSearchKey = search.getStringExtra("search_key");
-                ILog.v(TAG, "Current Search Key = " + mSearchKey);
-                requestTopScrollArticles();
-                break;*/
+                ILogcat.v(TAG, "Current Search Key = " + mSearchKey);
+//                requestTopScrollArticles();
+                break;
             default:
                 break;
         }
@@ -172,7 +175,8 @@ public class HomeFragment extends BaseFragment {
                 ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, Constant.HOME_SELECT_CITY_REQUEST_CODE);
                 break;
             case R.id.HomeFragment_Message_Layout:
-                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+//                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+                ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, Constant.HOME_SEARCH_KEY_REQUEST_CODE);
                 break;
         }
     }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/busi_shop_card_name"
+        android:layout_width="600dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.3"
+        android:text="Card Name"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/busi_shop_card_price"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/busi_shop_card_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.3"
+        android:maxLines="1"
+        android:text="¥"
+        android:textColor="@color/red"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/busi_shop_card_differ"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/busi_shop_card_name"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_toRightOf="@id/busi_shop_card_price"
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.3"
+        android:maxLines="1"
+        android:text="限时直降¥"
+        android:textColor="@color/bright_red"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/busi_shop_card_validate"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/busi_shop_card_price"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.3"
+        android:maxLines="1"
+        android:text="有效期至"
+        android:textColor="@color/gray"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/busi_shop_card_receive"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:background="@color/red"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="权益领用"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>

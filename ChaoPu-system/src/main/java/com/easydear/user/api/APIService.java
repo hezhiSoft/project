@@ -13,6 +13,7 @@ import com.easydear.user.module.message.data.MessageDetailEntity;
 import com.easydear.user.module.message.data.MessageItemEntity;
 import com.easydear.user.module.order.data.OrderDetailsEntity;
 import com.easydear.user.module.order.data.OrderEntity;
+import com.easydear.user.module.search.data.SearchEntity;
 
 import java.io.File;
 import java.util.List;
@@ -134,6 +135,23 @@ public interface APIService {
      */
     @POST("neweasydear-app/article/detailById")
     Call<ResponseEntity<DynamicDetailsEntity>> queryDynamic(@Query("articleId") int articleId);
+
+    /**
+     * 搜索热门
+     * <p>
+     * author: Colin
+     * created at 2017/7/8 20:51
+     */
+    @GET("neweasydear-app/search/hotSearch")
+    Call<ResponseEntity<List<SearchEntity>>> queryHotSearch();
+
+    /**
+     * 搜索关键字匹配
+     * author: Colin
+     * created at 2017/7/8 21:32
+     */
+    @POST("neweasydear-app/search/historySearchKey")
+    Call<ResponseEntity<List<SearchEntity>>> queryKeyMatch(@Query("userNo") String userNo, @Query("key") String key);
 
     /**
      * 查询系统消息列表

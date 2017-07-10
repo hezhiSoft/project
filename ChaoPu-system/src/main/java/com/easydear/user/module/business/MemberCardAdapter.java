@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
-import com.easydear.user.module.business.data.CardItemEntity;
+import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 
 import butterknife.BindView;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by LJH on 2017/7/3.
  */
 
-public class MemberCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> {
+public class MemberCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailEntity.CardListBean> {
 
     private Context mContext;
     private String mBusinessLogo;
@@ -32,14 +32,14 @@ public class MemberCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> {
 
     @Override
     public RecyclerView.ViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
-        MemberCardAdapter.ItemViewHolder viewHolder = new MemberCardAdapter.ItemViewHolder(inflater.inflate(R.layout.item_card_layout, parent, false));
+        MemberCardAdapter.ItemViewHolder viewHolder = new MemberCardAdapter.ItemViewHolder(inflater.inflate(R.layout.item_mem_card_layout, parent, false));
         return viewHolder;
     }
 
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        final CardItemEntity entity = mLists.get(position);
+        final BusinessDetailEntity.CardListBean entity = mLists.get(position);
         if (entity != null) {
             viewHolder.cardNameText.setText(entity.getCardName());
             viewHolder.cardSerialNoText.setText("序列号:  " + entity.getCardNo());
@@ -49,7 +49,6 @@ public class MemberCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> {
         viewHolder.cardNameText.setText(entity.getCardName());
         viewHolder.cardSerialNoText.setText("序列号:  " + entity.getCardNo());
 //        viewHolder.cardValidDateText.setText(entity.get);
-//        Glide.with(mContent).load(BuildConfig.DOMAI + entity.get()).into(viewHolder.logoView);
         }
         Glide.with(mContext).load(BuildConfig.DOMAIN + mBusinessLogo)
                 .asBitmap()

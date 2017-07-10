@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.easydear.user.R;
-import com.easydear.user.module.business.data.ActivityItemEntity;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.jinggan.library.base.ArrayListAdapter;
 

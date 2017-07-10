@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
+import com.easydear.user.alipay.AliPayService;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.soruce.BussinessRepo;
 import com.jinggan.library.base.BaseActivity;
@@ -122,6 +123,7 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
                 }
                 break;
             case R.id.business_buy_button:
+                AliPayService.getInstance().pay(this, "AAA");
                 break;
         }
     }

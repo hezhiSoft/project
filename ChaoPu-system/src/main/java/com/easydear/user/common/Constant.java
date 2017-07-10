@@ -18,8 +18,10 @@ public class Constant {
     public static final int DEFAULT_LOAD_SIZE = 10;
 
     public static final int NOTICE_HOME_UPDATE_CITY = 101;  /*通知 HomeFragment 更新选择城市*/
+    public static final int NOTICE_HOME_SEARCH = 102;  /*通知 HomeFragment 更新...*/
 
     public static final int HOME_SELECT_CITY_REQUEST_CODE = 1001;
+    public static final int HOME_SEARCH_KEY_REQUEST_CODE = 1002;
 
     public interface EventValue {
         int SET_SHOP_ACTIVITY = 5001;
