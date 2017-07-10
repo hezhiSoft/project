@@ -62,6 +62,31 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/HomeFragment_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_item_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:text="商家名称 商家 类目" />
+
+    </RelativeLayout>
+
+
     <com.jinggan.library.ui.widget.WaytoTabLayout
         android:id="@+id/HomeFragment_TabLayout"
         android:layout_width="match_parent"

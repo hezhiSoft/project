@@ -7,15 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.easydear.user.R;
-import com.easydear.user.module.business.BusinessListFragment;
+import com.easydear.user.common.Constant;
+import com.easydear.user.module.search.SearchActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -34,18 +37,18 @@ public class DynamicFragment extends BaseFragment {
     private String[] tabNames;
     private String[] tabKeys = new String[]{"jx", "ms", "yl", "zs", "ac", "js", "lr", "sh"};
 
-    private List<BaseFragment> fragments=new ArrayList<>();
+    private List<BaseFragment> fragments = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tabNames = getResources().getStringArray(R.array.home_tab_array);
-        for (int i=0;i<tabKeys.length;i++){
+        for (int i = 0; i < tabKeys.length; i++) {
 
-            Bundle bundle=new Bundle();
-            bundle.putString("key",tabKeys[i]);
+            Bundle bundle = new Bundle();
+            bundle.putString("key", tabKeys[i]);
 
-            DynamicListFragment fragment=new DynamicListFragment();
+            DynamicListFragment fragment = new DynamicListFragment();
             fragment.setArguments(bundle);
 
             fragments.add(fragment);
@@ -69,5 +72,10 @@ public class DynamicFragment extends BaseFragment {
 
     private void initTab() {
         HomeFragmentTabLayout.initTabLayout(getChildFragmentManager(), fragments, tabNames);
+    }
+
+    @OnClick(R.id.HomeFragment_search_layout)
+    public void onClick() {
+        ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, Constant.HOME_SEARCH_KEY_REQUEST_CODE);
     }
 }

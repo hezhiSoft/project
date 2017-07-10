@@ -92,17 +92,17 @@ public class HomeFragment extends BaseFragment {
         EventBus.getDefault().register(this);
         initTab();
 
-        if (PermissionHelper.checkPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION,0x9002)){
+        if (PermissionHelper.checkPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION, 0x9002)) {
             startLocation();
         }
         return rootView;
     }
 
-    private void startLocation(){
+    private void startLocation() {
         LocationManager.getInstance().startLocation(new LocationManager.LocationCallBack() {
             @Override
             public void onLocation(AMapLocation location) {
-                if (location!=null){
+                if (location != null) {
                     mCity = location.getCity();
                     ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
                     HomeFragmentLocationTextView.setText(mCity);
@@ -164,9 +164,9 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.HomeFragment_Message_Layout,R.id.HomeFragment_location_layout})
+    @OnClick({R.id.HomeFragment_search_layout, R.id.HomeFragment_Message_Layout, R.id.HomeFragment_location_layout})
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.HomeFragment_location_layout:
             case R.id.HomeFragment_location_textView:
                 Bundle bundle = new Bundle();
@@ -175,7 +175,9 @@ public class HomeFragment extends BaseFragment {
                 ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, Constant.HOME_SELECT_CITY_REQUEST_CODE);
                 break;
             case R.id.HomeFragment_Message_Layout:
-//                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+                break;
+            case R.id.HomeFragment_search_layout:
                 ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, Constant.HOME_SEARCH_KEY_REQUEST_CODE);
                 break;
         }
@@ -184,7 +186,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode==0x9002){
+        if (requestCode == 0x9002) {
             startLocation();
         }
     }
