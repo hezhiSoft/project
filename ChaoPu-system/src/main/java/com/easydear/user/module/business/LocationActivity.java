@@ -39,7 +39,7 @@ public class LocationActivity extends ChaoPuBaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        setContentView(R.layout.activity_business_location);
         setToolbarTitle("商家定位");
         ButterKnife.bind(this);
 

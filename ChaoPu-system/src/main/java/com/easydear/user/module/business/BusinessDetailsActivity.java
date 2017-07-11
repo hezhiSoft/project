@@ -78,7 +78,7 @@ public class BusinessDetailsActivity extends ChaoPuBaseActivity implements Remet
         BussinessRepo.getInstance().addVIP(businessDetailEntity.getBusinessNo(), new RemetoRepoCallbackV2<Void>() {
             @Override
             public void onReqStart() {
-                dialog=DialogFactory.createLoadingDialog(BusinessDetailsActivity.this,"添加会员...");
+                dialog = DialogFactory.createLoadingDialog(BusinessDetailsActivity.this, "添加会员...");
             }
 
             @Override
@@ -114,7 +114,7 @@ public class BusinessDetailsActivity extends ChaoPuBaseActivity implements Remet
                 ISkipActivityUtil.startIntent(this, LocationActivity.class, bundle);
                 break;
             case R.id.business_phone:
-                if (businessDetailEntity==null){
+                if (businessDetailEntity == null) {
                     showToast("数据异常");
                     return;
                 }
@@ -124,13 +124,16 @@ public class BusinessDetailsActivity extends ChaoPuBaseActivity implements Remet
                 }
                 break;
             case R.id.business_buy_button:
-                AliPayService.getInstance().pay(this, "AAA");
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("entity", businessDetailEntity);
+                ISkipActivityUtil.startIntent(this, PurchaseActivity.class, bundle1);
+//                AliPayService.getInstance().pay(this, "AAA");
                 break;
         }
     }
 
-    private void initUI(BusinessDetailEntity entity){
-        if (entity==null){
+    private void initUI(BusinessDetailEntity entity) {
+        if (entity == null) {
             return;
         }
 
@@ -138,8 +141,8 @@ public class BusinessDetailsActivity extends ChaoPuBaseActivity implements Remet
         businessInfo.setText(entity.getBrandName());
         businessAddress.setText(entity.getAddress());
 
-        String isVip=entity.getIsVip();
-        if ("0".equals(isVip)){
+        String isVip = entity.getIsVip();
+        if ("0".equals(isVip)) {
             setToolbarRightText("添加会员");
         }
 
@@ -160,9 +163,9 @@ public class BusinessDetailsActivity extends ChaoPuBaseActivity implements Remet
 
     }
 
-    private void initTab(){
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("entity",businessDetailEntity);
+    private void initTab() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("entity", businessDetailEntity);
 
         ShopFragment shopFragment = new ShopFragment();
         shopFragment.setArguments(bundle);
@@ -187,7 +190,7 @@ public class BusinessDetailsActivity extends ChaoPuBaseActivity implements Remet
 
     @Override
     public void onSuccess(BusinessDetailEntity data) {
-        this.businessDetailEntity=data;
+        this.businessDetailEntity = data;
         initUI(data);
         initTab();
     }

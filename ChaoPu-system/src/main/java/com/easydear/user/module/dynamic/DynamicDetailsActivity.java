@@ -14,6 +14,8 @@ import com.easydear.user.BuildConfig;
 import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.common.SharedManager;
+import com.easydear.user.module.business.BusinessDetailsActivity;
+import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.soruce.DynamicRepo;
 import com.easydear.user.module.order.data.source.OrderRepo;
@@ -21,6 +23,7 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +55,8 @@ public class DynamicDetailsActivity extends ChaoPuBaseActivity implements Remeto
 
     private Dialog dialog;
 
+    private DynamicDetailsEntity entity;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +79,7 @@ public class DynamicDetailsActivity extends ChaoPuBaseActivity implements Remeto
 
     @Override
     public void onSuccess(DynamicDetailsEntity data) {
+        this.entity=data;
         if (data != null) {
             Glide.with(this).load(BuildConfig.DOMAIN + data.getArticleImage()).into(DynamicBg);
              /*商家Logo*/
@@ -103,7 +109,7 @@ public class DynamicDetailsActivity extends ChaoPuBaseActivity implements Remeto
         DialogFactory.dimissDialog(dialog);
     }
 
-    @OnClick({R.id.Dynamic_support, R.id.Dynamic_relay})
+    @OnClick({R.id.Dynamic_support, R.id.Dynamic_relay,R.id.Dynamic_Title})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Dynamic_support:
@@ -136,6 +142,16 @@ public class DynamicDetailsActivity extends ChaoPuBaseActivity implements Remeto
                 break;
             case R.id.Dynamic_relay:
                 SharedManager.getInstance().showShared(this);
+                break;
+
+            case R.id.Dynamic_Title:
+                if (entity==null){
+                    return;
+                }
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", entity.getBusinessNO());
+                ISkipActivityUtil.startIntent(this, BusinessDetailsActivity.class, businessBundle);
+
                 break;
         }
     }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -70,6 +71,7 @@ public class BusinessListAdapter extends BaseRecyclerViewAdapter<BusinessEntity>
             viewHolder.BusinessListSubtilelogoImageView.setVisibility(View.VISIBLE);
             viewHolder.BusinessListSubtilelogoImageView.setText(activityQueryListBean.get(0).getTitle());
             viewHolder.BusinessListSubtilelogoNameTextView.setText(activityQueryListBean.get(0).getActivityName());
+
             viewHolder.BusinessListActionTextView.setText(activityQueryListBean.size()+"个活动");
 
             viewHolder.actionLayout.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +80,8 @@ public class BusinessListAdapter extends BaseRecyclerViewAdapter<BusinessEntity>
 
                 }
             });
+        }else {
+            viewHolder.bottomLayout.setVisibility(View.GONE);
         }
 
         final BusinessEntity businessEntity = mLists.get(position);
@@ -111,6 +115,8 @@ public class BusinessListAdapter extends BaseRecyclerViewAdapter<BusinessEntity>
         TextView BusinessListActionTextView;
         @BindView(R.id.Business_List_Action_Layout)
         LinearLayout actionLayout;
+        @BindView(R.id.Business_List_Bottom_Layout)
+        RelativeLayout bottomLayout;
 
         public ViewHolder(View view) {
             super(view);

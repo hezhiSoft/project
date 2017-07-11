@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
+import com.easydear.user.module.business.BusinessDetailsActivity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
@@ -71,6 +72,14 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
                 ISkipActivityUtil.startIntent(mContent,DynamicDetailsActivity.class,bundle);
             }
         });
+        viewHolder.titleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", mLists.get(position).getBusinessNO());
+                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -85,6 +94,8 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
         ImageView DynamicListImageView;
         @BindView(R.id.DynamicList_layout)
         LinearLayout itemLayout;
+        @BindView(R.id.DynamicList_Title_Layout)
+        LinearLayout titleLayout;
 
         public ViewHolder(View view) {
             super(view);

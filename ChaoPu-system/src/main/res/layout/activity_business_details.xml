@@ -38,7 +38,6 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/business_name"
                 android:layout_width="match_parent"
@@ -126,10 +125,10 @@
                 android:id="@+id/business_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                app:tabLayout_indicatorColor="@color/colorPrimary"
+                app:tabLayout_indicatorColor="@color/colorAccent"
                 app:tabLayout_mode="MODE_FIXED"
                 app:tabLayout_tab_defaultTextColor="@color/black"
-                app:tabLayout_tab_textColor="@color/colorPrimary" />
+                app:tabLayout_tab_textColor="@color/colorAccent" />
 
         </LinearLayout>
     </com.jinggan.library.ui.view.OverScrollView>
