@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.common.SharedManager;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
@@ -32,7 +33,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCallbackV2<DynamicDetailsEntity> {
+public class DynamicDetailsActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<DynamicDetailsEntity> {
 
     @BindView(R.id.Dynamic_bg)
     ImageView DynamicBg;

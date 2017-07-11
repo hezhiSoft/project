@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
@@ -38,7 +39,7 @@ import butterknife.OnClick;
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
 
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends ChaoPuBaseActivity {
 
     @BindView(R.id.Setting_UserHead)
     ImageView SettingUserHead;

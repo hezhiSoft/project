@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
  * author: hezhiWu
  * created at 2017/7/4 16:55
  */
-public class UpdateNickActivity extends BaseActivity implements RemetoRepoCallbackV2<Void> {
+public class UpdateNickActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<Void> {
 
     @BindView(R.id.Nick_EditView)
     EditText editView;

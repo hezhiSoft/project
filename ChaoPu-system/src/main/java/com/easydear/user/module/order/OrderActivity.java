@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ListView;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.order.data.OrderEntity;
 import com.easydear.user.module.order.data.source.OrderRepo;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * 我的订单
  */
-public class OrderActivity extends BaseActivity implements RemetoRepoCallbackV2<List<OrderEntity>>,PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener{
+public class OrderActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<List<OrderEntity>>,PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener{
 
     @BindView(R.id.Order_RecyclerView)
     PullToRefreshRecyclerView OrderRecyclerView;

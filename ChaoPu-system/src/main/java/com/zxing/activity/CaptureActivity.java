@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -54,7 +55,7 @@ import java.util.Vector;
  *
  * @author Ryan.Tang
  */
-public class CaptureActivity extends BaseActivity implements Callback {
+public class CaptureActivity extends ChaoPuBaseActivity implements Callback {
 
     private static final int REQUEST_CODE_SCAN_GALLERY = 100;
 

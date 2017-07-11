@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
 import com.easydear.user.module.cards.CardsFragment;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener{
+public class MainActivity extends ChaoPuBaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener{
 
     private final static int TAB_HOME=0;
     private final static int TAB_DYNAMIC=1;

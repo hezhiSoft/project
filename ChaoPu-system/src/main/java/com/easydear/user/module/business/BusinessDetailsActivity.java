@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.alipay.AliPayService;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
@@ -39,7 +40,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoCallbackV2<BusinessDetailEntity> {
+public class BusinessDetailsActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<BusinessDetailEntity> {
 
     @BindView(R.id.business_bg_img)
     ImageView businessBgImg;

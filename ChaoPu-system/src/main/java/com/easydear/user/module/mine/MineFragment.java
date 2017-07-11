@@ -138,11 +138,10 @@ public class MineFragment extends BaseFragment {
             public void onSuccess(String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
-                    MineFragmentConsumeCar.setText("权益数   " + jsonObject.getString("CardSize"));
+                    MineFragmentConsumeCar.setText("我的权益   " + jsonObject.getString("CardSize"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override

@@ -33,9 +33,9 @@
         android:id="@+id/HomeFragment_TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabLayout_indicatorColor="@color/colorPrimary"
+        app:tabLayout_indicatorColor="@color/colorAccent"
         app:tabLayout_mode="MODE_SCROLLABLE"
-        app:tabLayout_tab_defaultTextColor="#888888"
-        app:tabLayout_tab_textColor="@color/colorPrimary" />
+        app:tabLayout_tab_defaultTextColor="#666666"
+        app:tabLayout_tab_textColor="@color/colorAccent" />
 
 </LinearLayout>

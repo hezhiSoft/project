@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.module.account.data.UserInfoEntity;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class LoginActivity extends BaseActivity implements RemetoRepoCallbackV2<UserInfoEntity> {
+public class LoginActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<UserInfoEntity> {
 
 
     @BindView(R.id.Login_Account)

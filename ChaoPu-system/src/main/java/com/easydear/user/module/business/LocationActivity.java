@@ -8,6 +8,7 @@ import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.jinggan.library.base.BaseActivity;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class LocationActivity extends BaseActivity {
+public class LocationActivity extends ChaoPuBaseActivity {
 
     @BindView(R.id.MapView)
     MapView mMapView;

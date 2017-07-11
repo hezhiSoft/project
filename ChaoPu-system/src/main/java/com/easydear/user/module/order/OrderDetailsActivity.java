@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.order.data.OrderDetailsEntity;
 import com.easydear.user.module.order.data.source.OrderRepo;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
  * Version:1.0
  */
 
-public class OrderDetailsActivity extends BaseActivity implements RemetoRepoCallbackV2<OrderDetailsEntity> {
+public class OrderDetailsActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<OrderDetailsEntity> {
 
     @BindView(R.id.OrderDetails_BusinessName)
     TextView OrderDetailsBusinessName;

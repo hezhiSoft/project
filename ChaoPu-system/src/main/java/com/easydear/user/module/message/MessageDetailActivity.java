@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * 消息详情列表
  */
 
-public class MessageDetailActivity extends BaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallbackV2<List<MessageDetailEntity>> {
+public class MessageDetailActivity extends ChaoPuBaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallbackV2<List<MessageDetailEntity>> {
 
     private final String TAG = this.getClass().getSimpleName();
 
