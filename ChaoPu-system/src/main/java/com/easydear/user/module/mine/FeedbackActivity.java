@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.dynamic.DynamicFragment;
 import com.easydear.user.module.mine.data.source.MineRepo;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class FeedbackActivity extends BaseActivity implements RemetoRepoCallbackV2<Void> {
+public class FeedbackActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<Void> {
 
     @BindView(R.id.Feedback_Content)
     TextView contentView;

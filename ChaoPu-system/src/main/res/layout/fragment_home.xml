@@ -5,80 +5,91 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorAccent">
-
-        <LinearLayout
-            android:id="@+id/HomeFragment_location_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_location_on_black_24dp" />
-
-            <TextView
-                android:id="@+id/HomeFragment_location_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:text="location"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_expand_more_black_24dp" />
-
-        </LinearLayout>
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp">
 
         <RelativeLayout
-            android:id="@+id/HomeFragment_Message_Layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/selector_toolbar_seletor"
-            android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/HomeFragment_location_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_message" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/HomeFragment_Search_Layout"
-            android:layout_width="140dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="60dp"
-            android:background="@color/white"
-            android:paddingLeft="5dp">
-
-            <TextView
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableLeft="@mipmap/icon_search"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:hint="搜一搜" />
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_location_on_black_24dp" />
+
+                <TextView
+                    android:id="@+id/HomeFragment_location_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="location"
+                    android:textColor="#666666"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_expand_more_black_24dp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/HomeFragment_Message_Layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/selector_toolbar_seletor"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_message_black_24dp" />
+            </RelativeLayout>
         </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/HomeFragment_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_item_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="商家名称 商家 类目"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
@@ -86,9 +97,9 @@
         android:id="@+id/HomeFragment_TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabLayout_indicatorColor="@color/colorPrimary"
+        app:tabLayout_indicatorColor="@color/colorAccent"
         app:tabLayout_mode="MODE_SCROLLABLE"
-        app:tabLayout_tab_defaultTextColor="#888888"
-        app:tabLayout_tab_textColor="@color/colorPrimary" />
+        app:tabLayout_tab_defaultTextColor="#666666"
+        app:tabLayout_tab_textColor="@color/colorAccent" />
 
 </LinearLayout>

@@ -30,7 +30,7 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <RelativeLayout
+<!--        <RelativeLayout
             android:id="@+id/DynamicFragment_Search_Layout"
             android:layout_width="160dp"
             android:layout_height="30dp"
@@ -49,6 +49,30 @@
                 android:gravity="center_vertical"
                 android:hint="搜一搜" />
 
+        </RelativeLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/DynamicFragment_search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/search_item_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="商家名称 商家 类目"
+                android:textColor="@color/gray"
+                android:textSize="12sp" />
+
         </RelativeLayout>
     </RelativeLayout>
 
@@ -56,9 +80,9 @@
         android:id="@+id/HomeFragment_TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabLayout_indicatorColor="@color/colorPrimary"
+        app:tabLayout_indicatorColor="@color/colorAccent"
         app:tabLayout_mode="MODE_SCROLLABLE"
-        app:tabLayout_tab_defaultTextColor="#888888"
-        app:tabLayout_tab_textColor="@color/colorPrimary" />
+        app:tabLayout_tab_defaultTextColor="#666666"
+        app:tabLayout_tab_textColor="@color/colorAccent" />
 
 </LinearLayout>

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.module.search.data.SearchEntity;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
 /**
  * Created by LJH on 2017/3/4.
  */
-public class SearchActivity extends BaseActivity implements RemetoRepoCallbackV2<List<SearchEntity>>, SearchCallBack {
+public class SearchActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<List<SearchEntity>>, SearchCallBack {
 
     final String TAG = getClass().getSimpleName();
 

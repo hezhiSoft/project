@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
@@ -42,7 +43,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class BusinessActivity extends BaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallbackV2<BusinessDetailEntity> {
+public class BusinessActivity extends ChaoPuBaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, RemetoRepoCallbackV2<BusinessDetailEntity> {
 
     private final String TAG = this.getClass().getSimpleName();
 

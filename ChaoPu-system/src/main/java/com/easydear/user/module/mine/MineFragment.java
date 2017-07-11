@@ -142,7 +142,6 @@ public class MineFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override

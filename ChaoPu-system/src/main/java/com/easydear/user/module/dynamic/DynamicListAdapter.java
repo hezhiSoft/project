@@ -63,22 +63,6 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
         Glide.with(mContent).load(BuildConfig.DOMAIN + mLists.get(position).getLogo())
                 .into(viewHolder.DynamicListImageView);
 
-        viewHolder.DynamicListLogoImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle businessBundle = new Bundle();
-                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
-                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
-            }
-        });
-        viewHolder.DynamicListTitleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle businessBundle = new Bundle();
-                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
-                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
-            }
-        });
         viewHolder.DynamicListImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +70,14 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
                 Bundle bundle=new Bundle();
                 bundle.putInt("id",mLists.get(position).getArticleId());
                 ISkipActivityUtil.startIntent(mContent,DynamicDetailsActivity.class,bundle);
+            }
+        });
+        viewHolder.titleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
+                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
             }
         });
     }
@@ -102,6 +94,8 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
         ImageView DynamicListImageView;
         @BindView(R.id.DynamicList_layout)
         LinearLayout itemLayout;
+        @BindView(R.id.DynamicList_Title_Layout)
+        LinearLayout titleLayout;
 
         public ViewHolder(View view) {
             super(view);

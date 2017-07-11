@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
 import com.easydear.user.module.location.data.LocationEntity;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/7/3.
  */
 
-public class LocationActivity extends BaseActivity implements AdapterView.OnItemClickListener, StartLocationCallBack, LocationCallBack {
+public class LocationActivity extends ChaoPuBaseActivity implements AdapterView.OnItemClickListener, StartLocationCallBack, LocationCallBack {
 
     final String TAG = getClass().getSimpleName();
 

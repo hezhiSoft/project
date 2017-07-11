@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.business.BusinessListAdapter;
 import com.easydear.user.module.business.data.BusinessEntity;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class UserBusinessListActivity extends BaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallbackV2<List<BusinessEntity>>{
+public class UserBusinessListActivity extends ChaoPuBaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener,RemetoRepoCallbackV2<List<BusinessEntity>>{
 
     @BindView(R.id.UserBusiness_RecyclerView)
     PullToRefreshRecyclerView recyclerView;

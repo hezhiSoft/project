@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.cards.data.InterestsEntity;
 import com.easydear.user.module.cards.data.source.CardRepo;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * Version:1.0
  */
 
-public class InterestsActivity extends BaseActivity implements RemetoRepoCallbackV2<List<InterestsEntity>>,PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
+public class InterestsActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<List<InterestsEntity>>,PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
 
     @BindView(R.id.Cards_RecyclerView)
     PullToRefreshRecyclerView CardsRecyclerView;

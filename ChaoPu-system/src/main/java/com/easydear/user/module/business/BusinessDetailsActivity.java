@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.alipay.AliPayService;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
@@ -39,7 +40,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoCallbackV2<BusinessDetailEntity> {
+public class BusinessDetailsActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<BusinessDetailEntity> {
 
     @BindView(R.id.business_bg_img)
     ImageView businessBgImg;
@@ -77,7 +78,7 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
         BussinessRepo.getInstance().addVIP(businessDetailEntity.getBusinessNo(), new RemetoRepoCallbackV2<Void>() {
             @Override
             public void onReqStart() {
-                dialog=DialogFactory.createLoadingDialog(BusinessDetailsActivity.this,"添加会员...");
+                dialog = DialogFactory.createLoadingDialog(BusinessDetailsActivity.this, "添加会员...");
             }
 
             @Override
@@ -113,7 +114,7 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
                 ISkipActivityUtil.startIntent(this, LocationActivity.class, bundle);
                 break;
             case R.id.business_phone:
-                if (businessDetailEntity==null){
+                if (businessDetailEntity == null) {
                     showToast("数据异常");
                     return;
                 }
@@ -123,13 +124,16 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
                 }
                 break;
             case R.id.business_buy_button:
-                AliPayService.getInstance().pay(this, "AAA");
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("entity", businessDetailEntity);
+                ISkipActivityUtil.startIntent(this, PurchaseActivity.class, bundle1);
+//                AliPayService.getInstance().pay(this, "AAA");
                 break;
         }
     }
 
-    private void initUI(BusinessDetailEntity entity){
-        if (entity==null){
+    private void initUI(BusinessDetailEntity entity) {
+        if (entity == null) {
             return;
         }
 
@@ -137,8 +141,8 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
         businessInfo.setText(entity.getBrandName());
         businessAddress.setText(entity.getAddress());
 
-        String isVip=entity.getIsVip();
-        if ("0".equals(isVip)){
+        String isVip = entity.getIsVip();
+        if ("0".equals(isVip)) {
             setToolbarRightText("添加会员");
         }
 
@@ -159,9 +163,9 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
 
     }
 
-    private void initTab(){
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("entity",businessDetailEntity);
+    private void initTab() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("entity", businessDetailEntity);
 
         ShopFragment shopFragment = new ShopFragment();
         shopFragment.setArguments(bundle);
@@ -186,7 +190,7 @@ public class BusinessDetailsActivity extends BaseActivity implements RemetoRepoC
 
     @Override
     public void onSuccess(BusinessDetailEntity data) {
-        this.businessDetailEntity=data;
+        this.businessDetailEntity = data;
         initUI(data);
         initTab();
     }

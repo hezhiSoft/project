@@ -37,23 +37,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="3dp"
-        android:background="@color/default_background_color"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="官方优惠"
-        android:padding="5dp"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <View style="@style/line_horizontal" />
-
     <com.easydear.user.view.MeasuredListView
         android:id="@+id/business_shop_activity_lv"
         android:layout_width="match_parent"

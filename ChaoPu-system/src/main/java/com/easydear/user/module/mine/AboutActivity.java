@@ -3,6 +3,7 @@ package com.easydear.user.module.mine;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.jinggan.library.base.BaseActivity;
 
@@ -15,7 +16,7 @@ import com.jinggan.library.base.BaseActivity;
  * Version:1.0
  */
 
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends ChaoPuBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

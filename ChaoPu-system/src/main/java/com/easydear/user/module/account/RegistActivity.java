@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class RegistActivity extends BaseActivity implements RemetoRepoCallbackV2<UserInfoEntity>{
+public class RegistActivity extends ChaoPuBaseActivity implements RemetoRepoCallbackV2<UserInfoEntity>{
 
     @BindView(R.id.Regist_Phone)
     ResetEditView RegistPhone;
