@@ -142,6 +142,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         mTitleCenterTextView = ButterKnife.findById(this, R.id.WaytoBase_toolbar_center_title_tv);
         appBarLayout = ButterKnife.findById(this, R.id.WaytoBase_app_bar_layout);
 
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_gray_24dp);
+
         setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -286,6 +288,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         mToolbar.setTitle(str);
         mToolbarRightText.setVisibility(View.GONE);
         mToolbarRightIV.setVisibility(View.GONE);
+    }
+
+    /**
+     * 设置Title text color
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/11 10:21
+     */
+    public void setToolbarTextColor(int color) {
+        mToolbarRightText.setTextColor(color);
+        mToolbar.setTitleTextColor(color);
+        mToolbar.setSubtitleTextColor(color);
+        mTitleCenterTextView.setTextColor(color);
+    }
+
+    /**
+     * author: hezhiWu
+     * created at 2017/7/11 14:01
+     */
+    public void setNavigationIcon(int resId) {
+        mToolbar.setNavigationIcon(resId);
     }
 
     /**
@@ -483,12 +506,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 显示进度对话框
      * du yang
+     *
      * @param msg
      */
-    public void showProgressDlg(String msg){
-        if (progressDialog==null) {
-            progressDialog= DialogFactory.createLoadingDialog(this,msg);
-        }else{
+    public void showProgressDlg(String msg) {
+        if (progressDialog == null) {
+            progressDialog = DialogFactory.createLoadingDialog(this, msg);
+        } else {
             progressDialog.setMessage(msg);
         }
         progressDialog.show();
@@ -498,8 +522,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 隐藏进度框
      * du yang
      */
-    public void dismissProgressDlg(){
-        if (progressDialog!=null&&progressDialog.isShowing()) {
+    public void dismissProgressDlg() {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }

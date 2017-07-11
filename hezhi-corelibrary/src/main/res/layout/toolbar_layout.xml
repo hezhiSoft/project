@@ -4,10 +4,10 @@
     android:id="@+id/WaytoBase_app_bar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:elevation="0dp"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <android.support.v7.widget.Toolbar
+        style="@style/NoSpaceActionBarTheme"
         android:id="@+id/WaytoBase_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
