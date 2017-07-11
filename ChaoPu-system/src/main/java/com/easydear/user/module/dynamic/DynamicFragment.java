@@ -7,15 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.easydear.user.R;
+import com.easydear.user.common.Constant;
 import com.easydear.user.module.business.BusinessListFragment;
+import com.easydear.user.module.search.SearchActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.ui.widget.WaytoTabLayout;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -70,4 +74,14 @@ public class DynamicFragment extends BaseFragment {
     private void initTab() {
         HomeFragmentTabLayout.initTabLayout(getChildFragmentManager(), fragments, tabNames);
     }
+
+    @OnClick({R.id.DynamicFragment_Search_Layout})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.DynamicFragment_Search_Layout:
+                ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, Constant.HOME_SEARCH_KEY_REQUEST_CODE);
+                break;
+        }
+    }
+
 }

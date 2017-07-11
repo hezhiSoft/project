@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
 import com.easydear.user.common.SharedManager;
+import com.easydear.user.module.business.BusinessDetailsActivity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.soruce.DynamicRepo;
 import com.easydear.user.module.order.data.source.OrderRepo;
@@ -20,6 +21,7 @@ import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +90,16 @@ public class DynamicDetailsActivity extends BaseActivity implements RemetoRepoCa
             relayTextView.setText(data.getArticleForward() + "");
             supportTextView.setText(data.getArticleGood() + "");
             webView.loadDataWithBaseURL("about:blank", data.getContent(), "text/html", "utf-8", null);
+
+            final String businessNo = data.getBusinessNo();
+            DynamicBusinessName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("businessNo", businessNo);
+                    ISkipActivityUtil.startIntent(DynamicDetailsActivity.this, BusinessDetailsActivity.class, bundle);
+                }
+            });
         }
     }
 

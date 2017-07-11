@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
+import com.easydear.user.module.business.BusinessDetailsActivity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
@@ -62,7 +63,23 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
         Glide.with(mContent).load(BuildConfig.DOMAIN + mLists.get(position).getLogo())
                 .into(viewHolder.DynamicListImageView);
 
-        viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.DynamicListLogoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
+                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
+            }
+        });
+        viewHolder.DynamicListTitleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle businessBundle = new Bundle();
+                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
+                ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
+            }
+        });
+        viewHolder.DynamicListImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO 跳转

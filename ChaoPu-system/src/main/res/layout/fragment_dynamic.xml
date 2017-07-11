@@ -5,6 +5,53 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+
+        <LinearLayout
+            android:id="@+id/DynamicFragment_title_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp">
+
+            <TextView
+                android:id="@+id/DynamicFragment_title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="商家动态"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/DynamicFragment_Search_Layout"
+            android:layout_width="160dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/DynamicFragment_title_layout"
+            android:background="@color/white"
+            android:paddingLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableLeft="@mipmap/icon_search"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:hint="搜一搜" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
     <com.jinggan.library.ui.widget.WaytoTabLayout
         android:id="@+id/HomeFragment_TabLayout"
         android:layout_width="match_parent"

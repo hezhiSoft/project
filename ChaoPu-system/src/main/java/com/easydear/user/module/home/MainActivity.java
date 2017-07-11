@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 break;
             case TAB_DYNAMIC:
                 setToolbarCenterTitle("商家动态");
-                setToolbarVisibility(View.VISIBLE);
+                setToolbarVisibility(View.GONE);
                 currentPosition=TAB_DYNAMIC;
                 break;
             case TAB_CARDS:

@@ -175,7 +175,9 @@ public class HomeFragment extends BaseFragment {
                 ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, Constant.HOME_SELECT_CITY_REQUEST_CODE);
                 break;
             case R.id.HomeFragment_Message_Layout:
-//                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+                ISkipActivityUtil.startIntent(getContext(), MessageActivity.class);
+                break;
+            case R.id.HomeFragment_Search_Layout:
                 ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, Constant.HOME_SEARCH_KEY_REQUEST_CODE);
                 break;
         }
