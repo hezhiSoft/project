@@ -89,7 +89,7 @@ public class MainActivity extends ChaoPuBaseActivity implements MainBottomNaviga
                 break;
             case TAB_DYNAMIC:
                 setToolbarCenterTitle("商家动态");
-                setToolbarVisibility(View.GONE);
+                setToolbarVisibility(View.VISIBLE);
                 currentPosition = TAB_DYNAMIC;
                 break;
             case TAB_CARDS:
