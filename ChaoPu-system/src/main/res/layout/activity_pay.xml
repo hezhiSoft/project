@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.jinggan.library.ui.view.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="15dp"
+                android:background="@drawable/btn_white"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/pay_business_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp" />
+
+                <TextView
+                    android:id="@+id/pay_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@id/pay_business_logo"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@id/pay_business_logo"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/pay_is_privilege"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/pay_amount"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/pay_business_logo"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_white"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/pay_wechat_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/icon_wechat_pay" />
+
+                <TextView
+                    android:id="@+id/pay_wechat_pay_tv"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/pay_wechat_logo"
+                    android:gravity="center_vertical"
+                    android:text="微信支付"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/pay_wechat_pay_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/pay_wechat_logo"
+                    android:text="推荐使用微信5.0及以上版本用户使用"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/pay_wechat_rb"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp" />
+
+            </RelativeLayout>
+
+            <View style="@style/line_horizontal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_white"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/pay_alipay_logo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/icon_alipay" />
+
+                <TextView
+                    android:id="@+id/pay_alipay_tv"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/pay_alipay_logo"
+                    android:gravity="center_vertical"
+                    android:text="支付宝支付"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/pay_alipay_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/pay_alipay_logo"
+                    android:text="推荐使用支付宝5.0及以上版本用户使用"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/pay_alipay_rb"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp" />
+
+            </RelativeLayout>
+
+            <View style="@style/line_horizontal" />
+
+            <Button
+                android:id="@+id/Pay_pay_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@drawable/wayto_button_red_selector"
+                android:gravity="center"
+                android:text="确认支付"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </com.jinggan.library.ui.view.OverScrollView>
+
+</LinearLayout>
