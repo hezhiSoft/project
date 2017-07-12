@@ -47,10 +47,10 @@ public class MineFragment extends BaseFragment {
     ImageView MineFragmentUserHearImageView;
     @BindView(R.id.MineFragment_userName)
     TextView MineFragmentUserName;
-    @BindView(R.id.MineFragment_sex)
-    ImageView MineFragmentSex;
-    @BindView(R.id.MineFragment_location)
-    TextView MineFragmentLocation;
+//    @BindView(R.id.MineFragment_sex)
+//    ImageView MineFragmentSex;
+//    @BindView(R.id.MineFragment_location)
+//    TextView MineFragmentLocation;
     @BindView(R.id.MineFragment_consumeCar)
     TextView MineFragmentConsumeCar;
     @BindView(R.id.MineFragment_businessNumber)
@@ -138,7 +138,7 @@ public class MineFragment extends BaseFragment {
             public void onSuccess(String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
-                    MineFragmentConsumeCar.setText("我的权益   " + jsonObject.getString("CardSize"));
+//                    MineFragmentConsumeCar.setText("我的权益   " + jsonObject.getString("CardSize"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -165,7 +165,7 @@ public class MineFragment extends BaseFragment {
             public void onSuccess(String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
-                    MineFragmentBusinessNumber.setText("会员商家   " + jsonObject.getString("BusinessSize"));
+//                    MineFragmentBusinessNumber.setText("会员商家   " + jsonObject.getString("BusinessSize"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -96,7 +96,7 @@ public class DynamicListFragment extends BaseFragment implements PullToRefreshRe
             adapter.clearList();
             adapter.addItems(data);
             if (data == null || data.size() <= 0) {
-                PageListFragmentRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+                PageListFragmentRecyclerView.setEmptyTextViewVisiblity(View.INVISIBLE);
             }
         } else {
             adapter.addItems(data, adapter.getItemCount() - 1);
@@ -106,7 +106,7 @@ public class DynamicListFragment extends BaseFragment implements PullToRefreshRe
     @Override
     public void onFailure(int code, String msg) {
         if (pageSize == 1) {
-            PageListFragmentRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            PageListFragmentRecyclerView.setEmptyTextViewVisiblity(View.INVISIBLE);
         } else {
             showToast(msg);
         }

@@ -12,7 +12,7 @@ public class DynamicEntity {
 
     private String Status;
     private String Type;
-    private String BusinessNO;
+    private String BusinessNo;
     private String BusinessName;
     private String ArticleImage;
     private String GoodSize;
@@ -38,12 +38,12 @@ public class DynamicEntity {
         this.Type = Type;
     }
 
-    public String getBusinessNO() {
-        return BusinessNO;
+    public String getBusinessNo() {
+        return BusinessNo;
     }
 
-    public void setBusinessNO(String BusinessNO) {
-        this.BusinessNO = BusinessNO;
+    public void setBusinessNo(String BusinessNO) {
+        this.BusinessNo = BusinessNo;
     }
 
     public String getBusinessName() {

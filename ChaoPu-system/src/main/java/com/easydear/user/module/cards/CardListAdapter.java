@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
-import com.easydear.user.module.business.BusinessActivity;
 import com.easydear.user.module.business.BusinessDetailsActivity;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;

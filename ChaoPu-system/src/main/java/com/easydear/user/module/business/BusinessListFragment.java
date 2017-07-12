@@ -99,7 +99,7 @@ public class BusinessListFragment extends BaseFragment implements PullToRefreshR
     @Override
     public void onFailure(int code, String msg) {
         if (code==404){
-            PageListFragmentRecyclerView.setEmptyTextViewVisiblity(View.VISIBLE);
+            PageListFragmentRecyclerView.setEmptyTextViewVisiblity(View.INVISIBLE);
         }
     }
 

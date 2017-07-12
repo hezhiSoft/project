@@ -74,7 +74,7 @@ public class DynamicFragment extends BaseFragment {
         HomeFragmentTabLayout.initTabLayout(getChildFragmentManager(), fragments, tabNames);
     }
 
-    @OnClick(R.id.HomeFragment_search_layout)
+    @OnClick(R.id.DynamicFragment_search_layout)
     public void onClick() {
         ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, Constant.HOME_SEARCH_KEY_REQUEST_CODE);
     }

@@ -13,7 +13,7 @@ public class DynamicDetailsEntity {
 
     private int ArticleForward;
 
-    private String BusinessNO;
+    private String BusinessNo;
 
     private String BusinessName;
 
@@ -47,12 +47,12 @@ public class DynamicDetailsEntity {
         return this.ArticleForward;
     }
 
-    public void setBusinessNO(String BusinessNO) {
-        this.BusinessNO = BusinessNO;
+    public void setBusinessNo(String BusinessNo) {
+        this.BusinessNo = BusinessNo;
     }
 
-    public String getBusinessNO() {
-        return this.BusinessNO;
+    public String getBusinessNo() {
+        return this.BusinessNo;
     }
 
     public void setBusinessName(String BusinessName) {

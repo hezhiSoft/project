@@ -63,7 +63,7 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
         Glide.with(mContent).load(BuildConfig.DOMAIN + mLists.get(position).getLogo())
                 .into(viewHolder.DynamicListImageView);
 
-        viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.DynamicListImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO 跳转
@@ -76,7 +76,7 @@ public class DynamicListAdapter extends BaseRecyclerViewAdapter<DynamicEntity> {
             @Override
             public void onClick(View view) {
                 Bundle businessBundle = new Bundle();
-                businessBundle.putString("businessNo", mLists.get(position).getBusinessNO());
+                businessBundle.putString("businessNo", mLists.get(position).getBusinessNo());
                 ISkipActivityUtil.startIntent(mContent, BusinessDetailsActivity.class, businessBundle);
             }
         });

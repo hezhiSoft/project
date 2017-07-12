@@ -15,11 +15,9 @@ import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.common.SharedManager;
 import com.easydear.user.module.business.BusinessDetailsActivity;
-import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.soruce.DynamicRepo;
 import com.easydear.user.module.order.data.source.OrderRepo;
-import com.jinggan.library.base.BaseActivity;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.dialog.DialogFactory;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
@@ -95,6 +93,16 @@ public class DynamicDetailsActivity extends ChaoPuBaseActivity implements Remeto
             relayTextView.setText(data.getArticleForward() + "");
             supportTextView.setText(data.getArticleGood() + "");
             webView.loadDataWithBaseURL("about:blank", data.getContent(), "text/html", "utf-8", null);
+
+            final String businessNo = data.getBusinessNo();
+            DynamicBusinessName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("businessNo", businessNo);
+                    ISkipActivityUtil.startIntent(DynamicDetailsActivity.this, BusinessDetailsActivity.class, bundle);
+                }
+            });
         }
     }
 
@@ -149,7 +157,7 @@ public class DynamicDetailsActivity extends ChaoPuBaseActivity implements Remeto
                     return;
                 }
                 Bundle businessBundle = new Bundle();
-                businessBundle.putString("businessNo", entity.getBusinessNO());
+                businessBundle.putString("businessNo", entity.getBusinessNo());
                 ISkipActivityUtil.startIntent(this, BusinessDetailsActivity.class, businessBundle);
 
                 break;
