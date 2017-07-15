@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
+import com.easydear.user.module.pay.PayActivity;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +50,7 @@ public class PurchaseActivity extends ChaoPuBaseActivity {
         initUI();
     }
 
-    private void initUI(){
+    private void initUI() {
         PurchaseTotal.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -57,9 +59,9 @@ public class PurchaseActivity extends ChaoPuBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!TextUtils.isEmpty(charSequence.toString())){
-                    PurchaseTotalNumber.setText(charSequence.toString()+"元");
-                }else {
+                if (!TextUtils.isEmpty(charSequence.toString())) {
+                    PurchaseTotalNumber.setText(charSequence.toString() + "元");
+                } else {
                     PurchaseTotalNumber.setText("0.00元");
                 }
             }
@@ -73,11 +75,38 @@ public class PurchaseActivity extends ChaoPuBaseActivity {
 
     @OnClick(R.id.Purchase_pay_button)
     public void onClick() {
-        //TODO 支付跳转
-        if (!TextUtils.isEmpty(PurchaseTotalNumber.getText().toString())){
+        if (TextUtils.isEmpty(PurchaseTotalNumber.getText().toString())) {
             showToast("输入支付金额");
             return;
+        } else {
+            gotoPayActivity();
         }
 
+    }
+
+    private void gotoPayActivity() {
+        if (entity != null) {
+            String totalNum = PurchaseTotalNumber.getText().toString().replace("元", "");
+            float amount = Float.parseFloat(totalNum);
+
+            String disNumTxt = PurchaseDisTotal.getText().toString();
+            boolean isPriv = false;
+            if (TextUtils.isEmpty(disNumTxt)) {
+                isPriv = false;
+            } else {
+                float disNum = Float.parseFloat(disNumTxt.replace("元", ""));
+                if (disNum == 0) {
+                    isPriv = false;
+                } else if (disNum > 0) {
+                    isPriv = true;
+                }
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("entity", entity);
+            bundle.putFloat("amount", amount);
+            bundle.putBoolean("isPriv", isPriv);
+            ISkipActivityUtil.startIntent(this, PayActivity.class, bundle);
+        }
     }
 }

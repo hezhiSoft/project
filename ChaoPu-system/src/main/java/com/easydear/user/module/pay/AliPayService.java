@@ -1,4 +1,4 @@
-package com.easydear.user.alipay;
+package com.easydear.user.module.pay;
 
 import android.app.Activity;
 import android.os.Handler;

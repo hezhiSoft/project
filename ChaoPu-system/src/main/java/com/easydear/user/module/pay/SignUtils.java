@@ -1,4 +1,4 @@
-package com.easydear.user.alipay;
+package com.easydear.user.module.pay;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;

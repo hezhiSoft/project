@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.view.MeasuredListView;
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
 
 import java.util.List;
 
@@ -26,14 +26,13 @@ public class ShopFragment extends BaseFragment {
 
     @BindView(R.id.business_shop_activity_lv)
     MeasuredListView mShopActivityListView;
-    @BindView(R.id.Title)
-    TextView Title;
-    @BindView(R.id.ActivityName)
-    TextView ActivityName;
+    @BindView(R.id.business_shop_activity_card)
+    PullToRefreshRecyclerView mShopCardListView;
 
     Unbinder unbinder;
 
     private ActivityAdapter mActivityAdapter;
+    private BusinessCardAdapter mCardAdapter;
 
     private BusinessDetailEntity entity;
 
@@ -55,20 +54,27 @@ public class ShopFragment extends BaseFragment {
         if (entity==null){
             return;
         }
-        List<BusinessDetailEntity.ActivityListBean> been=entity.getActivityList();
-        if (been!=null&&been.size()>0){
-            Title.setText(been.get(0).getTitle());
-            ActivityName.setText(been.get(0).getActivityName());
+        List<BusinessDetailEntity.ActivityListBean> activityList = entity.getActivityList();
+        if (activityList !=null && activityList.size() > 0) {
+            setShopActivityListView(activityList);
         }
 
-        initShopActivityListView(entity.getCardList());
+        List<BusinessDetailEntity.CardListBean> cardList = entity.getCardList();
+        if (cardList != null && cardList.size() > 0) {
+            setShopCardListView(entity.getCardList());
+        }
     }
 
-
-    private void initShopActivityListView(List<BusinessDetailEntity.CardListBean> entity) {
+    private void setShopActivityListView(List<BusinessDetailEntity.ActivityListBean> entities) {
         mActivityAdapter = new ActivityAdapter(getActivity());
+        mActivityAdapter.setList(entities);
         mShopActivityListView.setAdapter(mActivityAdapter);
-        mActivityAdapter.appendToList(entity);
+    }
+
+    private void setShopCardListView(List<BusinessDetailEntity.CardListBean> cardList) {
+        mCardAdapter = new BusinessCardAdapter(getActivity());
+        mCardAdapter.addItems(cardList);
+        mShopCardListView.setRecyclerViewAdapter(mCardAdapter);
     }
 
 }

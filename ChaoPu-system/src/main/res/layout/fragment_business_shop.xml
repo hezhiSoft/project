@@ -6,37 +6,6 @@
     android:paddingBottom="20dp"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/red"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-            android:text="赠"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/ActivityName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="店周年活动"
-            android:textColor="@color/gray"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
     <com.easydear.user.view.MeasuredListView
         android:id="@+id/business_shop_activity_lv"
         android:layout_width="match_parent"
