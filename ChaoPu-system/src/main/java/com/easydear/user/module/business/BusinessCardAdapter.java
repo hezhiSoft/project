@@ -4,11 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
@@ -43,25 +40,25 @@ public class BusinessCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailE
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         final BusinessDetailEntity.CardListBean entity = mLists.get(position);
         if (entity != null) {
-            viewHolder.cardNameTV.setText(entity.getCardName());
-            viewHolder.cardPriceTV.setText("¥" + entity.getCardPrice());
-            viewHolder.cardDifferenceTV.setText("限时直降 ¥" + entity.getDifference());
-            viewHolder.cardValidateTV.setText("有效期至:  " + entity.getCardEndTime());
+            viewHolder.cardName.setText(entity.getCardName());
+            viewHolder.cardPrice.setText("¥" + entity.getCardPrice());
+            viewHolder.cardDifference.setText("限时直降 ¥" + entity.getDifference());
+            viewHolder.cardEndTime.setText("有效期至:  " + entity.getCardEndTime());
         }
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.busi_shop_card_name)
-        TextView cardNameTV;
+        TextView cardName;
         @BindView(R.id.busi_shop_card_price)
-        TextView cardPriceTV;
+        TextView cardPrice;
         @BindView(R.id.busi_shop_card_differ)
-        TextView cardDifferenceTV;
-        @BindView(R.id.busi_shop_card_validate)
-        TextView cardValidateTV;
+        TextView cardDifference;
+        @BindView(R.id.busi_shop_card_endTime)
+        TextView cardEndTime;
         @BindView(R.id.busi_shop_card_receive)
-        TextView cardReceiveTV;
+        TextView cardReceive;
 
         public ItemViewHolder(View view) {
             super(view);

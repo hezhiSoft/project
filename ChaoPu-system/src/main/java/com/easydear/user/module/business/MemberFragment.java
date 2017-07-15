@@ -20,6 +20,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -30,6 +31,18 @@ public class MemberFragment extends BaseFragment {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    @BindView(R.id.business_member_v1)
+    TextView mBusiMemberV1;
+    @BindView(R.id.business_member_v2)
+    TextView mBusiMemberV2;
+    @BindView(R.id.business_member_v3)
+    TextView mBusiMemberV3;
+    @BindView(R.id.business_member_v4)
+    TextView mBusiMemberV4;
+    @BindView(R.id.business_member_v5)
+    TextView mBusiMemberV5;
+    @BindView(R.id.business_member_priv)
+    TextView mBusiMemberPrivilege;
     @BindView(R.id.business_member_cardNum)
     TextView mBusiMemCardNumber;
     @BindView(R.id.business_member_cardlist)
@@ -78,5 +91,51 @@ public class MemberFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
         EventBus.getDefault().unregister(this);
+    }
+
+    @OnClick({R.id.business_member_v1, R.id.business_member_v2, R.id.business_member_v3, R.id.business_member_v4, R.id.business_member_v5})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.business_member_v1:
+                mBusiMemberV1.setBackgroundColor(getResources().getColor(R.color.bright_red, null));
+                mBusiMemberV2.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV3.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV4.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV5.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberPrivilege.setText("维修保养整单97折");
+                break;
+            case R.id.business_member_v2:
+                mBusiMemberV2.setBackgroundColor(getResources().getColor(R.color.bright_red, null));
+                mBusiMemberV1.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV3.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV4.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV5.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberPrivilege.setText("维修保养整单9折");
+                break;
+            case R.id.business_member_v3:
+                mBusiMemberV3.setBackgroundColor(getResources().getColor(R.color.bright_red, null));
+                mBusiMemberV1.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV2.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV4.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV5.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberPrivilege.setText("维修保养整单85折");
+                break;
+            case R.id.business_member_v4:
+                mBusiMemberV4.setBackgroundColor(getResources().getColor(R.color.bright_red, null));
+                mBusiMemberV1.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV2.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV3.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV5.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberPrivilege.setText("维修保养整单8折");
+                break;
+            case R.id.business_member_v5:
+                mBusiMemberV5.setBackgroundColor(getResources().getColor(R.color.bright_red, null));
+                mBusiMemberV1.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV2.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV3.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberV4.setBackgroundColor(getResources().getColor(R.color.light_gray, null));
+                mBusiMemberPrivilege.setText("维修保养整单8折");
+                break;
+        }
     }
 }
