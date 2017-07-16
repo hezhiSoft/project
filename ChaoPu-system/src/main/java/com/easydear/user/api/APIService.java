@@ -72,6 +72,14 @@ public interface APIService {
     @POST("neweasydear-app/user/updateNickName")
     Call<ResponseEntity<Void>> updateNick(@Query("nickName") String nickName);
 
+    /**
+     * 修改密码
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/4 17:08
+     */
+    @POST("neweasydear-app/user/updatePassword")
+    Call<ResponseEntity<Void>> modifyPassword(@Query("oldPassword") String oldPassword, @Query("newPassword") String newPassword);
 
     /**
      * 修改头像

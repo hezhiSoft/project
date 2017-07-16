@@ -97,6 +97,7 @@ public class SettingActivity extends ChaoPuBaseActivity {
                 ISkipActivityUtil.startIntent(this, UpdateNickActivity.class);
                 break;
             case R.id.Setting_Modify_pwd_Layout:
+                ISkipActivityUtil.startIntent(this, ModifyPasswordActivity.class);
                 break;
             case R.id.Setting_Switch_Account:
                 switchAccountDialog();
