@@ -56,6 +56,7 @@ public class InterestsActivity extends ChaoPuBaseActivity implements RemetoRepoC
 
     @Override
     public void onSuccess(List<InterestsEntity> data) {
+        adapter.clearList();
         adapter.addItems(data);
     }
 

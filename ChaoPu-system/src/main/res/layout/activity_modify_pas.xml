@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <com.jinggan.library.ui.widget.ResetEditView
+            android:id="@+id/Modify_pwd_old"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:edit_hint="输入原密码"
+            app:edit_inputType="password"
+            app:edite_icon="@mipmap/ic_password" />
+
+        <com.jinggan.library.ui.widget.ResetEditView
+            android:id="@+id/Modify_pwd_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:edit_hint="输入新密码"
+            app:edit_inputType="password"
+            app:edite_icon="@mipmap/ic_password" />
+
+        <com.jinggan.library.ui.widget.ResetEditView
+            android:id="@+id/Modify_pwd_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:edit_hint="确认新密码"
+            app:edit_inputType="password"
+            app:edite_icon="@mipmap/ic_password" />
+
+        <Button
+            android:id="@+id/Modify_pwd_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/wayto_button_red_selector"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

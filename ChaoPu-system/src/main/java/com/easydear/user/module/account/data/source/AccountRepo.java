@@ -57,7 +57,7 @@ public class AccountRepo implements BaseDataSourse {
             @Override
             public void onSuccess(ResponseEntity<UserInfoEntity> data) {
                 if (data.getCode() == 200) {
-                    ISharedPreferencesUtils.setValue(DataApplication.getInstance(), Constant.TOKEN_KEN,data.getToken());
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance(), Constant.TOKEN_KEN, data.getToken());
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMessage());
@@ -90,7 +90,7 @@ public class AccountRepo implements BaseDataSourse {
             @Override
             public void onSuccess(ResponseEntity<UserInfoEntity> data) {
                 if (data.getCode() == 200) {
-                    ISharedPreferencesUtils.setValue(DataApplication.getInstance(), Constant.TOKEN_KEN,data.getToken());
+                    ISharedPreferencesUtils.setValue(DataApplication.getInstance(), Constant.TOKEN_KEN, data.getToken());
                     callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMessage());
@@ -140,21 +140,21 @@ public class AccountRepo implements BaseDataSourse {
         });
     }
 
-    public void updateNickName(String nickName, final RemetoRepoCallbackV2<Void> callback){
-        Call<ResponseEntity<Void>> call=ChaoPuRetrofitManamer.getService().updateNick(nickName);
+    public void updateNickName(String nickName, final RemetoRepoCallbackV2<Void> callback) {
+        Call<ResponseEntity<Void>> call = ChaoPuRetrofitManamer.getService().updateNick(nickName);
         call.enqueue(new RetrofitCallbackV2<ResponseEntity<Void>>() {
             @Override
             public void onSuccess(ResponseEntity<Void> data) {
-                if (data.getCode()==200){
+                if (data.getCode() == 200) {
                     callback.onSuccess(data.getData());
-                }else {
-                    callback.onFailure(data.getCode(),data.getMessage());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                callback.onFailure(code,msg);
+                callback.onFailure(code, msg);
             }
 
             @Override
@@ -164,8 +164,39 @@ public class AccountRepo implements BaseDataSourse {
         });
     }
 
-    public void updateHead(String path,RemetoRepoCallbackV2<String> callback){
-        String url="neweasydear-app/uploadUserImagery?userNo=&file=&filename=";
+    public void updateHead(String path, RemetoRepoCallbackV2<String> callback) {
+        String url = "neweasydear-app/uploadUserImagery?userNo=&file=&filename=";
+    }
+
+    /**
+     * 密码修改
+     * <p>
+     * author: hezhiWu
+     * created at 2017/7/16 13:29
+     */
+    public void modifyPassword(String oldPwd, String newPwd, final RemetoRepoCallbackV2<Void> callback) {
+        callback.onReqStart();
+        Call<ResponseEntity<Void>> call = ChaoPuRetrofitManamer.getAPIService().modifyPassword(oldPwd, newPwd);
+        call.enqueue(new RetrofitCallbackV2<ResponseEntity<Void>>() {
+            @Override
+            public void onSuccess(ResponseEntity<Void> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
     }
 
     @Override
