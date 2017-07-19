@@ -10,7 +10,9 @@ import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.view.MeasuredListView;
 import com.jinggan.library.base.BaseFragment;
+import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
+import com.jinggan.library.utils.ILogcat;
 
 import java.util.List;
 
@@ -71,10 +73,18 @@ public class ShopFragment extends BaseFragment {
         mShopActivityListView.setAdapter(mActivityAdapter);
     }
 
-    private void setShopCardListView(List<BusinessDetailEntity.CardListBean> cardList) {
+    private void setShopCardListView(final List<BusinessDetailEntity.CardListBean> cardList) {
         mCardAdapter = new BusinessCardAdapter(getActivity());
         mCardAdapter.addItems(cardList);
         mShopCardListView.setRecyclerViewAdapter(mCardAdapter);
+        mCardAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data, int position) {
+                ILogcat.i(getClass().getSimpleName(), "----------> getCardNo = " + cardList.get(position).getCardNo());
+
+            }
+        });
+        ILogcat.i(getClass().getSimpleName(), "----------> getBusinessNo = " + entity.getBusinessNo());
     }
 
 }

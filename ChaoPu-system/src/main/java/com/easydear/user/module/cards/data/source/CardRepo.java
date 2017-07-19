@@ -5,10 +5,12 @@ import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.api.RetrofitManager;
 import com.easydear.user.module.cards.data.CardEntity;
+import com.easydear.user.module.cards.data.InterestDetailEntity;
 import com.easydear.user.module.cards.data.InterestsEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
+import com.jinggan.library.utils.ILogcat;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class CardRepo implements BaseDataSourse {
 
     private Call<ResponseEntity<List<CardEntity>>> cardsCall;
     private Call<ResponseEntity<List<InterestsEntity>>> interestsCall;
+    private Call<ResponseEntity<InterestDetailEntity>> interestDetailCall;
 
     private static CardRepo instance;
 
@@ -77,6 +80,32 @@ public class CardRepo implements BaseDataSourse {
 
             @Override
             public void onFailure(int code, String msg) {
+                callback.onFailure(code,msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    public void queryInterestDetail(String cardNo, final RemetoRepoCallbackV2<InterestDetailEntity> callback){
+        interestDetailCall= ChaoPuRetrofitManamer.getAPIService().queryInterestDetail(cardNo);
+        interestDetailCall.enqueue(new RetrofitCallbackV2<ResponseEntity<InterestDetailEntity>>() {
+            @Override
+            public void onSuccess(ResponseEntity<InterestDetailEntity> data) {
+                ILogcat.i(getClass().getSimpleName(), "----------> onSuccess getCode = " + data.getCode());
+                if (data.getCode()==200){
+                    callback.onSuccess(data.getData());
+                }else {
+                    callback.onFailure(data.getCode(),data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ILogcat.i(getClass().getSimpleName(), "----------> onFailure msg = " + msg);
                 callback.onFailure(code,msg);
             }
 

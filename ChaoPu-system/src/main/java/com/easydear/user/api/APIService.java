@@ -5,6 +5,7 @@ import com.easydear.user.module.account.data.UserInfoEntity;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
+import com.easydear.user.module.cards.data.InterestDetailEntity;
 import com.easydear.user.module.cards.data.InterestsEntity;
 import com.easydear.user.module.dynamic.data.DynamicDetailsEntity;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
@@ -199,6 +200,14 @@ public interface APIService {
      */
     @POST("neweasydear-app/user/userCardList")
     Call<ResponseEntity<List<InterestsEntity>>> queryInterests(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**
+     * 权益详情
+     * <p>
+     * created at 2017/7/16 下午2:31
+     */
+    @POST("neweasydear-app/card/detailById")
+    Call<ResponseEntity<InterestDetailEntity>> queryInterestDetail(@Query("cardNo") String cardNo);
 
     /**
      * 获取卡卷数量
