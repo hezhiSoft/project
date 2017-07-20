@@ -210,6 +210,14 @@ public interface APIService {
     Call<ResponseEntity<InterestDetailEntity>> queryInterestDetail(@Query("cardNo") String cardNo);
 
     /**
+     * 权益领用
+     * <p>
+     * created at 2017/7/16 下午4:52
+     */
+    @POST("neweasydear-app/user/receiveCard")
+    Call<ResponseEntity<String>> receiveInterestCard(@Query("cardNo") String cardNo, @Query("businessNo") String businessNo);
+
+    /**
      * 获取卡卷数量
      * <p>
      * author: hezhiWu

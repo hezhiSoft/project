@@ -2,6 +2,7 @@ package com.easydear.user.module.cards;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.jinggan.library.utils.ILogcat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/7/15.
@@ -37,8 +39,8 @@ public class InterestDetailActivity extends ChaoPuBaseActivity {
     TextView mInterestEndTime;
     @BindView(R.id.interest_price)
     TextView mInterestPrice;
-    @BindView(R.id.interest_pay)
-    Button mInterestPay;
+    @BindView(R.id.interest_receive)
+    Button mInterestReceive;
 
     private InterestDetailEntity mInterestDetailEntity;
 
@@ -47,7 +49,7 @@ public class InterestDetailActivity extends ChaoPuBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interest_detail);
         ButterKnife.bind(this);
-        setToolbarTitle("");
+        setToolbarTitle("权益详情");
 
         requestInterestDetail();
     }
@@ -82,6 +84,11 @@ public class InterestDetailActivity extends ChaoPuBaseActivity {
                             .placeholder(R.mipmap.default_image)
                             .error(R.mipmap.main_img_defaultpic_small)
                             .into(mInterestBg);
+
+                    if ("1".equals(mInterestDetailEntity.getIsHaveCard())) {
+                        mInterestReceive.setBackgroundColor(getResources().getColor(R.color.gray, null));
+                        mInterestReceive.setClickable(false);
+                    }
                 }
             }
 
@@ -96,4 +103,44 @@ public class InterestDetailActivity extends ChaoPuBaseActivity {
             }
         });
     }
+
+    @OnClick({R.id.interest_receive})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.interest_receive:
+                showToast(mInterestDetailEntity.getIsHaveCard());
+                receiveInterest();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void receiveInterest() {
+        String cardNo = mInterestDetailEntity.getCardNo();
+        String businessNo = mInterestDetailEntity.getBusinessNo();
+        CardRepo.getInstance().receiveInterestCard(cardNo, businessNo, new RemetoRepoCallbackV2<String>() {
+            @Override
+            public void onReqStart() {
+
+            }
+
+            @Override
+            public void onSuccess(String msg) {
+                mInterestReceive.setBackgroundColor(getResources().getColor(R.color.gray, null));
+                mInterestReceive.setClickable(false);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
 }
