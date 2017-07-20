@@ -1,6 +1,8 @@
 package com.easydear.user.module.business;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,12 @@ import android.widget.TextView;
 
 import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
+import com.easydear.user.module.cards.InterestDetailActivity;
+import com.easydear.user.module.cards.data.source.CardRepo;
+import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
+import com.jinggan.library.utils.ILogcat;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.util.List;
 
@@ -44,6 +51,15 @@ public class BusinessCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailE
             viewHolder.cardPrice.setText("¥" + entity.getCardPrice());
             viewHolder.cardDifference.setText("限时直降 ¥" + entity.getDifference());
             viewHolder.cardEndTime.setText("有效期至:  " + entity.getCardEndTime());
+            viewHolder.cardReceive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ILogcat.i(TAG, "----------> getCardNo = " + entity.getCardNo());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("cardNo", entity.getCardNo());
+                    ISkipActivityUtil.startIntent(mContext, InterestDetailActivity.class, bundle);
+                }
+            });
         }
     }
 
