@@ -95,7 +95,6 @@ public class CardRepo implements BaseDataSourse {
         interestDetailCall.enqueue(new RetrofitCallbackV2<ResponseEntity<InterestDetailEntity>>() {
             @Override
             public void onSuccess(ResponseEntity<InterestDetailEntity> data) {
-                ILogcat.i(getClass().getSimpleName(), "----------> onSuccess getCode = " + data.getCode());
                 if (data.getCode()==200){
                     callback.onSuccess(data.getData());
                 }else {
@@ -105,7 +104,6 @@ public class CardRepo implements BaseDataSourse {
 
             @Override
             public void onFailure(int code, String msg) {
-                ILogcat.i(getClass().getSimpleName(), "----------> onFailure msg = " + msg);
                 callback.onFailure(code,msg);
             }
 

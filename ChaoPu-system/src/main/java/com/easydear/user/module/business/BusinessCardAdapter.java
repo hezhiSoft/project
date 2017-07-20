@@ -54,7 +54,6 @@ public class BusinessCardAdapter extends BaseRecyclerViewAdapter<BusinessDetailE
             viewHolder.cardReceive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ILogcat.i(TAG, "----------> getCardNo = " + entity.getCardNo());
                     Bundle bundle = new Bundle();
                     bundle.putString("cardNo", entity.getCardNo());
                     ISkipActivityUtil.startIntent(mContext, InterestDetailActivity.class, bundle);

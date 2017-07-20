@@ -77,14 +77,6 @@ public class ShopFragment extends BaseFragment {
         mCardAdapter = new BusinessCardAdapter(getActivity());
         mCardAdapter.addItems(cardList);
         mShopCardListView.setRecyclerViewAdapter(mCardAdapter);
-        mCardAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, Object data, int position) {
-                ILogcat.i(getClass().getSimpleName(), "----------> getCardNo = " + cardList.get(position).getCardNo());
-
-            }
-        });
-        ILogcat.i(getClass().getSimpleName(), "----------> getBusinessNo = " + entity.getBusinessNo());
     }
 
 }
