@@ -42,7 +42,7 @@ public class CardRepo implements BaseDataSourse {
 
     public void queryCards(int pageSize, String keywords, final RemetoRepoCallbackV2<List<CardEntity>> callback) {
         callback.onReqStart();
-        String url = "neweasydear-app/card/listByKey?pageSize=" + pageSize + "&pageCount=10&keywords=" + keywords+"&userNo="+ DataApplication.getInstance().getUserInfoEntity().getUserNo();
+        String url = "neweasydear-app/card/listByKey?pageSize=" + pageSize + "&pageCount=10&keywords=" + keywords + "&userNo=" + DataApplication.getInstance().getUserInfoEntity().getUserNo();
         cardsCall = RetrofitManager.getInstance().getService().queryCards(url);
         cardsCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<CardEntity>>>() {
             @Override
@@ -66,21 +66,21 @@ public class CardRepo implements BaseDataSourse {
         });
     }
 
-    public void queryInterests(int pageSize, int pageCount, final RemetoRepoCallbackV2<List<InterestsEntity>> callback){
-        interestsCall= ChaoPuRetrofitManamer.getAPIService().queryInterests(DataApplication.getInstance().getUserInfoEntity().getUserNo(),pageSize,pageCount);
+    public void queryInterests(int pageSize, int pageCount, final RemetoRepoCallbackV2<List<InterestsEntity>> callback) {
+        interestsCall = ChaoPuRetrofitManamer.getAPIService().queryInterests(DataApplication.getInstance().getUserInfoEntity().getUserNo(), pageSize, pageCount);
         interestsCall.enqueue(new RetrofitCallbackV2<ResponseEntity<List<InterestsEntity>>>() {
             @Override
             public void onSuccess(ResponseEntity<List<InterestsEntity>> data) {
-                if (data.getCode()==200){
+                if (data.getCode() == 200) {
                     callback.onSuccess(data.getData());
-                }else {
-                    callback.onFailure(data.getCode(),data.getMessage());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                callback.onFailure(code,msg);
+                callback.onFailure(code, msg);
             }
 
             @Override
@@ -90,28 +90,50 @@ public class CardRepo implements BaseDataSourse {
         });
     }
 
-    public void queryInterestDetail(String cardNo, final RemetoRepoCallbackV2<InterestDetailEntity> callback){
-        interestDetailCall= ChaoPuRetrofitManamer.getAPIService().queryInterestDetail(cardNo);
+    public void queryInterestDetail(String cardNo, final RemetoRepoCallbackV2<InterestDetailEntity> callback) {
+        interestDetailCall = ChaoPuRetrofitManamer.getAPIService().queryInterestDetail(cardNo);
         interestDetailCall.enqueue(new RetrofitCallbackV2<ResponseEntity<InterestDetailEntity>>() {
             @Override
             public void onSuccess(ResponseEntity<InterestDetailEntity> data) {
-                ILogcat.i(getClass().getSimpleName(), "----------> onSuccess getCode = " + data.getCode());
-                if (data.getCode()==200){
+                if (data.getCode() == 200) {
                     callback.onSuccess(data.getData());
-                }else {
-                    callback.onFailure(data.getCode(),data.getMessage());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                ILogcat.i(getClass().getSimpleName(), "----------> onFailure msg = " + msg);
-                callback.onFailure(code,msg);
+                callback.onFailure(code, msg);
             }
 
             @Override
             public void onFinish() {
                 callback.onFinish();
+            }
+        });
+    }
+
+    public void receiveInterestCard(String cardNo, String businessNo, final RemetoRepoCallbackV2<String> callback) {
+        Call<ResponseEntity<String>> receCardCall = ChaoPuRetrofitManamer.getAPIService().receiveInterestCard(cardNo, businessNo);
+        receCardCall.enqueue(new RetrofitCallbackV2<ResponseEntity<String>>() {
+            @Override
+            public void onSuccess(ResponseEntity<String> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess(data.getMessage());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+
             }
         });
     }

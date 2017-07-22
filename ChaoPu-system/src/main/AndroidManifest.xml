@@ -122,6 +122,11 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
+            android:name=".module.business.InterestPurchaseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
             android:name=".module.mine.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />

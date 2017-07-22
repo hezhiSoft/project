@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
+import com.easydear.user.module.business.InterestPurchaseActivity;
 import com.easydear.user.module.cards.data.InterestsEntity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
+import com.jinggan.library.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +72,7 @@ public class InterestsListaAdapter extends BaseRecyclerViewAdapter<InterestsEnti
         viewHolder.ItemInterestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ISkipActivityUtil.startIntent(mContent, InterestPurchaseActivity.class);
             }
         });
     }
