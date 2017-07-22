@@ -36,13 +36,14 @@ public class AliPayService {
 
     private final String TAG = getClass().getName();
     // 商户PID
-    private static final String PARTNER = "";
+    private String PARTNER = "";
     // 商户收款账号
-    private static final String SELLER = "";
+    private String SELLER = "";
     // 商户私钥，pkcs8格式
-    private static final String RSA_PRIVATE = "";
+    private String RSA_PRIVATE = "";
     // 支付宝公钥
-    public static final String RSA_PUBLIC = "";
+    public String RSA_PUBLIC = "";
+
     private static final int SDK_PAY_FLAG = 1;
 
     private AliPayService() {
@@ -83,8 +84,13 @@ public class AliPayService {
         }
     };
 
-    public void pay(final Activity activity, String info) {
-        final String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+    /**
+     * @param subject 购买的商品
+     * @param body    商品的详细描述
+     * @param price   支付的价格
+     */
+    public void pay(final Activity activity, String subject, String body, String price) {
+        final String orderInfo = getOrderInfo(subject, body, "0.01");
         /**
          * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
          */
@@ -103,7 +109,7 @@ public class AliPayService {
          */
         final String payInfo = orderInfo + "&sign=\"" + sign + "\"&" + getSignType();
 
-        ILogcat.v(TAG, "----------> orderInfo = " + orderInfo);
+        ILogcat.i(TAG, "----------> orderInfo = " + orderInfo);
         Runnable payRunnable = new Runnable() {
 
             @Override
@@ -111,9 +117,9 @@ public class AliPayService {
                 // 构造PayTask 对象
                 PayTask alipay = new PayTask(activity);
                 // 调用支付接口，获取支付结果
-                ILogcat.v(TAG, "----------> payInfo = " + payInfo);
+                ILogcat.i(TAG, "----------> payInfo = " + payInfo);
                 String result = alipay.pay(payInfo, true);
-                ILogcat.v(TAG, "----------> result = " + result);
+                ILogcat.i(TAG, "----------> result = " + result);
 
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
@@ -207,6 +213,27 @@ public class AliPayService {
      */
     private String getSignType() {
         return "sign_type=\"RSA\"";
+    }
+
+
+    public AliPayService setPartner(String partner) {
+        PARTNER = partner;
+        return sInstance;
+    }
+
+    public AliPayService setSeller(String seller) {
+        SELLER = seller;
+        return sInstance;
+    }
+
+    public AliPayService setRsaPrivate(String rsaPrivate) {
+        RSA_PRIVATE = rsaPrivate;
+        return sInstance;
+    }
+
+    public AliPayService setRsaPublic(String rsaPublic) {
+        RSA_PUBLIC = rsaPublic;
+        return sInstance;
     }
 
 }

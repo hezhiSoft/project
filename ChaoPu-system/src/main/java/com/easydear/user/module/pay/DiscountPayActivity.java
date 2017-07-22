@@ -13,6 +13,8 @@ import com.easydear.user.BuildConfig;
 import com.easydear.user.ChaoPuBaseActivity;
 import com.easydear.user.R;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
+import com.easydear.user.module.cards.data.source.CardRepo;
+import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
@@ -23,7 +25,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/7/12.
  */
 
-public class PayActivity extends ChaoPuBaseActivity {
+public class DiscountPayActivity extends ChaoPuBaseActivity {
 
     @BindView(R.id.pay_business_logo)
     ImageView PayBusiLogo;
@@ -36,33 +38,37 @@ public class PayActivity extends ChaoPuBaseActivity {
     @BindView(R.id.pay_alipay_rb)
     RadioButton PayAli;
 
-    private BusinessDetailEntity entity;
-    private float mAmount;
+    private BusinessDetailEntity mEntity;
+    private float mTotalAmount;
+    private float mDisAmount;
+    private float mRealAmount;
     private boolean mIsPriv;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay);
+        setContentView(R.layout.activity_discount_pay);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
-        entity = (BusinessDetailEntity) intent.getSerializableExtra("entity");
-        mAmount = intent.getFloatExtra("amount", 0);
-        mIsPriv = intent.getBooleanExtra("isPriv", false);
         setToolbarTitle("支付订单");
+        Intent intent = getIntent();
+        mEntity = (BusinessDetailEntity) intent.getSerializableExtra("entity");
+        mTotalAmount = intent.getFloatExtra("total_amount", 0);
+        mDisAmount = intent.getFloatExtra("dis_amount", 0);
+        mRealAmount = intent.getFloatExtra("real_amount", 0);
+        mIsPriv = intent.getBooleanExtra("isPriv", false);
         initUI();
     }
 
     private void initUI() {
 
-        Glide.with(this).load(BuildConfig.DOMAIN + entity.getLogo())
+        Glide.with(this).load(BuildConfig.DOMAIN + mEntity.getLogo())
                 .asBitmap()
                 .centerCrop()
                 .placeholder(R.mipmap.default_head_img)
                 .error(R.mipmap.default_head_img)
                 .into(new RoundedBitmapImageViewTarget(this, PayBusiLogo));
 
-        PayAmount.setText("¥ " + mAmount);
+        PayAmount.setText("¥ " + mRealAmount);
         if (mIsPriv) {
             PayPriv.setText("优惠买单");
         }
@@ -95,8 +101,40 @@ public class PayActivity extends ChaoPuBaseActivity {
             showToast("微信支付暂未开通");
             return;
         } else if (PayAli.isSelected()) {
-            // TODO
-            AliPayService.getInstance().pay(PayActivity.this, mAmount + "");
+            aliPay();
+        }
+    }
+
+    private void aliPay() {
+        if (mEntity != null) {
+            CardRepo.getInstance().discountPay(mEntity.getBusinessNo(), String.valueOf(mTotalAmount),
+                    String.valueOf(mDisAmount),String.valueOf( mRealAmount), new RemetoRepoCallbackV2<PayEntity>() {
+                @Override
+                public void onReqStart() {
+
+                }
+
+                @Override
+                public void onSuccess(PayEntity payEntity) {
+                    if (payEntity != null) {
+                        AliPayService.getInstance()
+                                .setPartner(payEntity.getAliNo())
+                                .setSeller(payEntity.getAliAccount())
+                                .setRsaPrivate(payEntity.getPriKey())
+                                .pay(DiscountPayActivity.this, payEntity.getCardName(), "", payEntity.getPayment());
+                    }
+                }
+
+                @Override
+                public void onFailure(int code, String msg) {
+
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            });
         }
     }
 }

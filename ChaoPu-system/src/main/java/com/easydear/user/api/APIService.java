@@ -14,6 +14,7 @@ import com.easydear.user.module.message.data.MessageDetailEntity;
 import com.easydear.user.module.message.data.MessageItemEntity;
 import com.easydear.user.module.order.data.OrderDetailsEntity;
 import com.easydear.user.module.order.data.OrderEntity;
+import com.easydear.user.module.pay.PayEntity;
 import com.easydear.user.module.search.data.SearchEntity;
 
 import java.io.File;
@@ -216,6 +217,22 @@ public interface APIService {
      */
     @POST("neweasydear-app/user/receiveCard")
     Call<ResponseEntity<String>> receiveInterestCard(@Query("cardNo") String cardNo, @Query("businessNo") String businessNo);
+
+    /**
+     * 权益支付
+     * <p>
+     * created at 2017/7/16 下午5:56
+     */
+    @POST("neweasydear-app/user/addOrder")
+    Call<ResponseEntity<PayEntity>> cardOrderPay(@Query("CardNo") String CardNo, @Query("BusinessNo") String BusinessNo, @Query("CardSize") String CardSize, @Query("BuyAmount") String BuyAmount);
+
+    /**
+     * 优惠买单
+     * <p>
+     * created at 2017/7/16 下午6:36
+     */
+    @POST("neweasydear-app/user/preferentialPay")
+    Call<ResponseEntity<PayEntity>> discountPay(@Query("BusinessNo") String BusinessNo, @Query("BuyAmount") String BuyAmount, @Query("Discount") String Discount, @Query("Payment") String Payment);
 
     /**
      * 获取卡卷数量

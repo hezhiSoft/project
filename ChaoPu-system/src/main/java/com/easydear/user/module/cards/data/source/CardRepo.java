@@ -7,6 +7,7 @@ import com.easydear.user.api.RetrofitManager;
 import com.easydear.user.module.cards.data.CardEntity;
 import com.easydear.user.module.cards.data.InterestDetailEntity;
 import com.easydear.user.module.cards.data.InterestsEntity;
+import com.easydear.user.module.pay.PayEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.net.retrofit.RetrofitCallbackV2;
@@ -15,7 +16,6 @@ import com.jinggan.library.utils.ILogcat;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Query;
 
 /**
  * author: hezhiWu <wuhezhi007@gmail.com>
@@ -121,6 +121,54 @@ public class CardRepo implements BaseDataSourse {
             public void onSuccess(ResponseEntity<String> data) {
                 if (data.getCode() == 200) {
                     callback.onSuccess(data.getMessage());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    public void discountPay(String BusinessNo, String BuyAmount, String Discount, String Payment, final RemetoRepoCallbackV2<PayEntity> callback) {
+        Call<ResponseEntity<PayEntity>> disCountPayCall = ChaoPuRetrofitManamer.getAPIService().discountPay(BusinessNo, BuyAmount, Discount, Payment);
+        disCountPayCall.enqueue(new RetrofitCallbackV2<ResponseEntity<PayEntity>>() {
+            @Override
+            public void onSuccess(ResponseEntity<PayEntity> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    public void cardOrderPay(String cardNo, String businessNo, String CardSize, String BuyAmount, final RemetoRepoCallbackV2<PayEntity> callback) {
+        Call<ResponseEntity<PayEntity>> cardPayCall = ChaoPuRetrofitManamer.getAPIService().cardOrderPay(cardNo, businessNo, CardSize, BuyAmount);
+        cardPayCall.enqueue(new RetrofitCallbackV2<ResponseEntity<PayEntity>>() {
+            @Override
+            public void onSuccess(ResponseEntity<PayEntity> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess(data.getData());
                 } else {
                     callback.onFailure(data.getCode(), data.getMessage());
                 }

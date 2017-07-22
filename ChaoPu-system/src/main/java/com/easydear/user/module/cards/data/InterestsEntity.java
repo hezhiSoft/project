@@ -1,5 +1,7 @@
 package com.easydear.user.module.cards.data;
 
+import java.io.Serializable;
+
 /**
  * Describe:
  * Author: hezhiWu
@@ -8,7 +10,7 @@ package com.easydear.user.module.cards.data;
  * Version:1.0
  */
 
-public class InterestsEntity {
+public class InterestsEntity implements Serializable {
 
     private String Status;
     private String CardNo;
