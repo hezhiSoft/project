@@ -14,6 +14,10 @@ public interface SearchCallBack {
 
     void onHotSearchFailure(String msg);
 
+    void onHistorySearchSuccess(List<SearchEntity> list);
+
+    void onHistorySearchFailure(String msg);
+
     void onMatchedKeySuccess(List<SearchEntity> list);
 
     void onMatchedKeyFailure(String msg);

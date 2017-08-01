@@ -156,6 +156,15 @@ public interface APIService {
     Call<ResponseEntity<List<SearchEntity>>> queryHotSearch();
 
     /**
+     * 搜索历史
+     * <p>
+     * author: Colin
+     * created at 2017/7/8 21:01
+     */
+    @POST("neweasydear-app/search/historySearch")
+    Call<ResponseEntity<List<SearchEntity>>> queryHistorySearch(@Query("userNo") String userNo);
+
+    /**
      * 搜索关键字匹配
      * author: Colin
      * created at 2017/7/8 21:32
