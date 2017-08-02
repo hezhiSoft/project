@@ -2,6 +2,7 @@ package com.easydear.user.api;
 
 import com.easydear.user.common.ResponseModel;
 import com.easydear.user.module.account.data.UserInfoEntity;
+import com.easydear.user.module.business.data.ActivityDetailEntity;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.easydear.user.module.cards.data.CardEntity;
@@ -109,6 +110,15 @@ public interface APIService {
      */
     @POST
     Call<ResponseEntity<BusinessDetailEntity>> queryBusinessDetail(@Url String url);
+
+    /**
+     * 查询活动详情
+     *
+     * @param url
+     * @return
+     */
+    @POST
+    Call<ResponseEntity<ActivityDetailEntity>> queryActivityDetail(@Url String url);
 
     /**
      * 申请成为会员
