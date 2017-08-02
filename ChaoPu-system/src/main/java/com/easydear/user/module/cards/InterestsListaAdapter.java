@@ -1,6 +1,7 @@
 package com.easydear.user.module.cards;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.easydear.user.BuildConfig;
 import com.easydear.user.R;
-import com.easydear.user.module.business.InterestPurchaseActivity;
 import com.easydear.user.module.cards.data.InterestsEntity;
+import com.easydear.user.module.pay.InterestPayActivity;
 import com.jinggan.library.ui.view.RoundedBitmapImageViewTarget;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.BaseRecyclerViewAdapter;
 import com.jinggan.library.utils.ISkipActivityUtil;
@@ -69,10 +70,14 @@ public class InterestsListaAdapter extends BaseRecyclerViewAdapter<InterestsEnti
             }
         });
 
+        final int pos = position;
         viewHolder.ItemInterestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ISkipActivityUtil.startIntent(mContent, InterestPurchaseActivity.class);
+                final InterestsEntity entity = mLists.get(pos);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("interest_entity", entity);
+                ISkipActivityUtil.startIntent(mContent, InterestPayActivity.class,bundle);
             }
         });
     }

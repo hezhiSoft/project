@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.easydear.user.R;
-import com.easydear.user.common.Constant;
 import com.easydear.user.module.dynamic.data.DynamicEntity;
 import com.easydear.user.module.dynamic.data.soruce.DynamicRepo;
-import com.easydear.user.module.search.SearchActivity;
 import com.jinggan.library.base.BaseFragment;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
 import com.jinggan.library.ui.widget.pullRefreshRecyler.PullToRefreshRecyclerView;
-import com.jinggan.library.utils.ISkipActivityUtil;
 
 import java.util.List;
 
@@ -83,6 +80,10 @@ public class DynamicListFragment extends BaseFragment implements PullToRefreshRe
     public void onPullRefresh() {
         pageSize++;
         dynamicRepo.queryDynamics(pageSize, 20, "", key, "", "", "", this);
+    }
+
+    public void queryDynamicsWithKeywords(String searchKey) {
+        dynamicRepo.queryDynamics(pageSize, 20, searchKey, key, "", "", "", this);
     }
 
     @Override

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
-import com.easydear.user.DataApplication;
 import com.easydear.user.R;
 import com.easydear.user.common.Constant;
 import com.easydear.user.common.LocationManager;
@@ -106,7 +105,7 @@ public class HomeFragment extends BaseFragment {
                     mCity = location.getCity();
                     ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
                     HomeFragmentLocationTextView.setText(mCity);
-                    ILogcat.i(getClass().getSimpleName(), "onCreateView, location.getCity() = " + location.getCity());
+                    ILogcat.i(TAG, "onCreateView, location.getCity() = " + location.getCity());
                 }
             }
         });
@@ -124,7 +123,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * EventBus 更新 Location City
+     * EventBus 更新
      */
     @Subscribe
     public void onEventMainThread(EventBusValues value) {
@@ -153,11 +152,13 @@ public class HomeFragment extends BaseFragment {
                 mSearchKey = "";
 //                requestTopScrollArticles();
                 break;
-            case Constant.NOTICE_HOME_SEARCH:
+            case Constant.NOTICE_KEY_SEARCH_HOME:
                 Intent search = (Intent) value.getObject();
                 mSearchKey = search.getStringExtra("search_key");
                 ILogcat.v(TAG, "Current Search Key = " + mSearchKey);
-//                requestTopScrollArticles();
+                int position = HomeFragmentTabLayout.getTabLayout().getSelectedTabPosition();
+                BusinessListFragment businessListFragment = (BusinessListFragment) fragments.get(position);
+                businessListFragment.queryBusinessWithKeywords(mSearchKey);
                 break;
             default:
                 break;

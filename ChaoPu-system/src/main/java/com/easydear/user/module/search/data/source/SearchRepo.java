@@ -2,7 +2,6 @@ package com.easydear.user.module.search.data.source;
 
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
-import com.easydear.user.module.search.SearchActivity;
 import com.easydear.user.module.search.data.SearchEntity;
 import com.jinggan.library.base.BaseDataSourse;
 import com.jinggan.library.net.retrofit.RemetoRepoCallbackV2;
@@ -46,6 +45,32 @@ public class SearchRepo implements BaseDataSourse {
             public void onFailure(int code, String msg) {
                 callback.onFailure(code, msg);
                 searchCB.onHotSearchFailure(msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    public void requestHistorySearch(String userNo, final RemetoRepoCallbackV2<List<SearchEntity>> callback, final SearchCallBack searchCB) {
+        callback.onReqStart();
+        final Call<ResponseEntity<List<SearchEntity>>> call = ChaoPuRetrofitManamer.getService().queryHistorySearch(userNo);
+        call.enqueue(new RetrofitCallbackV2<ResponseEntity<List<SearchEntity>>>() {
+            @Override
+            public void onSuccess(ResponseEntity<List<SearchEntity>> data) {
+                if (data.getCode() == 200) {
+                    searchCB.onHistorySearchSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                    searchCB.onHistorySearchFailure(data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
             }
 
             @Override

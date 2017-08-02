@@ -85,6 +85,9 @@ public class SearchActivity extends ChaoPuBaseActivity implements RemetoRepoCall
     }
 
     private void initSearchHistoryListView() {
+        mSearchRepo.requestHistorySearch(getUserNo(), this, this);
+
+        // ---------服务器无数据，使用本地保存；若服务器有数据，从这里开始删除---------
         String savedHistory = (String) ISpfUtil.getValue("search_history", "");
         ILogcat.v(TAG, "Saved search history = " + savedHistory);
         if (!savedHistory.isEmpty()) {
@@ -103,6 +106,7 @@ public class SearchActivity extends ChaoPuBaseActivity implements RemetoRepoCall
                 });
             }
         }
+        // ---------服务器无数据，使用本地保存；若服务器有数据，从这里结束删除---------
     }
 
     private void initSearchKeyMatchedView() {
@@ -156,6 +160,36 @@ public class SearchActivity extends ChaoPuBaseActivity implements RemetoRepoCall
     }
 
     @Override
+    public void onHistorySearchSuccess(List<SearchEntity> entities) {
+        if (entities == null || entities.size() <= 0) {
+            ILogcat.v(TAG, "onHistorySearchSuccess: entities empty!");
+            return;
+        }
+
+        int size = entities.size();
+        final String[] historyArr = new String[size];
+        for (int i = 0; i < size; i++) {
+            historyArr[i] = entities.get(i).getMsg();
+        }
+        mSearchHistoryTextView.setVisibility(View.VISIBLE);
+        mSearchHistoryListView.setVisibility(View.VISIBLE);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SearchActivity.this, R.layout.item_search_list_layout, historyArr);
+        mSearchHistoryListView.setAdapter(arrayAdapter);
+        mSearchHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                saveAndSearch(historyArr[i]);
+            }
+        });
+
+    }
+
+    @Override
+    public void onHistorySearchFailure(String msg) {
+        ILogcat.e(TAG, "onHistorySearchFailure:: msg = " + msg);
+    }
+
+    @Override
     public void onMatchedKeySuccess(List<SearchEntity> entities) {
         if (entities == null || entities.size() <= 0) {
             ILogcat.v(TAG, "onGetMatchedKeySuccess: entities empty!");
@@ -198,6 +232,9 @@ public class SearchActivity extends ChaoPuBaseActivity implements RemetoRepoCall
     }
 
     private void saveSearchHistory(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            return;
+        }
         String savedHistory = (String) ISpfUtil.getValue("search_history", "");
         String newHistory = searchText + ";";
         if (!savedHistory.isEmpty()) {

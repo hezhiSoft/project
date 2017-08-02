@@ -3,6 +3,7 @@ package com.easydear.user.module.business.data.soruce;
 import com.easydear.user.api.ChaoPuRetrofitManamer;
 import com.easydear.user.api.ResponseEntity;
 import com.easydear.user.api.RetrofitManager;
+import com.easydear.user.module.business.data.ActivityDetailEntity;
 import com.easydear.user.module.business.data.BusinessDetailEntity;
 import com.easydear.user.module.business.data.BusinessEntity;
 import com.jinggan.library.base.BaseDataSourse;
@@ -87,6 +88,37 @@ public class BussinessRepo implements BaseDataSourse {
         businessDetailCall.enqueue(new RetrofitCallbackV2<ResponseEntity<BusinessDetailEntity>>() {
             @Override
             public void onSuccess(ResponseEntity<BusinessDetailEntity> data) {
+                if (data.getCode() == 200) {
+                    callback.onSuccess(data.getData());
+                } else {
+                    callback.onFailure(data.getCode(), data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                callback.onFailure(code, msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onFinish();
+            }
+        });
+    }
+
+    /**
+     * 查询活动详情
+     *
+     * @param activityId
+     * @param callback
+     */
+    public void queryActivityDetail(int activityId, final RemetoRepoCallbackV2<ActivityDetailEntity> callback) {
+        String url = "neweasydear-app/activity/detailById?activityId=" + activityId;
+        Call<ResponseEntity<ActivityDetailEntity>> call = ChaoPuRetrofitManamer.getAPIService().queryActivityDetail(url);
+        call.enqueue(new RetrofitCallbackV2<ResponseEntity<ActivityDetailEntity>>() {
+            @Override
+            public void onSuccess(ResponseEntity<ActivityDetailEntity> data) {
                 if (data.getCode() == 200) {
                     callback.onSuccess(data.getData());
                 } else {

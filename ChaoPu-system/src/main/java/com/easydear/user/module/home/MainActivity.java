@@ -139,7 +139,11 @@ public class MainActivity extends ChaoPuBaseActivity implements MainBottomNaviga
                     EventBus.getDefault().post(event);
                     break;
                 case Constant.HOME_SEARCH_KEY_REQUEST_CODE:
-                    event.setWhat(Constant.NOTICE_HOME_SEARCH);
+                    if (currentPosition == TAB_HOME) {
+                        event.setWhat(Constant.NOTICE_KEY_SEARCH_HOME);
+                    } else if (currentPosition == TAB_DYNAMIC) {
+                        event.setWhat(Constant.NOTICE_KEY_SEARCH_DYNAMIC);
+                    }
                     event.setObject(data);
                     EventBus.getDefault().post(event);
                     break;

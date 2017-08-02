@@ -76,6 +76,7 @@
                     android:layout_centerVertical="true"
                     android:background="@color/white"
                     android:hint="输入金额"
+                    android:inputType="number"
                     android:paddingBottom="5dp"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"

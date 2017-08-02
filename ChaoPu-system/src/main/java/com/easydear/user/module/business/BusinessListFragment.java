@@ -81,6 +81,10 @@ public class BusinessListFragment extends BaseFragment implements PullToRefreshR
         bussinessRepo.queryBusiness(pageSize,20,"",key,"","","",this);
     }
 
+    public void queryBusinessWithKeywords(String searchKey) {
+        bussinessRepo.queryBusiness(pageSize,20,searchKey,key,"","","",this);
+    }
+
     @Override
     public void onReqStart() {
 

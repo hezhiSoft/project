@@ -72,6 +72,11 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
+            android:name=".module.business.ActivityDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
             android:name=".module.business.LocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
@@ -122,7 +127,7 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.business.InterestPurchaseActivity"
+            android:name=".module.pay.InterestPayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
@@ -162,7 +167,7 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.pay.PayActivity"
+            android:name=".module.pay.DiscountPayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
